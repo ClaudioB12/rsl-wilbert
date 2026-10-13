@@ -1,0 +1,3117 @@
+[
+ {
+  "key": "E07",
+  "autores": "Fang, Yang, Zheng, Zhou, Peng",
+  "primer_autor": "Fang",
+  "anio": 2020,
+  "titulo": "A Deep Cycle Limit Learning Machine Method for Urban Expressway Traffic Incident Detection",
+  "venue": "Mathematical Problems in Engineering",
+  "tipo_doc": "revista",
+  "volumen": "2020",
+  "numero": "No reportado",
+  "paginas_o_articulo": "Art. 5965089 (11 pp.)",
+  "doi": "10.1155/2020/5965089",
+  "editorial": "Hindawi",
+  "pais_region_datos": "Hangzhou, China (viaducto Tangqiao, vía rápida urbana)",
+  "entorno": "autopista",
+  "tipo_dato": "series de sensores",
+  "tipo_dato_detalle": "Datos de detectores de microondas aguas arriba y aguas abajo (flujo, velocidad, ocupación) y 18 variables derivadas (ratios entre parámetros, entre detectores adyacentes y entre valores medidos y predichos por media móvil); Random Forest (MDA) selecciona 4 variables clave basadas en ratios de ocupación/velocidad/flujo.",
+  "datasets": [
+   {
+    "nombre": "Detectores de microondas del viaducto Tangqiao (Hangzhou, 11/06/2015–11/11/2015) + incidentes de la red de información de tráfico de Hangzhou",
+    "tipo": "real",
+    "publico": "no"
+   }
+  ],
+  "origen_etiquetas": "registros reales de incidentes",
+  "origen_etiquetas_detalle": "Los incidentes publicados por la red de información de tráfico de Hangzhou (223 registros, 107 efectivos) se localizan en el mapa y se emparejan espacial y temporalmente con los detectores aguas arriba/abajo, etiquetando 1 = evento y 0 = no evento.",
+  "tasa_anomalias": "≈20% de muestras de evento por diseño: entrenamiento 5240/26190 y prueba 4595/22978 (la proporción en prueba se fijó en 20%); el entrenamiento se balancea además con SMOTE (20360 muestras)",
+  "paradigma": "supervisado",
+  "enfoque": "clasificación",
+  "unidad_evaluacion": "evento",
+  "umbral": "No aplica (clasificador binario ELM); como regla de decisión adicional se aplica un persistence test (PT = 0–4) para reducir falsas alarmas; los resultados de la Tabla 5 corresponden a PT = 0",
+  "particion": "Aleatoria por evento: 55 de 107 eventos para entrenamiento y 52 para prueba, con muestras sin evento seleccionadas aleatoriamente (prueba con 20% de muestras de evento); SMOTE solo en entrenamiento; validación cruzada de 5 particiones como función de aptitud del PSO. El texto también menciona una partición de dos tercios/un tercio por subconjunto (este, oeste, tramo completo), inconsistente con lo anterior.",
+  "familia_principal": "convolucional",
+  "familias": {
+   "recurrente": false,
+   "convolucional": true,
+   "autoencoder": false,
+   "grafos": false,
+   "transformer_atencion": false,
+   "generativo": false
+  },
+  "hibrido": true,
+  "multimodal": false,
+  "arquitectura": "Deep Cycle Extreme Learning Machine (DELM): red neuronal convolucional cíclica (capas de convolución cíclica y submuestreo, entrenada con BFGS cuasi-Newton) como extractor de características cuyos parámetros se fijan y alimentan una Extreme Learning Machine de una capa oculta que clasifica incidente/no incidente; con selección de variables por Random Forest, SMOTE y PSO.",
+  "metricas": [
+   "DR",
+   "FAR",
+   "MTTD"
+  ],
+  "metricas_flags": {
+   "accuracy": false,
+   "precision": false,
+   "recall": false,
+   "f1": false,
+   "auc_roc": false,
+   "pr_auc": false,
+   "dr": true,
+   "far_fpr": true,
+   "mttd": true,
+   "error_mae_rmse_mape": false,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": false
+  },
+  "resultado_principal": "DR = 98.42%, FAR = 0.56%, MTTD = 0.68 min en los datos del viaducto Tangqiao (Hangzhou) con las variables seleccionadas por Random Forest",
+  "baselines": [
+   "LSTM",
+   "DBN",
+   "CNN",
+   "GBDT"
+  ],
+  "baseline_no_dl": true,
+  "ventaja_vs_mejor_baseline": "+2.01 pp de DR frente a DBN (98.42% vs 96.41%; los autores lo expresan como +2.08%) y MTTD 0.20 min menor (0.68 vs 0.88); FAR ligeramente peor que LSTM (0.48%), DBN y GBDT (0.50%)",
+  "limitaciones_autores": "Para una conclusión más general el DELM debe probarse en otros conjuntos de datos de incidentes; falta analizar y demostrar teóricamente su superioridad; el conjunto inicial de variables requiere más discusión. Solo se mencionan en el párrafo final de la conclusión.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": false,
+   "etiquetado": false,
+   "generalizacion": true,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": false,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "No (disponible bajo solicitud al autor de correspondencia)",
+  "categoria_anomalia": "accidentes/incidentes",
+  "categoria_anomalia_secundaria": "",
+  "calidad": {
+   "QA1": {
+    "p": 1,
+    "ev": "Etiquetas de incidentes reales publicados por la red de información de tráfico de Hangzhou, emparejados espacial y temporalmente con los detectores."
+   },
+   "QA2": {
+    "p": 0.5,
+    "ev": "Partición aleatoria por evento (55 eventos de entrenamiento / 52 de prueba) con muestras sin evento aleatorias; la descripción es inconsistente (también menciona 2/3–1/3 y 123 frente a 107 incidentes)."
+   },
+   "QA3": {
+    "p": 1,
+    "ev": "Compara con LSTM, DBN, CNN y GBDT (no DL) con las mismas variables (Tabla 5) y curvas DR-FAR y MTTD-FAR."
+   },
+   "QA4": {
+    "p": 0,
+    "ev": "Valores únicos sin dispersión ni pruebas de significancia; la validación cruzada de 5 particiones solo se usa como aptitud del PSO."
+   },
+   "QA5": {
+    "p": 0,
+    "ev": "Datos solo 'presentados en figuras y tablas'; código disponible únicamente bajo solicitud."
+   },
+   "QA6": {
+    "p": 0,
+    "ev": "Un único corredor (viaducto Tangqiao, Hangzhou); los subconjuntos este/oeste/tramo completo se mencionan pero no se reportan resultados por separado."
+   },
+   "QA7": {
+    "p": 1,
+    "ev": "Define DR por eventos detectados, FAR por decisiones y MTTD por evento, y la decisión del clasificador con persistence test (PT = 0–4)."
+   },
+   "QA8": {
+    "p": 0.5,
+    "ev": "Mención breve en la conclusión sobre la necesidad de probar en otros datasets y discutir el conjunto de variables."
+   }
+  },
+  "caso_limite": "Se puede dudar de que sea Deep Learning: el clasificador final es una Extreme Learning Machine de una sola capa oculta, con pesos de entrada aleatorios y pesos de salida calculados por pseudoinversa, sin retropropagación. A favor de incluirlo: la 'deep cycle ELM' antepone una red neuronal convolucional cíclica (capas de convolución cíclica y de submuestreo; la Fig. 3 muestra un esquema C-S-C) entrenada con BFGS cuasi-Newton y entropía cruzada, cuyas características aprendidas alimentan la ELM; los autores la presentan como aprendizaje profundo que 'transfiere características de bajo nivel capa a capa' y la comparan con LSTM, DBN y CNN. En contra: el PDF no informa número de capas, filtros ni tamaño de los kernels, la profundidad real parece mínima (dos capas convolucionales y una de submuestreo), y el texto sobre la parte convolucional habla de 'image target' aunque la entrada son 4 variables tabulares de detectores. Conclusión: incluir como híbrido CNN poco profundo + ELM, en el límite de DL y con baja confianza en la descripción del método.",
+  "notas": "Coincide con la ficha en lo esencial. Inconsistencias internas del PDF: el resumen dice que compara con SVM y BPNN y que FAR < 3%, pero la Tabla 5 solo incluye LSTM, DBN, CNN y GBDT y FAR ≈ 0.5%; el intervalo de muestreo se da como 1 min y como 5 min; se citan 107 y 123 incidentes; los parámetros del PSO (λ, σ, d) corresponden a una 'función kernel combinada' que no forma parte del DELM descrito. El resumen también habla de usar la ELM como unidad de aprendizaje no supervisado capa a capa (ELM-AE), pero no se describe en el método. Hindawi no usa número de fascículo; la cabecera de descarga de Wiley indica '2020, 1'. Afiliación escrita 'Jinlin University' (errata por Jilin University).",
+  "id": "S01",
+  "clave_extraccion": "E07",
+  "id_version_anterior": "E07",
+  "bibkey": "fang2020deep",
+  "tipo_dato_corto": "Detectores de microondas",
+  "datasets_corto": "Viaducto Tangqiao (Hangzhou)",
+  "datasets_ejemplo": [
+   "Tangqiao (propio)"
+  ],
+  "etiqueta_corta": "Registros reales",
+  "categoria_corta": "Accidentes e incidentes",
+  "modelo_corto": "CNN cíclica + ELM (DELM)",
+  "resultado_corto": "DR 98,4 %; FAR 0,56 %; MTTD 0,68 min",
+  "baselines_corto": "LSTM, DBN, CNN, GBDT",
+  "ventaja_corta": "+2,0 pp de DR frente a DBN",
+  "decision_limite": "Incluido. La red convolucional cíclica aprende la representación de las variables de tráfico y la ELM clasifica sobre ella (CI-5, cláusula de híbridos).",
+  "pdf": "A Deep Cycle Limit Learning Machine Method for Urban Expressway Traffic Incident Detection.pdf"
+ },
+ {
+  "key": "E10",
+  "autores": "Huang, He, Rangarajan, Ranka",
+  "primer_autor": "Huang",
+  "anio": 2020,
+  "titulo": "Intelligent Intersection: Two-stream Convolutional Networks for Real-time Near-accident Detection in Traffic Video",
+  "venue": "ACM Transactions on Spatial Algorithms and Systems",
+  "tipo_doc": "revista",
+  "volumen": "6",
+  "numero": "2",
+  "paginas_o_articulo": "Art. 10 (28 pp.)",
+  "doi": "10.1145/3373647",
+  "editorial": "ACM",
+  "pais_region_datos": "Gainesville, Florida, Estados Unidos (videos reales de dron y fisheye) + videos simulados con motor de videojuegos",
+  "entorno": "urbano",
+  "tipo_dato": "video/imágenes",
+  "tipo_dato_detalle": "Frames de video de intersecciones con vista cenital: dron, cámaras fisheye omnidireccionales (una y varias cámaras) y simulaciones de motor de videojuego; de ellos se derivan detecciones de objetos, máscaras por superpíxeles y trayectorias apiladas de L frames.",
+  "datasets": [
+   {
+    "nombre": "TNAD (Traffic Near-Accident Dataset)",
+    "tipo": "mixto",
+    "publico": "no"
+   },
+   {
+    "nombre": "VeRi (reidentificación vehicular, entrenamiento de la métrica coseno)",
+    "tipo": "real",
+    "publico": "sí"
+   }
+  ],
+  "origen_etiquetas": "anotación manual/experta",
+  "origen_etiquetas_detalle": "Los autores anotaron manualmente la localización espacial y temporal de los near-accidents y los objetos (con su clase) en cada video de TNAD; la evaluación cuantitativa de near-accidents se hace solo sobre videos simulados.",
+  "tasa_anomalias": "18 de 30 videos de prueba simulados con near-accident (60% de los videos); a nivel de frame: No reportado",
+  "paradigma": "supervisado",
+  "enfoque": "clasificación",
+  "unidad_evaluacion": "evento",
+  "umbral": "Una detección de near-accident es TP si su IoU con la anotación supera 0.7; en el flujo temporal, hay near-accident si dos trayectorias se intersectan o su separación cae bajo un umbral de gap aprendido dinámicamente (inicial 50 px; converge a ≈47/45/42 px en simulación/fisheye/dron); la probabilidad final promedia ambos flujos (umbral de confianza no reportado).",
+  "particion": "Por video: 32 videos con 20% de frames muestreados se usan solo para entrenar el detector y los 74 restantes para prueba; los near-accidents se evalúan en 30 videos de simulación de prueba (18 positivos, 12 negativos); de los 57 videos simulados se muestrean 1,087 frames para entrenamiento.",
+  "familia_principal": "convolucional",
+  "familias": {
+   "recurrente": false,
+   "convolucional": true,
+   "autoencoder": false,
+   "grafos": false,
+   "transformer_atencion": false,
+   "generativo": false
+  },
+  "hibrido": true,
+  "multimodal": false,
+  "arquitectura": "Two-stream CNN: flujo espacial con un detector tipo YOLOv2/Darknet-19 que detecta vehículos y regiones de near-accident por frame, y flujo temporal con seguimiento múltiple SORT/DeepSORT (Kalman, algoritmo húngaro) y métrica coseno aprendida (entrenada en VeRi) que genera trayectorias apiladas; se añade segmentación por superpíxeles gSLICr para estimar el gap y se promedian las probabilidades de ambos flujos.",
+  "metricas": [
+   "Precision",
+   "Recall",
+   "F1-score",
+   "FPS"
+  ],
+  "metricas_flags": {
+   "accuracy": false,
+   "precision": true,
+   "recall": true,
+   "f1": true,
+   "auc_roc": false,
+   "pr_auc": false,
+   "dr": false,
+   "far_fpr": false,
+   "mttd": false,
+   "error_mae_rmse_mape": false,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": true
+  },
+  "resultado_principal": "F1 = 0.93085 (Precision = 0.92105, Recall = 0.94086) en detección de near-accidents en los videos de simulación de TNAD; 33–50 fps en GPU NVIDIA TITAN V",
+  "baselines": [
+   "Spatial stream solo (ablación)",
+   "Temporal stream solo (ablación)",
+   "SORT sin métrica coseno (ablación de seguimiento)",
+   "Urban Tracker (cualitativo)",
+   "TrafficIntelligence (cualitativo)"
+  ],
+  "baseline_no_dl": true,
+  "ventaja_vs_mejor_baseline": "+4.93 pp de F1 frente al flujo espacial solo (0.93085 vs 0.88154) y +8.98 pp frente al flujo temporal solo (0.84108); no hay comparación cuantitativa con métodos externos de detección de near-accidents",
+  "limitaciones_autores": "Los videos fisheye originales tienen fuertes distorsiones cerca de los bordes y el sistema funciona mejor tras corregirlas; no se aborda el unwarping fisheye y para varias cámaras se usa un stitching simple a nivel de objeto (trabajo futuro); el dataset es distinto de otros, lo que dificulta la comparación cuantitativa con otros métodos.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": false,
+   "etiquetado": false,
+   "generalizacion": true,
+   "metricas_no_uniformes": true,
+   "costo_despliegue": false,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "No",
+  "categoria_anomalia": "trayectorias/conducción peligrosa",
+  "categoria_anomalia_secundaria": "accidentes/incidentes",
+  "calidad": {
+   "QA1": {
+    "p": 0.5,
+    "ev": "Anotación manual de near-accidents y objetos en TNAD, pero la evaluación cuantitativa de near-accidents se hace solo con eventos de videos simulados (motor de videojuego)."
+   },
+   "QA2": {
+    "p": 1,
+    "ev": "Conjunto de prueba independiente por video: 32 videos para entrenar el detector y 74 para prueba; near-accidents en 30 videos simulados de prueba."
+   },
+   "QA3": {
+    "p": 0.5,
+    "ev": "Para near-accidents solo hay ablación (flujo espacial, temporal y two-stream); la comparación con Urban Tracker y TrafficIntelligence es cualitativa y solo de seguimiento."
+   },
+   "QA4": {
+    "p": 0,
+    "ev": "Valores únicos en la Tabla 2 sin dispersión ni pruebas de significancia."
+   },
+   "QA5": {
+    "p": 0,
+    "ev": "No se publica código ni enlace al dataset TNAD."
+   },
+   "QA6": {
+    "p": 0.5,
+    "ev": "TNAD incluye dron, fisheye y simulación de varias intersecciones, pero la evaluación cuantitativa de near-accidents se limita a la simulación (detección y seguimiento también en fisheye)."
+   },
+   "QA7": {
+    "p": 1,
+    "ev": "Define la unidad (detección de near-accident emparejada por IoU > 0.7) y el criterio de decisión (intersección de trayectorias o gap bajo un umbral aprendido)."
+   },
+   "QA8": {
+    "p": 0.5,
+    "ev": "Mención breve de la distorsión fisheye, el unwarping pendiente y el stitching multicámara como trabajo futuro."
+   }
+  },
+  "caso_limite": "",
+  "notas": "El título publicado en el PDF es 'Intelligent Intersection: Two-stream Convolutional Networks for Real-time Near-accident Detection in Traffic Video', distinto del nombre del archivo ('Two-stream CNN for Near-Accident Detection in Traffic Video'); coincide con la ficha. La ficha clasifica la anomalía como accidentes/incidentes; aquí se clasifica como near-miss/conflicto de trayectorias (trayectorias/conducción peligrosa) y se deja accidentes como secundaria. La ficha no advierte que los resultados de near-accident son solo en simulación. El texto atribuye Darknet-19/YOLO9000 a la cita [Wojke et al. 2017] (errata). Se reportan 20–30 fps de detección y 40–50 fps del sistema en el texto frente a 33–50 fps en la Tabla 1.",
+  "id": "S02",
+  "clave_extraccion": "E10",
+  "id_version_anterior": "E10",
+  "bibkey": "huang2020intelligent",
+  "tipo_dato_corto": "Video (dron y simulación)",
+  "datasets_corto": "TNAD (propio, con videos simulados)",
+  "datasets_ejemplo": [
+   "TNAD"
+  ],
+  "etiqueta_corta": "Anotación manual",
+  "categoria_corta": "Conducción peligrosa (casi accidentes)",
+  "modelo_corto": "CNN de dos flujos + seguimiento",
+  "resultado_corto": "F1 0,93 (videos simulados)",
+  "baselines_corto": "Ablaciones (flujo espacial o temporal solo)",
+  "ventaja_corta": "+4,9 pp de F1 frente al flujo espacial solo",
+  "pdf": "Two-stream CNN for Near-Accident Detection in Traffic Video.pdf"
+ },
+ {
+  "key": "E13",
+  "autores": "Cai, Wu, Mao, Jin",
+  "primer_autor": "Cai",
+  "anio": 2021,
+  "titulo": "Road Closure Detection based upon Multi-feature Fusion",
+  "venue": "29th International Conference on Advances in Geographic Information Systems (SIGSPATIAL ’21)",
+  "tipo_doc": "conferencia",
+  "volumen": "",
+  "numero": "",
+  "paginas_o_articulo": "11 pp. (el PDF no indica rango de páginas)",
+  "doi": "10.1145/3474717.3483975",
+  "editorial": "ACM",
+  "pais_region_datos": "Shanghai, Chengdu y Beijing, China",
+  "entorno": "urbano",
+  "tipo_dato": "trayectorias GPS",
+  "tipo_dato_detalle": "Trayectorias de taxis (ID, timestamp, longitud, latitud) con map matching HMM sobre OSM; características derivadas por hora: flujo por celda de 500 m, volumen de giro de la vía fuertemente correlacionada, frecuencia de U-turn por vía y desplazamiento (offset) de trayectorias.",
+  "datasets": [
+   {
+    "nombre": "Shanghai2018 (SODA, taxis Qiangsheng, abril 2018)",
+    "tipo": "real",
+    "publico": "sí"
+   },
+   {
+    "nombre": "Chengdu2018 (Didi, oct.–nov. 2018)",
+    "tipo": "real",
+    "publico": "no"
+   },
+   {
+    "nombre": "Beijing2013 (taxis, oct. 2013)",
+    "tipo": "real",
+    "publico": "no"
+   },
+   {
+    "nombre": "OpenStreetMap (red vial)",
+    "tipo": "real",
+    "publico": "sí"
+   }
+  ],
+  "origen_etiquetas": "registros reales de incidentes",
+  "origen_etiquetas_detalle": "65 eventos de cierre vial recopilados de noticias, anuncios gubernamentales y sitios de gestión de tránsito (eventos deportivos, espectáculos, accidentes, reparaciones, eventos políticos), descritos como 'manually labeled road closure set'.",
+  "tasa_anomalias": "No reportado (65 eventos de cierre en los tres datasets)",
+  "paradigma": "no supervisado",
+  "enfoque": "predicción",
+  "unidad_evaluacion": "evento",
+  "umbral": "Umbrales adaptativos por densidad de trayectorias: th_f = d_g/avg(d_g)·α, th_t = avg(TV(v))/avg(TV)·β, th_u = avg(RU(v))/avg(RU)·γ, con α = 50, β = 40, γ = 8 y th_o = 11 (distancia de Wasserstein), elegidos por barrido comparando con los cierres etiquetados",
+  "particion": "60% de los datos sin cierres se usa para entrenar los predictores; la composición del conjunto de evaluación no se describe y los umbrales se ajustan contra los mismos cierres etiquetados",
+  "familia_principal": "grafos",
+  "familias": {
+   "recurrente": true,
+   "convolucional": true,
+   "autoencoder": false,
+   "grafos": true,
+   "transformer_atencion": false,
+   "generativo": false
+  },
+  "hibrido": true,
+  "multimodal": false,
+  "arquitectura": "RCDM: marco de dos fases (modelado offline + identificación online). CNN+LSTM predice el flujo por celda para filtrar celdas candidatas y GCN+LSTM predice volumen de giro y frecuencia de U-turn por vía; un cierre se declara cuando la diferencia predicción–observación supera umbrales adaptativos; se complementa con DBSCAN para U-turns y distancia de Wasserstein para el offset de trayectorias.",
+  "metricas": [
+   "Precision",
+   "Recall",
+   "F1-score",
+   "Runtime (tiempo de ejecución)"
+  ],
+  "metricas_flags": {
+   "accuracy": false,
+   "precision": true,
+   "recall": true,
+   "f1": true,
+   "auc_roc": false,
+   "pr_auc": false,
+   "dr": false,
+   "far_fpr": false,
+   "mttd": false,
+   "error_mae_rmse_mape": false,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": true
+  },
+  "resultado_principal": "F1-score = 0.94 (Tabla 1, con volumen de giro + U-turn + offset) sobre los 65 cierres de Shanghai2018, Chengdu2018 y Beijing2013; en la Fig. 8 precisión ≈ 0.91 y recall ≈ 0.98 (valores leídos del gráfico)",
+  "baselines": [
+   "TB1 (umbral, Zhu et al.)",
+   "TB2 (cold-start con betweenness centrality, Stanojevic et al.)",
+   "PB (proceso de Poisson, Pietrobon et al.)"
+  ],
+  "baseline_no_dl": true,
+  "ventaja_vs_mejor_baseline": "≈ +17 pp de F1 frente a TB2 (≈ 0.94 vs ≈ 0.77), valores aproximados leídos de la Fig. 8 (no hay tabla numérica)",
+  "limitaciones_autores": "Bajo rendimiento en regiones con distribución escasa de trayectorias; β y γ grandes reducen el recall; trabajo futuro: anotación semántica de los eventos de cierre.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": true,
+   "etiquetado": false,
+   "generalizacion": false,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": false,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "No",
+  "categoria_anomalia": "disrupciones/eventos extremos/infraestructura",
+  "categoria_anomalia_secundaria": "",
+  "calidad": {
+   "QA1": {
+    "p": 1,
+    "ev": "65 cierres reales recopilados de noticias, anuncios gubernamentales y webs de gestión de tránsito."
+   },
+   "QA2": {
+    "p": 0.5,
+    "ev": "Solo se indica que el 60% de los datos sin cierres entrena los predictores; no se describe un conjunto de prueba independiente y los umbrales se ajustan con los cierres de referencia."
+   },
+   "QA3": {
+    "p": 1,
+    "ev": "Tres baselines no DL de la literatura de detección de cierres (TB1, TB2, PB)."
+   },
+   "QA4": {
+    "p": 0,
+    "ev": "Una sola ejecución, sin dispersión ni pruebas de significancia."
+   },
+   "QA5": {
+    "p": 0.5,
+    "ev": "Shanghai2018 (SODA) y OSM son públicos; no se publica código ni se da acceso a Chengdu2018/Beijing2013."
+   },
+   "QA6": {
+    "p": 1,
+    "ev": "Tres ciudades independientes (Shanghai, Chengdu, Beijing)."
+   },
+   "QA7": {
+    "p": 1,
+    "ev": "Unidad: vía cerrada (TP/FP/FN respecto al conjunto de cierres etiquetado); criterio: umbrales adaptativos explícitos (α, β, γ, th_o)."
+   },
+   "QA8": {
+    "p": 0.5,
+    "ev": "Mención breve: 'good performance except for the regions where trajectory distribution is sparse' y trabajo futuro en la conclusión."
+   }
+  },
+  "caso_limite": "Es DL solo en parte: CNN+LSTM y GCN+LSTM predicen las características y la decisión de cierre es por reglas/umbrales; aun así, el DL es componente central del detector (desviación predicción–observación), por lo que se puede incluir. Sobre la observación del revisor: es incorrecta; el artículo sí reporta métricas cuantitativas de detección (Precision, Recall y F1 definidas en la Sec. 5.2; Fig. 8 compara con baselines y la Tabla 1 da F1 = 0.69/0.88/0.94 en la ablación). Lo que no hay son tablas numéricas por dataset ni frente a baselines (solo gráfico de barras).",
+  "notas": "Ficha_20 coherente con el PDF. Los valores de la ficha para RCDM/TB1/TB2/PB son aproximaciones de la Fig. 8; mi lectura del gráfico: RCDM P≈0.91, R≈0.98, F1≈0.94; TB1 P≈0.54, R≈0.84, F1≈0.66; TB2 P≈0.67, R≈0.90, F1≈0.77; PB P≈0.70, R≈0.78, F1≈0.74 (diferencias menores con la ficha). La ficha no menciona el riesgo de sobreajuste por calibrar umbrales con las etiquetas de evaluación. El PDF no indica la disponibilidad pública de Chengdu2018 y Beijing2013 (codificado como 'no'). El PDF solo dice '11 pages'; no hay rango de páginas.",
+  "id": "S03",
+  "clave_extraccion": "E13",
+  "id_version_anterior": "E13",
+  "bibkey": "cai2021road",
+  "tipo_dato_corto": "Trayectorias de taxis",
+  "datasets_corto": "Shanghai, Chengdu y Beijing (taxis)",
+  "datasets_ejemplo": [
+   "Shanghai2018 (SODA)",
+   "Chengdu2018 (Didi)",
+   "Beijing2013"
+  ],
+  "etiqueta_corta": "Registros reales (65 cierres)",
+  "categoria_corta": "Disrupciones (cierres de vías)",
+  "modelo_corto": "CNN+LSTM y GCN+LSTM + reglas",
+  "resultado_corto": "F1 0,94",
+  "baselines_corto": "TB1, TB2, PB (no DL)",
+  "ventaja_corta": "≈ +17 pp de F1 frente a TB2 (leído del gráfico)",
+  "decision_limite": "Incluido. Las redes CNN+LSTM y GCN+LSTM predicen el flujo y el volumen de giro; la desviación predicción-observación sobre esa representación decide el cierre (CI-5). Reporta precision, recall y F1 (CI-6), aunque los valores frente a baselines solo aparecen en un gráfico.",
+  "pdf": "Road Closure Detection based upon Multi-feature Fusion.pdf"
+ },
+ {
+  "key": "E05",
+  "autores": "Hu, Y.; Qu, A.; Work, D.",
+  "primer_autor": "Hu",
+  "anio": 2022,
+  "titulo": "Detecting Extreme Traffic Events Via a Context Augmented Graph Autoencoder",
+  "venue": "ACM Transactions on Intelligent Systems and Technology",
+  "tipo_doc": "revista",
+  "volumen": "13",
+  "numero": "6",
+  "paginas_o_articulo": "Art. 101 (23 pp.)",
+  "doi": "10.1145/3539735",
+  "editorial": "ACM",
+  "pais_region_datos": "Nashville (Tennessee), Nueva York y Chicago, Estados Unidos",
+  "entorno": "urbano",
+  "tipo_dato": "movilidad OD/agregada",
+  "tipo_dato_detalle": "Matrices origen-destino horarias de tiempos de viaje (top 50 zonas) modeladas como grafos dirigidos ponderados (peso = inverso escalado del tiempo de viaje), con extensión geográfica de cada zona como rasgo de nodo y embeddings de hora y día de la semana.",
+  "datasets": [
+   {
+    "nombre": "Uber Movement (Nashville, TN, 2019 Q1–Q2)",
+    "tipo": "mixto",
+    "publico": "no"
+   },
+   {
+    "nombre": "NYC taxi (2019)",
+    "tipo": "mixto",
+    "publico": "sí"
+   },
+   {
+    "nombre": "Chicago taxi (2019)",
+    "tipo": "mixto",
+    "publico": "sí"
+   }
+  ],
+  "origen_etiquetas": "anomalías inyectadas/sintéticas",
+  "origen_etiquetas_detalle": "Ante la falta de datasets OD etiquetados, se inyectan anomalías espaciales (perturbación U(−β, β) en una fracción α de pares OD) y temporales (desplazamiento de 12 h) en una fracción γ de franjas horarias de un conjunto de prueba re-muestreado; el evento real (NFL Draft 2019) solo se usa cualitativamente.",
+  "tasa_anomalias": "γ = 10% de franjas horarias por defecto (se evalúan 5%, 10% y 20%)",
+  "paradigma": "semisupervisado",
+  "enfoque": "reconstrucción",
+  "unidad_evaluacion": "punto/instante",
+  "umbral": "No aplica: se evalúa con AUC sobre la puntuación de anomalía (error de reconstrucción MSE del grafo de cada hora), sin umbral fijo.",
+  "particion": "Temporal: entrenamiento 2019 Q1 (ene–mar) y prueba Q2 (Uber y NYC abr–jun; Chicago abr); 10% del entrenamiento como validación.",
+  "familia_principal": "grafos",
+  "familias": {
+   "recurrente": false,
+   "convolucional": false,
+   "autoencoder": true,
+   "grafos": true,
+   "transformer_atencion": false,
+   "generativo": false
+  },
+  "hibrido": true,
+  "multimodal": false,
+  "arquitectura": "Con-GAE (Context augmented Graph Autoencoder): encoder con capas GraphSAGE ponderadas modificadas para grafos dirigidos y embeddings de contexto (hora y día de la semana); decoder MLP que reconstruye los pesos de arista; la pérdida de reconstrucción MSE es la puntuación de anomalía.",
+  "metricas": [
+   "AUC-ROC",
+   "Run time por muestra"
+  ],
+  "metricas_flags": {
+   "accuracy": false,
+   "precision": false,
+   "recall": false,
+   "f1": false,
+   "auc_roc": true,
+   "pr_auc": false,
+   "dr": false,
+   "far_fpr": false,
+   "mttd": false,
+   "error_mae_rmse_mape": false,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": true
+  },
+  "resultado_principal": "AUC = 0.912 (anomalías espaciales, Chicago taxi); 0.895 espacial y 0.868 temporal en Uber; 0.895 temporal en NYC (γ = 10%, α = 50%, β = 10%)",
+  "baselines": [
+   "HA (promedio histórico)",
+   "RTC (robust tensor recovery and completion)",
+   "AE",
+   "EncDec-AD",
+   "REBM",
+   "DAGMM",
+   "GraphSAGE",
+   "GCN"
+  ],
+  "baseline_no_dl": true,
+  "ventaja_vs_mejor_baseline": "Hasta +0.15 de AUC sobre el segundo mejor (p. ej., Chicago espacial 0.912 vs 0.765 de GCN); Uber espacial +0.039 frente a RTC; con β < 10% RTC lo supera por ~0.05",
+  "limitaciones_autores": "Falta de datasets OD etiquetados, por lo que la evaluación cuantitativa usa anomalías sintéticas; no modela estacionalidad anual ni verano/invierno; análisis restringido a las 50 zonas más conectadas; datos de Uber de Nashville no públicos; escalabilidad a redes mayores como trabajo futuro.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": true,
+   "etiquetado": true,
+   "generalizacion": true,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": false,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "https://github.com/yuehu9/Con-GAE",
+  "categoria_anomalia": "disrupciones/eventos extremos/infraestructura",
+  "categoria_anomalia_secundaria": "congestión/flujo anómalo",
+  "calidad": {
+   "QA1": {
+    "p": 0,
+    "ev": "Evaluación cuantitativa solo con anomalías inyectadas sintéticamente; el evento real (NFL Draft) es solo ilustrativo."
+   },
+   "QA2": {
+    "p": 1,
+    "ev": "Partición temporal explícita: Q1 2019 entrenamiento y Q2 2019 prueba."
+   },
+   "QA3": {
+    "p": 1,
+    "ev": "Ocho baselines bajo la misma partición, incluidos no DL (HA, RTC) y del estado del arte (EncDec-AD, DAGMM, REBM, GCN, GraphSAGE)."
+   },
+   "QA4": {
+    "p": 0.5,
+    "ev": "Promedio de 5 generaciones aleatorias del conjunto de prueba, sin reportar desviación estándar ni pruebas de significancia."
+   },
+   "QA5": {
+    "p": 1,
+    "ev": "Código público en GitHub; datasets NYC y Chicago taxi públicos (el de Uber Nashville no está en el portal público)."
+   },
+   "QA6": {
+    "p": 1,
+    "ev": "Tres ciudades independientes (Nashville, Nueva York, Chicago)."
+   },
+   "QA7": {
+    "p": 0.5,
+    "ev": "Unidad explícita (grafo de una franja horaria); no hay umbral de decisión porque solo se reporta AUC."
+   },
+   "QA8": {
+    "p": 0.5,
+    "ev": "Menciones breves (sin estacionalidad, datos sintéticos por falta de etiquetas, Uber no público, escalabilidad como trabajo futuro); sin sección de limitaciones."
+   }
+  },
+  "caso_limite": "",
+  "notas": "Ficha 11 coherente con el PDF. Matices: la ficha clasifica los datos como 'GPS/trayectorias', pero el PDF usa matrices OD agregadas de tiempos de viaje (movilidad OD/agregada). Las etiquetas son sintéticas y el conjunto de prueba se re-muestrea de una gaussiana por par OD/hora antes de inyectar anomalías, lo que limita la validez externa. Uber Movement figura como 'publicly available' en el texto, pero el apéndice aclara que los datos de Nashville no están en el portal público.",
+  "id": "S04",
+  "clave_extraccion": "E05",
+  "id_version_anterior": "E05",
+  "bibkey": "hu2022detecting",
+  "tipo_dato_corto": "Matrices OD de tiempos de viaje",
+  "datasets_corto": "Uber Movement, NYC taxi, Chicago taxi",
+  "datasets_ejemplo": [
+   "Uber Movement",
+   "NYC taxi",
+   "Chicago taxi"
+  ],
+  "etiqueta_corta": "Inyectadas",
+  "categoria_corta": "Eventos extremos",
+  "modelo_corto": "Autoencoder de grafos con contexto (Con-GAE)",
+  "resultado_corto": "AUC 0,84--0,91 (espacial)",
+  "baselines_corto": "HA, RTC, AE, EncDec-AD, REBM, DAGMM, GraphSAGE, GCN",
+  "ventaja_corta": "Hasta +0,15 de AUC frente a GCN",
+  "pdf": "Detecting Extreme Traffic Events Via a Context Augmented Graph Autoencoder.pdf"
+ },
+ {
+  "key": "E18",
+  "autores": "Khan, Hafeez, Khalid, Alroobaea, Hussain, Iqbal, Almotiri, Ullah",
+  "primer_autor": "Khan",
+  "anio": 2022,
+  "titulo": "Anomaly Detection in Traffic Surveillance Videos Using Deep Learning",
+  "venue": "Sensors",
+  "tipo_doc": "revista",
+  "volumen": "22",
+  "numero": "17",
+  "paginas_o_articulo": "Art. 6563",
+  "doi": "10.3390/s22176563",
+  "editorial": "MDPI",
+  "pais_region_datos": "No reportado (imágenes y videos recopilados de Internet)",
+  "entorno": "ambos",
+  "tipo_dato": "video/imágenes",
+  "tipo_dato_detalle": "Imágenes RGB de accidentes redimensionadas a 224×224, tanto fotos como frames extraídos de videos de cámaras de tráfico (VTSS); en prueba, videos de 4–10 s clasificados frame a frame y suavizados con una media móvil.",
+  "datasets": [
+   {
+    "nombre": "VAID (Vehicle Accident Image Dataset): 1360 imágenes de entrenamiento y 30 videos de prueba",
+    "tipo": "real",
+    "publico": "no"
+   }
+  ],
+  "origen_etiquetas": "anotación manual/experta",
+  "origen_etiquetas_detalle": "Los propios autores etiquetaron las imágenes en un Excel con la etiqueta 'accident' y los 30 videos de prueba como accidente o no accidente; no se describe ninguna verificación externa.",
+  "tasa_anomalias": "Prueba: 20 de 30 videos con accidente (≈67 %); el balance del entrenamiento no se reporta",
+  "paradigma": "supervisado",
+  "enfoque": "clasificación",
+  "unidad_evaluacion": "clip/video",
+  "umbral": "No aplica (clasificador): etiqueta de mayor probabilidad media en una cola móvil de 128 predicciones por frame",
+  "particion": "Imágenes de VAID: 80 % entrenamiento y 20 % validación (no se precisa si la división es aleatoria); prueba aparte con 30 videos de Internet",
+  "familia_principal": "convolucional",
+  "familias": {
+   "recurrente": false,
+   "convolucional": true,
+   "autoencoder": false,
+   "grafos": false,
+   "transformer_atencion": false,
+   "generativo": false
+  },
+  "hibrido": false,
+  "multimodal": false,
+  "arquitectura": "ResNet50 preentrenada en ImageNet (Keras) con cabeza AveragePooling + FC de 512 + softmax, ajustada en VAID; en inferencia se aplica un promedio móvil de predicciones (cola de 128 frames) para evitar el 'label flickering'.",
+  "metricas": [
+   "Accuracy",
+   "Precision",
+   "Recall",
+   "F1-score",
+   "matriz de confusión",
+   "training/validation loss y accuracy",
+   "complejidad computacional (%)"
+  ],
+  "metricas_flags": {
+   "accuracy": true,
+   "precision": true,
+   "recall": true,
+   "f1": true,
+   "auc_roc": false,
+   "pr_auc": false,
+   "dr": false,
+   "far_fpr": false,
+   "mttd": false,
+   "error_mae_rmse_mape": false,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": true
+  },
+  "resultado_principal": "Accuracy = 82 % (Precision = 0.80, Recall = 0.88, F1 = 0.85) en los 30 videos de prueba de VAID",
+  "baselines": [
+   "CNN simple sin promedio móvil de predicciones"
+  ],
+  "baseline_no_dl": false,
+  "ventaja_vs_mejor_baseline": "+10 pp de accuracy (82 vs 72 %) y +10 pp de F1 (85 vs 75) frente a la CNN sin promedio móvil (ablación)",
+  "limitaciones_autores": "Falla con videos de baja resolución, con anomalías lejanas a la cámara, con niebla y con reflejos o fuentes de luz; VAID se consideró insuficiente y hubo que aumentar datos. Como trabajo futuro proponen modelos para larga distancia, mala cobertura y niebla.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": true,
+   "etiquetado": false,
+   "generalizacion": true,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": false,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "No",
+  "categoria_anomalia": "accidentes/incidentes",
+  "categoria_anomalia_secundaria": "",
+  "calidad": {
+   "QA1": {
+    "p": 0.5,
+    "ev": "Etiquetado manual por los autores (Sección 4.3: 'all images were assigned with the label accident') sobre material de Internet, sin verificación descrita."
+   },
+   "QA2": {
+    "p": 0.5,
+    "ev": "Hay prueba aparte con 30 videos, pero entrenamiento y prueba proceden de videos de accidentes de Internet y no se garantiza que no se solapen; el split 80/20 de imágenes se describe de forma incompleta."
+   },
+   "QA3": {
+    "p": 0.5,
+    "ev": "Única comparación: CNN simple frente a CNN con promedio móvil (ablación). La comparación con trabajos previos es solo cualitativa."
+   },
+   "QA4": {
+    "p": 0,
+    "ev": "Una sola ejecución, sin dispersión."
+   },
+   "QA5": {
+    "p": 0,
+    "ev": "Sin código ni enlace a VAID; Data Availability Statement: 'Not applicable'."
+   },
+   "QA6": {
+    "p": 0,
+    "ev": "Un único dataset propio; las condiciones (día/noche, HRC/LRC) se describen pero no se reportan resultados por subconjunto."
+   },
+   "QA7": {
+    "p": 1,
+    "ev": "La unidad es el video (30 pruebas, una etiqueta por video) y la regla de decisión es la clase de mayor probabilidad media en una cola de 128 frames."
+   },
+   "QA8": {
+    "p": 0.5,
+    "ev": "Se mencionan los fallos (baja resolución, distancia, niebla, reflejos) en Resultados y Conclusiones, sin sección propia."
+   }
+  },
+  "caso_limite": "Es una clasificación supervisada de accidentes (detección de un evento conocido) con una CNN estándar y una prueba muy pequeña (30 videos); podría cuestionarse si es 'detección de anomalías' en sentido estricto. A favor de incluirlo: es DL, en el dominio del tráfico y los autores lo plantean como detección de anomalías (accidentes) en video de vigilancia vial.",
+  "notas": "Inconsistencias internas del PDF: (1) la Tabla 5 indica 20 videos con accidente y 10 sin accidente, pero la matriz de confusión suma 18 reales positivos (TP = 16, FN = 2) y 12 negativos (FP = 4, TN = 8); (2) 24/30 aciertos equivalen a 80 % (la Figura 20 dice 'almost 80%') y no al 82 % reportado; (3) las definiciones de FP y FN están intercambiadas en el texto; (4) dice 'the training dataset consisted of 30 videos' cuando se refiere a la prueba; (5) el tamaño de entrada aparece como 224×224 y 244×244; (6) en la Sección 4.3 todas las imágenes se etiquetan 'accident', sin explicar de dónde sale la clase negativa del entrenamiento binario. La 'complejidad computacional' se da en porcentajes sin unidad clara. La ficha considera el modelo híbrido; aquí se marca como no híbrido porque el promedio móvil no es un componente DL.",
+  "id": "S05",
+  "clave_extraccion": "E18",
+  "id_version_anterior": "E18",
+  "bibkey": "khan2022anomaly",
+  "tipo_dato_corto": "Imágenes y video",
+  "datasets_corto": "VAID (propio)",
+  "datasets_ejemplo": [
+   "VAID"
+  ],
+  "etiqueta_corta": "Anotación manual",
+  "categoria_corta": "Accidentes",
+  "modelo_corto": "ResNet50 + promedio móvil",
+  "resultado_corto": "Accuracy 82 % (30 videos)",
+  "baselines_corto": "CNN sin promedio móvil (ablación)",
+  "ventaja_corta": "+10 pp de accuracy (ablación)",
+  "pdf": "Anomaly Detection in Traffic Surveillance Videos Using Deep Learning.pdf"
+ },
+ {
+  "key": "E06",
+  "autores": "Pawar, Attar",
+  "primer_autor": "Pawar",
+  "anio": 2022,
+  "titulo": "Deep learning based detection and localization of road accidents from traffic surveillance videos",
+  "venue": "ICT Express",
+  "tipo_doc": "revista",
+  "volumen": "8",
+  "numero": "No reportado",
+  "paginas_o_articulo": "pp. 379–387",
+  "doi": "10.1016/j.icte.2021.11.004",
+  "editorial": "Elsevier",
+  "pais_region_datos": "Hyderabad, India (IITH); Iowa, Estados Unidos (Iowa DOT / AI City Challenge 2021); DoTA: videos de dashcam de YouTube sin país especificado",
+  "entorno": "ambos",
+  "tipo_dato": "video/imágenes",
+  "tipo_dato_detalle": "Frames de video de cámaras CCTV (cruces urbanos de Hyderabad y autopistas de Iowa) y videos de cámara a bordo (DoTA); la entrada son frames individuales al autoencoder convolucional y pilas de m vectores latentes (ventana deslizante) al LSTM autoencoder.",
+  "datasets": [
+   {
+    "nombre": "IITH Road Accident Dataset",
+    "tipo": "real",
+    "publico": "sí"
+   },
+   {
+    "nombre": "Iowa DOT Anomaly Dataset (AI City Challenge 2021, Track 4)",
+    "tipo": "real",
+    "publico": "sí"
+   },
+   {
+    "nombre": "DoTA (Detection of Traffic Anomaly)",
+    "tipo": "real",
+    "publico": "sí"
+   }
+  ],
+  "origen_etiquetas": "benchmark anotado de terceros",
+  "origen_etiquetas_detalle": "Las etiquetas de detección provienen de benchmarks anotados por terceros (IITH, AI City Challenge 2021, DoTA con anotaciones temporales, espaciales y categóricas); para la localización en IITH los autores anotaron manualmente bounding boxes con LabelImg porque el dataset no trae ground truth a nivel de píxel.",
+  "tasa_anomalias": "IITH: 863 frames de accidente de 128,001 (≈0.67%); en prueba 863 de 33,281 frames (≈2.6%). Iowa DOT y DoTA: No reportado",
+  "paradigma": "no supervisado",
+  "enfoque": "reconstrucción",
+  "unidad_evaluacion": "frame",
+  "umbral": "Score de anomalía sobre los vectores latentes ajustados a una distribución gaussiana (media μi y desviación σi por dimensión) con hiperparámetros α y β (Algoritmo 1); los valores de α y β no se reportan. Localización: ventana h×w marcada como anómala si supera β×η. AUC/EER sin umbral fijo; mAP con IoU = 0.4; en Iowa, TP si se detecta dentro de 10 s del evento real.",
+  "particion": "IITH: 94,720 frames normales para entrenamiento y 33,281 frames (32,418 normales + 863 de accidente) para prueba; Iowa DOT: partición oficial de 100 videos de entrenamiento y 150 de prueba, curada (se eliminan vehículos detenidos y los accidentes del entrenamiento); DoTA: partición aleatoria en 3275 videos de entrenamiento y 1402 de prueba siguiendo [33], entrenando solo con frames normales previos al accidente.",
+  "familia_principal": "autoencoder",
+  "familias": {
+   "recurrente": true,
+   "convolucional": true,
+   "autoencoder": true,
+   "grafos": false,
+   "transformer_atencion": false,
+   "generativo": false
+  },
+  "hibrido": true,
+  "multimodal": false,
+  "arquitectura": "Spatio-temporal autoencoder en cascada: autoencoder convolucional (CAE) para representación espacial de cada frame y LSTM autoencoder sequence-to-sequence (SLAE) sobre ventanas deslizantes de vectores latentes, con capa RBF antes del cuello de botella para ajustar los datos normales a una gaussiana (clasificación de una clase); localización por ventana móvil sobre el frame reconstruido.",
+  "metricas": [
+   "Frame-level AUC",
+   "EER",
+   "mAP (IoU)",
+   "F1-score"
+  ],
+  "metricas_flags": {
+   "accuracy": false,
+   "precision": false,
+   "recall": false,
+   "f1": true,
+   "auc_roc": true,
+   "pr_auc": false,
+   "dr": false,
+   "far_fpr": false,
+   "mttd": false,
+   "error_mae_rmse_mape": false,
+   "iou_map": true,
+   "operativas_latencia_fps_energia": false
+  },
+  "resultado_principal": "Frame-level AUC = 84.70% en DoTA (además AUC = 79%, EER = 20.50% y mAP = 60% con IoU 0.4 en IITH; F1 = 78.58% en Iowa DOT)",
+  "baselines": [
+   "Stacked autoencoder (Singh y Mohan)",
+   "Baidu-SIAT",
+   "ByteDance",
+   "WHU",
+   "USF",
+   "Mizzou-ISU",
+   "ConvLSTMAE",
+   "ConvAE",
+   "AnoPred",
+   "TAD",
+   "Ensemble (Yao et al.)"
+  ],
+  "baseline_no_dl": false,
+  "ventaja_vs_mejor_baseline": "+2 pp de AUC frente a Stacked autoencoder en IITH; mejora de 11.7% en AUC frente a Ensemble [33] en DoTA (no se precisa si es absoluta o relativa); en Iowa DOT no comparable (los métodos del AI City Challenge son supervisados y el desempeño propio 'varía')",
+  "limitaciones_autores": "No detecta vehículos detenidos (solo accidentes de uno o varios vehículos), por lo que tuvieron que curar el dataset de Iowa; IITH no tiene ground truth de localización y se anotó manualmente; el desempeño en Iowa es distinto al de métodos supervisados. Como trabajo futuro: despliegue en hardware (PYNQ) para procesar más rápido y aprendizaje activo. No hay sección explícita de limitaciones.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": false,
+   "etiquetado": true,
+   "generalizacion": true,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": false,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "No",
+  "categoria_anomalia": "accidentes/incidentes",
+  "categoria_anomalia_secundaria": "",
+  "calidad": {
+   "QA1": {
+    "p": 1,
+    "ev": "Usa benchmarks reales anotados por terceros (IITH, AI City 2021 Track 4, DoTA con anotaciones temporales/espaciales) y anotación manual de bounding boxes con LabelImg para localización."
+   },
+   "QA2": {
+    "p": 1,
+    "ev": "Conjuntos de prueba independientes descritos: IITH 94,720 frames normales de entrenamiento vs. 33,281 de prueba; Iowa con partición oficial train/test (100/150 videos); DoTA partición aleatoria por video 3275/1402."
+   },
+   "QA3": {
+    "p": 1,
+    "ev": "En DoTA compara con ConvLSTMAE, ConvAE, AnoPred, TAD y Ensemble (estado del arte no supervisado) por AUC; en IITH con Stacked autoencoder; en Iowa con 5 métodos del AI City Challenge (protocolo distinto, supervisados)."
+   },
+   "QA4": {
+    "p": 0,
+    "ev": "Se reportan valores únicos sin desviación estándar, intervalos de confianza ni pruebas de significancia."
+   },
+   "QA5": {
+    "p": 0.5,
+    "ev": "Los tres datasets son públicos con enlaces; no se publica código ni las anotaciones manuales de bounding boxes."
+   },
+   "QA6": {
+    "p": 1,
+    "ev": "Evalúa en tres datasets independientes: IITH (Hyderabad), Iowa DOT (autopistas de Iowa) y DoTA (dashcam)."
+   },
+   "QA7": {
+    "p": 0.5,
+    "ev": "Unidad de evaluación explícita (frame-level y pixel-level con IoU 0.4; TP dentro de 10 s en Iowa), pero los valores de los hiperparámetros α y β que definen el umbral de anomalía no se reportan."
+   },
+   "QA8": {
+    "p": 0.5,
+    "ev": "Sin sección de limitaciones; menciona brevemente que no detecta vehículos detenidos y la falta de ground truth de localización en IITH."
+   }
+  },
+  "caso_limite": "",
+  "notas": "La ficha coincide con el PDF. Los autores denominan su enfoque 'no supervisado', pero técnicamente es clasificación de una clase entrenada solo con datos normales (podría clasificarse como semisupervisado). DoTA es de cámaras a bordo (dashcam de YouTube), no de vigilancia fija. Las cifras de los baselines de Iowa DOT y DoTA solo aparecen en figuras (Fig. 11 y 14), no en tablas. El PDF no reporta número de fascículo.",
+  "id": "S06",
+  "clave_extraccion": "E06",
+  "id_version_anterior": "E06",
+  "bibkey": "pawar2022deep",
+  "tipo_dato_corto": "Video de vigilancia y dashcam",
+  "datasets_corto": "IITH, Iowa DOT, DoTA",
+  "datasets_ejemplo": [
+   "IITH",
+   "Iowa DOT (AI City)",
+   "DoTA"
+  ],
+  "etiqueta_corta": "Benchmarks de terceros",
+  "categoria_corta": "Accidentes",
+  "modelo_corto": "Autoencoder espacio-temporal (CAE + LSTM-AE)",
+  "resultado_corto": "AUC 84,7 % (DoTA)",
+  "baselines_corto": "Autoencoders y equipos AI City",
+  "ventaja_corta": "+2 pp de AUC en IITH",
+  "pdf": "Deep learning based detection and localization of road accidents from traffic surveillance videos.pdf"
+ },
+ {
+  "key": "E20",
+  "autores": "Riaz, Gao, Azeem, Saifullah, Bux, Ullah",
+  "primer_autor": "Riaz",
+  "anio": 2022,
+  "titulo": "Traffic Anomaly Prediction System Using Predictive Network",
+  "venue": "Remote Sensing",
+  "tipo_doc": "revista",
+  "volumen": "14",
+  "numero": "3",
+  "paginas_o_articulo": "Art. 447",
+  "doi": "10.3390/rs14030447",
+  "editorial": "MDPI",
+  "pais_region_datos": "HTA: Nueva York y Bay Area (EE. UU.); D2City: principalmente ciudades de Taiwán; KITTI: no reportado en el PDF",
+  "entorno": "ambos",
+  "tipo_dato": "video/imágenes",
+  "tipo_dato_detalle": "Frames RGB de video dashcam (cámara a bordo) redimensionados a 224×224; una CNN tipo GoogleNet extrae mapas de características (2048×3×3) que PredNet usa para predecir representaciones futuras; no usa flujo óptico como entrada.",
+  "datasets": [
+   {
+    "nombre": "HTA (Highway Traffic Anomaly)",
+    "tipo": "real",
+    "publico": "sí"
+   },
+   {
+    "nombre": "KITTI",
+    "tipo": "real",
+    "publico": "sí"
+   },
+   {
+    "nombre": "D2City",
+    "tipo": "real",
+    "publico": "sí"
+   }
+  ],
+  "origen_etiquetas": "anotación manual/experta",
+  "origen_etiquetas_detalle": "Los autores reutilizan datasets públicos y los etiquetan con las clases Accident, Close Merge y Speeding Vehicle ('We labeled the dataset with 3 different classes'); en D2City anotaron a mano bounding boxes y el instante del accidente; no se describe verificación.",
+  "tasa_anomalias": "No reportado (en D2City se mencionan 620 clips positivos y 1130 negativos)",
+  "paradigma": "supervisado",
+  "enfoque": "clasificación",
+  "unidad_evaluacion": "clip/video",
+  "umbral": "No aplica (clasificador): softmax sobre la suma ponderada exponencialmente de los scores por frame; el evento se dispara cuando el frame se clasifica en una clase anómala",
+  "particion": "No reportado (se afirma que 'training and testing splits ... are presented' pero no se describen; en D2City, 58 de 678 videos se usan para entrenar el detector de objetos)",
+  "familia_principal": "recurrente",
+  "familias": {
+   "recurrente": true,
+   "convolucional": true,
+   "autoencoder": false,
+   "grafos": false,
+   "transformer_atencion": false,
+   "generativo": false
+  },
+  "hibrido": true,
+  "multimodal": false,
+  "arquitectura": "FWPredNet: CNN tipo GoogleNet con activación Swish como extractor de características, más PredNet (ConvLSTM con propagación de errores de codificación predictiva) que predice la representación del frame siguiente; una unidad de clasificación pondera los scores en el tiempo.",
+  "metricas": [
+   "Top-1 accuracy por clase (tablas 1–4)",
+   "Average Precision (mencionada)",
+   "parámetros del modelo",
+   "VRAM de entrenamiento"
+  ],
+  "metricas_flags": {
+   "accuracy": true,
+   "precision": false,
+   "recall": false,
+   "f1": false,
+   "auc_roc": false,
+   "pr_auc": false,
+   "dr": false,
+   "far_fpr": false,
+   "mttd": false,
+   "error_mae_rmse_mape": false,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": true
+  },
+  "resultado_principal": "Top-1 = 0.724 (Close Merge) en KITTI; 0.718 (Accident) en D2City; 0.675 (Accident) en HTA",
+  "baselines": [
+   "CGAN",
+   "FlowNet",
+   "PredNet",
+   "CNN preentrenada en ImageNet",
+   "CNN preentrenada en KITTI"
+  ],
+  "baseline_no_dl": false,
+  "ventaja_vs_mejor_baseline": "Frente a FlowNet: +1.8 pp en Accident y +12.0 pp en Close Merge en HTA; +3.7 y +3.9 pp en KITTI; +17.7 y +1.9 pp en D2City",
+  "limitaciones_autores": "Rinde peor en Speeding Vehicle porque es sensible a la continuidad del movimiento; el entrenamiento es muy largo y se requiere un uso más eficiente de GPU; tiene 3.9 M de parámetros más que PredNet (compromiso precisión–costo); los videos de HTA contienen ruido (sacudidas por baches).",
+  "limitaciones_flags": {
+   "datos_replicabilidad": false,
+   "etiquetado": false,
+   "generalizacion": false,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": true,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "No",
+  "categoria_anomalia": "accidentes/incidentes",
+  "categoria_anomalia_secundaria": "trayectorias/conducción peligrosa",
+  "calidad": {
+   "QA1": {
+    "p": 0.5,
+    "ev": "Las etiquetas de clase las asignan los autores al reutilizar datasets públicos ('repurposed them'); no se describe verificación."
+   },
+   "QA2": {
+    "p": 0,
+    "ev": "No se describe la partición entrenamiento/prueba."
+   },
+   "QA3": {
+    "p": 0.5,
+    "ev": "Compara con CGAN, FlowNet y PredNet, pero los valores de CGAN y FlowNet en D2City (Tabla 4) son idénticos a los de KITTI (Tabla 3), lo que hace dudar de que se hayan reentrenado bajo el mismo protocolo."
+   },
+   "QA4": {
+    "p": 0,
+    "ev": "Valores únicos, sin dispersión."
+   },
+   "QA5": {
+    "p": 0.5,
+    "ev": "Los datasets base son públicos (HTA, KITTI, D2City), pero no se publican código ni etiquetas; Data Availability: 'Not applicable'."
+   },
+   "QA6": {
+    "p": 1,
+    "ev": "Tres datasets independientes: HTA (EE. UU.), KITTI y D2City (Taiwán)."
+   },
+   "QA7": {
+    "p": 0.5,
+    "ev": "La regla de decisión (softmax sobre scores ponderados) está descrita, pero la unidad de evaluación (frame, clip o video) y el significado exacto de la métrica (accuracy frente a AP) no quedan claros."
+   },
+   "QA8": {
+    "p": 0.5,
+    "ev": "Breve mención en las viñetas de las Conclusiones ('One limitation of the test performance...' y el costo de entrenamiento)."
+   }
+  },
+  "caso_limite": "Es anticipación de anomalías desde cámara dashcam (perspectiva del vehículo) planteada como clasificación supervisada de acciones (Accident, Close Merge, Speeding), más cercana al reconocimiento de acciones o la conducción autónoma que al monitoreo del tráfico. A favor de incluirlo: es DL (CNN + PredNet/ConvLSTM) aplicado explícitamente a anomalías de tráfico, accidentes incluidos, en tres datasets reales.",
+  "notas": "Ambigüedad de métricas: la Sección 4 habla de 'average precision (AP)', pero la Discusión y las tablas hablan de 'top1 accuracy'. Las Tablas 3 (KITTI) y 4 (D2City) repiten los valores de CGAN (0.439/0.526) y FlowNet (0.541/0.685). La Discusión afirma que el PredNet vanilla 'performs significantly better', en contradicción con las tablas (probable errata). En el texto, 'outperforms Flownet by 32.96%' no se corresponde con las tablas. El artículo fue corregido el 9 de junio de 2023 (Corrected: 9 June 2023). La ficha incluye la región de KITTI como no reportada, igual que aquí; la ficha clasifica el enfoque como 'Predicción / Clasificación', aquí 'clasificación' porque la decisión la toma el clasificador softmax.",
+  "id": "S07",
+  "clave_extraccion": "E20",
+  "id_version_anterior": "E20",
+  "bibkey": "riaz2022traffic",
+  "tipo_dato_corto": "Video dashcam",
+  "datasets_corto": "HTA, KITTI, D2City",
+  "datasets_ejemplo": [
+   "HTA",
+   "KITTI",
+   "D2City"
+  ],
+  "etiqueta_corta": "Anotación manual",
+  "categoria_corta": "Accidentes",
+  "modelo_corto": "CNN + PredNet (ConvLSTM)",
+  "resultado_corto": "Top-1 0,68--0,72",
+  "baselines_corto": "CGAN, FlowNet, PredNet",
+  "ventaja_corta": "+1,8 a +17,7 pp frente a FlowNet",
+  "pdf": "Traffic Anomaly Prediction System Using Predictive Network.pdf"
+ },
+ {
+  "key": "E04",
+  "autores": "Zhang, H.; Zhao, S.; Liu, R.; Wang, W.; Hong, Y.; Hu, R.",
+  "primer_autor": "Zhang",
+  "anio": 2022,
+  "titulo": "Automatic Traffic Anomaly Detection on the Road Network with Spatial-Temporal Graph Neural Network Representation Learning",
+  "venue": "Wireless Communications and Mobile Computing",
+  "tipo_doc": "revista",
+  "volumen": "2022",
+  "numero": "",
+  "paginas_o_articulo": "Art. 4222827 (12 pp.)",
+  "doi": "10.1155/2022/4222827",
+  "editorial": "Hindawi",
+  "pais_region_datos": "Beijing, China",
+  "entorno": "urbano",
+  "tipo_dato": "series de sensores",
+  "tipo_dato_detalle": "Series temporales multivariadas del estado de tráfico (estado, velocidad) de estaciones de recolección de la red vial, con rasgos temporales extraídos de la marca de tiempo; ventana deslizante de 48.",
+  "datasets": [
+   {
+    "nombre": "Dataset de red vial de Beijing con registros de incidentes",
+    "tipo": "real",
+    "publico": "no"
+   }
+  ],
+  "origen_etiquetas": "registros reales de incidentes",
+  "origen_etiquetas_detalle": "Registros de incidentes: 13 759 de congestión, 1 139 de accidentes, 74 de obras viales y 3 de cierres de carril; no se describe un procedimiento de verificación.",
+  "tasa_anomalias": "No reportado",
+  "paradigma": "no supervisado",
+  "enfoque": "predicción",
+  "unidad_evaluacion": "punto/instante",
+  "umbral": "Umbral fijo igual al valor máximo de la puntuación suavizada As(t) (SMA sobre el máximo de errores normalizados con mediana/IQR) en los datos de validación; marca de tiempo anómala si lo supera.",
+  "particion": "80% entrenamiento / 20% validación; no se describe el conjunto de prueba ni si la partición es temporal (se afirma que los datos deben ser temporalmente coherentes).",
+  "familia_principal": "grafos",
+  "familias": {
+   "recurrente": false,
+   "convolucional": false,
+   "autoencoder": false,
+   "grafos": true,
+   "transformer_atencion": true,
+   "generativo": false
+  },
+  "hibrido": false,
+  "multimodal": false,
+  "arquitectura": "Graph Deviation Network (GDN) adaptado: embedding de estaciones, aprendizaje de estructura de grafo (similitud coseno + TopK, k = 6), predicción del estado con Graph Attention Network y puntuación de desviación robusta (mediana/IQR, máximo entre nodos y suavizado SMA).",
+  "metricas": [
+   "Accuracy",
+   "Detection Rate",
+   "False Alarm Rate"
+  ],
+  "metricas_flags": {
+   "accuracy": true,
+   "precision": false,
+   "recall": false,
+   "f1": false,
+   "auc_roc": false,
+   "pr_auc": false,
+   "dr": true,
+   "far_fpr": true,
+   "mttd": false,
+   "error_mae_rmse_mape": false,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": false
+  },
+  "resultado_principal": "Accuracy = 97.01%, Detection Rate = 97.49%, False Alarm Rate = 2.51% en el dataset de Beijing",
+  "baselines": [
+   "LOF",
+   "IFOREST",
+   "OCSVM",
+   "HBOS",
+   "COPOD",
+   "LSTM-VAE",
+   "MAD-GAN"
+  ],
+  "baseline_no_dl": true,
+  "ventaja_vs_mejor_baseline": "Igual Accuracy y DR que LSTM-VAE (0.97) con −1 pp de FAR (0.02 vs 0.03)",
+  "limitaciones_autores": "Alto costo computacional y largo tiempo de entrenamiento por la estructura de grafo, difícil para escenarios ligeros o en tiempo real; ignora la topología vial real y conocimiento previo como el clima.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": false,
+   "etiquetado": false,
+   "generalizacion": false,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": true,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "No",
+  "categoria_anomalia": "congestión/flujo anómalo",
+  "categoria_anomalia_secundaria": "accidentes/incidentes",
+  "calidad": {
+   "QA1": {
+    "p": 1,
+    "ev": "Etiquetas procedentes de registros reales de incidentes (congestión, accidentes, obras, cierres de carril)."
+   },
+   "QA2": {
+    "p": 0.5,
+    "ev": "Solo se describe 80% entrenamiento / 20% validación; no se describe conjunto de prueba independiente ni partición temporal."
+   },
+   "QA3": {
+    "p": 1,
+    "ev": "Siete baselines: cinco no DL (LOF, IFOREST, OCSVM, HBOS, COPOD) y dos del estado del arte (LSTM-VAE, MAD-GAN)."
+   },
+   "QA4": {
+    "p": 0,
+    "ev": "Resultados de una sola ejecución sin dispersión ni pruebas estadísticas."
+   },
+   "QA5": {
+    "p": 0,
+    "ev": "Sin código; la declaración indica que los datos están 'incluidos en el artículo', pero solo hay estadísticas resumidas."
+   },
+   "QA6": {
+    "p": 0,
+    "ev": "Un único dataset (Beijing)."
+   },
+   "QA7": {
+    "p": 1,
+    "ev": "Unidad: marca de tiempo t (o(t) ∈ {0,1}); umbral: máximo de As(t) en validación."
+   },
+   "QA8": {
+    "p": 1,
+    "ev": "Párrafo explícito de limitaciones en la Conclusión (costo computacional, ausencia de topología y clima)."
+   }
+  },
+  "caso_limite": "",
+  "notas": "Ficha 08 coherente con el PDF. Matices: la ficha describe el modelo como 'híbrido'; es un único modelo GNN con atención (no combina familias distintas), por eso hibrido = false. El método es esencialmente GDN (Deng y Hooi, 2021) aplicado al tráfico, pero el artículo no cita el trabajo original. El texto se refiere a la ablación como 'Table 4' cuando es la Tabla 6. Ningún dato sobre el número de estaciones ni periodo temporal del dataset.",
+  "id": "S08",
+  "clave_extraccion": "E04",
+  "id_version_anterior": "E04",
+  "bibkey": "zhang2022automatic",
+  "tipo_dato_corto": "Series de estaciones",
+  "datasets_corto": "Red vial de Beijing (propio)",
+  "datasets_ejemplo": [
+   "Beijing (propio)"
+  ],
+  "etiqueta_corta": "Registros reales",
+  "categoria_corta": "Congestión",
+  "modelo_corto": "GNN con aprendizaje de estructura y atención",
+  "resultado_corto": "Accuracy 97,0 %; FAR 2,5 %",
+  "baselines_corto": "LOF, iForest, OCSVM, HBOS, COPOD, LSTM-VAE, MAD-GAN",
+  "ventaja_corta": "−1 pp de FAR frente a LSTM-VAE",
+  "pdf": "Automatic Traffic Anomaly Detection on the Road Network with Spatial-Temporal Graph Neural Network Representation Learning.pdf"
+ },
+ {
+  "key": "E17",
+  "autores": "Chakraborty, Hasan, Liu, Ji, Liang, McPherson, Driggs-Campbell",
+  "primer_autor": "Chakraborty",
+  "anio": 2023,
+  "titulo": "Structural Attention-Based Recurrent Variational Autoencoder for Highway Vehicle Anomaly Detection",
+  "venue": "Proceedings of the 22nd International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2023)",
+  "tipo_doc": "conferencia",
+  "volumen": "",
+  "numero": "",
+  "paginas_o_articulo": "pp. 1125–1134",
+  "doi": "No asignado (actas IFAAMAS); URL del artículo en ifaamas.org",
+  "editorial": "IFAAMAS (actas distribuidas por ACM)",
+  "pais_region_datos": "No reportado (dataset simulado MAAD)",
+  "entorno": "autopista",
+  "tipo_dato": "simulado",
+  "tipo_dato_detalle": "Trayectorias 2D simuladas de dos vehículos en una autopista recta de dos carriles por sentido: desplazamientos relativos de cada vehículo, posiciones relativas de los vecinos y coordenadas de los nodos de carril permitidos (frente, izquierda y derecha), añadidas por los autores; ventanas de 15 pasos.",
+  "datasets": [
+   {
+    "nombre": "MAAD (Multi-Agent Anomaly Detection), aumentado con información de carriles",
+    "tipo": "simulado",
+    "publico": "no reportado"
+   }
+  ],
+  "origen_etiquetas": "benchmark anotado de terceros",
+  "origen_etiquetas_detalle": "El split de prueba de MAAD (Wiederer et al.) trae comportamientos normales y 11 clases anómalas, con etiquetas por paso temporal (normal, ignorado o anómalo); el entrenamiento usa solo trayectorias normales.",
+  "tasa_anomalias": "No reportado (80 trayectorias de entrenamiento y 66 de prueba; ≈6.3K ventanas de entrenamiento y ≈3.1K de prueba)",
+  "paradigma": "no supervisado",
+  "enfoque": "predicción",
+  "unidad_evaluacion": "punto/instante",
+  "umbral": "No aplica: la evaluación no depende de un umbral (AUROC, AUPR y FPR @ 95 %-TPR); el score es el máximo, entre vehículos, del error de predicción a un paso promediado",
+  "particion": "Splits predefinidos de MAAD: 80 trayectorias normales de entrenamiento y 66 de prueba; los hiperparámetros se eligen sobre un 20 % del propio conjunto de prueba",
+  "familia_principal": "autoencoder",
+  "familias": {
+   "recurrente": true,
+   "convolucional": false,
+   "autoencoder": true,
+   "grafos": false,
+   "transformer_atencion": true,
+   "generativo": true
+  },
+  "hibrido": true,
+  "multimodal": false,
+  "arquitectura": "SABeR-VAE: autoatención vehículo-vehículo y atención carril-vehículo, codificador GRU hacia un espacio latente gaussiano (VAE), propagación latente con un operador de Koopman estocástico condicionado por los carriles y decodificador MLP que predice el siguiente estado.",
+  "metricas": [
+   "AUROC",
+   "AUPR-Abnormal",
+   "AUPR-Normal",
+   "FPR @ 95%-TPR",
+   "AUROC por tipo de anomalía"
+  ],
+  "metricas_flags": {
+   "accuracy": false,
+   "precision": false,
+   "recall": false,
+   "f1": false,
+   "auc_roc": true,
+   "pr_auc": true,
+   "dr": false,
+   "far_fpr": true,
+   "mttd": false,
+   "error_mae_rmse_mape": false,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": false
+  },
+  "resultado_principal": "AUROC = 87.0 ± 1.5 %, AUPR-Abnormal = 65.5 ± 2.9 %, FPR @ 95 %-TPR = 57.7 ± 7.6 % en MAAD (10 ejecuciones); AUROC de conducción en sentido contrario = 99.3 %",
+  "baselines": [
+   "CVM",
+   "RAE-Recon",
+   "STGAE",
+   "STGAE-KDE",
+   "RAE-Pred",
+   "VV-RAE",
+   "Att-LSTM-VAE",
+   "SABeR-AE"
+  ],
+  "baseline_no_dl": true,
+  "ventaja_vs_mejor_baseline": "Frente a STGAE-KDE: +0.7 pp de AUROC y +10.3 pp de AUPR-Abnormal (≈18 % relativo), pero FPR @ 95 %-TPR peor (57.7 vs 50.0); AUROC de sentido contrario 99.3 vs 73.2. La variante propia SABeR-AE logra más AUROC (87.2) y AUPR-Abnormal (69.0)",
+  "limitaciones_autores": "MAAD no traía información de mapa ni de carriles y los autores tuvieron que añadirla; la estocasticidad de SABeR-VAE afecta su reproducibilidad (el AUROC varía entre 84 % y 89 % en 10 ejecuciones); VV-RAE no aprendió rasgos útiles. Como trabajo futuro proponen usar datos crudos de sensores, integrar el modelo con un controlador y probar otros métodos de sincronización de Koopman.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": true,
+   "etiquetado": false,
+   "generalizacion": true,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": false,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "https://sites.google.com/illinois.edu/saber-vae",
+  "categoria_anomalia": "trayectorias/conducción peligrosa",
+  "categoria_anomalia_secundaria": "",
+  "calidad": {
+   "QA1": {
+    "p": 0.5,
+    "ev": "Las etiquetas por paso temporal vienen del benchmark MAAD (terceros), pero las anomalías son comportamientos escenificados en simulación, no incidentes reales."
+   },
+   "QA2": {
+    "p": 0.5,
+    "ev": "Hay un split de prueba independiente de MAAD (66 trayectorias), pero los hiperparámetros se seleccionan sobre un 20 % de ese mismo conjunto de prueba ('calculate metrics for each hyperparameter choice on a 20% validation split of the whole test data'), lo que supone riesgo de fuga."
+   },
+   "QA3": {
+    "p": 1,
+    "ev": "Ocho baselines y ablaciones bajo el mismo protocolo, entre ellos STGAE-KDE (estado del arte en MAAD) y CVM (no DL)."
+   },
+   "QA4": {
+    "p": 1,
+    "ev": "Cada método, salvo CVM, se entrena 10 veces y se reportan media ± desviación estándar (Tabla 1)."
+   },
+   "QA5": {
+    "p": 0.5,
+    "ev": "Código disponible en https://sites.google.com/illinois.edu/saber-vae; el acceso a MAAD lo concedió Wiederer y su disponibilidad pública no se declara."
+   },
+   "QA6": {
+    "p": 0,
+    "ev": "Un único escenario simulado (autopista recta de dos carriles, MAAD); solo hay desglose por tipo de anomalía."
+   },
+   "QA7": {
+    "p": 0.5,
+    "ev": "La unidad (score por paso temporal, Ec. 17) está explícita, pero no se fija un criterio de decisión: solo hay métricas independientes del umbral."
+   },
+   "QA8": {
+    "p": 0.5,
+    "ev": "Hay menciones breves: la reproducibilidad afectada por la estocasticidad, el fallo de VV-RAE y el trabajo futuro; no existe una sección de limitaciones."
+   }
+  },
+  "caso_limite": "Los datos son íntegramente simulados (MAAD), con solo dos vehículos y un tramo de autopista, y el enfoque está pensado para la seguridad del vehículo autónomo más que para la gestión del tráfico. A favor de incluirlo: es DL (VAE recurrente con atención) aplicado a detectar comportamientos anómalos de vehículos en autopista (sentido contrario, salida de vía), con evaluación cuantitativa sobre etiquetas.",
+  "notas": "Publicación en AAMAS 2023 verificada: la cabecera y el pie del PDF dicen 'Proc. of the 22nd International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2023), A. Ricci, W. Yeoh, N. Agmon, B. An (eds.), May 29 – June 2, 2023, London', © IFAAMAS, con paginación 1125–1134. Fuentes externas (dblp y Proceedings of AAMAS 2023-May) confirman pp. 1125–1134. El PDF no trae DOI y no se pudo confirmar el DOI ni el enlace de ACM DL: los dominios dl.acm.org, dblp.org y crossref quedaron bloqueados por la red; ACM DL usa el prefijo 10.5555/3545946.* para AAMAS'23, pero el sufijo no está verificado. La ficha dice 'Base de datos: No reportado' y 'dataset No reportado', lo que es coherente. La ficha omite que los hiperparámetros se eligen sobre un 20 % del test.",
+  "id": "S09",
+  "clave_extraccion": "E17",
+  "id_version_anterior": "E17",
+  "bibkey": "chakraborty2023structural",
+  "tipo_dato_corto": "Trayectorias simuladas",
+  "datasets_corto": "MAAD (simulado)",
+  "datasets_ejemplo": [
+   "MAAD"
+  ],
+  "etiqueta_corta": "Benchmark de terceros",
+  "categoria_corta": "Conducción peligrosa",
+  "modelo_corto": "VAE recurrente con atención estructural",
+  "resultado_corto": "AUROC 87,0 %; AUPR 65,5 %",
+  "baselines_corto": "CVM, RAE, STGAE, STGAE-KDE, VV-RAE",
+  "ventaja_corta": "+10,3 pp de AUPR frente a STGAE-KDE",
+  "pdf": "Structural Attention-Based Recurrent Variational Autoencoderfor Highway Vehicle Anomaly Detection.pdf"
+ },
+ {
+  "key": "E08",
+  "autores": "Mehrannia, Shirahmad Gale Bagi, Moshiri, Al-Basir",
+  "primer_autor": "Mehrannia",
+  "anio": 2023,
+  "titulo": "Deep representation of imbalanced spatio-temporal traffic flow data for traffic accident detection",
+  "venue": "IET Intelligent Transport Systems",
+  "tipo_doc": "revista",
+  "volumen": "17",
+  "numero": "3",
+  "paginas_o_articulo": "pp. 606–619",
+  "doi": "10.1049/itr2.12287",
+  "editorial": "Wiley",
+  "pais_region_datos": "Autopistas de Twin Cities Metro, Minnesota, Estados Unidos",
+  "entorno": "autopista",
+  "tipo_dato": "series de sensores",
+  "tipo_dato_detalle": "Datos de 16 detectores de lazo (8 por sentido) con 6 variables cada uno (capacity, density, flow, headway, occupancy, speed), agregados a intervalos DAI de 1–5 min; cada muestra es una serie de TSL = 6 intervalos (forma 6×96 = 576 rasgos) presentada al LSTM en orden cronológico inverso.",
+  "datasets": [
+   {
+    "nombre": "MnDOT RTMC loop detector data + Minnesota crash records (2009–2019), sitio 1",
+    "tipo": "real",
+    "publico": "parcial"
+   },
+   {
+    "nombre": "MnDOT loop detector data + crash records, sitio 2 (prueba de generalización)",
+    "tipo": "real",
+    "publico": "parcial"
+   }
+  ],
+  "origen_etiquetas": "registros reales de incidentes",
+  "origen_etiquetas_detalle": "Las etiquetas crash/non-crash provienen de los registros de accidentes de MnDOT (fecha y hora) de 2009–2019; los autores advierten que las marcas de tiempo pueden desfasarse decenas de minutos y lo compensan con el parámetro degree of flexibility (DoF).",
+  "tasa_anomalias": "No reportado (solo se indica que los datos están muy desbalanceados; se usa peso de clase 1:100)",
+  "paradigma": "supervisado",
+  "enfoque": "clasificación",
+  "unidad_evaluacion": "ventana",
+  "umbral": "0.5 sobre la probabilidad de choque (salida sigmoide); la matriz de confusión se calcula con tolerancia temporal DoF (±DoF muestras alrededor de la etiqueta real)",
+  "particion": "Validación cruzada aleatoria de 5 particiones sobre los datos del sitio 1 (4 para entrenamiento, 1 para prueba), con remuestreo solo en entrenamiento y prueba intacta; además, entrenamiento en sitio 1 y prueba en sitio 2, y entrenamiento/prueba con datos combinados de ambos sitios.",
+  "familia_principal": "recurrente",
+  "familias": {
+   "recurrente": true,
+   "convolucional": false,
+   "autoencoder": false,
+   "grafos": false,
+   "transformer_atencion": false,
+   "generativo": false
+  },
+  "hibrido": false,
+  "multimodal": false,
+  "arquitectura": "Codificador LSTM que proyecta la entrada espacio-temporal de 576 dimensiones a un espacio de 100 rasgos con mayor separabilidad de clases, seguido de un clasificador MLP de dos capas ocultas (leaky ReLU, dropout) con salida sigmoide; entrenado con entropía cruzada binaria ponderada, SGD con momentum y remuestreo SMOTE.",
+  "metricas": [
+   "Accuracy",
+   "Sensitivity (TPR)",
+   "Specificity",
+   "FPR",
+   "AUC",
+   "Time to detection (TTD)",
+   "Training time",
+   "Wasserstein distance",
+   "Bhattacharya distance",
+   "JS divergence"
+  ],
+  "metricas_flags": {
+   "accuracy": true,
+   "precision": false,
+   "recall": true,
+   "f1": false,
+   "auc_roc": true,
+   "pr_auc": false,
+   "dr": false,
+   "far_fpr": true,
+   "mttd": true,
+   "error_mae_rmse_mape": false,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": true
+  },
+  "resultado_principal": "TPR = 0.705, FPR = 0.25 y AUC = 0.228 a 18 min tras el accidente (DAI = 3, TSL = 6) en el sitio 1 de MnDOT; sensibilidad máxima 0.8 y especificidad 0.7 con parámetros óptimos",
+  "baselines": [
+   "CNN",
+   "RNN",
+   "PNN",
+   "AdaBoost",
+   "GradientBoost"
+  ],
+  "baseline_no_dl": true,
+  "ventaja_vs_mejor_baseline": "A 18 min: +0.011 de AUC frente a RNN (0.228 vs 0.217) y +0.151 de TPR frente a PNN (0.705 vs 0.554), pero con FPR mayor (0.25 vs 0.085 de CNN); a 30 min CNN supera al LSTM en AUC (0.252 vs 0.206)",
+  "limitaciones_autores": "Marcas de tiempo de los accidentes imprecisas (desfases de decenas de minutos) que afectan la evaluación y el tiempo de detección; experimentos limitados a tramos sin rampas ni intersecciones; la sensibilidad cae (0.59 y 0.54) al probar en otro sitio; los datos sintéticos del remuestreo pueden no ser realistas. Trabajo futuro: tiempo real, generalización, rampas/intersecciones.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": false,
+   "etiquetado": true,
+   "generalizacion": true,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": false,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "No",
+  "categoria_anomalia": "accidentes/incidentes",
+  "categoria_anomalia_secundaria": "",
+  "calidad": {
+   "QA1": {
+    "p": 1,
+    "ev": "Etiquetas de registros reales de accidentes de MnDOT (2009–2019) emparejados con los detectores, con advertencia sobre imprecisión temporal compensada mediante DoF."
+   },
+   "QA2": {
+    "p": 0.5,
+    "ev": "Validación cruzada aleatoria de 5 particiones (riesgo de fuga temporal entre ventanas contiguas), con la prueba sin remuestrear; se añade una prueba en un segundo sitio."
+   },
+   "QA3": {
+    "p": 1,
+    "ev": "Compara con CNN, RNN, PNN, AdaBoost y GradientBoost implementados y probados en el mismo sitio y configuración (Tabla 3)."
+   },
+   "QA4": {
+    "p": 0.5,
+    "ev": "Se reportan promedios de 5 particiones de validación cruzada sin desviación estándar ni pruebas de significancia."
+   },
+   "QA5": {
+    "p": 0.5,
+    "ev": "Los datos proceden de la herramienta pública de MnDOT (data.dot.state.mn.us), pero los datos procesados solo están disponibles bajo solicitud; no hay código."
+   },
+   "QA6": {
+    "p": 1,
+    "ev": "Se usan dos sitios de autopista con sus propios detectores: entrenamiento en sitio 1 y prueba en sitio 2, y experimento con datos combinados (Fig. 11)."
+   },
+   "QA7": {
+    "p": 1,
+    "ev": "Unidad = muestra de serie temporal (TSL = 6, DAI) con tolerancia DoF definida en Ec. 3–5; umbral de decisión 0.5 sobre la probabilidad sigmoide."
+   },
+   "QA8": {
+    "p": 0.5,
+    "ev": "No hay sección de limitaciones; se mencionan la imprecisión de las marcas de tiempo, la exclusión de rampas e intersecciones y la caída de sensibilidad en otro sitio."
+   }
+  },
+  "caso_limite": "",
+  "notas": "Sin ficha previa; todo se extrajo del PDF. Los valores de AUC de la Tabla 3 (≈0.13–0.25) son anormalmente bajos para un AUC ROC estándar y no se explica cómo se calculan (posiblemente AUC parcial). El resumen menciona 'menos de 18 min con TPR 0.71 y FPR 0.25'. Los autores agrupan PNN dentro de los 'deep learning methods'. Recibido en 2021 y publicado en 2023 (vol. 17, n.º 3 según la cabecera de Wiley); la publicación corre a cargo de John Wiley & Sons en nombre de la IET.",
+  "id": "S10",
+  "clave_extraccion": "E08",
+  "id_version_anterior": "E08",
+  "bibkey": "mehrannia2023deep",
+  "tipo_dato_corto": "Detectores de lazo",
+  "datasets_corto": "MnDOT (Minneapolis)",
+  "datasets_ejemplo": [
+   "MnDOT RTMC"
+  ],
+  "etiqueta_corta": "Registros reales",
+  "categoria_corta": "Accidentes",
+  "modelo_corto": "Codificador LSTM + clasificador",
+  "resultado_corto": "TPR 0,71; FPR 0,25 (18 min)",
+  "baselines_corto": "CNN, RNN, PNN, AdaBoost, GradientBoost",
+  "ventaja_corta": "+0,15 de TPR frente a PNN, con mayor FPR",
+  "pdf": "Deep representation of imbalanced spatio-temporal traffic flow data for traffic accident detection.pdf"
+ },
+ {
+  "key": "E25",
+  "autores": "Lu, Yuanyao; Chen, Wei; Yu, Zhanhe; Wang, Jingxuan; Yang, Chaochao",
+  "primer_autor": "Lu",
+  "anio": 2024,
+  "titulo": "Vehicle Abnormal Behavior Detection Based on Dense Block and Soft Thresholding",
+  "venue": "Computers, Materials & Continua",
+  "tipo_doc": "revista",
+  "volumen": "79",
+  "numero": "3",
+  "paginas_o_articulo": "pp. 5051–5066",
+  "doi": "10.32604/cmc.2024.050865",
+  "editorial": "Tech Science Press",
+  "pais_region_datos": "No reportado (UCF-Crime: videos de vigilancia de diversas procedencias; autores de Pekín, China)",
+  "entorno": "no especificado",
+  "tipo_dato": "video/imágenes",
+  "tipo_dato_detalle": "Secuencias de frames de video de vigilancia (entrada de 112x112x8 tras la primera capa C3D) procesadas por convoluciones 3D; salida de clasificación binaria normal/anómalo y puntuación de anomalía por frame en la simulación",
+  "datasets": [
+   {
+    "nombre": "UCF-Crime (subconjunto de comportamientos vehiculares anómalos: 150 videos de anomalías de tráfico graves + 950 videos normales)",
+    "tipo": "real",
+    "publico": "parcial"
+   }
+  ],
+  "origen_etiquetas": "benchmark anotado de terceros",
+  "origen_etiquetas_detalle": "Se usan las etiquetas de categoría a nivel de video de UCF-Crime (p. ej., Road accidents, Normal), filtrando videos no editados; los autores no reetiquetan.",
+  "tasa_anomalias": "≈13,6 % (150 videos anómalos de tráfico frente a 950 normales en el subconjunto)",
+  "paradigma": "supervisado",
+  "enfoque": "clasificación",
+  "unidad_evaluacion": "clip/video",
+  "umbral": "No aplica (clasificador binario con Softmax)",
+  "particion": "Se mencionan conjuntos de entrenamiento, validación y prueba (Figuras 8–9), pero no se describen la proporción ni el criterio de separación",
+  "familia_principal": "convolucional",
+  "familias": {
+   "recurrente": true,
+   "convolucional": true,
+   "autoencoder": false,
+   "grafos": false,
+   "transformer_atencion": false,
+   "generativo": false
+  },
+  "hibrido": true,
+  "multimodal": false,
+  "arquitectura": "DRN + Bi-LSTM: tronco R3D (C3D + max pooling) con 3 bloques Dense-R3D (DRN) que combinan conexiones residuales y densas, con umbralización suave adaptativa (umbral = α·|A| con una pequeña FC sigmoide) y Dropout; las salidas concatenadas pasan por una Bi-LSTM y un clasificador FC con Softmax.",
+  "metricas": [
+   "Accuracy",
+   "parámetros del modelo (M)",
+   "tiempo de cálculo (s)",
+   "accuracy por categoría de anomalía"
+  ],
+  "metricas_flags": {
+   "accuracy": true,
+   "precision": false,
+   "recall": false,
+   "f1": false,
+   "auc_roc": false,
+   "pr_auc": false,
+   "dr": false,
+   "far_fpr": false,
+   "mttd": false,
+   "error_mae_rmse_mape": false,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": true
+  },
+  "resultado_principal": "Accuracy global = 85,43 % en el subconjunto de UCF-Crime (25,67M parámetros, 121 s); accuracy en la categoría Road accidents = 89,30 %",
+  "baselines": [
+   "R3D",
+   "R3D + LSTM",
+   "R3D + Bi-LSTM",
+   "DRN",
+   "DRN + LSTM",
+   "P3D",
+   "I3D",
+   "R(2+1)D"
+  ],
+  "baseline_no_dl": false,
+  "ventaja_vs_mejor_baseline": "+2,70 pp de accuracy global frente a R3D + Bi-LSTM (85,43 % vs 82,73 %) con 11,8M parámetros menos; en Road accidents, +2,38 pp frente a DRN + LSTM (89,30 % vs 86,92 %); la comparación con P3D/I3D/R(2+1)D solo se muestra en una gráfica (Fig. 10), sin valores",
+  "limitaciones_autores": "Mención breve: los seis modelos no son adecuados para algunas categorías (arrest, shoplifting); con más de 3 bloques DRN la mejora de accuracy es limitada y el tiempo de cálculo crece notablemente. No hay sección de limitaciones.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": false,
+   "etiquetado": false,
+   "generalizacion": true,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": true,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "No",
+  "categoria_anomalia": "accidentes/incidentes",
+  "categoria_anomalia_secundaria": "",
+  "calidad": {
+   "QA1": {
+    "p": 1,
+    "ev": "Etiquetas a nivel de video del benchmark UCF-Crime, anotado por terceros sobre videos reales de vigilancia."
+   },
+   "QA2": {
+    "p": 0.5,
+    "ev": "Se citan conjuntos de entrenamiento, validación y prueba, pero no se describe cómo se separaron ni en qué proporción."
+   },
+   "QA3": {
+    "p": 0.5,
+    "ev": "La comparación principal es con variantes propias (R3D, DRN, ±LSTM/Bi-LSTM), que funcionan como ablación; la comparación con P3D, I3D y R(2+1)D es solo gráfica (Fig. 10), sin valores ni protocolo detallado."
+   },
+   "QA4": {
+    "p": 0,
+    "ev": "Una sola ejecución por modelo, sin desviación estándar ni pruebas de significancia."
+   },
+   "QA5": {
+    "p": 0.5,
+    "ev": "UCF-Crime es público, pero el subconjunto construido está disponible solo bajo solicitud y no se publica código."
+   },
+   "QA6": {
+    "p": 0.5,
+    "ev": "Un único dataset (UCF-Crime) con varias categorías de anomalía evaluadas por separado (Tabla 5)."
+   },
+   "QA7": {
+    "p": 0.5,
+    "ev": "El criterio de decisión es una clasificación binaria con Softmax y accuracy (Ec. 8), pero la unidad de evaluación (video o clip) no se define explícitamente."
+   },
+   "QA8": {
+    "p": 0.5,
+    "ev": "Solo comentarios breves en los resultados (arrest/shoplifting, coste con >3 DRN); no hay párrafo de limitaciones."
+   }
+  },
+  "caso_limite": "",
+  "notas": "Verificado en el PDF: Computers, Materials & Continua, vol. 79, n.º 3, pp. 5051–5066 (la primera página no está numerada; la segunda es la 5052 y la última, la 5066), DOI 10.32604/cmc.2024.050865, publicado el 20/06/2024; coincide con la ficha_25. Discrepancias: (1) el resumen afirma '89.30% de accuracy en nuestro test set', pero ese valor corresponde solo a la categoría Road accidents; la accuracy global es del 85,43 %. (2) La ficha numera las tablas como 1–3, mientras que en el PDF son las Tablas 3, 4 y 5. (3) Incoherencia interna: se dice que el subconjunto contiene solo 150 videos de tráfico anómalos y 950 normales, pero la Tabla 5 reporta accuracy para arrest, arson, burglary, robbery, shoplifting y vandalism (categorías no vehiculares). (4) El resumen describe la umbralización suave como un 'método autoatento'; no se marcó la familia transformer/atención porque no hay un módulo de atención propiamente dicho. (5) La ficha dice 'Sí, bajo solicitud' para el dataset; UCF-Crime es público, pero el subconjunto no.",
+  "id": "S11",
+  "clave_extraccion": "E25",
+  "id_version_anterior": "E25",
+  "bibkey": "lu2024vehicle",
+  "tipo_dato_corto": "Video de vigilancia",
+  "datasets_corto": "UCF-Crime (subconjunto)",
+  "datasets_ejemplo": [
+   "UCF-Crime"
+  ],
+  "etiqueta_corta": "Benchmark de terceros",
+  "categoria_corta": "Accidentes",
+  "modelo_corto": "CNN 3D densa-residual + Bi-LSTM",
+  "resultado_corto": "Accuracy 85,4 %",
+  "baselines_corto": "R3D, P3D, I3D, R(2+1)D",
+  "ventaja_corta": "+2,7 pp frente a R3D+Bi-LSTM",
+  "pdf": "Vehicle Abnormal Behavior Detection Based on Dense Block and Soft Thresholding.pdf"
+ },
+ {
+  "key": "E03",
+  "autores": "Mao, Y.; Shi, Y.; Lu, B.",
+  "primer_autor": "Mao",
+  "anio": 2024,
+  "titulo": "Detecting Urban Traffic Anomalies Using Traffic-Monitoring Data",
+  "venue": "ISPRS International Journal of Geo-Information",
+  "tipo_doc": "revista",
+  "volumen": "13",
+  "numero": "10",
+  "paginas_o_articulo": "Art. 351",
+  "doi": "10.3390/ijgi13100351",
+  "editorial": "MDPI",
+  "pais_region_datos": "Wuhan, China",
+  "entorno": "urbano",
+  "tipo_dato": "trayectorias GPS",
+  "tipo_dato_detalle": "Puntos de trayectoria en tiempo real (velocidad, longitud, latitud, tramo) de Amap cada 30 min, convertidos en imágenes de condición de tráfico (píxeles según velocidad relativa al promedio del tramo) y organizados en series horarias, diarias y semanales (proporción 16:3:1).",
+  "datasets": [
+   {
+    "nombre": "Datos de monitoreo de tráfico de Wuhan (Amap API), sep 2021–jun 2022, ~60 millones de registros",
+    "tipo": "real",
+    "publico": "no"
+   }
+  ],
+  "origen_etiquetas": "registros reales de incidentes",
+  "origen_etiquetas_detalle": "Eventos anómalos cuantificados a partir de plataformas de internet, noticias e información pública de la Wuhan Traffic Management Bureau; no se describe cómo se construye el conjunto de referencia (Fr) ni su emparejamiento con las detecciones.",
+  "tasa_anomalias": "No reportado",
+  "paradigma": "no supervisado",
+  "enfoque": "predicción",
+  "unidad_evaluacion": "evento",
+  "umbral": "Anomalía si la diferencia entre el SSIM de una zona en el instante t y el SSIM estándar (media por franja, 7 × 48 valores) supera un umbral; el valor del umbral no se reporta.",
+  "particion": "No reportado",
+  "familia_principal": "recurrente",
+  "familias": {
+   "recurrente": true,
+   "convolucional": true,
+   "autoencoder": false,
+   "grafos": false,
+   "transformer_atencion": false,
+   "generativo": false
+  },
+  "hibrido": true,
+  "multimodal": false,
+  "arquitectura": "Traffic-ConvLSTM: ConvLSTM multiescala con estructura encoder-forecasting; kernels convolucionales de distintos tamaños extraen rasgos a escala ciudad, región y carretera, combinados con series horarias/diarias/semanales ponderadas; pérdida y criterio de anomalía basados en SSIM.",
+  "metricas": [
+   "Accuracy (definida como Fp/Ft)",
+   "Precision (definida como Fp/Fr)",
+   "Tiempo de cómputo"
+  ],
+  "metricas_flags": {
+   "accuracy": true,
+   "precision": true,
+   "recall": false,
+   "f1": false,
+   "auc_roc": false,
+   "pr_auc": false,
+   "dr": false,
+   "far_fpr": false,
+   "mttd": false,
+   "error_mae_rmse_mape": false,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": true
+  },
+  "resultado_principal": "City-precision = 92.875% y City-accuracy = 83.871%; Road-precision = 88.889% y Road-accuracy = 92.035% en el dataset de Wuhan (Tabla 2)",
+  "baselines": [
+   "SAE",
+   "CNN+LSTM",
+   "Bi-LSTM",
+   "GAN",
+   "Transformer"
+  ],
+  "baseline_no_dl": false,
+  "ventaja_vs_mejor_baseline": "Escala ciudad: +3.7 pp de accuracy (83.871% vs 80.154%, Transformer) y +2.8 pp de precision (vs GAN 90.124%); escala carretera: +0.3 pp de accuracy frente a Transformer pero −5.7 pp de precision (88.889% vs 94.582%)",
+  "limitaciones_autores": "No declaradas (solo se menciona que las anomalías carecen de definición unificada y que GAN/Transformer tienen mayor costo de tiempo y almacenamiento).",
+  "limitaciones_flags": {
+   "datos_replicabilidad": false,
+   "etiquetado": false,
+   "generalizacion": false,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": false,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "No",
+  "categoria_anomalia": "congestión/flujo anómalo",
+  "categoria_anomalia_secundaria": "disrupciones/eventos extremos/infraestructura",
+  "calidad": {
+   "QA1": {
+    "p": 0.5,
+    "ev": "Eventos de referencia obtenidos de noticias, internet y la Wuhan Traffic Management Bureau (registros reales), pero sin procedimiento de etiquetado ni verificación descritos y sin precisar el conjunto de ejemplos seleccionados."
+   },
+   "QA2": {
+    "p": 0,
+    "ev": "No se reporta cómo se separan entrenamiento y prueba."
+   },
+   "QA3": {
+    "p": 0.5,
+    "ev": "Cinco baselines DL (SAE, CNN+LSTM, Bi-LSTM, GAN, Transformer), sin baseline no DL, sin método específico del estado del arte referenciado para GAN/Transformer y sin describir el protocolo común; el texto habla de 'tres' baselines y la Tabla 2 de 'cuatro modelos'."
+   },
+   "QA4": {
+    "p": 0,
+    "ev": "Una sola ejecución sin dispersión ni pruebas de significancia."
+   },
+   "QA5": {
+    "p": 0,
+    "ev": "Sin código; datos 'disponibles bajo solicitud'."
+   },
+   "QA6": {
+    "p": 0.5,
+    "ev": "Una sola ciudad (Wuhan) evaluada a dos escalas espaciales (ciudad y carretera)."
+   },
+   "QA7": {
+    "p": 0.5,
+    "ev": "La unidad (eventos anómalos identificados) y el criterio SSIM se describen, pero el valor del umbral no se reporta y la unidad de conteo no queda claramente definida."
+   },
+   "QA8": {
+    "p": 0,
+    "ev": "No hay sección ni párrafo de limitaciones; la conclusión no menciona limitaciones."
+   }
+  },
+  "caso_limite": "",
+  "notas": "Verificación del comentario del revisor: el PDF SÍ reporta métricas cuantitativas de detección (Tabla 2: City/Road-precision y City/Road-accuracy para 6 modelos; Tablas 3–4 de ablación), por lo que la afirmación de que no hay métricas es incorrecta. Sin embargo, las métricas son atípicas: 'Accuracy' = Fp/Ft (anomalías correctas / anomalías detectadas, equivale a precision) y 'Precision' = Fp/Fr (anomalías correctas / anomalías de referencia, equivale a recall); no hay F1, AUC ni falsas alarmas. Fichas 10 y 12: coinciden entre sí y con el PDF en identificación, arquitectura, valores de las tablas y datos; diferencias menores: la ficha 10 clasifica el enfoque como 'predicción/no supervisado' y la ficha 12 como 'reconstrucción/predicción' (el PDF usa encoder-forecasting, es decir, predicción); la ficha 10 lista limitaciones que el PDF no declara explícitamente (inferidas por el extractor), y la ficha 12 atribuye a los autores limitaciones de ciudad única y datos bajo solicitud que tampoco están declaradas. Las fichas numeran la ablación de orden como Tabla 3 cuando en el PDF es la Tabla 4. Errata del PDF: la Fig. 4 dice 'September 2021 to June 2021'.",
+  "id": "S12",
+  "clave_extraccion": "E03",
+  "id_version_anterior": "E03",
+  "bibkey": "mao2024detecting",
+  "tipo_dato_corto": "Trayectorias (Amap)",
+  "datasets_corto": "Wuhan (propio)",
+  "datasets_ejemplo": [
+   "Wuhan/Amap (propio)"
+  ],
+  "etiqueta_corta": "Registros reales",
+  "categoria_corta": "Congestión",
+  "modelo_corto": "ConvLSTM multiescala",
+  "resultado_corto": "Precisión 92,9 % (ciudad)",
+  "baselines_corto": "SAE, CNN+LSTM, Bi-LSTM, GAN, Transformer",
+  "ventaja_corta": "+3,7 pp frente a Transformer",
+  "decision_limite": "Incluido. A diferencia de lo señalado en la revisión previa, reporta métricas cuantitativas de detección (Tabla 2 del artículo), aunque con definiciones no estándar de accuracy y precision.",
+  "pdf": "Detecting Urban Traffic Anomalies Using Traffic-Monitoring Data.pdf"
+ },
+ {
+  "key": "E14",
+  "autores": "Ren, Li, Peng, Chen, Tan, Wu, Shi",
+  "primer_autor": "Ren",
+  "anio": 2024,
+  "titulo": "Graph autoencoder with mirror temporal convolutional networks for traffic anomaly detection",
+  "venue": "Scientific Reports",
+  "tipo_doc": "revista",
+  "volumen": "14",
+  "numero": "",
+  "paginas_o_articulo": "Art. 1247",
+  "doi": "10.1038/s41598-024-51374-3",
+  "editorial": "Springer Nature",
+  "pais_region_datos": "Nueva York, EE. UU. (NYC taxi, principal); Área de la Bahía, California, EE. UU. (PEMS-BAY, ablación)",
+  "entorno": "ambos",
+  "tipo_dato": "movilidad OD/agregada",
+  "tipo_dato_detalle": "NYC: grafos dirigidos y ponderados por hora a partir de viajes de taxi TLC (pesos = tiempos de viaje inversos escalados entre pares origen-destino) con embedding de hora del día y día de la semana; PEMS-BAY (solo ablación): velocidad y flujo de un subgrafo de 6 sensores.",
+  "datasets": [
+   {
+    "nombre": "NYC taxi (TLC, enero–marzo 2019, vía repositorio Con-GAE)",
+    "tipo": "mixto",
+    "publico": "sí"
+   },
+   {
+    "nombre": "PEMS-BAY (subgrafo de 6 sensores) + incidentes CHP",
+    "tipo": "real",
+    "publico": "sí"
+   },
+   {
+    "nombre": "Uber Movement (porción usada en prueba)",
+    "tipo": "real",
+    "publico": "sí"
+   },
+   {
+    "nombre": "DGraphFin (dominio financiero, solo generalización)",
+    "tipo": "real",
+    "publico": "sí"
+   }
+  ],
+  "origen_etiquetas": "anomalías inyectadas/sintéticas",
+  "origen_etiquetas_detalle": "NYC carece de etiquetas, por lo que se inyectan anomalías espaciales (perturbación U(−β, β) del tiempo de viaje en una fracción α de pares OD) y temporales (desplazamiento de 12 h) en una fracción γ de franjas; los incidentes CHP de PEMS-BAY se mencionan, pero no se reporta métrica de detección con ellos.",
+  "tasa_anomalias": "γ = 5%, 10% y 20% de franjas horarias contaminadas; α = 25% o 50% de pares OD por franja",
+  "paradigma": "no supervisado",
+  "enfoque": "reconstrucción",
+  "unidad_evaluacion": "punto/instante",
+  "umbral": "No reportado (evaluación por AUC; la pérdida MSE de reconstrucción de cada instancia de prueba es la puntuación de anomalía)",
+  "particion": "NYC: entrenamiento del 8 de enero al 31 de marzo de 2019 (10% para validación) y prueba del 1 al 7 de enero de 2019 más una porción de Uber Movement; se declara que entrenamiento y prueba son mutuamente excluyentes, aunque también se menciona muestreo aleatorio uniforme",
+  "familia_principal": "autoencoder",
+  "familias": {
+   "recurrente": true,
+   "convolucional": true,
+   "autoencoder": true,
+   "grafos": true,
+   "transformer_atencion": false,
+   "generativo": false
+  },
+  "hibrido": true,
+  "multimodal": false,
+  "arquitectura": "MTGAE (Mirror Temporal Graph Autoencoder): encoder con proceso adaptativo, Mirror Temporal Convolutional Module (TCN dilatada sobre la secuencia concatenada con su espejo) y dos GCGRU CELL (GRU con compuertas GCN y kernel gaussiano), embedding temporal; decoder bilineal que reconstruye los pesos dirigidos del grafo; la puntuación de anomalía es el MSE de reconstrucción.",
+  "metricas": [
+   "AUC",
+   "MAE (ablación, PEMS-BAY)",
+   "RMSE (ablación, PEMS-BAY)"
+  ],
+  "metricas_flags": {
+   "accuracy": false,
+   "precision": false,
+   "recall": false,
+   "f1": false,
+   "auc_roc": true,
+   "pr_auc": false,
+   "dr": false,
+   "far_fpr": false,
+   "mttd": false,
+   "error_mae_rmse_mape": true,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": false
+  },
+  "resultado_principal": "AUC = 1.000 en NYC taxi con anomalías inyectadas, en todas las configuraciones (γ = 5/10/20%; α = 25/50%, β = 5/10/20%)",
+  "baselines": [
+   "HA",
+   "RTC",
+   "AE",
+   "EncDec-AD",
+   "REBM",
+   "DAGMM",
+   "GraphSAGE",
+   "GCN",
+   "Con-GAE",
+   "SuperGAT",
+   "EG",
+   "GraphGPS",
+   "GATv2",
+   "Dir-GNN",
+   "PMLP (layer1/2/64/128)",
+   "En DGraphFin: GCN, MLP, GAT, GATv2, TGN, SAGE"
+  ],
+  "baseline_no_dl": true,
+  "ventaja_vs_mejor_baseline": "+3.2 a +4.0 pp de AUC frente a PMLP-layer128 (0.960–0.968) en la Tabla 1; en DGraphFin queda por debajo de TGN y SAGE (0.768 vs 0.774/0.776)",
+  "limitaciones_autores": "No declaradas como tales; solo reconocen la falta de etiquetas en NYC (por eso se usa inyección) y proponen como trabajo futuro probar más datasets y aprender correlaciones espaciales dinámicas.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": false,
+   "etiquetado": true,
+   "generalizacion": true,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": false,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "No",
+  "categoria_anomalia": "congestión/flujo anómalo",
+  "categoria_anomalia_secundaria": "",
+  "calidad": {
+   "QA1": {
+    "p": 0,
+    "ev": "La evaluación de detección (AUC) usa solo anomalías inyectadas en NYC; los incidentes CHP de PEMS-BAY no se usan en ninguna métrica de detección reportada."
+   },
+   "QA2": {
+    "p": 1,
+    "ev": "Conjunto de prueba explícito e independiente por fechas (1–7 ene. 2019) frente a entrenamiento (8 ene.–31 mar. 2019); hay ambigüedad por la mención de muestreo aleatorio."
+   },
+   "QA3": {
+    "p": 1,
+    "ev": "15 baselines con sus repositorios oficiales sobre NYC, incluidos no DL (HA, RTC) y del estado del arte (Con-GAE, GraphGPS, PMLP)."
+   },
+   "QA4": {
+    "p": 0,
+    "ev": "Valores únicos de AUC, sin desviación estándar, varias ejecuciones ni pruebas de significancia."
+   },
+   "QA5": {
+    "p": 0.5,
+    "ev": "Datasets públicos (GitHub Con-GAE, STGAN, DGraphFin); no se publica el código de MTGAE y parte de los datos está disponible solo bajo solicitud."
+   },
+   "QA6": {
+    "p": 0.5,
+    "ev": "La detección (AUC) se evalúa solo en NYC con varias configuraciones de contaminación; PEMS-BAY solo se usa en la ablación con MAE/RMSE y DGraphFin es de otro dominio."
+   },
+   "QA7": {
+    "p": 0.5,
+    "ev": "Se indica que la pérdida de cada instancia de prueba es la puntuación (unidad: franja/grafo horario), pero no hay umbral (solo AUC)."
+   },
+   "QA8": {
+    "p": 0.5,
+    "ev": "Solo una mención breve de la falta de etiquetas y del trabajo futuro; no hay sección de limitaciones."
+   }
+  },
+  "caso_limite": "AUC = 1.000 en todas las configuraciones, frente a ≤0.968 del mejor baseline, sugiere un problema de evaluación (techo o fuga), sobre todo porque las anomalías son sintéticas y el conjunto de prueba incluye una 'porción de Uber Movement' no explicada. Es DL y de detección de anomalías de tráfico, por lo que se incluye, pero con baja confianza en la magnitud de los resultados.",
+  "notas": "Número de artículo y DOI exactos según el PDF: Scientific Reports (2024) 14:1247, https://doi.org/10.1038/s41598-024-51374-3 (recibido 24 mar. 2023; aceptado 4 ene. 2024). Discrepancias con ficha_13: la ficha califica las etiquetas como 'Parcial' por los incidentes CHP, pero el PDF no reporta ninguna métrica de detección con ellos (la ablación en PEMS-BAY usa MAE/RMSE de reconstrucción); la ficha no menciona Uber Movement en la prueba. Inconsistencias del PDF: dice 'six months of data' para NYC pero el periodo es enero–marzo 2019; la conclusión llama al modelo 'MTGAN' y al dataset 'NCY'; la Tabla 2 presenta valores casi constantes para SuperGAT/EG/GraphGPS, distintos del patrón de los demás baselines.",
+  "id": "S13",
+  "clave_extraccion": "E14",
+  "id_version_anterior": "E14",
+  "bibkey": "ren2024graph",
+  "tipo_dato_corto": "Matrices OD y sensores",
+  "datasets_corto": "NYC taxi, PEMS-BAY, Uber Movement",
+  "datasets_ejemplo": [
+   "NYC taxi",
+   "PEMS-BAY",
+   "Uber Movement"
+  ],
+  "etiqueta_corta": "Inyectadas",
+  "categoria_corta": "Congestión",
+  "modelo_corto": "Autoencoder de grafos + TCN (MTGAE)",
+  "resultado_corto": "AUC 1,000 (inyectadas)",
+  "baselines_corto": "Con-GAE, GCN, GraphSAGE, GATv2, PMLP, otros",
+  "ventaja_corta": "+3,2 a +4,0 pp de AUC frente a PMLP",
+  "pdf": "Graph autoencoder with mirror temporal convolutional networks for traffic anomaly detection.pdf"
+ },
+ {
+  "key": "E22",
+  "autores": "Wang, Chenhao; Chen, Lisi; Shang, Shuo; Jensen, Christian S.; Kalnis, Panos",
+  "primer_autor": "Wang",
+  "anio": 2024,
+  "titulo": "Multi-Scale Detection of Anomalous Spatio-Temporal Trajectories in Evolving Trajectory Datasets",
+  "venue": "Proceedings of the 30th ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD '24), Barcelona, Spain",
+  "tipo_doc": "conferencia",
+  "volumen": "",
+  "numero": "",
+  "paginas_o_articulo": "pp. 2980–2990",
+  "doi": "10.1145/3637528.3671874",
+  "editorial": "ACM",
+  "pais_region_datos": "Oporto, Portugal; Chengdu, China",
+  "entorno": "urbano",
+  "tipo_dato": "trayectorias GPS",
+  "tipo_dato_detalle": "Trayectorias de taxis (secuencias de puntos con marca de tiempo) mapeadas a celdas de una grilla de 100 m x 100 m; embedding espacial de celdas y embedding temporal (fecha, hora, minuto, segundo) tipo Time2Vec",
+  "datasets": [
+   {
+    "nombre": "Porto taxi trajectory dataset (442 taxis, 1 año, muestreo cada 15 s; 1.198.551 trayectorias)",
+    "tipo": "real",
+    "publico": "sí"
+   },
+   {
+    "nombre": "Chengdu taxi trajectory dataset (≈14.000 taxis, 3–30 ago 2014; subconjunto de 10 días; 2.124.763 trayectorias)",
+    "tipo": "real",
+    "publico": "sí"
+   }
+  ],
+  "origen_etiquetas": "anomalías inyectadas/sintéticas",
+  "origen_etiquetas_detalle": "Ante la falta de un dataset etiquetado, se generan anomalías espaciales y temporales mediante un esquema de perturbación (se desplaza una fracción continua α de la trayectoria d celdas, con ajuste de marcas de tiempo).",
+  "tasa_anomalias": "5 % de muestras anómalas generadas en todos los experimentos",
+  "paradigma": "no supervisado",
+  "enfoque": "reconstrucción",
+  "unidad_evaluacion": "trayectoria",
+  "umbral": "No reportado (puntuación de anomalía continua en [0, 1] evaluada con PR-AUC, sin umbral fijo)",
+  "particion": "Aleatoria: 80 % de trayectorias para entrenamiento y 20 % para prueba; además, en Porto se usan los primeros 2 meses (y en Chengdu los primeros 3 días) para evaluación y el resto, en orden temporal, para la actualización evolutiva",
+  "familia_principal": "generativo",
+  "familias": {
+   "recurrente": true,
+   "convolucional": false,
+   "autoencoder": true,
+   "grafos": true,
+   "transformer_atencion": true,
+   "generativo": true
+  },
+  "hibrido": true,
+  "multimodal": false,
+  "arquitectura": "MST-OATD: embeddings espaciales de celdas con matriz de agregación tipo GCN, embeddings temporales tipo Time2Vec, fusión multiescala con atención cruzada (escalas 1, 2 y 4), inferencia de ruta con RNN y mezcla gaussiana (variacional) y red generativa RNN que reconstruye la trayectoria (detección por generación); un modelo de ranking aprendido (regresión logística) actualiza el conjunto de entrenamiento.",
+  "metricas": [
+   "PR-AUC",
+   "tiempo medio de detección por trayectoria (ms)"
+  ],
+  "metricas_flags": {
+   "accuracy": false,
+   "precision": false,
+   "recall": false,
+   "f1": false,
+   "auc_roc": false,
+   "pr_auc": true,
+   "dr": false,
+   "far_fpr": false,
+   "mttd": false,
+   "error_mae_rmse_mape": false,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": true
+  },
+  "resultado_principal": "PR-AUC = 0.970 en Porto y 0.969 en Chengdu (α=0.3, d=2, trayectoria completa); 0.413 ms y 0.636 ms por trayectoria en una RTX 3090",
+  "baselines": [
+   "iBAT",
+   "SAE",
+   "VSAE",
+   "TPRRO",
+   "GM-VSAE",
+   "DeepTEA"
+  ],
+  "baseline_no_dl": true,
+  "ventaja_vs_mejor_baseline": "Mejora media relativa de PR-AUC del 18,6 % en Porto y del 2,9 % en Chengdu frente a DeepTEA (p. ej., 0.739 vs 0.408 en Porto con α=0.1, d=3, ρ=1.0)",
+  "limitaciones_autores": "Mención breve: no existen datasets etiquetados y el etiquetado manual es costoso y sin estándares (por eso se usan anomalías sintéticas); el horizonte temporal más corto de Chengdu limita el uso de información temporal; como trabajo futuro, extender el modelo a otras tareas de minería de trayectorias. No hay sección de limitaciones.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": false,
+   "etiquetado": true,
+   "generalizacion": true,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": false,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "https://github.com/chwang0721/MST-OATD",
+  "categoria_anomalia": "trayectorias/conducción peligrosa",
+  "categoria_anomalia_secundaria": "",
+  "calidad": {
+   "QA1": {
+    "p": 0,
+    "ev": "Solo anomalías sintéticas generadas por perturbación (α, d) con una proporción del 5 %."
+   },
+   "QA2": {
+    "p": 0.5,
+    "ev": "Partición aleatoria 80/20 de las trayectorias descrita explícitamente; la evaluación evolutiva usa bloques temporales posteriores, pero la partición principal es aleatoria."
+   },
+   "QA3": {
+    "p": 1,
+    "ev": "Seis baselines bajo el mismo protocolo, entre ellos métodos no DL (iBAT, TPRRO) y el estado del arte (GM-VSAE, DeepTEA), más ablación."
+   },
+   "QA4": {
+    "p": 0,
+    "ev": "Resultados puntuales de PR-AUC sin desviación estándar, sin repeticiones ni pruebas de significancia."
+   },
+   "QA5": {
+    "p": 1,
+    "ev": "Código en GitHub (chwang0721/MST-OATD) y enlaces a los datasets públicos de Porto (Kaggle) y Chengdu."
+   },
+   "QA6": {
+    "p": 1,
+    "ev": "Dos datasets independientes de dos ciudades (Oporto y Chengdu)."
+   },
+   "QA7": {
+    "p": 0.5,
+    "ev": "Unidad de evaluación clara (trayectoria, con ratio observado ρ), pero no se define umbral ni criterio de decisión (PR-AUC sin umbral)."
+   },
+   "QA8": {
+    "p": 0.5,
+    "ev": "Solo menciones breves (falta de etiquetas, horizonte corto de Chengdu, trabajo futuro); no hay párrafo de limitaciones."
+   }
+  },
+  "caso_limite": "",
+  "notas": "La ficha_17 coincide con el PDF en los valores de PR-AUC (Tabla 2), datasets, código, split 80/20 y proporción del 5 %; la tabla de trayectorias más largas que cita está en el Apéndice D.2 (Tabla 4) y también coincide. Datos añadidos desde el PDF: pp. 2980–2990 y DOI 10.1145/3637528.3671874. Se marcó la familia 'grafos' porque el embedding espacial usa una matriz de agregación normalizada inspirada en GCN (componente menor).",
+  "id": "S14",
+  "clave_extraccion": "E22",
+  "id_version_anterior": "E22",
+  "bibkey": "wang2024multiscale",
+  "tipo_dato_corto": "Trayectorias de taxis",
+  "datasets_corto": "Porto, Chengdu",
+  "datasets_ejemplo": [
+   "Porto taxi",
+   "Chengdu taxi"
+  ],
+  "etiqueta_corta": "Inyectadas",
+  "categoria_corta": "Trayectorias anómalas",
+  "modelo_corto": "Codificador multiescala con atención (MST-OATD)",
+  "resultado_corto": "PR-AUC 0,97",
+  "baselines_corto": "iBAT, SAE, VSAE, GM-VSAE, DeepTEA",
+  "ventaja_corta": "+18,6 % relativo de PR-AUC (Porto)",
+  "pdf": "Multi-Scale Detection of Anomalous Spatio-Temporal Trajectoriesin Evolving Trajectory Datasets.pdf"
+ },
+ {
+  "key": "E21",
+  "autores": "Zhao, Liguo; Fu, Zhipeng; Yang, Jingwen; Zhao, Ziqiao; Wang, Ping",
+  "primer_autor": "Zhao",
+  "anio": 2024,
+  "titulo": "Multi-Adjacent Camera-Based Dangerous Driving Trajectory Recognition for Ultra-Long Highways",
+  "venue": "Applied Sciences",
+  "tipo_doc": "revista",
+  "volumen": "14",
+  "numero": "11",
+  "paginas_o_articulo": "Art. 4593",
+  "doi": "10.3390/app14114593",
+  "editorial": "MDPI",
+  "pais_region_datos": "Provincia de Shaanxi, China (autopista de circunvalación de Xi'an); la introducción menciona además la carretera del puente Hong Kong-Zhuhai-Macao como escenario",
+  "entorno": "autopista",
+  "tipo_dato": "video/imágenes",
+  "tipo_dato_detalle": "Video de cámaras de vigilancia de autopista (25 fps); imágenes para detección (YOLOv5s) y re-identificación; trayectorias derivadas (posición, desplazamiento, ángulo, pendiente, velocidad media en k=10 frames) para reglas de anomalía; la BiLSTM usa secuencias de posición lateral/longitudinal, velocidad y aceleración",
+  "datasets": [
+   {
+    "nombre": "Dataset propio de detección vehicular (videos de la red vial de Shaanxi; 6 clases x 500 imágenes)",
+    "tipo": "real",
+    "publico": "no"
+   },
+   {
+    "nombre": "Xi'an Ring Expressway Re-identification Dataset (100 vehículos, 7 hitos kilométricos)",
+    "tipo": "real",
+    "publico": "no"
+   }
+  ],
+  "origen_etiquetas": "anotación manual/experta",
+  "origen_etiquetas_detalle": "Las cajas de vehículos se anotaron manualmente con LabelImg; para las anomalías (Tablas 3–7) se reportan conteos de 'Behaviors', correctas, omisiones y falsas detecciones, pero no se describe cómo se estableció la verdad de terreno; para contramano se usó la configuración invertida aguas arriba/abajo sobre datos normales por falta de datos reales.",
+  "tasa_anomalias": "No reportado como tasa global; p. ej., exceso de velocidad: 14/320, 20/443, 25/461 y 8/112 trayectorias en los videos 1–4 (≈3–7 %)",
+  "paradigma": "supervisado",
+  "enfoque": "otro",
+  "unidad_evaluacion": "trayectoria",
+  "umbral": "Reglas con umbrales fijos: contramano si Num/f ≥ 0.2; velocidad anómala si 5 frames consecutivos fuera de [m, n] (velocidad media en 10 frames); detención si no hay cambio de posición en 5 frames; cambio de carril peligroso si la pendiente supera u (valores de m, n, u no reportados)",
+  "particion": "No reportado (se menciona un 'test set' de trayectorias re-identificadas entre cámaras adyacentes, sin describir la separación)",
+  "familia_principal": "convolucional",
+  "familias": {
+   "recurrente": true,
+   "convolucional": true,
+   "autoencoder": false,
+   "grafos": false,
+   "transformer_atencion": true,
+   "generativo": false
+  },
+  "hibrido": true,
+  "multimodal": false,
+  "arquitectura": "Marco en cascada: YOLOv5s + DeepSORT para detección y seguimiento, red de re-identificación con ramas de atributos basadas en atención (pérdidas triplet + entropía cruzada), BiLSTM para predecir trayectorias en zonas ciegas entre cámaras y reglas de trayectoria para clasificar contramano, velocidad anómala, detención y cambio de carril peligroso.",
+  "metricas": [
+   "CMC (Cumulative Matching Characteristic)",
+   "RMSE lateral y longitudinal (m)",
+   "conteos de detecciones correctas",
+   "detecciones omitidas (missed detection)",
+   "falsas detecciones (false detection)"
+  ],
+  "metricas_flags": {
+   "accuracy": false,
+   "precision": false,
+   "recall": false,
+   "f1": false,
+   "auc_roc": false,
+   "pr_auc": false,
+   "dr": true,
+   "far_fpr": false,
+   "mttd": false,
+   "error_mae_rmse_mape": true,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": false
+  },
+  "resultado_principal": "Contramano: 476/478 trayectorias correctas (99,6 %) en 4 videos; exceso de velocidad: 66/67 detectados con 4 falsas detecciones; cambio de carril peligroso: 27/31; BiLSTM RMSE lateral 0,56 m / longitudinal 1,84 m (1/2 de trayectoria predicha); re-ID mejora >15,38 % en CMC sobre el estado del arte",
+  "baselines": [
+   "StRDAN",
+   "VAnet",
+   "PRND",
+   "SAVER",
+   "HPGN"
+  ],
+  "baseline_no_dl": false,
+  "ventaja_vs_mejor_baseline": "Solo para re-identificación: mejora >15,38 % en la curva CMC frente a métodos del estado del arte; la detección de anomalías no se compara con ningún baseline ('No comparable')",
+  "limitaciones_autores": "Datos de video de autopista imperfectos y faltan datos para entrenar la re-ID en el escenario (limita la generalización); la detección basada en reglas ignora la relación con el entorno y otros vehículos; el pipeline en cascada es engorroso y se propone un modelo integrado.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": true,
+   "etiquetado": false,
+   "generalizacion": true,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": true,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "No",
+  "categoria_anomalia": "trayectorias/conducción peligrosa",
+  "categoria_anomalia_secundaria": "",
+  "calidad": {
+   "QA1": {
+    "p": 0.5,
+    "ev": "Cajas anotadas manualmente con LabelImg, pero no se describe cómo se etiquetaron los comportamientos anómalos de las Tablas 3–7; el contramano se simula invirtiendo la configuración de la cámara sobre datos normales."
+   },
+   "QA2": {
+    "p": 0,
+    "ev": "No se describe la partición entrenamiento/prueba; solo se menciona un 'test set'."
+   },
+   "QA3": {
+    "p": 0.5,
+    "ev": "Compara cinco modelos de re-ID (StRDAN, VAnet, PRND, SAVER, HPGN) solo con la curva CMC; el módulo de detección de anomalías no tiene baselines."
+   },
+   "QA4": {
+    "p": 0,
+    "ev": "Resultados de una sola ejecución, sin desviación estándar ni pruebas de significancia."
+   },
+   "QA5": {
+    "p": 0,
+    "ev": "Datos disponibles bajo solicitud a los autores; sin código público."
+   },
+   "QA6": {
+    "p": 0.5,
+    "ev": "Cuatro videos y varios hitos de la misma red vial de Shaanxi (Xi'an Ring Expressway); no hay vías ni ciudades independientes."
+   },
+   "QA7": {
+    "p": 1,
+    "ev": "Unidad de evaluación: trayectoria (conteos por trayectoria en Tablas 3–7); criterios de decisión explícitos (Num/f ≥ 0.2, 5 frames consecutivos, umbral de pendiente u)."
+   },
+   "QA8": {
+    "p": 1,
+    "ev": "La sección 5 (Discusión) enumera tres limitaciones y mejoras."
+   }
+  },
+  "caso_limite": "El aprendizaje profundo (YOLOv5s, DeepSORT, re-ID, BiLSTM) solo produce y completa trayectorias; la decisión de anomalía es puramente por reglas con umbrales fijos y no se compara con baselines. A favor de incluirlo: el pipeline de DL es indispensable para detectar conductas peligrosas y se evalúa la detección de anomalías (Tablas 3–7). En contra: el componente de detección de anomalías en sí no es DL.",
+  "notas": "Sin ficha previa. Discrepancia interna del PDF: la introducción dice que el escenario de estudio es la carretera del puente Hong Kong-Zhuhai-Macao, pero los experimentos usan videos de Shaanxi / Xi'an Ring Expressway. El 'resultado_principal' en porcentaje se calculó a partir de las Tablas 3, 4 y 7.",
+  "id": "S15",
+  "clave_extraccion": "E21",
+  "id_version_anterior": "E21",
+  "bibkey": "zhao2024multiadjacent",
+  "tipo_dato_corto": "Video de vigilancia",
+  "datasets_corto": "Xi'an Ring Expressway (propio)",
+  "datasets_ejemplo": [
+   "Xi'an Ring Expressway (propio)"
+  ],
+  "etiqueta_corta": "Anotación manual",
+  "categoria_corta": "Conducción peligrosa",
+  "modelo_corto": "YOLOv5 + DeepSORT + re-ID + BiLSTM + reglas",
+  "resultado_corto": "Contramano 99,6 %",
+  "baselines_corto": "Solo para re-identificación",
+  "ventaja_corta": "Detección sin línea base",
+  "decision_limite": "Incluido. El pipeline profundo (detección, seguimiento, re-identificación y BiLSTM) produce las trayectorias sobre las que reglas de umbral deciden la anomalía (CI-5, cláusula de híbridos); la detección se evalúa cuantitativamente (CI-6).",
+  "pdf": "Multi-Adjacent Camera-Based Dangerous Driving Trajectory Recognition for Ultra-Long Highways.pdf"
+ },
+ {
+  "key": "E02",
+  "autores": "Abdallah, W.; Alghamdi, M.",
+  "primer_autor": "Abdallah",
+  "anio": 2025,
+  "titulo": "AIP-Urban: Edge-Enabled Deep Learning Framework for Predictive Maintenance and Anomaly Detection in Urban Traffic Infrastructure",
+  "venue": "Systems",
+  "tipo_doc": "revista",
+  "volumen": "13",
+  "numero": "12",
+  "paginas_o_articulo": "Art. 1117",
+  "doi": "10.3390/systems13121117",
+  "editorial": "MDPI",
+  "pais_region_datos": "No reportado de forma explícita; datasets públicos (CityCam, UA-DETRAC, PEMS-BAY) y escenarios simulados SUMO",
+  "entorno": "ambos",
+  "tipo_dato": "multimodal",
+  "tipo_dato_detalle": "Ventanas fusionadas de 15 s (~200 características): rasgos visuales de video (entropía de brillo, densidad de objetos) de CityCam/UA-DETRAC, series de velocidad/flujo/ocupación de PEMS-BAY, flujo simulado SUMO y variables de infraestructura (voltaje, vibración, estabilidad de corriente, ambientales).",
+  "datasets": [
+   {
+    "nombre": "CityCam",
+    "tipo": "real",
+    "publico": "sí"
+   },
+   {
+    "nombre": "UA-DETRAC",
+    "tipo": "real",
+    "publico": "sí"
+   },
+   {
+    "nombre": "PEMS-BAY",
+    "tipo": "real",
+    "publico": "sí"
+   },
+   {
+    "nombre": "Escenarios sintéticos SUMO",
+    "tipo": "simulado",
+    "publico": "parcial"
+   }
+  ],
+  "origen_etiquetas": "mixto",
+  "origen_etiquetas_detalle": "Pseudo-etiquetas generadas por un autoencoder preentrenado con umbral µe + 3σe, validadas parcialmente contra un pequeño conjunto de marcas temporales de anomalías conocidas de CityCam/UA-DETRAC y escenarios SUMO (TPR 0.87–0.92, FPR < 0.11).",
+  "tasa_anomalias": "No reportado",
+  "paradigma": "semisupervisado",
+  "enfoque": "clasificación",
+  "unidad_evaluacion": "ventana",
+  "umbral": "Alerta si la puntuación de mantenimiento predictivo PMS ≥ 0.8 (fijado empíricamente para equilibrar falsas alarmas y omisiones); las etiquetas de entrenamiento usan umbral de reconstrucción µe + 3σe.",
+  "particion": "70% entrenamiento / 15% validación / 15% prueba, consistente en los cuatro datasets; no se indica si es temporal o aleatoria (semilla fija 42).",
+  "familia_principal": "transformer/atención",
+  "familias": {
+   "recurrente": true,
+   "convolucional": true,
+   "autoencoder": true,
+   "grafos": false,
+   "transformer_atencion": true,
+   "generativo": false
+  },
+  "hibrido": true,
+  "multimodal": true,
+  "arquitectura": "AIP-Urban: modelo híbrido CNN (extracción espacial/visual) + encoder Transformer (4 cabezas, contexto temporal y atención cruzada multimodal) + decoder LSTM que produce una puntuación de mantenimiento predictivo a 24 h; pérdida conjunta MAE + BCE; podado e INT8 para Jetson Nano/Coral TPU.",
+  "metricas": [
+   "Accuracy",
+   "Precision",
+   "Recall",
+   "F1-score",
+   "MAE",
+   "RMSE",
+   "R²",
+   "Horizonte de predicción (h)",
+   "Latencia (ms)",
+   "Potencia (W)",
+   "Throughput (fps)",
+   "Energía/CO2",
+   "Tamaño del modelo",
+   "Temperatura"
+  ],
+  "metricas_flags": {
+   "accuracy": true,
+   "precision": true,
+   "recall": true,
+   "f1": true,
+   "auc_roc": false,
+   "pr_auc": false,
+   "dr": false,
+   "far_fpr": false,
+   "mttd": false,
+   "error_mae_rmse_mape": true,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": true
+  },
+  "resultado_principal": "F1 = 0.94 (MAE 4.2, RMSE 4.8, latencia 72 ms, 7.8 W en Jetson Nano) en el conjunto multimodal combinado; por dataset F1 = 0.95 CityCam, 0.94 UA-DETRAC, 0.93 PEMS-BAY, 0.92 SUMO",
+  "baselines": [
+   "CNN",
+   "LSTM",
+   "GRU",
+   "Federated LSTM",
+   "CNN-LSTM (ablación)",
+   "Transformer only (ablación)",
+   "CNN-Transformer sin LSTM (ablación)"
+  ],
+  "baseline_no_dl": false,
+  "ventaja_vs_mejor_baseline": "+1 pp de F1 (0.94 vs 0.93) y −0.3 de MAE frente a Federated LSTM; +3 pp de F1 por dataset frente al mejor baseline de cada uno",
+  "limitaciones_autores": "Validación principalmente en datasets benchmark y dos plataformas edge en entorno controlado; robustez y generalización a largo plazo in situ limitadas; el componente federado no se evaluó (solo nodos aislados); deriva térmica/estacional/de calibración no abordada; faltan validación multi-intersección y modalidades adicionales.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": false,
+   "etiquetado": false,
+   "generalizacion": true,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": true,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "No",
+  "categoria_anomalia": "disrupciones/eventos extremos/infraestructura",
+  "categoria_anomalia_secundaria": "congestión/flujo anómalo",
+  "calidad": {
+   "QA1": {
+    "p": 0.5,
+    "ev": "Pseudo-etiquetas automáticas de un autoencoder (µe + 3σe) con verificación parcial contra pocas anomalías anotadas (TPR 0.87–0.92, FPR < 0.11)."
+   },
+   "QA2": {
+    "p": 0.5,
+    "ev": "Se describe partición 70/15/15 en los cuatro datasets, sin indicar si es temporal; riesgo de fuga en series."
+   },
+   "QA3": {
+    "p": 0.5,
+    "ev": "Compara con CNN, LSTM, GRU y Federated LSTM bajo el mismo protocolo, pero son baselines genéricos sin método de detección del estado del arte ni no DL; la tabla con estudios recientes copia cifras de otros dominios/protocolos."
+   },
+   "QA4": {
+    "p": 1,
+    "ev": "Wilcoxon (p < 0.05) sobre 10 ejecuciones independientes, IC95% del MAE [4.11; 4.36], ANOVA y Tukey HSD; media ± DE en 5 repeticiones."
+   },
+   "QA5": {
+    "p": 0.5,
+    "ev": "Datos en repositorio público de Google Drive; no se publica el código."
+   },
+   "QA6": {
+    "p": 1,
+    "ev": "Cuatro datasets independientes (CityCam, UA-DETRAC, PEMS-BAY, SUMO) evaluados por separado (Tabla 4)."
+   },
+   "QA7": {
+    "p": 1,
+    "ev": "Unidad: ventanas de 15 s con etiqueta binaria; criterio de decisión PMS ≥ 0.8 y umbral µe + 3σe para etiquetas."
+   },
+   "QA8": {
+    "p": 1,
+    "ev": "Párrafos explícitos en la Discusión sobre entorno controlado, nodos aislados, deriva y necesidad de validación in situ multi-intersección."
+   }
+  },
+  "caso_limite": "¿Cae en CE-3 (solo predicción sin detección de anomalías)? En contra de excluir: el modelo produce una etiqueta binaria de anomalía por ventana (0 = normal, 1 = falla) entrenada con BCE y se evalúa con Precision/Recall/F1 para 'anomaly detection' (señal apagada, congestión abrupta, desconexión de sensor), además de la predicción de mantenimiento a 24 h; la detección no es solo un subproducto del pronóstico. A favor de excluir/precaución: la decisión operativa (PMS ≥ 0.8) es predictiva, gran parte de los resultados (Tabla 5, R², horizontes 22–28 h) son de pronóstico de degradación, varias tareas por dataset se describen como forecasting/drift prediction y las anomalías son de infraestructura (cámaras, voltaje, vibración) más que de tráfico. Recomendación: incluir como caso límite (detección + mantenimiento), señalando la baja calidad metodológica.",
+  "notas": "Inconsistencias internas del PDF: el resumen reporta 'RMSE = 0.11' para predicción de fallas mientras la Tabla 3 da RMSE = 4.8; el resumen dice '94% accuracy (F1 = 0.94)' sin tabla de accuracy; se mencionan 10 ejecuciones (Wilcoxon) y 5 repeticiones en otro apartado; aparece 'Evanston' sin explicación; datos de voltaje/vibración no provienen de los datasets citados y su origen no se aclara. La ficha 06 resume bien el PDF; la ficha cita 'Tabla 6' para la comparación con estudios, que en el PDF es la Tabla 7. País no reportado (autores de Arabia Saudita).",
+  "id": "S16",
+  "clave_extraccion": "E02",
+  "id_version_anterior": "E02",
+  "bibkey": "abdallah2025aipurban",
+  "tipo_dato_corto": "Video, sensores y simulación",
+  "datasets_corto": "CityCam, UA-DETRAC, PEMS-BAY, SUMO",
+  "datasets_ejemplo": [
+   "CityCam",
+   "UA-DETRAC",
+   "PEMS-BAY",
+   "SUMO"
+  ],
+  "etiqueta_corta": "Mixto (pseudo-etiquetas)",
+  "categoria_corta": "Fallos de infraestructura",
+  "modelo_corto": "CNN + Transformer + LSTM (borde)",
+  "resultado_corto": "F1 0,94; 72 ms",
+  "baselines_corto": "CNN, LSTM, GRU, LSTM federado",
+  "ventaja_corta": "+1 pp de F1 frente a LSTM federado",
+  "decision_limite": "Incluido. Aunque el objetivo final es el mantenimiento predictivo, el modelo clasifica ventanas como normales o anómalas y la detección se evalúa con precision, recall y F1, por lo que no cae en CE-3.",
+  "pdf": "AIP-Urban Edge-Enabled Deep Learning Framework for Predictive Maintenance and Anomaly Detection in Urban Traffic Infrastructure.pdf"
+ },
+ {
+  "key": "E12",
+  "autores": "Duan, Sun, Liu",
+  "primer_autor": "Duan",
+  "anio": 2025,
+  "titulo": "A multimodal deep fusion framework for highway traffic anomaly detection",
+  "venue": "Scientific Reports",
+  "tipo_doc": "revista",
+  "volumen": "15",
+  "numero": "",
+  "paginas_o_articulo": "Art. 33573",
+  "doi": "10.1038/s41598-025-18671-x",
+  "editorial": "Springer Nature",
+  "pais_region_datos": "Los Ángeles y Área de la Bahía de San Francisco, California, EE. UU. (METR-LA y PEMS-BAY); el origen de los datos multimodales (cámaras de túnel, LiDAR, sonido, temperatura) no se identifica",
+  "entorno": "autopista",
+  "tipo_dato": "multimodal",
+  "tipo_dato_detalle": "Según el marco: imágenes de cámaras, nubes de puntos LiDAR, sonido, temperatura de superficie, flujo, velocidad y densidad; en la sección experimental solo se describen series de detectores de lazo (velocidad, flujo, densidad cada 5 min) de METR-LA y PEMS-BAY, con ventanas de 10 intervalos.",
+  "datasets": [
+   {
+    "nombre": "METR-LA",
+    "tipo": "real",
+    "publico": "sí"
+   },
+   {
+    "nombre": "PEMS-BAY",
+    "tipo": "real",
+    "publico": "sí"
+   },
+   {
+    "nombre": "Datos multimodales (video de túnel, LiDAR, sonido, temperatura) sin fuente identificada",
+    "tipo": "mixto",
+    "publico": "no"
+   }
+  ],
+  "origen_etiquetas": "mixto",
+  "origen_etiquetas_detalle": "'Traffic anomalies ... were labeled based on known event logs and data-driven detection patterns (e.g., sudden spikes or drops in traffic flow)'.",
+  "tasa_anomalias": "No reportado (se aplica sobre- y submuestreo para balancear clases)",
+  "paradigma": "supervisado",
+  "enfoque": "clasificación",
+  "unidad_evaluacion": "no reportado",
+  "umbral": "No aplica (clasificador)",
+  "particion": "Aleatoria 80:20 (validación 'randomly selected from the raw data' sin solapamiento); además, experimento cross-dataset: entrenamiento en METR-LA y prueba en PEMS-BAY",
+  "familia_principal": "grafos",
+  "familias": {
+   "recurrente": true,
+   "convolucional": true,
+   "autoencoder": false,
+   "grafos": true,
+   "transformer_atencion": true,
+   "generativo": false
+  },
+  "hibrido": true,
+  "multimodal": true,
+  "arquitectura": "MHGNN-CPLE: red neuronal de grafos heterogénea (GCN multinivel y GCN ponderada) con fusión multimodal por atención y GCN+LSTM para dependencias espaciotemporales, optimizada con Contrastive Pessimistic Likelihood Estimation (ponderación dinámica de muestras); preprocesamiento de imágenes con CNN/R-CNN.",
+  "metricas": [
+   "Accuracy",
+   "Precision",
+   "Recall",
+   "F1-score",
+   "AUC",
+   "Robustness (cualitativa)",
+   "Significance (cualitativa)",
+   "Stability (cualitativa)"
+  ],
+  "metricas_flags": {
+   "accuracy": true,
+   "precision": true,
+   "recall": true,
+   "f1": true,
+   "auc_roc": true,
+   "pr_auc": false,
+   "dr": false,
+   "far_fpr": false,
+   "mttd": false,
+   "error_mae_rmse_mape": false,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": false
+  },
+  "resultado_principal": "Accuracy = 0.980, F1 = 0.967, AUC = 0.985 en detección estática (escenario de flujo, METR-LA/PEMS-BAY)",
+  "baselines": [
+   "AGC-LSTM",
+   "AttentionDeepST",
+   "Variantes de ablación (sin HGNN, sin atención, sin CPLE; por modalidad)"
+  ],
+  "baseline_no_dl": false,
+  "ventaja_vs_mejor_baseline": "+1.5 pp de accuracy, +2.2 pp de F1 y +2.5 pp de AUC frente a AGC-LSTM (0.965/0.945/0.960) en detección estática",
+  "limitaciones_autores": "Dependencia de entradas multimodales sincronizadas y de alta resolución (fallos de sensores, datos faltantes o asíncronos); alto costo computacional de HGNN y fusión para inferencia en tiempo real y en edge; todos los datos provienen de autopistas de California, sin probar transferencia a otras regiones; casos de fallo: niebla/nieve confundidas con congestión y mantenimiento vial confundido con accidentes.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": true,
+   "etiquetado": false,
+   "generalizacion": true,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": true,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "No",
+  "categoria_anomalia": "accidentes/incidentes",
+  "categoria_anomalia_secundaria": "congestión/flujo anómalo",
+  "calidad": {
+   "QA1": {
+    "p": 0.5,
+    "ev": "Etiquetas mixtas: registros de eventos conocidos más patrones detectados automáticamente en los datos; sin verificación descrita."
+   },
+   "QA2": {
+    "p": 0.5,
+    "ev": "Resultados principales con partición aleatoria 80:20 (riesgo de fuga temporal); solo el experimento cross-dataset METR-LA→PEMS-BAY usa un conjunto independiente."
+   },
+   "QA3": {
+    "p": 1,
+    "ev": "Dos baselines DL avanzados (AGC-LSTM, AttentionDeepST) en todas las tablas, más ablaciones de módulos y modalidades."
+   },
+   "QA4": {
+    "p": 0.5,
+    "ev": "La Tabla 3 se promedia sobre 1,000 ensayos de simulación pero sin dispersión; 'Significance' es una etiqueta cualitativa sin prueba estadística reportada."
+   },
+   "QA5": {
+    "p": 0.5,
+    "ev": "METR-LA y PEMS-BAY son públicos (enlace a DCRNN); los datos del estudio 'available ... on reasonable request'; no hay código."
+   },
+   "QA6": {
+    "p": 1,
+    "ev": "Dos datasets de regiones distintas (Los Ángeles y Bay Area), con prueba cross-dataset."
+   },
+   "QA7": {
+    "p": 0,
+    "ev": "No se define la unidad de evaluación ni el criterio de decisión del clasificador."
+   },
+   "QA8": {
+    "p": 1,
+    "ev": "Párrafos explícitos de limitaciones en 'Discussion and future work' y 'Conclusion', más sección 'Failure case analysis'."
+   }
+  },
+  "caso_limite": "Inclusión dudosa por consistencia interna: el marco y las ablaciones dicen usar imágenes, LiDAR, sonido y temperatura, pero los únicos datasets descritos (METR-LA, PEMS-BAY) contienen solo series de velocidad/flujo de detectores de lazo y no tienen etiquetas de incidentes; no se identifica la fuente de los datos multimodales ni de las etiquetas. Es DL y aborda detección de anomalías, por lo que cumple criterios formales, pero su evidencia empírica es poco verificable; se recomienda incluir con calidad baja y señalarlo.",
+  "notas": "Título, autores, volumen, artículo y DOI exactos según el PDF: 'A multimodal deep fusion framework for highway traffic anomaly detection', Mengmeng Duan, Shaowei Sun & Mingzhou Liu, Scientific Reports (2025) 15:33573, https://doi.org/10.1038/s41598-025-18671-x (recibido 28 abr. 2025; aceptado 3 sep. 2025); coinciden con ficha_02. Discrepancias: la numeración de tablas de la ficha no coincide con el PDF (Tabla 1 de la ficha = Tabla 3 del PDF, etc.); el texto dice que AGC-LSTM obtiene accuracy 0.950 en detección estática, pero la Tabla 4 muestra 0.965; en la ablación 'HGNN' se expande como 'Hierarchical Graph Neural Network'; la tabla de ablación usa función objetivo MSE pese a ser clasificación. La ficha clasifica el enfoque también como predicción; el PDF evalúa tanto detección como predicción de accidentes, aquí se codifica como clasificación.",
+  "id": "S17",
+  "clave_extraccion": "E12",
+  "id_version_anterior": "E12",
+  "bibkey": "duan2025multimodal",
+  "tipo_dato_corto": "Sensores (+ multimodal declarado)",
+  "datasets_corto": "METR-LA, PEMS-BAY",
+  "datasets_ejemplo": [
+   "METR-LA",
+   "PEMS-BAY"
+  ],
+  "etiqueta_corta": "Mixto",
+  "categoria_corta": "Accidentes e incidentes",
+  "modelo_corto": "GNN heterogénea + atención + LSTM",
+  "resultado_corto": "F1 0,967; AUC 0,985",
+  "baselines_corto": "AGC-LSTM, AttentionDeepST",
+  "ventaja_corta": "+2,2 pp de F1 frente a AGC-LSTM",
+  "decision_limite": "Incluido con advertencia. Cumple CI-4 a CI-6, pero la fuente de los datos multimodales y de las etiquetas no se identifica; se refleja en la evaluación de calidad y en la discusión.",
+  "pdf": "A multimodal deep fusion framework for highway traffic anomaly detection.pdf"
+ },
+ {
+  "key": "E16",
+  "autores": "Jia, Qu, Lyu, Guo, Zhang, Guo",
+  "primer_autor": "Jia",
+  "anio": 2025,
+  "titulo": "A Prediction-Based Anomaly Detection Method for Traffic Flow Data with Multi-Domain Feature Extraction",
+  "venue": "Applied Sciences",
+  "tipo_doc": "revista",
+  "volumen": "15",
+  "numero": "6",
+  "paginas_o_articulo": "Art. 3234",
+  "doi": "10.3390/app15063234",
+  "editorial": "MDPI",
+  "pais_region_datos": "California, Estados Unidos (PeMS)",
+  "entorno": "autopista",
+  "tipo_dato": "series de sensores",
+  "tipo_dato_detalle": "Flujo vehicular agregado cada 5 min de 307 (PEMS04) y 170 (PEMS08) detectores; se conserva solo el componente de flujo (se descartan velocidad y ocupación) junto con la matriz de adyacencia de la red; ventana histórica de 6 pasos para predecir el siguiente paso.",
+  "datasets": [
+   {
+    "nombre": "PEMS04",
+    "tipo": "real",
+    "publico": "sí"
+   },
+   {
+    "nombre": "PEMS08",
+    "tipo": "real",
+    "publico": "sí"
+   }
+  ],
+  "origen_etiquetas": "sin etiquetas",
+  "origen_etiquetas_detalle": "Los autores declaran que los datos reales de flujo no tienen etiquetado de anomalías; la detección se contrasta con la agregación por votación (≥2 de 3) de Isolation Forest, LSTM-VAE y LSTM-NDT y con inspección visual.",
+  "tasa_anomalias": "No reportado (se detectan 46 puntos anómalos en PEMS04 y 51 en PEMS08 con k = 3; no se da el total de puntos evaluados)",
+  "paradigma": "no supervisado",
+  "enfoque": "predicción",
+  "unidad_evaluacion": "punto/instante",
+  "umbral": "Desigualdad de Chebyshev sobre el error de predicción: anómalo si e_t sale de μe ± kσe, con k = 3",
+  "particion": "Temporal: PEMS04 primeros 45 días entrenamiento y últimos 14 días prueba; PEMS08 primeros 48 días entrenamiento y últimos 14 días prueba",
+  "familia_principal": "transformer/atención",
+  "familias": {
+   "recurrente": true,
+   "convolucional": false,
+   "autoencoder": false,
+   "grafos": true,
+   "transformer_atencion": true,
+   "generativo": false
+  },
+  "hibrido": true,
+  "multimodal": false,
+  "arquitectura": "BI-GAT-TF: Bi-LSTM (dependencias temporales) y GAT (dependencias espaciales) en el dominio del tiempo, más FFT y Transformer que aprende magnitud y fase en el dominio de la frecuencia; el predictor combina ambos y el residuo se umbraliza con Chebyshev.",
+  "metricas": [
+   "MAE",
+   "RMSE",
+   "MAPE",
+   "NSE",
+   "número de anomalías detectadas",
+   "coincidencias con la agregación de métodos no supervisados"
+  ],
+  "metricas_flags": {
+   "accuracy": false,
+   "precision": false,
+   "recall": false,
+   "f1": false,
+   "auc_roc": false,
+   "pr_auc": false,
+   "dr": false,
+   "far_fpr": false,
+   "mttd": false,
+   "error_mae_rmse_mape": true,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": false
+  },
+  "resultado_principal": "Predicción: MAE = 19.12, RMSE = 25.90, MAPE = 7.25 %, NSE = 0.97 en PEMS08 (PEMS04: MAE = 26.05, RMSE = 37.08, MAPE = 12.36 %, NSE = 0.93). Detección: recupera 29 de las 30 anomalías de la agregación en PEMS08 (19 de 21 en PEMS04)",
+  "baselines": [
+   "CNN-LSTM",
+   "BI-GAT (ablación sin módulo de frecuencia)",
+   "CNN-LSTM-TF",
+   "Isolation Forest",
+   "LSTM-VAE",
+   "LSTM-NDT"
+  ],
+  "baseline_no_dl": true,
+  "ventaja_vs_mejor_baseline": "Predicción: −2.92 MAE y −3.74 RMSE frente a CNN-LSTM-TF en PEMS08 (22.04/29.64 → 19.12/25.90); detección: no comparable (sin etiquetas, solo coincidencia con la agregación)",
+  "limitaciones_autores": "Los datos no tienen etiquetas de anomalías; los datasets tienen pocos datos faltantes y poca proporción de ruido; como trabajo futuro proponen experimentos con etiquetas claras de outliers, distintas proporciones de ruido y más modelos de referencia.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": false,
+   "etiquetado": true,
+   "generalizacion": true,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": false,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "No",
+  "categoria_anomalia": "congestión/flujo anómalo",
+  "categoria_anomalia_secundaria": "disrupciones/eventos extremos/infraestructura",
+  "calidad": {
+   "QA1": {
+    "p": 0,
+    "ev": "\"there is no labeling of anomaly data\": los datos reales no tienen etiquetas; la validación se hace por coincidencia con otros métodos no supervisados."
+   },
+   "QA2": {
+    "p": 1,
+    "ev": "Partición temporal explícita: los primeros 45/48 días para entrenamiento y los 14 días finales para prueba (Sección 4.4)."
+   },
+   "QA3": {
+    "p": 0.5,
+    "ev": "La predicción se compara con CNN-LSTM, BI-GAT y CNN-LSTM-TF (en parte ablaciones). La detección se coteja con IF, LSTM-VAE y LSTM-NDT solo por coincidencia de puntos, sin etiquetas ni métricas de desempeño: comparación débil."
+   },
+   "QA4": {
+    "p": 0,
+    "ev": "Una sola ejecución por modelo, sin desviación estándar ni pruebas de significancia."
+   },
+   "QA5": {
+    "p": 0.5,
+    "ev": "Usa PEMS04/PEMS08, que son públicos; no se publica código ni repositorio (Data Availability: 'included within the article')."
+   },
+   "QA6": {
+    "p": 1,
+    "ev": "Dos datasets independientes: PEMS04 (307 detectores, 59 días) y PEMS08 (170 detectores, 62 días)."
+   },
+   "QA7": {
+    "p": 1,
+    "ev": "La unidad es el punto temporal (error e_t por instante) y el criterio es la cota de Chebyshev con k = 3 (μ ± 3σ)."
+   },
+   "QA8": {
+    "p": 0.5,
+    "ev": "Breve mención en las Conclusiones: 'the dataset used in this paper has some limitations, such as less missing data, lower proportion of noise'."
+   }
+  },
+  "caso_limite": "Es ante todo un modelo de predicción de flujo; la detección se evalúa sin etiquetas, solo por coincidencia con otros detectores y por inspección visual. Además, las anomalías pueden ser fallos de sensores o de recolección (calidad de datos) y no eventos de tráfico. A favor de incluirlo: propone de forma explícita un método DL de detección de anomalías en flujo vehicular, con umbral definido y salida de puntos anómalos.",
+  "notas": "En el texto de la Sección 4.5 el RMSE de PEMS08 aparece como 19.12 (repite el MAE, errata); la Figura 6 del PDF muestra RMSE = 25.90, valor que coincide con la ficha. El entorno 'autopista' se infiere de que PeMS reúne detectores de autopistas de California; el PDF solo dice 'California transportation management system'. El número de la revista (6) se deduce del DOI. La ficha no menciona la comparación por coincidencias (19/21 en PEMS04 y 29/30 en PEMS08), que sí está en el PDF.",
+  "id": "S18",
+  "clave_extraccion": "E16",
+  "id_version_anterior": "E16",
+  "bibkey": "jia2025prediction",
+  "tipo_dato_corto": "Detectores (PeMS)",
+  "datasets_corto": "PEMS04, PEMS08",
+  "datasets_ejemplo": [
+   "PEMS04",
+   "PEMS08"
+  ],
+  "etiqueta_corta": "Sin etiquetas",
+  "categoria_corta": "Flujo anómalo",
+  "modelo_corto": "Bi-LSTM + GAT + Transformer en frecuencia",
+  "resultado_corto": "29/30 anomalías de consenso",
+  "baselines_corto": "iForest, LSTM-VAE, LSTM-NDT",
+  "ventaja_corta": "No comparable (sin etiquetas)",
+  "decision_limite": "Incluido. La detección se cuantifica frente a un consenso de tres detectores (29 de 30 anomalías), lo que satisface CI-6 aunque sin etiquetas reales (QA1 = 0).",
+  "pdf": "A Prediction-Based Anomaly Detection Method for Traffic Flow Data with Multi-Domain Feature Extraction.pdf"
+ },
+ {
+  "key": "E11",
+  "autores": "Park, Choi, Lim, Kang",
+  "primer_autor": "Park",
+  "anio": 2025,
+  "titulo": "Graph Multi-Resolution Transformer for Road Traffic Anomaly Detection",
+  "venue": "IEEE Access",
+  "tipo_doc": "revista",
+  "volumen": "13",
+  "numero": "",
+  "paginas_o_articulo": "pp. 27428–27437",
+  "doi": "10.1109/ACCESS.2025.3538836",
+  "editorial": "IEEE",
+  "pais_region_datos": "Pangyo (zona de demostración de conducción autónoma), Corea del Sur",
+  "entorno": "urbano",
+  "tipo_dato": "simulado",
+  "tipo_dato_detalle": "Simulación microscópica VISSIM (13 intersecciones, 66 enlaces, 256 carriles, 70% vehículos convencionales/30% AV nivel 4); cinco atributos por carril cada 5 min: número de vehículos, velocidad media armónica, velocidad media aritmética, demora total y ocupación; más codificación horaria one-hot (5 franjas).",
+  "datasets": [
+   {
+    "nombre": "Simulación VISSIM de la red de Pangyo (14 días: 7 normales + 7 con anomalías)",
+    "tipo": "simulado",
+    "publico": "no"
+   }
+  ],
+  "origen_etiquetas": "anomalías inyectadas/sintéticas",
+  "origen_etiquetas_detalle": "Las anomalías se generan en la simulación bloqueando carriles (AN1–AN3, con distinta severidad) o reduciendo la velocidad por clima adverso (AN4), en 15 enlaces aleatorios y con duraciones de 5 a 60 min; las proporciones se inspiran en estadísticas de Gyeonggi-do de 2023.",
+  "tasa_anomalias": "No reportado (anomalías en 15 de 66 enlaces durante los 7 días de prueba; duración 5–60 min; no se da proporción de instantes anómalos)",
+  "paradigma": "no supervisado",
+  "enfoque": "reconstrucción",
+  "unidad_evaluacion": "evento",
+  "umbral": "θ = puntuación de anomalía máxima observada en el conjunto de validación (datos normales); un enlace es anómalo si algún carril supera θ",
+  "particion": "Temporal: días 1–5 entrenamiento, días 6–7 validación (solo datos normales), días 8–14 prueba (con anomalías)",
+  "familia_principal": "transformer/atención",
+  "familias": {
+   "recurrente": false,
+   "convolucional": false,
+   "autoencoder": false,
+   "grafos": true,
+   "transformer_atencion": true,
+   "generativo": false
+  },
+  "hibrido": true,
+  "multimodal": false,
+  "arquitectura": "GMRT (Graph Multi-Resolution Transformer): entrada transformada en grafo mediante matriz de adyacencia por conectividad vial, codificación temporal one-hot y L capas con ramas multi-resolución de tokenización por parches (channel-independent) procesadas por un encoder Transformer con atención multi-cabeza y fusionadas por proyección lineal; detecta por error de reconstrucción (RMSE por carril).",
+  "metricas": [
+   "Recall (media ± desviación estándar entre enlaces probados)",
+   "Recall por horizonte de detección (on-time, +30, +60, +90, +120 min)"
+  ],
+  "metricas_flags": {
+   "accuracy": false,
+   "precision": false,
+   "recall": true,
+   "f1": false,
+   "auc_roc": false,
+   "pr_auc": false,
+   "dr": false,
+   "far_fpr": false,
+   "mttd": false,
+   "error_mae_rmse_mape": false,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": false
+  },
+  "resultado_principal": "Recall promedio = 0.7755 ± 0.2944 (T = 288) en la simulación VISSIM de Pangyo",
+  "baselines": [
+   "LSTM",
+   "GRU",
+   "Transformer",
+   "Informer",
+   "Autoformer"
+  ],
+  "baseline_no_dl": false,
+  "ventaja_vs_mejor_baseline": "+5.33 pp de recall promedio frente a Autoformer (0.7755 vs 0.7222) con T = 288; con T = 72 Autoformer supera a GMRT (0.6488 vs 0.6369)",
+  "limitaciones_autores": "Uso exclusivo de datos simulados por la dificultad de obtener datos reales etiquetados a gran escala; no se reporta precisión porque pueden existir anomalías no identificadas y la propagación entre enlaces eleva puntuaciones; trabajo futuro: aplicar a datos reales y a otros contextos urbanos.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": false,
+   "etiquetado": true,
+   "generalizacion": true,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": false,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "No",
+  "categoria_anomalia": "accidentes/incidentes",
+  "categoria_anomalia_secundaria": "congestión/flujo anómalo",
+  "calidad": {
+   "QA1": {
+    "p": 0,
+    "ev": "Solo anomalías inyectadas en simulación VISSIM (bloqueos de carril y reducción de velocidad); no hay registros reales."
+   },
+   "QA2": {
+    "p": 1,
+    "ev": "Partición temporal explícita: días 1–5 entrenamiento, 6–7 validación, 8–14 prueba."
+   },
+   "QA3": {
+    "p": 1,
+    "ev": "Cinco baselines DL bajo el mismo protocolo, incluidos Informer y Autoformer (estado del arte en series largas)."
+   },
+   "QA4": {
+    "p": 0.5,
+    "ev": "Se reporta media ± desviación estándar del recall entre los enlaces probados, pero de una sola ejecución; sin semillas múltiples ni pruebas de significancia."
+   },
+   "QA5": {
+    "p": 0,
+    "ev": "No se publica código ni el dataset simulado."
+   },
+   "QA6": {
+    "p": 0,
+    "ev": "Una única red simulada (Pangyo); las variaciones son de tipo de anomalía, ventana T y horizonte, no escenarios independientes."
+   },
+   "QA7": {
+    "p": 1,
+    "ev": "Unidad: evento de anomalía ('calculated by the anomaly event not using the time points'); umbral: máxima puntuación en validación."
+   },
+   "QA8": {
+    "p": 0.5,
+    "ev": "Mención breve: justificación del uso de simulación y trabajo futuro con datos reales en la conclusión; sin sección de limitaciones."
+   }
+  },
+  "caso_limite": "Datos 100% simulados: la validez externa es baja, aunque el método es claramente DL (Transformer + grafo) y orientado a detección de anomalías; se incluye, con la salvedad de que no hay validación con datos reales.",
+  "notas": "PDF verificado frente a ficha_14: identificación y DOI coinciden. Discrepancias: (1) la ficha afirma que GMRT supera 'de forma consistente' a los baselines, pero la Tabla 5 del PDF muestra que con T = 72 Autoformer obtiene mayor recall promedio (0.6488 vs 0.6369), aunque el texto del artículo también dice que GMRT lo supera; (2) la Ec. 11 define Recall como TP/(TP+FP), que es en realidad la fórmula de precisión (error del artículo); (3) pequeños errores de transcripción en la tabla de la ficha (p. ej., Transformer T = 288 on-time es 0.6589 en el PDF, no 0.5889). Páginas 27428–27437 tomadas del PDF.",
+  "id": "S19",
+  "clave_extraccion": "E11",
+  "id_version_anterior": "E11",
+  "bibkey": "park2025graph",
+  "tipo_dato_corto": "Simulación microscópica",
+  "datasets_corto": "VISSIM Pangyo (simulado)",
+  "datasets_ejemplo": [
+   "VISSIM Pangyo"
+  ],
+  "etiqueta_corta": "Inyectadas",
+  "categoria_corta": "Accidentes e incidentes",
+  "modelo_corto": "Transformer de grafos multirresolución",
+  "resultado_corto": "Recall 0,78 ± 0,29",
+  "baselines_corto": "LSTM, GRU, Transformer, Informer, Autoformer",
+  "ventaja_corta": "+5,3 pp de recall frente a Autoformer (T=288)",
+  "pdf": "Graph Multi-Resolution Transformer for Road Traffic Anomaly Detection.pdf"
+ },
+ {
+  "key": "E19",
+  "autores": "Chai, Silamu",
+  "primer_autor": "Chai",
+  "anio": 2026,
+  "titulo": "Road Traffic Anomaly Detection by Human-Attention-Assisted Text–Vision Learning",
+  "venue": "Sensors",
+  "tipo_doc": "revista",
+  "volumen": "26",
+  "numero": "9",
+  "paginas_o_articulo": "Art. 2638",
+  "doi": "10.3390/s26092638",
+  "editorial": "MDPI",
+  "pais_region_datos": "No reportado (los frames llevan textos en chino, lo que sugiere China)",
+  "entorno": "no especificado",
+  "tipo_dato": "video/imágenes",
+  "tipo_dato_detalle": "Grupos de 5 frames consecutivos de video de vigilancia (224×224). En entrenamiento se añaden descripciones textuales gruesas (2) y finas (1448) y mapas de mirada humana (eye-gaze); en inferencia solo entran video y las dos frases gruesas.",
+  "datasets": [
+   {
+    "nombre": "TADS (con anotaciones textuales nuevas)",
+    "tipo": "real",
+    "publico": "parcial"
+   }
+  ],
+  "origen_etiquetas": "anotación manual/experta",
+  "origen_etiquetas_detalle": "Los intervalos normales y anómalos y las 12 categorías proceden de TADS, dataset propio de los autores [4]; en este trabajo añaden 1450 anotaciones textuales y usan mapas de mirada registrados con eye-tracker a varios observadores.",
+  "tasa_anomalias": "No reportado",
+  "paradigma": "supervisado",
+  "enfoque": "contrastivo/similitud",
+  "unidad_evaluacion": "frame",
+  "umbral": "Score softmax de similitud con la frase de anomalía > 0.5 ⇒ frame anómalo (umbral fijo 0.5; el AUC se calcula sobre todos los umbrales)",
+  "particion": "Conjuntos de entrenamiento y prueba predefinidos de TADS (remite a [4]); en el artículo no se describe el criterio de partición",
+  "familia_principal": "transformer/atención",
+  "familias": {
+   "recurrente": false,
+   "convolucional": false,
+   "autoencoder": false,
+   "grafos": false,
+   "transformer_atencion": true,
+   "generativo": false
+  },
+  "hibrido": false,
+  "multimodal": true,
+  "arquitectura": "Modelo basado en CLIP: codificador visual de 5 frames con fusión temporal Transformer, codificador de texto para descripciones gruesas y finas, y cross-attention frame-texto alineada con los mapas de mirada mediante pérdida KL; se entrena con cuatro pérdidas (v2c, v2f, f2c y gaze).",
+  "metricas": [
+   "Micro AUC",
+   "Macro AUC",
+   "Accuracy",
+   "FPS",
+   "Micro AUC por categoría de anomalía"
+  ],
+  "metricas_flags": {
+   "accuracy": true,
+   "precision": false,
+   "recall": false,
+   "f1": false,
+   "auc_roc": true,
+   "pr_auc": false,
+   "dr": false,
+   "far_fpr": false,
+   "mttd": false,
+   "error_mae_rmse_mape": false,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": true
+  },
+  "resultado_principal": "Micro AUC = 74.3 %, Macro AUC = 76.0 %, Accuracy = 66.4 % en el conjunto de prueba de TADS (54 FPS)",
+  "baselines": [
+   "ResNet50",
+   "LS-ResNet50",
+   "MNAD(recon)",
+   "MNAD(pred)",
+   "OLP-TAD",
+   "RF-RG",
+   "CLIP (zero-shot)"
+  ],
+  "baseline_no_dl": false,
+  "ventaja_vs_mejor_baseline": "+5.7 pp de Micro AUC, +6.9 pp de Macro AUC y +3.6 pp de accuracy frente a RF-RG",
+  "limitaciones_autores": "El AUC de 74.3 % deja mucho margen de mejora por la diversidad y complejidad de los escenarios de vigilancia; el rendimiento es bajo en categorías con pocos datos (2, 3 y 11 representan 2 %, 0.25 % y 2 % del entrenamiento); los inicios y finales de las anomalías son difíciles de delimitar; 54 FPS medidos offline bajarían en línea y los módulos Transformer y de cross-attention encarecen la inferencia.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": true,
+   "etiquetado": true,
+   "generalizacion": true,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": true,
+   "interpretabilidad": false
+  },
+  "codigo_disponible": "No",
+  "categoria_anomalia": "accidentes/incidentes",
+  "categoria_anomalia_secundaria": "",
+  "calidad": {
+   "QA1": {
+    "p": 0.5,
+    "ev": "Intervalos anómalos anotados manualmente en TADS (dataset propio [4]) más anotación textual de los autores; aquí no se describe ninguna verificación de las etiquetas."
+   },
+   "QA2": {
+    "p": 0.5,
+    "ev": "Se evalúa en el 'TADS testing set', separado del entrenamiento, pero no se describe cómo se formó la partición (por video o por escena)."
+   },
+   "QA3": {
+    "p": 1,
+    "ev": "Seis baselines bajo el mismo test (supervisados ResNet50 y LS-ResNet50; no supervisados MNAD, OLP-TAD y RF-RG, este último del estado del arte), además de CLIP zero-shot y una ablación."
+   },
+   "QA4": {
+    "p": 0,
+    "ev": "Valores únicos, sin desviación estándar ni repeticiones."
+   },
+   "QA5": {
+    "p": 0,
+    "ev": "Sin código; los datos solo 'upon reasonable request' a Y. Chai."
+   },
+   "QA6": {
+    "p": 0.5,
+    "ev": "Un solo dataset (TADS) con múltiples escenas de vigilancia y resultados desglosados en 12 categorías de anomalía."
+   },
+   "QA7": {
+    "p": 1,
+    "ev": "Unidad = frame objetivo (micro AUC sobre frames concatenados y macro AUC por video); umbral de decisión de 0.5 sobre el score de anomalía."
+   },
+   "QA8": {
+    "p": 1,
+    "ev": "Hay un párrafo explícito en las Conclusiones ('there are at least two avenues...') y otro en la Sección 5.5.2 sobre el FPS y el costo de los módulos."
+   }
+  },
+  "caso_limite": "",
+  "notas": "Coincide en general con la ficha. La accuracy se define primero como la 'proportion of traffic anomaly video frames that are correctly classified' y luego como aciertos sobre el total de frames del test (Ec. 6), lo que es ambiguo. La ficha da el país como 'No reportado', igual que aquí; el indicio de China se basa solo en los textos en chino de los frames. Algunos resultados de baselines se toman de [4] y no se reentrenan ('some experiment results in this paper are referred to the article [4]'). En la ablación, la accuracy de base-t-f (67.2) supera a la del modelo final (66.4).",
+  "id": "S20",
+  "clave_extraccion": "E19",
+  "id_version_anterior": "E19",
+  "bibkey": "chai2026road",
+  "tipo_dato_corto": "Video y texto",
+  "datasets_corto": "TADS",
+  "datasets_ejemplo": [
+   "TADS"
+  ],
+  "etiqueta_corta": "Anotación manual",
+  "categoria_corta": "Accidentes e incidentes",
+  "modelo_corto": "CLIP + Transformer temporal + mirada",
+  "resultado_corto": "Micro AUC 74,3 %",
+  "baselines_corto": "ResNet50, MNAD, OLP-TAD, RF-RG",
+  "ventaja_corta": "+5,7 pp de AUC frente a RF-RG",
+  "pdf": "Road Traffic Anomaly Detection by Human-Attention-Assisted Text–Vision Learning.pdf"
+ },
+ {
+  "key": "E09",
+  "autores": "Jadhav, Benslimane, Vora, Patil",
+  "primer_autor": "Jadhav",
+  "anio": 2026,
+  "titulo": "Multi-stage classification of abnormal traffic events using a multi-head + LSTM",
+  "venue": "Scientific Reports",
+  "tipo_doc": "revista",
+  "volumen": "16",
+  "numero": "No reportado",
+  "paginas_o_articulo": "Art. 1516",
+  "doi": "10.1038/s41598-025-31470-8",
+  "editorial": "Springer Nature",
+  "pais_region_datos": "California, Estados Unidos (PeMS)",
+  "entorno": "autopista",
+  "tipo_dato": "multimodal",
+  "tipo_dato_detalle": "Series de estaciones PeMS (flujo, ocupación, velocidad), metadatos geográficos (latitud, longitud, autopista, dirección, tipo de carril), codificación seno/coseno de día/hora/minuto y clima por API (temperatura, viento, precipitación, humedad); ventanas de 6 pasos con 31 rasgos por paso.",
+  "datasets": [
+   {
+    "nombre": "PeMS California (station data, station metadata, incident reports), 1–15 enero 2024",
+    "tipo": "real",
+    "publico": "sí"
+   },
+   {
+    "nombre": "Datos meteorológicos históricos vía API (no se nombra el proveedor)",
+    "tipo": "real",
+    "publico": "parcial"
+   }
+  ],
+  "origen_etiquetas": "mixto",
+  "origen_etiquetas_detalle": "Las anomalías se etiquetan automáticamente con Isolation Forest (contaminación 1%, contrastado con informes históricos e inspección visual), la congestión con umbrales derivados de centroides K-means y los incidentes asociando los reportes reales de PeMS a estaciones en un radio de 1.5 km (cKDTree).",
+  "tasa_anomalias": "1% de anomalías fijado por la contaminación de Isolation Forest; en prueba 6,690 de 517,509 muestras con anomalía (≈1.3%) y 1,578 de 515,501 muestras con incidente (≈0.31%)",
+  "paradigma": "supervisado",
+  "enfoque": "clasificación",
+  "unidad_evaluacion": "ventana",
+  "umbral": "No aplica (clasificador con salida sigmoide/softmax; el umbral de decisión no se reporta). Los umbrales de etiquetado son: contaminación 1% (Isolation Forest), reglas de umbral a partir de los centroides K-means y radio espacial de 1.5 km.",
+  "particion": "Temporal por día: entrenamiento incremental con los CSV diarios (15 días) y prueba en el CSV del día 16, no visto por el modelo; SMOTE solo en entrenamiento.",
+  "familia_principal": "transformer/atención",
+  "familias": {
+   "recurrente": true,
+   "convolucional": false,
+   "autoencoder": false,
+   "grafos": false,
+   "transformer_atencion": true,
+   "generativo": false
+  },
+  "hibrido": true,
+  "multimodal": true,
+  "arquitectura": "Multi-head + LSTM en un pipeline de tres etapas (detección de anomalías → clasificación de congestión baja/media/alta → identificación de incidentes): bloque multi-head attention de 128 dimensiones con normalización, capa densa y dropout, seguido de LSTM apiladas, global average pooling y capas densas con salida sigmoide (binaria) o softmax (congestión); hiperparámetros por optimización bayesiana con Optuna.",
+  "metricas": [
+   "Accuracy",
+   "Precision",
+   "Recall",
+   "F1-score",
+   "AUC-ROC",
+   "TPR",
+   "TNR",
+   "MCC",
+   "DR",
+   "FAR",
+   "CR",
+   "Confusion matrix"
+  ],
+  "metricas_flags": {
+   "accuracy": true,
+   "precision": true,
+   "recall": true,
+   "f1": true,
+   "auc_roc": true,
+   "pr_auc": false,
+   "dr": true,
+   "far_fpr": true,
+   "mttd": false,
+   "error_mae_rmse_mape": false,
+   "iou_map": false,
+   "operativas_latencia_fps_energia": false
+  },
+  "resultado_principal": "Detección de anomalías: F1 (clase anómala) = 0.81, MCC = 0.81, TPR = 0.8979, TNR = 0.9959 en PeMS (día de prueba); identificación de incidentes: Accuracy = 99.99%, DR = 0.9968, FAR = 0.011, AUC-ROC = 1.0; congestión: Accuracy = 94.84%, MCC = 0.8922",
+  "baselines": [
+   "CNN with decomposition (Djenouri)",
+   "YOLOv5 + decision tree (Aboah)",
+   "Machine learning-based system (Laanaoui)",
+   "LSTM + CNN + spectrum decomposition (Lei)",
+   "Random Forest (Shah)",
+   "Spatio-temporal variational graph auto-encoders (Liu)",
+   "XGB (Bereczki)",
+   "Network Lasso (Zhu)",
+   "GAN + Transformer (Lu)",
+   "SASYNO-RF-RSKNN (Xie)",
+   "SAE (Gurusamy)"
+  ],
+  "baseline_no_dl": true,
+  "ventaja_vs_mejor_baseline": "No comparable: las cifras de los baselines se copian de otros artículos con datasets y protocolos distintos (p. ej., FAR 0.011 frente a 0.021 de GAN + Transformer; en congestión, ST-VGAE/TAP tiene mayor accuracy, 96% frente a 94.84%)",
+  "limitaciones_autores": "Desbalance de clases (anomalías e incidentes raros) con posible sesgo; solo 15 días de datos, sin variaciones estacionales ni festivos y con riesgo de concept drift; modelo de caja negra poco interpretable; umbrales fijos (contaminación, 1.5 km) quizá no transferibles a otras redes; se proponen arquitecturas más ligeras para tiempo real y comparar con Transformers avanzados.",
+  "limitaciones_flags": {
+   "datos_replicabilidad": false,
+   "etiquetado": true,
+   "generalizacion": true,
+   "metricas_no_uniformes": false,
+   "costo_despliegue": true,
+   "interpretabilidad": true
+  },
+  "codigo_disponible": "No",
+  "categoria_anomalia": "congestión/flujo anómalo",
+  "categoria_anomalia_secundaria": "accidentes/incidentes",
+  "calidad": {
+   "QA1": {
+    "p": 0.5,
+    "ev": "Etiquetas mixtas: anomalías generadas automáticamente con Isolation Forest (1%) con verificación parcial, congestión con K-means e incidentes desde reportes reales de PeMS asociados por radio de 1.5 km."
+   },
+   "QA2": {
+    "p": 1,
+    "ev": "Partición temporal explícita: entrenamiento con los CSV diarios y prueba en un CSV de un día posterior no visto; remuestreo solo en entrenamiento."
+   },
+   "QA3": {
+    "p": 0.5,
+    "ev": "Las tablas 1–3 comparan con cifras publicadas por otros trabajos en datasets distintos (Odense, AI City, simulación, I-205); no se reentrenan baselines bajo el mismo protocolo."
+   },
+   "QA4": {
+    "p": 0,
+    "ev": "Una sola ejecución sin desviación estándar, intervalos ni pruebas de significancia."
+   },
+   "QA5": {
+    "p": 0.5,
+    "ev": "Datos disponibles en el repositorio PeMS; no se publica código."
+   },
+   "QA6": {
+    "p": 0,
+    "ev": "Un único dataset (PeMS California, enero 2024) evaluado en un solo día de prueba."
+   },
+   "QA7": {
+    "p": 0.5,
+    "ev": "Se reporta la unidad (ventanas de 6 pasos por estación) pero no el umbral de decisión de las salidas sigmoide/softmax."
+   },
+   "QA8": {
+    "p": 1,
+    "ev": "Párrafo explícito en la conclusión sobre desbalance, datos limitados a 15 días, concept drift, interpretabilidad y umbrales fijos."
+   }
+  },
+  "caso_limite": "",
+  "notas": "Verificación en el PDF: el título publicado es 'Multi-stage classification of abnormal traffic events using a multi-head + LSTM' (con espacios alrededor de '+'; la ficha y el nombre del archivo dicen 'multi-head+LSTM'); se publica en Scientific Reports, volumen 16, artículo 1516 (2026; © 2025), con DOI 10.1038/s41598-025-31470-8, que la ficha omitía. Inconsistencias internas: el AUC de anomalías aparece como 0.98 en el texto, 99.8 en la Tabla 1 y 99.08 en el texto de comparación; el AUC de congestión es 0.9675 en el texto y 98.41 en la Tabla 2; el periodo de datos es del 1 al 15 de enero, pero se prueba en un 'CSV del día 16'; la FAR de 0.011 no cuadra con la matriz de confusión (57 FP de 513,923 ≈ 0.0001). Las precision/recall/F1 'globales' de ≈99.5% son promedios ponderados dominados por la clase normal. La ficha usaba 99.8% como AUC de anomalías sin señalar estas discrepancias.",
+  "id": "S21",
+  "clave_extraccion": "E09",
+  "id_version_anterior": "E09",
+  "bibkey": "jadhav2026multistage",
+  "tipo_dato_corto": "Sensores (PeMS) + clima",
+  "datasets_corto": "PeMS, datos meteorológicos",
+  "datasets_ejemplo": [
+   "PeMS",
+   "Clima (API)"
+  ],
+  "etiqueta_corta": "Mixto (automáticas)",
+  "categoria_corta": "Congestión",
+  "modelo_corto": "Atención multicabeza + LSTM",
+  "resultado_corto": "F1 0,81 (clase anómala)",
+  "baselines_corto": "Cifras de otros artículos",
+  "ventaja_corta": "No comparable",
+  "pdf": "Multi-stage classification of abnormal traffic events using a multi-head+LSTM..pdf"
+ }
+]

@@ -1,0 +1,460 @@
+{
+ "_descripcion": "Capa de curación sobre las fichas individuales (extraccion_individual/*.json). Asigna el ID definitivo, la clave BibTeX y los textos abreviados para las tablas, y registra la decisión de elegibilidad de los casos límite. Los campos 'override' corrigen la ficha individual tras verificarla contra el PDF.",
+ "incluidos": [
+  {
+   "id": "S01",
+   "clave_extraccion": "E07",
+   "id_version_anterior": "E07",
+   "bibkey": "fang2020deep",
+   "tipo_dato_corto": "Detectores de microondas",
+   "datasets_corto": "Viaducto Tangqiao (Hangzhou)",
+   "datasets_ejemplo": [
+    "Tangqiao (propio)"
+   ],
+   "etiqueta_corta": "Registros reales",
+   "categoria_corta": "Accidentes e incidentes",
+   "modelo_corto": "CNN cíclica + ELM (DELM)",
+   "resultado_corto": "DR 98,4 %; FAR 0,56 %; MTTD 0,68 min",
+   "baselines_corto": "LSTM, DBN, CNN, GBDT",
+   "ventaja_corta": "+2,0 pp de DR frente a DBN",
+   "decision_limite": "Incluido. La red convolucional cíclica aprende la representación de las variables de tráfico y la ELM clasifica sobre ella (CI-5, cláusula de híbridos).",
+   "pdf": "A Deep Cycle Limit Learning Machine Method for Urban Expressway Traffic Incident Detection.pdf"
+  },
+  {
+   "id": "S02",
+   "clave_extraccion": "E10",
+   "id_version_anterior": "E10",
+   "bibkey": "huang2020intelligent",
+   "tipo_dato_corto": "Video (dron y simulación)",
+   "datasets_corto": "TNAD (propio, con videos simulados)",
+   "datasets_ejemplo": [
+    "TNAD"
+   ],
+   "etiqueta_corta": "Anotación manual",
+   "categoria_corta": "Conducción peligrosa (casi accidentes)",
+   "modelo_corto": "CNN de dos flujos + seguimiento",
+   "resultado_corto": "F1 0,93 (videos simulados)",
+   "baselines_corto": "Ablaciones (flujo espacial o temporal solo)",
+   "ventaja_corta": "+4,9 pp de F1 frente al flujo espacial solo",
+   "pdf": "Two-stream CNN for Near-Accident Detection in Traffic Video.pdf"
+  },
+  {
+   "id": "S03",
+   "clave_extraccion": "E13",
+   "id_version_anterior": "E13",
+   "bibkey": "cai2021road",
+   "tipo_dato_corto": "Trayectorias de taxis",
+   "datasets_corto": "Shanghai, Chengdu y Beijing (taxis)",
+   "datasets_ejemplo": [
+    "Shanghai2018 (SODA)",
+    "Chengdu2018 (Didi)",
+    "Beijing2013"
+   ],
+   "etiqueta_corta": "Registros reales (65 cierres)",
+   "categoria_corta": "Disrupciones (cierres de vías)",
+   "modelo_corto": "CNN+LSTM y GCN+LSTM + reglas",
+   "resultado_corto": "F1 0,94",
+   "baselines_corto": "TB1, TB2, PB (no DL)",
+   "ventaja_corta": "≈ +17 pp de F1 frente a TB2 (leído del gráfico)",
+   "decision_limite": "Incluido. Las redes CNN+LSTM y GCN+LSTM predicen el flujo y el volumen de giro; la desviación predicción-observación sobre esa representación decide el cierre (CI-5). Reporta precision, recall y F1 (CI-6), aunque los valores frente a baselines solo aparecen en un gráfico.",
+   "pdf": "Road Closure Detection based upon Multi-feature Fusion.pdf"
+  },
+  {
+   "id": "S04",
+   "clave_extraccion": "E05",
+   "id_version_anterior": "E05",
+   "bibkey": "hu2022detecting",
+   "tipo_dato_corto": "Matrices OD de tiempos de viaje",
+   "datasets_corto": "Uber Movement, NYC taxi, Chicago taxi",
+   "datasets_ejemplo": [
+    "Uber Movement",
+    "NYC taxi",
+    "Chicago taxi"
+   ],
+   "etiqueta_corta": "Inyectadas",
+   "categoria_corta": "Eventos extremos",
+   "modelo_corto": "Autoencoder de grafos con contexto (Con-GAE)",
+   "resultado_corto": "AUC 0,84--0,91 (espacial)",
+   "baselines_corto": "HA, RTC, AE, EncDec-AD, REBM, DAGMM, GraphSAGE, GCN",
+   "ventaja_corta": "Hasta +0,15 de AUC frente a GCN",
+   "pdf": "Detecting Extreme Traffic Events Via a Context Augmented Graph Autoencoder.pdf"
+  },
+  {
+   "id": "S05",
+   "clave_extraccion": "E18",
+   "id_version_anterior": "E18",
+   "bibkey": "khan2022anomaly",
+   "tipo_dato_corto": "Imágenes y video",
+   "datasets_corto": "VAID (propio)",
+   "datasets_ejemplo": [
+    "VAID"
+   ],
+   "etiqueta_corta": "Anotación manual",
+   "categoria_corta": "Accidentes",
+   "modelo_corto": "ResNet50 + promedio móvil",
+   "resultado_corto": "Accuracy 82 % (30 videos)",
+   "baselines_corto": "CNN sin promedio móvil (ablación)",
+   "ventaja_corta": "+10 pp de accuracy (ablación)",
+   "pdf": "Anomaly Detection in Traffic Surveillance Videos Using Deep Learning.pdf"
+  },
+  {
+   "id": "S06",
+   "clave_extraccion": "E06",
+   "id_version_anterior": "E06",
+   "bibkey": "pawar2022deep",
+   "tipo_dato_corto": "Video de vigilancia y dashcam",
+   "datasets_corto": "IITH, Iowa DOT, DoTA",
+   "datasets_ejemplo": [
+    "IITH",
+    "Iowa DOT (AI City)",
+    "DoTA"
+   ],
+   "etiqueta_corta": "Benchmarks de terceros",
+   "categoria_corta": "Accidentes",
+   "modelo_corto": "Autoencoder espacio-temporal (CAE + LSTM-AE)",
+   "resultado_corto": "AUC 84,7 % (DoTA)",
+   "baselines_corto": "Autoencoders y equipos AI City",
+   "ventaja_corta": "+2 pp de AUC en IITH",
+   "pdf": "Deep learning based detection and localization of road accidents from traffic surveillance videos.pdf"
+  },
+  {
+   "id": "S07",
+   "clave_extraccion": "E20",
+   "id_version_anterior": "E20",
+   "bibkey": "riaz2022traffic",
+   "tipo_dato_corto": "Video dashcam",
+   "datasets_corto": "HTA, KITTI, D2City",
+   "datasets_ejemplo": [
+    "HTA",
+    "KITTI",
+    "D2City"
+   ],
+   "etiqueta_corta": "Anotación manual",
+   "categoria_corta": "Accidentes",
+   "modelo_corto": "CNN + PredNet (ConvLSTM)",
+   "resultado_corto": "Top-1 0,68--0,72",
+   "baselines_corto": "CGAN, FlowNet, PredNet",
+   "ventaja_corta": "+1,8 a +17,7 pp frente a FlowNet",
+   "pdf": "Traffic Anomaly Prediction System Using Predictive Network.pdf"
+  },
+  {
+   "id": "S08",
+   "clave_extraccion": "E04",
+   "id_version_anterior": "E04",
+   "bibkey": "zhang2022automatic",
+   "tipo_dato_corto": "Series de estaciones",
+   "datasets_corto": "Red vial de Beijing (propio)",
+   "datasets_ejemplo": [
+    "Beijing (propio)"
+   ],
+   "etiqueta_corta": "Registros reales",
+   "categoria_corta": "Congestión",
+   "modelo_corto": "GNN con aprendizaje de estructura y atención",
+   "resultado_corto": "Accuracy 97,0 %; FAR 2,5 %",
+   "baselines_corto": "LOF, iForest, OCSVM, HBOS, COPOD, LSTM-VAE, MAD-GAN",
+   "ventaja_corta": "−1 pp de FAR frente a LSTM-VAE",
+   "pdf": "Automatic Traffic Anomaly Detection on the Road Network with Spatial-Temporal Graph Neural Network Representation Learning.pdf"
+  },
+  {
+   "id": "S09",
+   "clave_extraccion": "E17",
+   "id_version_anterior": "E17",
+   "bibkey": "chakraborty2023structural",
+   "tipo_dato_corto": "Trayectorias simuladas",
+   "datasets_corto": "MAAD (simulado)",
+   "datasets_ejemplo": [
+    "MAAD"
+   ],
+   "etiqueta_corta": "Benchmark de terceros",
+   "categoria_corta": "Conducción peligrosa",
+   "modelo_corto": "VAE recurrente con atención estructural",
+   "resultado_corto": "AUROC 87,0 %; AUPR 65,5 %",
+   "baselines_corto": "CVM, RAE, STGAE, STGAE-KDE, VV-RAE",
+   "ventaja_corta": "+10,3 pp de AUPR frente a STGAE-KDE",
+   "pdf": "Structural Attention-Based Recurrent Variational Autoencoderfor Highway Vehicle Anomaly Detection.pdf"
+  },
+  {
+   "id": "S10",
+   "clave_extraccion": "E08",
+   "id_version_anterior": "E08",
+   "bibkey": "mehrannia2023deep",
+   "tipo_dato_corto": "Detectores de lazo",
+   "datasets_corto": "MnDOT (Minneapolis)",
+   "datasets_ejemplo": [
+    "MnDOT RTMC"
+   ],
+   "etiqueta_corta": "Registros reales",
+   "categoria_corta": "Accidentes",
+   "modelo_corto": "Codificador LSTM + clasificador",
+   "resultado_corto": "TPR 0,71; FPR 0,25 (18 min)",
+   "baselines_corto": "CNN, RNN, PNN, AdaBoost, GradientBoost",
+   "ventaja_corta": "+0,15 de TPR frente a PNN, con mayor FPR",
+   "pdf": "Deep representation of imbalanced spatio-temporal traffic flow data for traffic accident detection.pdf"
+  },
+  {
+   "id": "S11",
+   "clave_extraccion": "E25",
+   "id_version_anterior": "E25",
+   "bibkey": "lu2024vehicle",
+   "tipo_dato_corto": "Video de vigilancia",
+   "datasets_corto": "UCF-Crime (subconjunto)",
+   "datasets_ejemplo": [
+    "UCF-Crime"
+   ],
+   "etiqueta_corta": "Benchmark de terceros",
+   "categoria_corta": "Accidentes",
+   "modelo_corto": "CNN 3D densa-residual + Bi-LSTM",
+   "resultado_corto": "Accuracy 85,4 %",
+   "baselines_corto": "R3D, P3D, I3D, R(2+1)D",
+   "ventaja_corta": "+2,7 pp frente a R3D+Bi-LSTM",
+   "pdf": "Vehicle Abnormal Behavior Detection Based on Dense Block and Soft Thresholding.pdf"
+  },
+  {
+   "id": "S12",
+   "clave_extraccion": "E03",
+   "id_version_anterior": "E03",
+   "bibkey": "mao2024detecting",
+   "tipo_dato_corto": "Trayectorias (Amap)",
+   "datasets_corto": "Wuhan (propio)",
+   "datasets_ejemplo": [
+    "Wuhan/Amap (propio)"
+   ],
+   "etiqueta_corta": "Registros reales",
+   "categoria_corta": "Congestión",
+   "modelo_corto": "ConvLSTM multiescala",
+   "resultado_corto": "Precisión 92,9 % (ciudad)",
+   "baselines_corto": "SAE, CNN+LSTM, Bi-LSTM, GAN, Transformer",
+   "ventaja_corta": "+3,7 pp frente a Transformer",
+   "decision_limite": "Incluido. A diferencia de lo señalado en la revisión previa, reporta métricas cuantitativas de detección (Tabla 2 del artículo), aunque con definiciones no estándar de accuracy y precision.",
+   "pdf": "Detecting Urban Traffic Anomalies Using Traffic-Monitoring Data.pdf"
+  },
+  {
+   "id": "S13",
+   "clave_extraccion": "E14",
+   "id_version_anterior": "E14",
+   "bibkey": "ren2024graph",
+   "tipo_dato_corto": "Matrices OD y sensores",
+   "datasets_corto": "NYC taxi, PEMS-BAY, Uber Movement",
+   "datasets_ejemplo": [
+    "NYC taxi",
+    "PEMS-BAY",
+    "Uber Movement"
+   ],
+   "etiqueta_corta": "Inyectadas",
+   "categoria_corta": "Congestión",
+   "modelo_corto": "Autoencoder de grafos + TCN (MTGAE)",
+   "resultado_corto": "AUC 1,000 (inyectadas)",
+   "baselines_corto": "Con-GAE, GCN, GraphSAGE, GATv2, PMLP, otros",
+   "ventaja_corta": "+3,2 a +4,0 pp de AUC frente a PMLP",
+   "pdf": "Graph autoencoder with mirror temporal convolutional networks for traffic anomaly detection.pdf"
+  },
+  {
+   "id": "S14",
+   "clave_extraccion": "E22",
+   "id_version_anterior": "E22",
+   "bibkey": "wang2024multiscale",
+   "tipo_dato_corto": "Trayectorias de taxis",
+   "datasets_corto": "Porto, Chengdu",
+   "datasets_ejemplo": [
+    "Porto taxi",
+    "Chengdu taxi"
+   ],
+   "etiqueta_corta": "Inyectadas",
+   "categoria_corta": "Trayectorias anómalas",
+   "modelo_corto": "Codificador multiescala con atención (MST-OATD)",
+   "resultado_corto": "PR-AUC 0,97",
+   "baselines_corto": "iBAT, SAE, VSAE, GM-VSAE, DeepTEA",
+   "ventaja_corta": "+18,6 % relativo de PR-AUC (Porto)",
+   "pdf": "Multi-Scale Detection of Anomalous Spatio-Temporal Trajectoriesin Evolving Trajectory Datasets.pdf"
+  },
+  {
+   "id": "S15",
+   "clave_extraccion": "E21",
+   "id_version_anterior": "E21",
+   "bibkey": "zhao2024multiadjacent",
+   "tipo_dato_corto": "Video de vigilancia",
+   "datasets_corto": "Xi'an Ring Expressway (propio)",
+   "datasets_ejemplo": [
+    "Xi'an Ring Expressway (propio)"
+   ],
+   "etiqueta_corta": "Anotación manual",
+   "categoria_corta": "Conducción peligrosa",
+   "modelo_corto": "YOLOv5 + DeepSORT + re-ID + BiLSTM + reglas",
+   "resultado_corto": "Contramano 99,6 %",
+   "baselines_corto": "Solo para re-identificación",
+   "ventaja_corta": "Detección sin línea base",
+   "decision_limite": "Incluido. El pipeline profundo (detección, seguimiento, re-identificación y BiLSTM) produce las trayectorias sobre las que reglas de umbral deciden la anomalía (CI-5, cláusula de híbridos); la detección se evalúa cuantitativamente (CI-6).",
+   "pdf": "Multi-Adjacent Camera-Based Dangerous Driving Trajectory Recognition for Ultra-Long Highways.pdf"
+  },
+  {
+   "id": "S16",
+   "clave_extraccion": "E02",
+   "id_version_anterior": "E02",
+   "bibkey": "abdallah2025aipurban",
+   "tipo_dato_corto": "Video, sensores y simulación",
+   "datasets_corto": "CityCam, UA-DETRAC, PEMS-BAY, SUMO",
+   "datasets_ejemplo": [
+    "CityCam",
+    "UA-DETRAC",
+    "PEMS-BAY",
+    "SUMO"
+   ],
+   "etiqueta_corta": "Mixto (pseudo-etiquetas)",
+   "categoria_corta": "Fallos de infraestructura",
+   "modelo_corto": "CNN + Transformer + LSTM (borde)",
+   "resultado_corto": "F1 0,94; 72 ms",
+   "baselines_corto": "CNN, LSTM, GRU, LSTM federado",
+   "ventaja_corta": "+1 pp de F1 frente a LSTM federado",
+   "decision_limite": "Incluido. Aunque el objetivo final es el mantenimiento predictivo, el modelo clasifica ventanas como normales o anómalas y la detección se evalúa con precision, recall y F1, por lo que no cae en CE-3.",
+   "pdf": "AIP-Urban Edge-Enabled Deep Learning Framework for Predictive Maintenance and Anomaly Detection in Urban Traffic Infrastructure.pdf"
+  },
+  {
+   "id": "S17",
+   "clave_extraccion": "E12",
+   "id_version_anterior": "E12",
+   "bibkey": "duan2025multimodal",
+   "tipo_dato_corto": "Sensores (+ multimodal declarado)",
+   "datasets_corto": "METR-LA, PEMS-BAY",
+   "datasets_ejemplo": [
+    "METR-LA",
+    "PEMS-BAY"
+   ],
+   "etiqueta_corta": "Mixto",
+   "categoria_corta": "Accidentes e incidentes",
+   "modelo_corto": "GNN heterogénea + atención + LSTM",
+   "resultado_corto": "F1 0,967; AUC 0,985",
+   "baselines_corto": "AGC-LSTM, AttentionDeepST",
+   "ventaja_corta": "+2,2 pp de F1 frente a AGC-LSTM",
+   "decision_limite": "Incluido con advertencia. Cumple CI-4 a CI-6, pero la fuente de los datos multimodales y de las etiquetas no se identifica; se refleja en la evaluación de calidad y en la discusión.",
+   "pdf": "A multimodal deep fusion framework for highway traffic anomaly detection.pdf"
+  },
+  {
+   "id": "S18",
+   "clave_extraccion": "E16",
+   "id_version_anterior": "E16",
+   "bibkey": "jia2025prediction",
+   "tipo_dato_corto": "Detectores (PeMS)",
+   "datasets_corto": "PEMS04, PEMS08",
+   "datasets_ejemplo": [
+    "PEMS04",
+    "PEMS08"
+   ],
+   "etiqueta_corta": "Sin etiquetas",
+   "categoria_corta": "Flujo anómalo",
+   "modelo_corto": "Bi-LSTM + GAT + Transformer en frecuencia",
+   "resultado_corto": "29/30 anomalías de consenso",
+   "baselines_corto": "iForest, LSTM-VAE, LSTM-NDT",
+   "ventaja_corta": "No comparable (sin etiquetas)",
+   "decision_limite": "Incluido. La detección se cuantifica frente a un consenso de tres detectores (29 de 30 anomalías), lo que satisface CI-6 aunque sin etiquetas reales (QA1 = 0).",
+   "pdf": "A Prediction-Based Anomaly Detection Method for Traffic Flow Data with Multi-Domain Feature Extraction.pdf"
+  },
+  {
+   "id": "S19",
+   "clave_extraccion": "E11",
+   "id_version_anterior": "E11",
+   "bibkey": "park2025graph",
+   "tipo_dato_corto": "Simulación microscópica",
+   "datasets_corto": "VISSIM Pangyo (simulado)",
+   "datasets_ejemplo": [
+    "VISSIM Pangyo"
+   ],
+   "etiqueta_corta": "Inyectadas",
+   "categoria_corta": "Accidentes e incidentes",
+   "modelo_corto": "Transformer de grafos multirresolución",
+   "resultado_corto": "Recall 0,78 ± 0,29",
+   "baselines_corto": "LSTM, GRU, Transformer, Informer, Autoformer",
+   "ventaja_corta": "+5,3 pp de recall frente a Autoformer (T=288)",
+   "pdf": "Graph Multi-Resolution Transformer for Road Traffic Anomaly Detection.pdf"
+  },
+  {
+   "id": "S20",
+   "clave_extraccion": "E19",
+   "id_version_anterior": "E19",
+   "bibkey": "chai2026road",
+   "tipo_dato_corto": "Video y texto",
+   "datasets_corto": "TADS",
+   "datasets_ejemplo": [
+    "TADS"
+   ],
+   "etiqueta_corta": "Anotación manual",
+   "categoria_corta": "Accidentes e incidentes",
+   "modelo_corto": "CLIP + Transformer temporal + mirada",
+   "resultado_corto": "Micro AUC 74,3 %",
+   "baselines_corto": "ResNet50, MNAD, OLP-TAD, RF-RG",
+   "ventaja_corta": "+5,7 pp de AUC frente a RF-RG",
+   "pdf": "Road Traffic Anomaly Detection by Human-Attention-Assisted Text–Vision Learning.pdf"
+  },
+  {
+   "id": "S21",
+   "clave_extraccion": "E09",
+   "id_version_anterior": "E09",
+   "bibkey": "jadhav2026multistage",
+   "tipo_dato_corto": "Sensores (PeMS) + clima",
+   "datasets_corto": "PeMS, datos meteorológicos",
+   "datasets_ejemplo": [
+    "PeMS",
+    "Clima (API)"
+   ],
+   "etiqueta_corta": "Mixto (automáticas)",
+   "categoria_corta": "Congestión",
+   "modelo_corto": "Atención multicabeza + LSTM",
+   "resultado_corto": "F1 0,81 (clase anómala)",
+   "baselines_corto": "Cifras de otros artículos",
+   "ventaja_corta": "No comparable",
+   "pdf": "Multi-stage classification of abnormal traffic events using a multi-head+LSTM..pdf"
+  }
+ ],
+ "overrides": {
+  "E17": {
+   "doi": "No asignado (actas IFAAMAS); URL del artículo en ifaamas.org"
+  },
+  "E09": {
+   "anio": 2026
+  },
+  "E06": {
+   "origen_etiquetas": "benchmark anotado de terceros"
+  }
+ },
+ "excluidos_texto_completo": [
+  {
+   "clave_extraccion": "E01",
+   "id_version_anterior": "E01",
+   "bibkey": "taheri2026applicability",
+   "criterio": "CE-4",
+   "motivo": "El método propuesto (Si-TDD) no es DL: se basa en la distancia al K-ésimo vecino histórico. Los modelos de DL aparecen solo como líneas base. Se usa en la discusión como evidencia sobre etiquetas reales y desempeño comparado.",
+   "pdf": "On the applicability of time series anomaly detection methods to.pdf"
+  },
+  {
+   "clave_extraccion": "E15",
+   "id_version_anterior": "E15",
+   "bibkey": "nouri2025self",
+   "criterio": "CI-6",
+   "motivo": "La detección de disrupciones solo se muestra de forma cualitativa (coincidencia visual con fechas de eventos); la única evaluación cuantitativa es de imputación.",
+   "pdf": "A Self-Imputing Deep Multitask Sequence Model for Traffic Disruption Detection in Extreme Conditions.pdf"
+  },
+  {
+   "clave_extraccion": "E24",
+   "id_version_anterior": "E24",
+   "bibkey": "feng2021traffic",
+   "criterio": "CI-6",
+   "motivo": "La única evaluación cuantitativa es de reconocimiento de acciones en Kinetics; la detección de anomalías de tráfico solo se ilustra cualitativamente.",
+   "pdf": "A Traffic Anomaly Detection and Identification Approach Based on Multi-instance Learning.pdf"
+  },
+  {
+   "clave_extraccion": "N26",
+   "id_version_anterior": "(no figuraba)",
+   "bibkey": "choudhary2024autoencoder",
+   "criterio": "CE-3",
+   "motivo": "Las puntuaciones de atípicos del autoencoder solo ponderan un modelo de pronóstico; la evaluación es exclusivamente de RMSE de predicción, sin métricas de detección.",
+   "pdf": "Autoencoder-based Continual Outlier Correlation Detection forReal-Time Traffic Flow Prediction.pdf"
+  },
+  {
+   "clave_extraccion": "E23",
+   "id_version_anterior": "E23",
+   "bibkey": "giasemis2025learning",
+   "criterio": "CE-5",
+   "motivo": "Preprint de arXiv (CE-5); la versión anterior lo incluía como excepción ad hoc. La planilla de Parsif.al enlaza un documento de IEEE Xplore (n.º 11171552): si corresponde a una versión revisada por pares recuperada por la búsqueda en IEEE Xplore, debe reincorporarse citando esa versión.",
+   "pdf": "Learning Traffic Anomalies from Generative Models on Real-Time Observations.pdf"
+  }
+ ]
+}

@@ -1,0 +1,924 @@
+%=============================================================
+%  REVISIÓN SISTEMÁTICA — Deep Learning y Detección de Anomalías
+%  en Series Temporales de Tráfico Vehicular Urbano
+%  Basada en: Kitchenham & Charters (2007)
+%  Formato: Artículo de revista (una columna)
+%=============================================================
+
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage[top=3cm, bottom=2.5cm, left=3cm, right=2.5cm]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{pifont}
+\usepackage{graphicx, float, caption, subcaption}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric, fit, backgrounds, calc}
+\usepackage{booktabs, tabularx, array, multirow, longtable}
+\renewcommand{\arraystretch}{1.35}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1.5em, itemsep=2pt}
+\setlist[enumerate]{leftmargin=1.5em, itemsep=2pt}
+\usepackage[table]{xcolor}
+\definecolor{azulPrincipal}{RGB}{0, 70, 127}
+\definecolor{azulMedio}{RGB}{0, 102, 179}
+\definecolor{azulClaro}{RGB}{204, 229, 255}
+\definecolor{grisClaro}{RGB}{245, 245, 245}
+\definecolor{verdeOsc}{RGB}{0, 100, 60}
+\definecolor{naranjaAlerta}{RGB}{255, 140, 0}
+\definecolor{rojoAlerta}{RGB}{180, 0, 0}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+\newtcolorbox{preguntabox}[1][]{enhanced,colback=azulClaro!50,colframe=azulPrincipal,
+  fonttitle=\bfseries\color{white},coltitle=white,colbacktitle=azulPrincipal,
+  title={Preguntas de Investigaci\'{o}n},#1}
+
+\newtcolorbox{notamet}{enhanced,breakable,colback=naranjaAlerta!15,
+  colframe=naranjaAlerta,leftrule=4pt,left=8pt,fontupper=\small\itshape}
+
+\newtcolorbox{hallazgo}[1][]{enhanced,colback=verdeOsc!8,colframe=verdeOsc,
+  fonttitle=\bfseries\color{white},coltitle=white,colbacktitle=verdeOsc,
+  title={Hallazgo},#1}
+
+\newtcolorbox{aportebox}[1][]{enhanced,breakable,colback=grisClaro!80,colframe=azulMedio,
+  leftrule=4pt,left=8pt,fontupper=\small,
+  title={Aporte metodol\'{o}gico},fonttitle=\bfseries\color{white},coltitle=white,colbacktitle=azulMedio,#1}
+
+\usepackage{fancyhdr}
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{azulPrincipal}{\textit{Deep Learning --- Detecci\'{o}n de Anomal\'{i}as en Tr\'{a}fico Vehicular Urbano}}}
+\fancyhead[R]{\small\textcolor{azulPrincipal}{\textit{Art\'{i}culo de Revisi\'{o}n}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries\color{azulPrincipal}}{\thesection.}{0.6em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries\color{azulMedio}}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\itshape\color{azulPrincipal}}{\thesubsubsection.}{0.4em}{}
+
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=azulPrincipal,citecolor=azulMedio,urlcolor=azulMedio}
+
+\usepackage{cite} % Citas numéricas estilo IEEE: [1], [2], [3]
+
+%=============================================================
+\begin{document}
+%=============================================================
+
+\begin{center}
+  {\LARGE\bfseries\color{azulPrincipal}
+   Detecci\'{o}n de Anomal\'{i}as en Tr\'{a}fico Vehicular Urbano mediante \textit{Deep Learning}: una Revisi\'{o}n Sistem\'{a}tica de la Literatura}\\[1em]
+
+  {\large Wilbert Alex Mayta Arotaype\textsuperscript{1}}\\[0.5em] {\large Wrangler Choquechambi Luque\textsuperscript{2}}\\[0.5em]{\large Ender Prieto Quispe\textsuperscript{1}}\\[0.5em]
+
+
+  {\small
+    \textsuperscript{1}Escuela Profesional de Ingenier\'{i}a de Sistemas,
+    Universidad Peruana Uni\'{o}n, Juliaca, Per\'{u}.\\
+    \href{mailto:wilbert.mayta@upeu.edu.pe}{wilbert.mayta@upeu.edu.pe}
+    \href{mailto:glenen.choquechambi@upeu.edu.pe}{wrangler.choquechambi@upeu.edu.pe}
+    \href{mailto:juan.prieto@upeu.edu.pe}{juan.prieto@upeu.edu.pe}
+  }\\[0.8em]
+
+\end{center}
+\noindent\rule{\linewidth}{1pt}
+
+%--- RESUMEN --------------------------------------------------
+\section*{Resumen}
+\noindent
+\textbf{Antecedentes:} La gesti\'{o}n del tr\'{a}fico vehicular urbano enfrenta crecientes desaf\'{i}os debido a la alta variabilidad temporal de los flujos, la presencia de ruido y la complejidad de los patrones espacio-temporales. Los m\'{e}todos estad\'{i}sticos y de aprendizaje autom\'{a}tico tradicionales muestran limitaciones ante la no linealidad de los datos y el desbalance entre eventos normales y an\'{o}malos. \textbf{Objetivo:} Analizar y sintetizar los modelos de \textit{Deep Learning} empleados para la detecci\'{o}n de anomal\'{i}as en series temporales de tr\'{a}fico vehicular urbano, as\'{i} como las m\'{e}tricas de evaluaci\'{o}n, los tipos de anomal\'{i}as abordadas, los conjuntos de datos utilizados y las limitaciones reportadas en la literatura reciente. \textbf{M\'{e}todo:} Se realiz\'{o} una revisi\'{o}n sistem\'{a}tica de la literatura siguiendo las directrices de Kitchenham y Charters~\cite{Kitchenham2007}. La b\'{u}squeda se ejecut\'{o} en seis bases de datos acad\'{e}micas ---Scopus, ScienceDirect, ISI Web of Science, ACM Digital Library, MDPI y Taylor \& Francis Online--- para el periodo 2020--2026. De 758 registros recuperados se seleccionaron 25 estudios primarios tras aplicar criterios de inclusi\'{o}n y exclusi\'{o}n, y una evaluaci\'{o}n de calidad metodol\'{o}gica con puntuaci\'{o}n media de 5.74 sobre 6.0. \textbf{Resultados:} Las t\'{e}cnicas m\'{a}s utilizadas son modelos recurrentes (LSTM, Bi-LSTM), convolucionales (CNN), autoencoders, redes neuronales de grafos (GNN), Transformers y arquitecturas h\'{i}bridas o multimodales. Las m\'{e}tricas predominantes son \textit{Accuracy}, \textit{Precision}, \textit{Recall}, \textit{F1-score} y \textit{AUC-ROC}, aunque sin protocolo de evaluaci\'{o}n uniforme. Las anomal\'{i}as m\'{a}s abordadas son accidentes e incidentes viales (32\,\%), congesti\'{o}n an\'{o}mala (24\,\%), trayectorias peligrosas (24\,\%) y disrupciones de infraestructura (20\,\%). \textbf{Conclusiones:} El \textit{Deep Learning} ofrece herramientas potentes para modelar la complejidad del tr\'{a}fico urbano, con una evoluci\'{o}n clara hacia enfoques espacio-temporales y multimodales. Sin embargo, persisten limitaciones en la disponibilidad de benchmarks p\'{u}blicos con etiquetas verificadas, la generalizaci\'{o}n entre contextos urbanos y la interpretabilidad de los modelos.
+
+\vspace{0.4em}
+\noindent\textbf{Palabras clave:} detecci\'{o}n de anomal\'{i}as, tr\'{a}fico vehicular urbano, \textit{Deep Learning}, series temporales, revisi\'{o}n sistem\'{a}tica
+
+\vspace{0.5em}\noindent\rule{\linewidth}{0.4pt}
+
+\section*{Abstract}
+\noindent
+\textbf{Background:} Urban vehicular traffic management faces growing challenges due to high temporal variability in traffic flows, noise, and the complexity of spatio-temporal patterns. Traditional statistical and machine learning methods show limitations when applied to nonlinear, imbalanced real-world traffic data. \textbf{Objective:} To analyze and synthesize the Deep Learning models used for anomaly detection in urban vehicular traffic time series, as well as the evaluation metrics, anomaly types, datasets, and limitations reported in recent literature. \textbf{Method:} A systematic literature review was conducted following Kitchenham and Charters~\cite{Kitchenham2007} guidelines. The search was carried out in six academic databases ---Scopus, ScienceDirect, ISI Web of Science, ACM Digital Library, MDPI, and Taylor \& Francis Online--- covering the period 2020--2026. From 758 retrieved records, 25 primary studies were selected after applying inclusion and exclusion criteria and a methodological quality assessment with a mean score of 5.74 out of 6.0. \textbf{Results:} The most frequently used techniques include recurrent models (LSTM, Bi-LSTM), convolutional networks (CNN), autoencoders, graph neural networks (GNN), Transformers, and hybrid or multimodal architectures. The predominant metrics are \textit{Accuracy}, \textit{Precision}, \textit{Recall}, \textit{F1-score}, and \textit{AUC-ROC}, though without a uniform evaluation protocol. The most studied anomaly types are traffic accidents and incidents (32\%), anomalous flow and congestion (24\%), dangerous trajectories (24\%), and infrastructure disruptions (20\%). \textbf{Conclusions:} Deep Learning offers powerful tools for modeling the complexity of urban traffic, with a clear evolution toward spatio-temporal and multimodal approaches. However, limitations persist regarding the availability of public benchmarks with verified labels, generalization across urban contexts, and model interpretability.
+
+\vspace{0.4em}
+\noindent\textbf{Keywords:} anomaly detection, urban vehicular traffic, Deep Learning, time series, systematic literature review
+\noindent\rule{\linewidth}{1pt}\vspace{1em}
+
+%=============================================================
+\section{Introducci\'{o}n}
+\label{sec:intro}
+%=============================================================
+
+El crecimiento acelerado de las ciudades y el aumento sostenido del parque automotor han incrementado la complejidad de la gesti\'{o}n del tr\'{a}fico vehicular urbano y de autopistas.\footnote{Si bien el presente RSL cubre tr\'{a}fico urbano y de autopistas de manera conjunta, el estudio emp\'{i}rico derivado de esta revisi\'{o}n se centra espec\'{i}ficamente en series de flujo vehicular de autopistas (dataset PeMS-D4). Esta delimitaci\'{o}n se declara expl\'{i}citamente para evitar confusiones sobre el alcance del proyecto.} En estos escenarios, el flujo vehicular presenta alta variabilidad temporal, presencia de ruido y patrones dif\'{i}ciles de modelar mediante enfoques tradicionales. Asimismo, la dependencia espacial entre v\'{i}as, sensores, intersecciones y segmentos de carretera exige considerar el tr\'{a}fico como un fen\'{o}meno temporal y espacio-temporal, no solamente como una secuencia aislada de mediciones \cite{taheri2026applicability}.
+
+Frente a este problema, los Sistemas Inteligentes de Transporte (\textit{Intelligent Transportation Systems}, ITS) permiten integrar sensores viales, c\'{a}maras de vigilancia, dispositivos GPS y plataformas de monitoreo para apoyar la toma de decisiones en movilidad urbana. Los datos generados por estos sistemas pueden representarse como series temporales, cuando describen la evoluci\'{o}n de variables como flujo, velocidad u ocupaci\'{o}n; o como datos espacio-temporales, cuando incorporan simult\'{a}neamente la ubicaci\'{o}n de los eventos dentro de la red vial \cite{zhang2022automatic}.
+
+Dentro de este contexto, la detecci\'{o}n de anomal\'{i}as en el tr\'{a}fico vehicular busca identificar desviaciones relevantes respecto al comportamiento esperado del sistema vial. Estas anomal\'{i}as pueden manifestarse como congestiones repentinas, accidentes, cierres de v\'{i}as, trayectorias peligrosas, cambios abruptos de velocidad o eventos inusuales que afectan la circulaci\'{o}n normal. Su detecci\'{o}n oportuna resulta importante porque permite mejorar la respuesta frente a incidentes, reducir los efectos de la congesti\'{o}n y fortalecer la seguridad vial \cite{khan2022anomaly}.
+
+Tradicionalmente, este problema fue abordado mediante m\'{e}todos estad\'{i}sticos y t\'{e}cnicas de aprendizaje autom\'{a}tico convencional, como modelos autorregresivos, reglas basadas en umbrales, \'{a}rboles de decisi\'{o}n y m\'{a}quinas de vectores de soporte. Aunque estos enfoques han sido \'{u}tiles en escenarios controlados, pueden resultar insuficientes cuando se aplican a datos reales de tr\'{a}fico, debido al desbalance entre eventos normales y an\'{o}malos, la variaci\'{o}n temporal, la dependencia espacial entre v\'{i}as y la presencia de datos incompletos o ruidosos \cite{fang2020deep}.
+
+Ante estas limitaciones, el \textit{Deep Learning} (DL) se ha convertido en una alternativa relevante para analizar datos de tr\'{a}fico. En la literatura reciente se han empleado arquitecturas como LSTM, CNN, autoencoders, Transformers y redes neuronales de grafos, cada una orientada a distintos tipos de datos y problemas de detecci\'{o}n. Por ejemplo, las CNN se han utilizado en datos visuales de vigilancia, los modelos recurrentes en secuencias temporales, las redes neuronales de grafos en la representaci\'{o}n de redes viales y los modelos multimodales en la integraci\'{o}n de diversas fuentes de informaci\'{o}n para detectar eventos an\'{o}malos con mayor robustez \cite{duan2025multimodal}.
+
+A pesar de estos avances, los estudios revisados presentan diferencias importantes en los modelos utilizados, los tipos de anomal\'{i}as abordadas, las m\'{e}tricas reportadas y los conjuntos de datos empleados. Esta variedad dificulta comparar directamente los resultados y reconocer qu\'{e} enfoques son m\'{a}s adecuados para cada escenario. Por ello, se considera necesario desarrollar una Revisi\'{o}n Sistem\'{a}tica de la Literatura (RSL) que organice y analice los estudios recientes sobre detecci\'{o}n de anomal\'{i}as en series temporales de tr\'{a}fico vehicular urbano mediante \textit{Deep Learning} \cite{Kitchenham2007}.
+
+El presente estudio realiza cuatro contribuciones principales: (i) sintetiza el estado del arte sobre modelos de \textit{Deep Learning} aplicados a la detecci\'{o}n de anomal\'{i}as de tr\'{a}fico; (ii) identifica los modelos, datasets y m\'{e}tricas predominantes; (iii) clasifica los tipos de anomal\'{i}as abordadas por los estudios primarios; y (iv) delimita brechas de investigaci\'{o}n relacionadas con benchmarks, generalizaci\'{o}n, interpretabilidad y evaluaci\'{o}n en contextos reales.
+
+\begin{preguntabox}
+  \begin{enumerate}
+    \item \textbf{RQ1:} \textquestiondown Qu\'{e} t\'{e}cnicas de \textit{Deep Learning} han sido utilizadas para la detecci\'{o}n de anomal\'{i}as en series temporales de tr\'{a}fico vehicular urbano?
+    \item \textbf{RQ2:} \textquestiondown Qu\'{e} m\'{e}tricas de evaluaci\'{o}n se han empleado para medir el rendimiento de los modelos de \textit{Deep Learning} en la detecci\'{o}n de anomal\'{i}as de tr\'{a}fico?
+    \item \textbf{RQ3:} \textquestiondown Qu\'{e} tipos de anomal\'{i}as en el tr\'{a}fico vehicular urbano han sido abordadas mediante t\'{e}cnicas de \textit{Deep Learning}?
+    \item \textbf{RQ4:} \textquestiondown Qu\'{e} conjuntos de datos han sido utilizados en los estudios sobre detecci\'{o}n de anomal\'{i}as en tr\'{a}fico vehicular con \textit{Deep Learning}?
+    \item \textbf{RQ5:} \textquestiondown Cu\'{a}les son las limitaciones y desaf\'{i}os reportados en los estudios que aplican \textit{Deep Learning} para la detecci\'{o}n de anomal\'{i}as en series temporales de tr\'{a}fico?
+  \end{enumerate}
+\end{preguntabox}
+
+%=============================================================
+\section{Marco Conceptual}
+\label{sec:marco}
+%=============================================================
+
+\subsection{Sistemas Inteligentes de Transporte y Tr\'{a}fico Urbano}
+
+Los Sistemas Inteligentes de Transporte (\textit{Intelligent Transportation Systems}, ITS) integran tecnolog\'{i}as de informaci\'{o}n, comunicaci\'{o}n y monitoreo para mejorar la gesti\'{o}n de la movilidad urbana. En el contexto de esta revisi\'{o}n, estos sistemas permiten recolectar datos a partir de sensores viales, c\'{a}maras de vigilancia, dispositivos GPS y plataformas de monitoreo~\cite{abdallah2025aipurban}.
+
+Los sensores fijos instalados en la v\'{i}a suelen registrar variables como flujo, velocidad u ocupaci\'{o}n vehicular~\cite{fang2020deep}. Por otro lado, las c\'{a}maras de vigilancia se utilizan principalmente para analizar eventos visibles en intersecciones, autopistas o corredores urbanos. Asimismo, los datos GPS y de trayectoria permiten estudiar rutas, cierres de v\'{i}as y cambios inusuales en la movilidad de los veh\'{i}culos~\cite{cai2021road}.
+
+El an\'{a}lisis de estos datos es importante porque el tr\'{a}fico urbano genera informaci\'{o}n continua, variable y dependiente tanto del tiempo como de la ubicaci\'{o}n. Por ello, los ITS modernos requieren m\'{e}todos capaces de procesar datos con alta variabilidad, presencia de ruido y relaciones espacio-temporales entre distintos segmentos de la red vial~\cite{zhang2022automatic}.
+
+\subsection{Series Temporales y Representaci\'{o}n Espacio-Temporal}
+
+Una \textit{serie temporal de tr\'{a}fico} es una secuencia de observaciones registradas en el tiempo sobre una variable de movilidad, como velocidad, flujo u ocupaci\'{o}n vehicular~\cite{taheri2026applicability}. Este tipo de dato permite analizar c\'{o}mo cambia el comportamiento del tr\'{a}fico en un punto espec\'{i}fico de la red vial. En algunos estudios, las series se trabajan de forma univariada; en otros, se utilizan se\~{n}ales multivariadas que combinan informaci\'{o}n de varios sensores o segmentos adyacentes~\cite{jadhav2025multistage}.
+
+Cuando los datos incluyen informaci\'{o}n de varias ubicaciones al mismo tiempo, se habla de una representaci\'{o}n \textit{espacio-temporal}. Una forma com\'{u}n de representar esta relaci\'{o}n es mediante grafos, donde los nodos pueden ser sensores, intersecciones o segmentos viales, y las aristas representan conexiones entre ellos~\cite{ren2024graph}. La forma en que se representan los datos influye directamente en el modelo de \textit{Deep Learning} que se utiliza: las series temporales suelen procesarse con modelos recurrentes, mientras que los datos con estructura de red vial pueden requerir redes neuronales de grafos~\cite{park2025graph}; cuando la fuente principal son c\'{a}maras, los datos se tratan como im\'{a}genes o secuencias de video mediante arquitecturas convolucionales~\cite{huang2020intelligent}.
+
+\subsection{Anomal\'{i}as en el Tr\'{a}fico Vehicular Urbano}
+
+En el contexto de los ITS, una \textit{anomal\'{i}a de tr\'{a}fico} puede entenderse como un evento o patr\'{o}n que se aleja del comportamiento normal esperado del flujo vehicular~\cite{zhang2022automatic}. Estas anomal\'{i}as pueden aparecer en forma de accidentes, congestiones no recurrentes, cierres de v\'{i}as, eventos extremos o trayectorias vehiculares inusuales~\cite{hu2022detecting}. Un reto importante en este problema es que las anomal\'{i}as suelen ser menos frecuentes que los eventos normales, lo que genera conjuntos de datos desbalanceados y puede afectar el entrenamiento y la evaluaci\'{o}n de los modelos de detecci\'{o}n~\cite{mehrannia2023deep}.
+
+\subsection{T\'{e}cnicas de \textit{Deep Learning} para Detecci\'{o}n de Anomal\'{i}as}
+
+El \textit{Deep Learning} (DL) agrupa t\'{e}cnicas basadas en redes neuronales profundas que permiten aprender patrones complejos a partir de grandes vol\'{u}menes de datos. En la detecci\'{o}n de anomal\'{i}as de tr\'{a}fico, se identifican tres enfoques principales:
+
+\begin{itemize}
+  \item \textbf{Modelos de predicci\'{o}n}: Aprenden el comportamiento esperado de una serie temporal y detectan anomal\'{i}as cuando existe una diferencia importante entre el valor esperado y el observado. En este grupo se encuentran LSTM, GRU y Transformers~\cite{jadhav2025multistage}.
+  \item \textbf{Modelos de reconstrucci\'{o}n}: Como los autoencoders, aprenden a reconstruir datos normales de tr\'{a}fico y clasifican como posibles anomal\'{i}as los casos donde el error de reconstrucci\'{o}n es alto~\cite{chakraborty2023structural}. Este enfoque es \'{u}til cuando no se cuenta con suficientes etiquetas de eventos an\'{o}malos.
+  \item \textbf{Modelos de clasificaci\'{o}n supervisada}: Cuando los datos incluyen etiquetas de eventos normales y an\'{o}malos, las redes CNN se han aplicado al an\'{a}lisis de im\'{a}genes y videos de tr\'{a}fico~\cite{khan2022anomaly}. Las redes neuronales de grafos (GNN) permiten representar la red vial y resultan adecuadas para analizar relaciones espacio-temporales~\cite{park2025graph}.
+\end{itemize}
+
+La selecci\'{o}n de una arquitectura no depende \'{u}nicamente del rendimiento reportado, sino tambi\'{e}n del tipo de dato disponible. Por ejemplo, los datos tabulares de sensores suelen favorecer modelos secuenciales o de reconstrucci\'{o}n; los videos de vigilancia requieren arquitecturas convolucionales o modelos de visi\'{o}n; las trayectorias GPS demandan representaciones espacio-temporales; y las redes viales con sensores distribuidos pueden beneficiarse de modelos basados en grafos. Esta relaci\'{o}n entre fuente de datos y arquitectura es central para interpretar los resultados de la revisi\'{o}n.
+
+%=============================================================
+\section{Proceso Metodol\'{o}gico}
+\label{sec:metodo}
+%=============================================================
+
+Esta revisi\'{o}n sigue el protocolo de Kitchenham y Charters~\cite{Kitchenham2007} para la realizaci\'{o}n de revisiones sistem\'{a}ticas en ingenier\'{i}a de software, adaptado al \'{a}rea de detecci\'{o}n de anomal\'{i}as en series temporales de tr\'{a}fico vehicular urbano mediante \textit{Deep Learning}.
+
+\subsection{Protocolo PICOC}
+
+\begin{table}[H]
+\centering
+\caption{Marco PICOC de la revisi\'{o}n sistem\'{a}tica.}
+\label{tab:picoc}
+\begin{tabularx}{\linewidth}{>{\bfseries}lX}
+\toprule
+Elemento & Descripci\'{o}n \\
+\midrule
+Poblaci\'{o}n    & Sistemas de tr\'{a}fico vehicular urbano, redes viales y datos de flujo vehicular provenientes de sensores, c\'{a}maras y dispositivos GPS \\
+Intervenci\'{o}n & T\'{e}cnicas de \textit{Deep Learning} aplicadas a la detecci\'{o}n de anomal\'{i}as en series temporales, incluyendo LSTM, GRU, CNN, Autoencoder, Transformer y modelos h\'{i}bridos \\
+Comparaci\'{o}n  & M\'{e}todos tradicionales de \textit{machine learning}, t\'{e}cnicas estad\'{i}sticas cl\'{a}sicas (ARIMA, SVM) y enfoques basados en reglas \\
+Resultado        & Precisi\'{o}n en la detecci\'{o}n de anomal\'{i}as medida mediante m\'{e}tricas como F1-score, Precision, Recall, AUC-ROC, Accuracy y \textit{False Positive Rate} \\
+Contexto         & Entornos urbanos, sistemas inteligentes de transporte (ITS), ciudades inteligentes y monitoreo de tr\'{a}fico con sensores, c\'{a}maras o datos GPS (2020--2026) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Bases de Datos y Cadena de B\'{u}squeda}
+
+La b\'{u}squeda bibliogr\'{a}fica se realiz\'{o} en seis bases de datos acad\'{e}micas seleccionadas por su relaci\'{o}n con ingenier\'{i}a, ciencias de la computaci\'{o}n y transporte inteligente:
+
+\begin{itemize}
+  \item Scopus (\url{https://www.scopus.com})
+  \item ScienceDirect/Elsevier (\url{https://www.sciencedirect.com})
+  \item ISI Web of Science (\url{https://www.webofscience.com})
+  \item ACM Digital Library (\url{https://dl.acm.org})
+  \item MDPI (\url{https://www.mdpi.com})
+  \item Taylor \& Francis Online (\url{https://www.tandfonline.com})
+\end{itemize}
+
+Como herramienta de apoyo se utiliz\'{o} Parsif.al (\url{https://parsif.al}), donde se registr\'{o} la cadena de b\'{u}squeda, los criterios de selecci\'{o}n y las decisiones de inclusi\'{o}n o exclusi\'{o}n de cada estudio.
+
+\begin{notamet}
+La cadena de b\'{u}squeda se formul\'{o} inicialmente en ingl\'{e}s, dado que la mayor\'{i}a de bases de datos indexadas utilizan este idioma para t\'{i}tulos, res\'{u}menes y palabras clave. Los t\'{e}rminos no preseleccionan modelos espec\'{i}ficos para evitar sesgo de confirmaci\'{o}n, siguiendo la recomendaci\'{o}n de Kitchenham y Charters~\cite{Kitchenham2007}.
+\end{notamet}
+
+La cadena de b\'{u}squeda fue construida a partir del marco PICOC y ajustada iterativamente en Parsifal de acuerdo con la sintaxis de cada base de datos. Posteriormente, fue revisada por el autor para verificar su coherencia con las preguntas de investigaci\'{o}n, los criterios de inclusi\'{o}n y exclusi\'{o}n, y el alcance tem\'{a}tico de la revisi\'{o}n. Esta decisi\'{o}n se registra de manera prudente, dado que no se afirma una validaci\'{o}n externa formal por un experto independiente.
+
+\noindent\textbf{Cadena base general:}
+\begin{center}
+\fbox{\parbox{0.92\linewidth}{\small\ttfamily\raggedright
+(``traffic anomaly detection'' OR ``anomaly detection'' OR ``incident detection'')\\
+AND (``deep learning'' OR LSTM OR GRU OR CNN OR autoencoder OR transformer OR ``graph neural network'')\\
+AND (``time series'' OR ``spatio-temporal'' OR ``traffic flow'')\\
+AND (``urban traffic'' OR ``vehicular traffic'' OR ``road traffic'' OR ``intelligent transportation'')
+}}
+\end{center}
+
+\subsection{Criterios de Inclusi\'{o}n y Exclusi\'{o}n}
+
+\begin{table}[H]
+\centering
+\caption{Criterios de selecci\'{o}n de estudios primarios.}
+\label{tab:criterios}
+\begin{tabularx}{\linewidth}{lX}
+\toprule
+\textbf{C\'{o}d.} & \textbf{Criterio} \\
+\midrule
+\multicolumn{2}{l}{\cellcolor{azulClaro!40}\textbf{Inclusi\'{o}n}} \\
+CI-1 & Estudios publicados en revistas cient\'{i}ficas indexadas o conferencias revisadas por pares \\
+CI-2 & Estudios publicados en idioma ingl\'{e}s o espa\~{n}ol con acceso al texto completo \\
+CI-3 & Estudios publicados entre 2020 y 2026 \\
+CI-4 & Estudios que aborden la detecci\'{o}n de anomal\'{i}as en tr\'{a}fico vehicular urbano, flujo vehicular o sistemas inteligentes de transporte \\
+CI-5 & Estudios que utilicen \textit{Deep Learning} como m\'{e}todo principal sobre series temporales o datos espacio-temporales de tr\'{a}fico vehicular \\
+CI-6 & Estudios que reporten resultados cuantitativos mediante m\'{e}tricas como Accuracy, Precision, Recall, F1-score, AUC-ROC o \textit{False Positive Rate} \\
+\midrule
+\multicolumn{2}{l}{\cellcolor{rojoAlerta!10}\textbf{Exclusi\'{o}n}} \\
+CE-1 & Art\'{i}culos duplicados entre bases de datos; se conserv\'{o} la versi\'{o}n m\'{a}s completa del estudio \\
+CE-2 & Estudios no relacionados con tr\'{a}fico vehicular urbano, flujo vehicular o sistemas inteligentes de transporte \\
+CE-3 & Estudios que solo realicen predicci\'{o}n de tr\'{a}fico, clasificaci\'{o}n general o \textit{forecasting}, sin abordar expl\'{i}citamente la detecci\'{o}n de anomal\'{i}as \\
+CE-4 & Estudios que no utilicen \textit{Deep Learning} como m\'{e}todo principal (SVM, ARIMA, reglas estad\'{i}sticas, umbrales o m\'{e}todos tradicionales) \\
+CE-5 & Revisiones sistem\'{a}ticas, \textit{surveys}, metaan\'{a}lisis, cap\'{i}tulos de libro, tesis, res\'{u}menes, p\'{o}steres o literatura gris \\
+CE-6 & Estudios sin acceso completo, sin m\'{e}tricas cuantitativas, sin descripci\'{o}n clara del modelo, del conjunto de datos o de los resultados experimentales \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Proceso de Selecci\'{o}n y Evaluaci\'{o}n de Calidad}
+
+El proceso sigue las tres fases de Kitchenham y Charters~\cite{Kitchenham2007}: Planificaci\'{o}n, Ejecuci\'{o}n y Documentaci\'{o}n. La Figura~\ref{fig:flujo} ilustra el flujo completo.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  fase/.style={draw=azulPrincipal,fill=azulPrincipal,text=white,font=\bfseries\small,
+               text width=3.4cm,align=center,minimum height=0.8cm,rounded corners=3pt},
+  act/.style={draw=azulPrincipal,fill=azulClaro!40,font=\small,text width=3.4cm,
+              align=center,minimum height=0.65cm,rounded corners=2pt},
+  arr/.style={-Stealth,thick,color=azulPrincipal}]
+  \node[fase](f1){FASE 1 --- Planificaci\'{o}n};
+  \node[act,below=0.22cm of f1](p1){Necesidad de la revisi\'{o}n};
+  \node[act,below=0.16cm of p1](p2){Elaborar protocolo};
+  \node[act,below=0.16cm of p2](p3){Evaluar protocolo};
+  \node[fase,below=0.4cm of p3](f2){FASE 2 --- Ejecuci\'{o}n};
+  \node[act,below=0.22cm of f2](e1){Identificar estudios};
+  \node[act,below=0.16cm of e1](e2){Seleccionar estudios};
+  \node[act,below=0.16cm of e2](e3){Evaluar calidad (CQI)};
+  \node[act,below=0.16cm of e3](e4){Extraer y sintetizar datos};
+  \node[fase,below=0.4cm of e4](f3){FASE 3 --- Documentaci\'{o}n};
+  \node[act,below=0.22cm of f3](d1){Redactar informe};
+  \node[act,below=0.16cm of d1](d2){Validar y publicar};
+  \foreach \a/\b in {f1/p1,p1/p2,p2/p3,p3/f2,f2/e1,e1/e2,e2/e3,e3/e4,e4/f3,f3/d1,d1/d2}
+    \draw[arr](\a)--(\b);
+\end{tikzpicture}
+\caption{Proceso RSL seg\'{u}n Kitchenham y Charters~\cite{Kitchenham2007}.}
+\label{fig:flujo}
+\end{figure}
+
+
+\begin{table}[H]
+\centering
+\caption{Registros importados por base de datos en Parsifal.}
+\label{tab:importados}
+\begin{tabularx}{\linewidth}{Xr}
+\toprule
+\textbf{Base de datos} & \textbf{Registros importados} \\
+\midrule
+ACM Digital Library       & 92  \\
+ISI Web of Science        & 137 \\
+ScienceDirect             & 318 \\
+Scopus                    & 46  \\
+Taylor \& Francis Online & 50  \\
+MDPI                      & 115 \\
+\midrule
+\textbf{Total}            & \textbf{758} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\resizebox{0.95\textwidth}{!}{%
+\begin{tikzpicture}[
+  db/.style={
+    draw=black,
+    thick,
+    align=center,
+    rounded corners=2pt,
+    minimum height=0.95cm,
+    text width=2.55cm,
+    font=\scriptsize\bfseries
+  },
+  main/.style={
+    draw=black,
+    thick,
+    align=center,
+    rounded corners=2pt,
+    minimum height=1.25cm,
+    text width=5.8cm,
+    font=\small
+  },
+  excl/.style={
+    draw=black,
+    thick,
+    dashed,
+    align=center,
+    rounded corners=2pt,
+    minimum height=1.15cm,
+    text width=5.0cm,
+    font=\small
+  },
+  arr/.style={-Stealth, thick}
+]
+
+%------------------------------------------------
+% Bases de datos
+%------------------------------------------------
+\node[db] (acm)  at (-8.0,0) {ACM Digital\\Library\\\textbf{92}};
+\node[db] (wos)  at (-4.8,0) {Web of Science\\\textbf{137}};
+\node[db] (sd)   at (-1.6,0) {ScienceDirect\\\textbf{318}};
+\node[db] (sc)   at (1.6,0) {Scopus\\\textbf{46}};
+\node[db] (tf)   at (4.8,0) {Taylor \& Francis\\Online\\\textbf{50}};
+\node[db] (mdpi) at (8.0,0) {MDPI\\\textbf{115}};
+
+% Punto de unión
+\coordinate (union) at (0,-1.55);
+
+% Flechas desde bases de datos
+\draw[arr] (acm.south)  -- ++(0,-0.55) -| (union);
+\draw[arr] (wos.south)  -- ++(0,-0.55) -| (union);
+\draw[arr] (sd.south)   -- ++(0,-0.55) -| (union);
+\draw[arr] (sc.south)   -- ++(0,-0.55) -| (union);
+\draw[arr] (tf.south)   -- ++(0,-0.55) -| (union);
+\draw[arr] (mdpi.south) -- ++(0,-0.55) -| (union);
+
+%------------------------------------------------
+% Flujo principal
+%------------------------------------------------
+\node[main] (dedup) at (0,-2.60)
+{Registros tras eliminar duplicados\\\textbf{721}};
+
+\node[main] (screen) at (0,-4.55)
+{Registros cribados por t\'itulo y resumen\\\textbf{721}};
+
+\node[main] (full) at (0,-6.50)
+{Art\'iculos de texto completo evaluados para elegibilidad\\\textbf{77}};
+
+\node[main] (final) at (0,-8.45)
+{Estudios incluidos en la s\'intesis cualitativa\\\textbf{25}};
+
+%------------------------------------------------
+% Cajas laterales de exclusión
+%------------------------------------------------
+\node[excl] (dups) at (7.2,-2.60)
+{Citas duplicadas eliminadas\\\textbf{37}};
+
+\node[excl] (excl1) at (7.2,-4.55)
+{Registros excluidos por t\'itulo/resumen\\\textbf{644}};
+
+\node[excl] (excl2) at (7.2,-6.50)
+{Art\'iculos excluidos en elegibilidad\\\textbf{52}};
+
+%------------------------------------------------
+% Flechas del flujo principal
+%------------------------------------------------
+\draw[arr] (union) -- (dedup.north);
+\draw[arr] (dedup.south) -- (screen.north);
+\draw[arr] (screen.south) -- (full.north);
+\draw[arr] (full.south) -- (final.north);
+
+%------------------------------------------------
+% Flechas hacia exclusiones
+%------------------------------------------------
+\draw[arr] (dedup.east) -- (dups.west);
+\draw[arr] (screen.east) -- (excl1.west);
+\draw[arr] (full.east) -- (excl2.west);
+
+\end{tikzpicture}%
+}
+\caption{Flujo de selecci\'on de estudios registrado en Parsifal.}
+\label{fig:seleccion}
+\end{figure}
+
+\noindent El proceso de selecci\'{o}n inici\'{o} con 758 registros importados desde seis bases de datos. Luego de eliminar 37 citas duplicadas, se obtuvieron 721 registros. En la fase de cribado se excluyeron 644 registros por no cumplir los criterios de inclusi\'{o}n o por no responder al alcance de la revisi\'{o}n, quedando 77 registros candidatos. Posteriormente, se evaluaron los estudios en funci\'{o}n de disponibilidad de texto completo, pertinencia metodol\'{o}gica, uso de \textit{Deep Learning}, tipo de datos y resultados cuantitativos. Finalmente, 25 estudios fueron incluidos en la s\'{i}ntesis cualitativa. La diferencia entre los 77 registros candidatos y los 25 estudios finales corresponde a 52 art\'{i}culos excluidos en la etapa de elegibilidad.
+
+Para la evaluaci\'{o}n de calidad se dise\~{n}\'{o} un instrumento (CQI) de 6 criterios con la siguiente escala: S\'{i} cumple (1.0), Parcialmente (0.5), No cumple (0.0). La puntuaci\'{o}n m\'{a}xima posible fue de 6.0 y el umbral m\'{i}nimo de inclusi\'{o}n se estableci\'{o} en 4.0.
+
+\textbf{Aplicaci\'{o}n del CQI.} Cada estudio primario fue evaluado individualmente por los tres autores siguiendo los 6 criterios. Las discrepancias se resolvieron por consenso en sesiones de revisi\'{o}n conjunta. Las puntuaciones finales se agregaron por estudio y se reportan en la Tabla~\ref{tab:estudios}. La dispersi\'{o}n observada en las puntuaciones es reducida (rango 5.5--6.0; desviaci\'{o}n est\'{a}ndar $\sigma \approx 0.25$) porque el proceso de cribado previo aplic\'{o} los criterios CI/CE de manera estricta: los estudios con puntuaciones inferiores a 5.5 fueron descartados en la etapa de elegibilidad. Esta estrechez del rango no invalida el instrumento, pero se declara expl\'{i}citamente como limitaci\'{o}n de la evaluaci\'{o}n de calidad.
+
+\begin{table}[H]
+\centering
+\caption{Instrumento de evaluaci\'{o}n de calidad (CQI).}
+\label{tab:cqi}
+\small
+\begin{tabularx}{\linewidth}{@{}clX@{}}
+\toprule
+\textbf{\'{I}tem} & \textbf{Criterio} & \textbf{Descripci\'{o}n} \\
+\midrule
+CQ-1 & Enfoque en anomal\'{i}as & \textquestiondown El estudio aborda la detecci\'{o}n de anomal\'{i}as en tr\'{a}fico vehicular urbano como problema principal? \\[3pt]
+CQ-2 & Uso de \textit{Deep Learning} & \textquestiondown El estudio utiliza DL como m\'{e}todo principal (LSTM, CNN, Autoencoder, Transformer o modelos h\'{i}bridos)? \\[3pt]
+CQ-3 & Datos secuenciales & \textquestiondown El estudio usa datos de series temporales o espacio-temporales (sensores, GPS, flujo vehicular)? \\[3pt]
+CQ-4 & M\'{e}tricas cuantitativas & \textquestiondown El estudio reporta m\'{e}tricas como F1-score, Precision, Recall, AUC-ROC, Accuracy o similares? \\[3pt]
+CQ-5 & Descripci\'{o}n metodol\'{o}gica & \textquestiondown El estudio describe claramente la arquitectura del modelo y el proceso de preprocesamiento, entrenamiento y evaluaci\'{o}n? \\[3pt]
+CQ-6 & Resultados evaluables & \textquestiondown El estudio presenta resultados claros, evaluaci\'{o}n experimental o comparaci\'{o}n con otros m\'{e}todos? \\[3pt]
+\midrule
+\multicolumn{2}{@{}l}{\textbf{Puntuaci\'{o}n m\'{a}xima}} & 6.0 \\
+\multicolumn{2}{@{}l}{\textbf{Umbral de inclusi\'{o}n}} & $\geq 4.0$ \\
+\multicolumn{2}{@{}l}{\textbf{Puntuaci\'{o}n media observada}} & $5.74$ \\
+\multicolumn{2}{@{}l}{\textbf{Desviaci\'{o}n est\'{a}ndar}} & $\sigma \approx 0.25$ \\
+\multicolumn{2}{@{}l}{\textbf{Rango}} & $5.5$--$6.0$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Extracci\'{o}n de Datos}
+
+Los datos de cada estudio primario se extrajeron siguiendo el formulario del Cuadro~\ref{tab:extraccion}, dise\~{n}ado conforme a las pautas de Kitchenham y Charters~\cite{Kitchenham2007}.
+
+\begin{table}[H]
+\centering
+\caption{Formulario de extracci\'{o}n de datos.}
+\label{tab:extraccion}
+\begin{tabularx}{\linewidth}{lX}
+\toprule
+\textbf{Campo} & \textbf{Descripci\'{o}n} \\
+\midrule
+ID                   & Identificador \'{u}nico del estudio (E01, E02, \ldots) \\
+Autor y a\~{n}o      & Apellido del primer autor y a\~{n}o de publicaci\'{o}n \\
+T\'{i}tulo           & T\'{i}tulo completo del art\'{i}culo revisado \\
+Fuente               & Revista, conferencia o repositorio de publicaci\'{o}n \\
+Modelo DL            & Arquitectura empleada (LSTM, CNN, Autoencoder, Transformer, GNN o h\'{i}bridos) \\
+Tipo de datos        & Fuente principal (sensores, c\'{a}maras, GPS, series temporales) \\
+Conjunto de datos    & Nombre del dataset o descripci\'{o}n de la fuente \\
+Tipo de dataset      & Clasificaci\'{o}n: real, simulado o mixto \\
+Tipo de anomal\'{i}a & Clase de anomal\'{i}a abordada (accidentes, congesti\'{o}n, trayectorias, etc.) \\
+M\'{e}tricas         & Indicadores de rendimiento reportados \\
+Resultado principal  & Hallazgo o desempe\~{n}o m\'{a}s relevante reportado \\
+Limitaciones         & Restricciones, debilidades o desaf\'{i}os se\~{n}alados por los autores \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Estrategia de S\'{i}ntesis}
+
+La s\'{i}ntesis de resultados se realiz\'{o} de manera descriptiva y comparativa. Primero, los estudios fueron agrupados seg\'{u}n la arquitectura principal de \textit{Deep Learning}: modelos recurrentes, convolucionales, autoencoders, redes neuronales de grafos, Transformers y modelos h\'{i}bridos o multimodales. Segundo, se identificaron las m\'{e}tricas de evaluaci\'{o}n reportadas, diferenciando entre m\'{e}tricas de clasificaci\'{o}n, error de predicci\'{o}n, localizaci\'{o}n visual y desempe\~{n}o operativo. Tercero, se clasificaron los tipos de anomal\'{i}as abordadas, considerando accidentes, congesti\'{o}n an\'{o}mala, trayectorias peligrosas, cierres de v\'{i}as y eventos inusuales. Finalmente, se analizaron las limitaciones reportadas para construir una lectura transversal de las brechas del campo.
+
+No se realiz\'{o} metaan\'{a}lisis cuantitativo debido a la heterogeneidad de los datasets, tareas, m\'{e}tricas y condiciones experimentales. En su lugar, se opt\'{o} por una s\'{i}ntesis narrativa apoyada en tablas comparativas, lo cual resulta m\'{a}s apropiado cuando los estudios primarios no comparten un protocolo experimental uniforme.
+
+%=============================================================
+\section{Resultados}
+\label{sec:resultados}
+%=============================================================
+
+\subsection{Descripci\'{o}n General de los Estudios}
+
+Se incluyeron \textbf{25 estudios primarios} publicados entre 2020 y 2026. La distribuci\'{o}n temporal muestra crecimiento sostenido: 2 estudios en 2020, 2 en 2021, 5 en 2022, 2 en 2023, 5 en 2024, 7 en 2025 y 2 en 2026. Este comportamiento refleja una aceleraci\'{o}n reciente del inter\'{e}s investigativo en modelos espacio-temporales, grafos, Transformers y enfoques multimodales~\cite{park2025graph,duan2025multimodal}. La puntuaci\'{o}n media de calidad fue de 5.74/6.0, con 12 estudios (48\,\%) alcanzando 6.0 y 13 estudios (52\,\%) obteniendo 5.5.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=1.15cm,y=0.38cm]
+  \draw[->,thick] (0,0) -- (7.5,0) node[right]{A\~{n}o};
+  \draw[->,thick] (0,0) -- (0,8.2) node[above]{Estudios};
+  \foreach \y in {0,1,2,3,4,5,6,7} \draw (-0.08,\y) -- (0.08,\y) node[left=4pt]{\scriptsize \y};
+  \foreach \x/\year/\val in {1/2020/2,2/2021/2,3/2022/5,4/2023/2,5/2024/5,6/2025/7,7/2026/2}{
+    \draw[fill=azulClaro,draw=azulPrincipal,thick] (\x-0.28,0) rectangle (\x+0.28,\val);
+    \node[above,font=\scriptsize\bfseries] at (\x,\val) {\val};
+    \node[below,font=\scriptsize] at (\x,0) {\year};
+  }
+\end{tikzpicture}
+\caption{Distribuci\'{o}n anual de publicaciones incluidas (N=25).}
+\label{fig:publicaciones_anuales}
+\end{figure}
+
+\begin{longtable}{clp{4.2cm}ccc}
+\caption{Estudios primarios seleccionados.\label{tab:estudios}}\\
+\toprule
+\textbf{ID} & \textbf{Referencia} & \textbf{Objetivo abreviado} & \textbf{A\~{n}o} & \textbf{CQI} & \textbf{RQ} \\
+\midrule\endfirsthead
+\midrule\textbf{ID}&\textbf{Referencia}&\textbf{Objetivo abreviado}&\textbf{A\~{n}o}&\textbf{CQI}&\textbf{RQ}\\
+\midrule\endhead\endfoot\bottomrule\endlastfoot
+E01 & \cite{taheri2026applicability} & Aplicabilidad de m\'{e}todos de detecci\'{o}n en series temporales de volumen vehicular & 2026 & 5.5 & RQ1, RQ2, RQ4, RQ5 \\
+E02 & \cite{abdallah2025aipurban}   & Marco DL en borde para mantenimiento predictivo en infraestructura urbana & 2025 & 6.0 & RQ1, RQ2, RQ3, RQ4 \\
+E03 & \cite{mao2024detecting}       & Detecci\'{o}n de anomal\'{i}as urbanas de tr\'{a}fico con datos de monitoreo & 2024 & 5.5 & RQ1, RQ3, RQ4 \\
+E04 & \cite{zhang2022automatic}     & Detecci\'{o}n autom\'{a}tica de anomal\'{i}as con ST-GNN & 2022 & 6.0 & RQ1, RQ2, RQ3 \\
+E05 & \cite{hu2022detecting}        & Detecci\'{o}n de eventos extremos con autoencoder de grafos contextualizado & 2022 & 6.0 & RQ1, RQ2, RQ3 \\
+E06 & \cite{pawar2022deep}          & Detecci\'{o}n y localizaci\'{o}n de accidentes viales en video & 2022 & 6.0 & RQ1, RQ2, RQ3, RQ4 \\
+E07 & \cite{fang2020deep}           & Detecci\'{o}n de incidentes en v\'{i}a r\'{a}pida urbana con ciclo de aprendizaje profundo & 2020 & 5.5 & RQ1, RQ2, RQ3, RQ5 \\
+E08 & \cite{mehrannia2023deep}      & Representaci\'{o}n profunda de datos espacio-temporales desbalanceados & 2023 & 6.0 & RQ1, RQ2, RQ5 \\
+E09 & \cite{jadhav2025multistage}   & Clasificaci\'{o}n multi-etapa de eventos an\'{o}malos con LSTM y atenci\'{o}n & 2025 & 6.0 & RQ1, RQ2, RQ3 \\
+E10 & \cite{huang2020intelligent}   & Detecci\'{o}n de casi accidentes en intersecciones con CNN de dos flujos & 2020 & 6.0 & RQ1, RQ2, RQ3 \\
+E11 & \cite{park2025graph}          & Transformer multi-resoluci\'{o}n en grafos para anomal\'{i}as a nivel carril & 2025 & 6.0 & RQ1, RQ2, RQ4 \\
+E12 & \cite{duan2025multimodal}     & Fusi\'{o}n profunda multimodal para detecci\'{o}n de anomal\'{i}as en autopista & 2025 & 6.0 & RQ1, RQ2, RQ3 \\
+E13 & \cite{cai2021road}            & Detecci\'{o}n de cierres de v\'{i}as mediante fusi\'{o}n de caracter\'{i}sticas & 2021 & 5.5 & RQ1, RQ3, RQ4 \\
+E14 & \cite{ren2024graph}           & Autoencoder de grafos con red de convoluci\'{o}n temporal especular & 2024 & 6.0 & RQ1, RQ2, RQ3 \\
+E15 & \cite{nouri2025self}          & Modelo secuencial multitarea auto-imputado para disrupciones extremas & 2025 & 5.5 & RQ1, RQ2, RQ4, RQ5 \\
+E16 & \cite{jia2025prediction}      & Detecci\'{o}n de anomal\'{i}as basada en predicci\'{o}n con extracci\'{o}n multi-dominio & 2025 & 6.0 & RQ1, RQ2, RQ4 \\
+E17 & \cite{chakraborty2023structural} & Autoencoder variacional recurrente con atenci\'{o}n estructural en autopistas & 2023 & 5.5 & RQ1, RQ2, RQ4 \\
+E18 & \cite{khan2022anomaly}        & Detecci\'{o}n de anomal\'{i}as en video de vigilancia vehicular con DL & 2022 & 6.0 & RQ1, RQ2, RQ3 \\
+E19 & \cite{chai2026road}           & Detecci\'{o}n de anomal\'{i}as viales con aprendizaje texto-visi\'{o}n y atenci\'{o}n humana & 2026 & 5.5 & RQ1, RQ2, RQ3 \\
+E20 & \cite{riaz2022traffic}        & Sistema predictivo para anomal\'{i}as de tr\'{a}fico y conducci\'{o}n peligrosa & 2022 & 5.5 & RQ1, RQ2, RQ3 \\
+E21 & \cite{zhao2024multiadjacent}  & Reconocimiento de trayectorias peligrosas en autopistas ultra-largas & 2024 & 5.5 & RQ1, RQ2, RQ3 \\
+E22 & \cite{wang2024multiscale}     & Detecci\'{o}n multiescala de trayectorias espacio-temporales an\'{o}malas & 2024 & 6.0 & RQ1, RQ2, RQ3, RQ5 \\
+E23 & \cite{giasemis2025learning}   & Aprendizaje de anomal\'{i}as de tr\'{a}fico desde modelos generativos & 2025 & 5.5 & RQ1, RQ2, RQ4, RQ5 \\
+E24 & \cite{feng2021traffic}        & Detecci\'{o}n e identificaci\'{o}n de anomal\'{i}as con aprendizaje multi-instancia & 2021 & 5.5 & RQ1, RQ2, RQ3 \\
+E25 & \cite{lu2024vehicle}          & Detecci\'{o}n de comportamiento vehicular anormal con Dense Block & 2024 & 5.5 & RQ1, RQ2, RQ3 \\
+\end{longtable}
+
+\subsection{RQ1: T\'{e}cnicas de \textit{Deep Learning} implementadas}
+
+Los 25 estudios revelan seis familias de modelos utilizadas para la detecci\'{o}n de anomal\'{i}as en tr\'{a}fico vehicular. Los modelos recurrentes (LSTM, Bi-LSTM) son frecuentes en estudios basados en series temporales de flujo, velocidad u ocupaci\'{o}n vehicular~\cite{mehrannia2023deep}. Jadhav et al. combinan LSTM con atenci\'{o}n multi-cabezal para clasificaci\'{o}n multi-etapa de eventos an\'{o}malos~\cite{jadhav2025multistage}. Jia et al. emplean Bi-LSTM junto con GAT y Transformer para integrar caracter\'{i}sticas temporales, espaciales y frecuenciales~\cite{jia2025prediction}.
+
+Las arquitecturas convolucionales (CNN) aparecen principalmente en trabajos basados en c\'{a}maras o video. Huang et al. proponen una red CNN de dos flujos para detectar casi accidentes en intersecciones~\cite{huang2020intelligent}. Khan et al. emplean CNN para detectar accidentes en videos de vigilancia~\cite{khan2022anomaly}. Los modelos basados en grafos (GNN) tienen una presencia importante en los trabajos m\'{a}s recientes: Zhang et al. utilizan ST-GNN para detecci\'{o}n autom\'{a}tica de anomal\'{i}as en red vial~\cite{zhang2022automatic}; Park et al. plantean un Graph Multi-Resolution Transformer para anomal\'{i}as a nivel de carril~\cite{park2025graph}. Los enfoques h\'{i}bridos y multimodales, como el de Abdallah y Alghamdi que integra CNN, Transformer y LSTM~\cite{abdallah2025aipurban}, y el de Duan et al. con fusi\'{o}n de imagen, flujo, velocidad y clima~\cite{duan2025multimodal}, representan la tendencia m\'{a}s reciente del campo.
+
+\begin{table}[H]
+\centering
+\caption{Familias de modelos de \textit{Deep Learning} identificadas (RQ1).}
+\label{tab:rq1}
+\small
+\begin{tabularx}{\linewidth}{Xcc}
+\toprule
+\textbf{Familia de modelo} & \textbf{Menciones} & \textbf{Ejemplos representativos} \\
+\midrule
+Modelos recurrentes y secuenciales    & 7 & LSTM, Bi-LSTM, SI-DMSeq \\
+Modelos convolucionales y de video    & 7 & CNN, Two-stream CNN, Dense Block \\
+Autoencoders y modelos de reconstrucci\'{o}n & 5 & Con-GAE, MTGAE, VAE \\
+Modelos basados en grafos             & 7 & GNN, GAT, HGNN, Graph Autoencoder \\
+Transformers y mecanismos de atenci\'{o}n & 6 & GMRT, CLIP, multi-head attention \\
+Modelos h\'{i}bridos o multimodales   & 8 & CNN--Transformer--LSTM, STGAN \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{hallazgo}[]
+Los estudios recientes muestran una transici\'{o}n desde modelos centrados en series temporales individuales hacia enfoques h\'{i}bridos, espacio-temporales y multimodales. Esta tendencia sugiere que la detecci\'{o}n de anomal\'{i}as de tr\'{a}fico requiere integrar dependencias temporales, relaciones espaciales de la red vial y fuentes heterog\'{e}neas de datos~\cite{duan2025multimodal,park2025graph}.
+\end{hallazgo}
+
+\subsection{RQ2: M\'{e}tricas de Evaluaci\'{o}n}
+
+Las m\'{e}tricas reportadas se agrupan en cinco categor\'{i}as. Las m\'{e}tricas de clasificaci\'{o}n son las m\'{a}s frecuentes: \textit{Accuracy}, \textit{Precision}, \textit{Recall}, \textit{F1-score} y \textit{AUC-ROC} aparecen en estudios que formulan la detecci\'{o}n como tarea supervisada~\cite{khan2022anomaly,jadhav2025multistage,duan2025multimodal}. En los enfoques de predicci\'{o}n o reconstrucci\'{o}n predominan m\'{e}tricas de error como MAE, RMSE, MAPE y NSE~\cite{ren2024graph,jia2025prediction}. Algunos estudios reportan m\'{e}tricas espec\'{i}ficas de detecci\'{o}n de incidentes, como \textit{Detection Rate}, \textit{False Alarm Rate} y \textit{Mean Time to Detection}~\cite{fang2020deep}. Los estudios basados en video emplean m\'{e}tricas de localizaci\'{o}n como IoU y mAP~\cite{huang2020intelligent,pawar2022deep}. Trabajos recientes incluyen m\'{e}tricas operativas como latencia y consumo energ\'{e}tico orientadas al despliegue en tiempo real~\cite{abdallah2025aipurban}.
+
+\begin{table}[H]
+\centering
+\caption{S\'{i}ntesis de m\'{e}tricas de evaluaci\'{o}n identificadas (RQ2).}
+\label{tab:rq2}
+\small
+\begin{tabularx}{\linewidth}{Xcc}
+\toprule
+\textbf{Tipo de m\'{e}trica} & \textbf{Menciones} & \textbf{Ejemplos} \\
+\midrule
+Clasificaci\'{o}n general          & 9 & Accuracy, Precision, Recall, F1-score, AUC-ROC \\
+Errores de predicci\'{o}n          & 6 & MAE, RMSE, MAPE, NSE \\
+Detecci\'{o}n de incidentes        & 4 & Detection Rate, False Positive Rate, MTTD, EER \\
+Localizaci\'{o}n visual            & 2 & IoU, mAP \\
+Robustez y operaci\'{o}n           & 4 & Latencia, consumo energ\'{e}tico, tiempo de inferencia \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{hallazgo}[]
+\textit{Accuracy}, \textit{Precision}, \textit{Recall}, \textit{F1-score} y \textit{AUC-ROC} son las m\'{e}tricas predominantes. Sin embargo, la literatura carece de un protocolo com\'{u}n de evaluaci\'{o}n. Para futuras investigaciones, se recomienda reportar conjuntamente m\'{e}tricas de clasificaci\'{o}n, de error y operativas, especialmente cuando el modelo est\'{e} orientado a sistemas de monitoreo en tiempo real~\cite{taheri2026applicability}.
+\end{hallazgo}
+
+\subsection{RQ3: Tipos de Anomal\'{i}as Abordadas}
+
+Los estudios revisados agrupan las anomal\'{i}as en cuatro categor\'{i}as principales. La m\'{a}s frecuente, accidentes e incidentes viales, aparece en 8 estudios (32\,\%): incluye accidentes vehiculares, incidentes en autopistas y casi accidentes detectados mediante c\'{a}maras o sensores~\cite{fang2020deep,huang2020intelligent,khan2022anomaly,pawar2022deep}. La congesti\'{o}n o flujo an\'{o}malo est\'{a} presente en 6 estudios (24\,\%), centr\'{a}ndose en desviaciones del comportamiento esperado del flujo, volumen, velocidad u ocupaci\'{o}n vehicular~\cite{ren2024graph,mao2024detecting,jia2025prediction}. Los patrones an\'{o}malos de trayectoria o comportamiento vehicular representan otro 24\,\%: exceso de velocidad, conducci\'{o}n peligrosa, rutas inusuales y comportamientos vehiculares anormales~\cite{riaz2022traffic,chakraborty2023structural,wang2024multiscale}. Finalmente, 5 estudios (20\,\%) abordan eventos inusuales o disrupciones de infraestructura, como cierres de v\'{i}as, fallos de sensores, condiciones clim\'{a}ticas extremas y eventos de gran escala~\cite{cai2021road,hu2022detecting,nouri2025self}.
+
+\begin{table}[H]
+\centering
+\caption{Categor\'{i}as de anomal\'{i}as abordadas en los estudios (RQ3).}
+\label{tab:rq3}
+\small
+\begin{tabularx}{\linewidth}{Xcc}
+\toprule
+\textbf{Categor\'{i}a de anomal\'{i}a} & \textbf{Estudios} & \textbf{\%} \\
+\midrule
+Accidentes e incidentes viales                    & 8 & 32\,\% \\
+Congesti\'{o}n o flujo an\'{o}malo                & 6 & 24\,\% \\
+Patrones an\'{o}malos de trayectoria o conducta   & 6 & 24\,\% \\
+Eventos inusuales o disrupciones de infraestructura & 5 & 20\,\% \\
+\midrule
+\textbf{Total} & \textbf{25} & \textbf{100\,\%} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{hallazgo}[]
+Las anomal\'{i}as m\'{a}s estudiadas son accidentes, incidentes viales y congestiones an\'{o}malas. No obstante, los trabajos recientes incorporan nuevas categor\'{i}as: fallos de infraestructura, eventos extremos, trayectorias peligrosas y comportamientos vehiculares anormales. Esta ampliaci\'{o}n del concepto de anomal\'{i}a muestra que la detecci\'{o}n en tr\'{a}fico vehicular urbano est\'{a} evolucionando hacia enfoques m\'{a}s integrales y multimodales~\cite{abdallah2025aipurban,duan2025multimodal}.
+\end{hallazgo}
+
+\subsection{RQ4: Conjuntos de Datos Utilizados}
+
+Los estudios primarios utilizan conjuntos de datos provenientes de sensores fijos, c\'{a}maras de vigilancia, trayectorias GPS, plataformas de monitoreo urbano y entornos simulados. Los sensores fijos y datos de flujo vehicular son una de las fuentes m\'{a}s utilizadas, con datasets como PeMS, PEMS-BAY, PEMS04, PEMS08 y MnDOT~\cite{fang2020deep,mehrannia2023deep,jia2025prediction}. Taheri et al. proponen AnoLT, un dataset etiquetado de volumen vehicular de Melbourne orientado espec\'{i}ficamente a la evaluaci\'{o}n de m\'{e}todos de detecci\'{o}n~\cite{taheri2026applicability}. Las c\'{a}maras de vigilancia aportan datos en estudios como TNAD, VAID, IITH, Iowa DOT y DoTA~\cite{huang2020intelligent,khan2022anomaly,pawar2022deep}. Los datos GPS y trayectorias cubren bases como NYC Taxi, Chicago Taxi, Uber Movement y conjuntos de Shanghai y Chengdu~\cite{hu2022detecting,wang2024multiscale,cai2021road}. Un aspecto cr\'{i}tico es que no todos los estudios cuentan con etiquetas de anomal\'{i}as verificadas por expertos: algunos recurren a anomal\'{i}as inyectadas~\cite{ren2024graph} o generaci\'{o}n controlada~\cite{wang2024multiscale}, lo que limita la comparaci\'{o}n entre modelos.
+
+\begin{table}[H]
+\centering
+\caption{Fuentes de datos utilizadas en los estudios primarios (RQ4).}
+\label{tab:rq4}
+\small
+\begin{tabularx}{\linewidth}{Xcc}
+\toprule
+\textbf{Fuente de datos} & \textbf{Menciones} & \textbf{Ejemplos de datasets} \\
+\midrule
+Sensores fijos y datos de flujo         & 9 & PeMS, PEMS-BAY, PEMS04, AnoLT \\
+C\'{a}maras y video de vigilancia       & 9 & TNAD, VAID, IITH, DoTA, TADS \\
+GPS, taxis y trayectorias               & 5 & NYC Taxi, Chicago Taxi, Porto \\
+Datos simulados                         & 2 & MAAD, VISSIM Pangyo \\
+Datos multimodales o mixtos             & 3 & SUMO, UA-DETRAC, clima+imagen \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{hallazgo}[]
+La mayor\'{i}a de estudios utiliza datos reales de sensores fijos, c\'{a}maras o trayectorias GPS. Sin embargo, la falta de etiquetas verificadas, el uso de anomal\'{i}as inyectadas y la dependencia de datasets propios limitan la replicabilidad. Esto evidencia la necesidad de benchmarks p\'{u}blicos, multimodales y estandarizados para evaluar modelos de detecci\'{o}n de anomal\'{i}as en tr\'{a}fico vehicular urbano~\cite{taheri2026applicability}.
+\end{hallazgo}
+
+\subsection{RQ5: Limitaciones y Desaf\'{i}os Reportados}
+
+Los estudios primarios reportan cinco categor\'{i}as principales de limitaciones. La escasez de datos y la replicabilidad afectan a 7 estudios: el uso de datasets propios, locales o de acceso limitado impide la reproducci\'{o}n de experimentos en otros escenarios~\cite{fang2020deep,mao2024detecting,giasemis2025learning}. El etiquetado de anomal\'{i}as es problem\'{a}tico en 6 estudios, que recurren a anomal\'{i}as sint\'{e}ticas, etiquetas autom\'{a}ticas o validaci\'{o}n manual parcial, lo que afecta la validez externa de los resultados~\cite{ren2024graph,wang2024multiscale,jadhav2025multistage}. La generalizaci\'{o}n tambi\'{e}n aparece en 6 estudios: la evaluaci\'{o}n en una sola ciudad, autopista o entorno simulado limita la transferencia de los modelos a nuevos contextos~\cite{mehrannia2023deep,nouri2025self,chakraborty2023structural}. La heterogeneidad de m\'{e}tricas en 5 estudios impide la comparaci\'{o}n directa entre modelos que abordan problemas similares~\cite{riaz2022traffic,jia2025prediction,taheri2026applicability}. Finalmente, el costo computacional y el despliegue en tiempo real constituyen una limitaci\'{o}n en 5 estudios que emplean modelos basados en grafos, Transformers o datos multimodales~\cite{park2025graph,abdallah2025aipurban,duan2025multimodal}.
+
+\begin{table}[H]
+\centering
+\caption{Limitaciones y desaf\'{i}os reportados en los estudios primarios (RQ5).}
+\label{tab:rq5}
+\small
+\begin{tabularx}{\linewidth}{Xcc}
+\toprule
+\textbf{Tipo de limitaci\'{o}n} & \textbf{Menciones} & \textbf{Descripci\'{o}n resumida} \\
+\midrule
+Datos y replicabilidad          & 7 & Datasets propios, locales o de acceso limitado \\
+Etiquetado de anomal\'{i}as     & 6 & Anomal\'{i}as sint\'{e}ticas o validaci\'{o}n manual parcial \\
+Generalizaci\'{o}n              & 6 & Evaluaci\'{o}n en ciudad, autopista o entorno \'{u}nico \\
+M\'{e}tricas no uniformes       & 5 & Ausencia de m\'{e}tricas completas o comparables \\
+Costo computacional y despliegue & 5 & Modelos pesados o dependientes de infraestructura avanzada \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{hallazgo}[]
+Las principales limitaciones son la escasez de datasets p\'{u}blicos con etiquetas verificadas, la evaluaci\'{o}n en contextos urbanos espec\'{i}ficos, el uso de anomal\'{i}as artificiales, la falta de m\'{e}tricas uniformes y el alto costo computacional de modelos complejos. Estas limitaciones evidencian la necesidad de benchmarks abiertos, protocolos de evaluaci\'{o}n comparables y modelos m\'{a}s generalizables para su aplicaci\'{o}n en sistemas inteligentes de transporte~\cite{taheri2026applicability,abdallah2025aipurban}.
+\end{hallazgo}
+
+\subsection{Mapa de Evidencia}
+
+La Tabla~\ref{tab:mapa} resume las t\'{e}cnicas y enfoques identificados y su cobertura por pregunta de investigaci\'{o}n.
+
+\begin{table}[H]
+\centering
+\caption{Mapa de evidencia: t\'{e}cnicas / enfoques vs.\ preguntas de investigaci\'{o}n.}
+\label{tab:mapa}
+\small
+\begin{tabularx}{\linewidth}{Xccccc}
+\toprule
+\textbf{T\'{e}cnica / Enfoque} &
+\textbf{RQ1} & \textbf{RQ2} & \textbf{RQ3} & \textbf{RQ4} & \textbf{RQ5} \\
+\midrule
+Modelos recurrentes (LSTM, Bi-LSTM)
+  & \checkmark & \checkmark & \checkmark & \checkmark & {--} \\
+Modelos convolucionales (CNN, Two-stream)
+  & \checkmark & \checkmark & \checkmark & \checkmark & {--} \\
+Autoencoders y modelos de reconstrucci\'{o}n
+  & \checkmark & \checkmark & \checkmark & {--} & \checkmark \\
+Redes neuronales de grafos (GNN, GAT)
+  & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
+Transformers y mecanismos de atenci\'{o}n
+  & \checkmark & \checkmark & {--} & \checkmark & \checkmark \\
+Arquitecturas h\'{i}bridas y multimodales
+  & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
+Benchmarks p\'{u}blicos estandarizados
+  & {--} & \checkmark & {--} & \checkmark & \checkmark \\
+Despliegue en tiempo real y borde
+  & {--} & \checkmark & {--} & {--} & \checkmark \\
+Modelos generativos y aprendizaje no supervisado
+  & \checkmark & \checkmark & \checkmark & {--} & \checkmark \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+%=============================================================
+\section{Discusi\'{o}n}
+\label{sec:discusion}
+%=============================================================
+
+\subsection{Interpretaci\'{o}n de los Resultados}
+
+Los resultados confirman que el \textit{Deep Learning} ha alcanzado un nivel de madurez t\'{e}cnica relevante para la detecci\'{o}n de anomal\'{i}as en tr\'{a}fico vehicular urbano~\cite{zhang2022automatic,park2025graph}. La evoluci\'{o}n observada no es lineal y no sigue una progresi\'{o}n estrictamente acumulativa: los estudios del periodo 2020--2022 se distribuyen de manera heterog\'{e}nea entre modelos convolucionales (CNN de dos flujos, redes de video), recurrentes y de reconstrucci\'{o}n, mientras que a partir de 2023 se observa una mayor presencia de arquitecturas basadas en grafos, mecanismos de atenci\'{o}n, Transformers y fusi\'{o}n multimodal~\cite{duan2025multimodal,chai2026road,park2025graph}. Este cambio sugiere que la comunidad investigadora reconoce al tr\'{a}fico como un fen\'{o}meno distribuido, dependiente del tiempo, de la ubicaci\'{o}n y del contexto operativo, aunque sin abandonar las familias arquitect\'{o}nicas previas.
+
+Una primera lectura transversal indica que no existe una arquitectura dominante para todos los escenarios. Las CNN y las redes de video son adecuadas cuando la anomal\'{i}a es visualmente observable, como accidentes o casi accidentes en intersecciones~\cite{huang2020intelligent,khan2022anomaly}. Los modelos recurrentes y de predicci\'{o}n son m\'{a}s pertinentes cuando se trabaja con series de velocidad, flujo u ocupaci\'{o}n vehicular~\cite{jadhav2025multistage,jia2025prediction}. Los autoencoders y modelos variacionales resultan \'{u}tiles cuando se dispone de abundantes datos normales pero pocas etiquetas an\'{o}malas~\cite{hu2022detecting,chakraborty2023structural}. Finalmente, las redes neuronales de grafos y los Transformers ofrecen ventajas cuando se necesita representar relaciones entre segmentos de v\'{i}a, sensores, carriles o regiones urbanas~\cite{ren2024graph,park2025graph}.
+
+La revisi\'{o}n tambi\'{e}n muestra que la evaluaci\'{o}n del rendimiento depende fuertemente del tipo de tarea. En problemas de clasificaci\'{o}n supervisada, las m\'{e}tricas como \textit{Accuracy}, \textit{Precision}, \textit{Recall} y \textit{F1-score} permiten comparar modelos bajo un mismo conjunto de datos. Sin embargo, en escenarios con fuerte desbalance, el \textit{F1-score}, el AUC-ROC y el PR-AUC suelen ser m\'{a}s informativos que la exactitud global~\cite{taheri2026applicability,wang2024multiscale}. En sistemas de monitoreo real, adem\'{a}s del rendimiento predictivo, deber\'{i}an reportarse latencia, tiempo de inferencia, estabilidad temporal y costo computacional, porque una alerta tard\'{i}a puede tener bajo valor operativo.
+
+Desde una perspectiva metodol\'{o}gica, la heterogeneidad de datasets y m\'{e}tricas impide afirmar de forma absoluta que una arquitectura sea superior a otra. Por ello, los resultados deben interpretarse como evidencia comparativa y no como ranking universal. La contribuci\'{o}n m\'{a}s importante de esta RSL consiste en organizar dicha evidencia, mostrando qu\'{e} t\'{e}cnicas se asocian con qu\'{e} tipos de datos, qu\'{e} anomal\'{i}as se han estudiado con mayor frecuencia y qu\'{e} limitaciones se repiten en la literatura.
+
+\subsection{Implicaciones para Sistemas Inteligentes de Transporte}
+
+Para los sistemas ITS, los hallazgos sugieren que la detecci\'{o}n de anomal\'{i}as no debe implementarse como una soluci\'{o}n aislada. En aplicaciones reales, un modelo deber\'{i}a integrarse con fuentes de datos confiables, reglas de validaci\'{o}n, paneles de monitoreo, protocolos de alerta y mecanismos de explicabilidad. La combinaci\'{o}n de datos visuales, sensores de flujo, trayectorias GPS y contexto urbano puede mejorar la robustez del sistema, pero tambi\'{e}n aumenta la complejidad del procesamiento y del despliegue~\cite{abdallah2025aipurban,duan2025multimodal}.
+
+Asimismo, los operadores de transporte requieren modelos que no solo indiquen que existe una anomal\'{i}a, sino que tambi\'{e}n ayuden a interpretar su posible causa, ubicaci\'{o}n, severidad y evoluci\'{o}n temporal. Por esta raz\'{o}n, la interpretabilidad debe considerarse un requisito pr\'{a}ctico y no solo una caracter\'{i}stica secundaria. En escenarios urbanos, donde las decisiones pueden afectar la movilidad y la seguridad de muchas personas, la explicabilidad de los modelos es clave para fortalecer la confianza en los sistemas automatizados.
+
+\subsection{Brechas de Investigaci\'{o}n}
+
+Se identifican cuatro brechas principales para futuras investigaciones. La primera es la \textbf{ausencia de benchmarks p\'{u}blicos multimodales con etiquetas verificadas}. Aunque existen datasets ampliamente utilizados como PeMS, VAID, TNAD, TADS o AnoLT, no todos fueron dise\~{n}ados con la misma finalidad ni poseen etiquetas de anomal\'{i}as verificadas bajo criterios homog\'{e}neos~\cite{taheri2026applicability,khan2022anomaly,huang2020intelligent}. Esto dificulta reproducir experimentos y comparar modelos de manera justa.
+
+La segunda brecha es la \textbf{limitada generalizaci\'{o}n entre contextos urbanos}. Muchos modelos se entrenan y eval\'{u}an en una ciudad, autopista o red vial espec\'{i}fica. Sin embargo, los patrones de movilidad cambian seg\'{u}n infraestructura, cultura vial, densidad vehicular, clima y disponibilidad de sensores. El aprendizaje por transferencia, el aprendizaje federado y la adaptaci\'{o}n de dominio representan l\'{i}neas prometedoras para reducir esta dependencia contextual.
+
+La tercera brecha es el \textbf{tratamiento de datos escasos, desbalanceados o incompletos}. Las anomal\'{i}as reales son poco frecuentes y, en muchos casos, no est\'{a}n etiquetadas con precisi\'{o}n. Esto afecta especialmente a los modelos supervisados, que pueden aprender patrones dominados por la clase normal~\cite{mehrannia2023deep}. Los enfoques no supervisados, semi-supervisados, generativos y basados en reconstrucci\'{o}n ofrecen alternativas relevantes, pero a\'{u}n requieren validaci\'{o}n m\'{a}s amplia en escenarios reales.
+
+La cuarta brecha es la \textbf{interpretabilidad y explicabilidad de los modelos}. La mayor\'{i}a de arquitecturas profundas opera como caja negra, dificultando que un operador comprenda el origen de una alerta antes de tomar decisiones. Algunos trabajos incorporan mecanismos de explicabilidad mediante SHAP o mapas de atenci\'{o}n~\cite{abdallah2025aipurban}, pero esta pr\'{a}ctica todav\'{i}a no es generalizada. En sistemas cr\'{i}ticos de transporte, la explicabilidad debe formar parte del dise\~{n}o del modelo y del reporte experimental.
+
+\subsection{Amenazas a la Validez}
+
+Siguiendo a Kitchenham y Charters~\cite{Kitchenham2007}, se consideran cuatro amenazas principales. En primer lugar, la \textbf{validez de construcci\'{o}n} puede verse afectada por la cadena de b\'{u}squeda, ya que algunos estudios relevantes podr\'{i}an utilizar t\'{e}rminos diferentes a los empleados en esta revisi\'{o}n. Para mitigar este riesgo, se combinaron t\'{e}rminos relacionados con detecci\'{o}n de anomal\'{i}as, tr\'{a}fico vehicular, series temporales, datos espacio-temporales y t\'{e}cnicas de \textit{Deep Learning}.
+
+En segundo lugar, la \textbf{validez interna} puede estar influida por decisiones de inclusi\'{o}n o exclusi\'{o}n durante la selecci\'{o}n de estudios. Esta amenaza se redujo mediante criterios CI/CE definidos previamente, un instrumento de calidad metodol\'{o}gica y el uso de Parsifal para registrar las decisiones de revisi\'{o}n. En tercer lugar, la \textbf{validez externa} se encuentra limitada por el periodo 2020--2026, el predominio de estudios en ingl\'{e}s y la concentraci\'{o}n de datasets en ciertos pa\'{i}ses o ciudades. Por tanto, los hallazgos deben interpretarse en relaci\'{o}n con el corpus analizado.
+
+Finalmente, la \textbf{validez de conclusi\'{o}n} se ve condicionada por la heterogeneidad de m\'{e}tricas, datasets y tipos de anomal\'{i}as. Para mitigar esta amenaza, la s\'{i}ntesis se realiz\'{o} de forma narrativa y comparativa, evitando un metaan\'{a}lisis cuantitativo no sustentado por datos homog\'{e}neos. Esta decisi\'{o}n permite presentar conclusiones m\'{a}s prudentes y coherentes con la diversidad metodol\'{o}gica de los estudios primarios.
+
+%=============================================================
+\section{Conclusiones}
+\label{sec:conclusiones}
+%=============================================================
+
+Esta RSL analiz\'{o} 25 estudios primarios publicados entre 2020 y 2026, siguiendo las directrices de Kitchenham y Charters~\cite{Kitchenham2007}. A partir de 758 registros recuperados en seis bases de datos acad\'{e}micas, se aplicaron criterios de inclusi\'{o}n, exclusi\'{o}n y evaluaci\'{o}n de calidad, obteni\'{e}ndose una puntuaci\'{o}n media de 5.74/6.0. El corpus final permite caracterizar el estado reciente de la detecci\'{o}n de anomal\'{i}as en tr\'{a}fico vehicular urbano mediante \textit{Deep Learning}.
+
+En relaci\'{o}n con \textbf{RQ1}, las t\'{e}cnicas m\'{a}s utilizadas son modelos recurrentes, modelos convolucionales, autoencoders, redes neuronales de grafos, Transformers y arquitecturas h\'{i}bridas o multimodales. La tendencia m\'{a}s reciente se orienta hacia modelos capaces de integrar dependencias temporales, relaciones espaciales y fuentes heterog\'{e}neas de datos~\cite{park2025graph,duan2025multimodal,chai2026road}. Esta evoluci\'{o}n confirma que el tr\'{a}fico urbano no puede entenderse \'{u}nicamente como una secuencia temporal, sino como un sistema din\'{a}mico, distribuido y condicionado por el contexto.
+
+Respecto a \textbf{RQ2}, las m\'{e}tricas predominantes son \textit{Accuracy}, \textit{Precision}, \textit{Recall}, \textit{F1-score} y \textit{AUC-ROC}. Sin embargo, la falta de un protocolo uniforme de evaluaci\'{o}n impide comparar de manera directa todos los estudios. En escenarios desbalanceados, se recomienda priorizar m\'{e}tricas como \textit{F1-score}, AUC-ROC o PR-AUC, junto con indicadores operativos como latencia, tiempo de inferencia y estabilidad del sistema.
+
+Sobre \textbf{RQ3}, las anomal\'{i}as m\'{a}s abordadas son accidentes e incidentes viales, congesti\'{o}n an\'{o}mala, trayectorias peligrosas y disrupciones de infraestructura. Esta clasificaci\'{o}n evidencia que el concepto de anomal\'{i}a se ha ampliado: ya no se limita a accidentes visibles, sino que incluye desviaciones de flujo, comportamientos peligrosos, cierres de v\'{i}as y patrones at\'{i}picos de movilidad.
+
+En cuanto a \textbf{RQ4}, los estudios utilizan principalmente datos reales de sensores, c\'{a}maras y GPS, aunque tambi\'{e}n se identifican datasets simulados o mixtos. La diversidad de fuentes permite estudiar el problema desde diferentes perspectivas, pero tambi\'{e}n genera dificultades para la replicabilidad. La falta de benchmarks p\'{u}blicos, multimodales y etiquetados por expertos sigue siendo una de las principales limitaciones del campo~\cite{taheri2026applicability}.
+
+Finalmente, \textbf{RQ5} identifica como desaf\'{i}os principales la escasez de datos etiquetados, el desbalance de clases, la generalizaci\'{o}n limitada entre ciudades, la heterogeneidad de m\'{e}tricas y el costo computacional de modelos complejos. Estos aspectos deben ser abordados para avanzar desde modelos experimentales hacia sistemas ITS aplicables en entornos reales.
+
+Como implicaci\'{o}n pr\'{a}ctica, los desarrolladores de sistemas inteligentes de transporte deber\'{i}an priorizar modelos interpretables, validaci\'{o}n en m\'{u}ltiples escenarios urbanos y protocolos de evaluaci\'{o}n reproducibles~\cite{abdallah2025aipurban}. Como trabajo futuro, se recomienda construir benchmarks p\'{u}blicos multimodales con etiquetas verificadas, evaluar modelos transferibles entre ciudades, explorar aprendizaje federado y fortalecer el uso de t\'{e}cnicas explicables para apoyar la toma de decisiones operativas.
+
+%=============================================================
+\section*{Declaraciones}
+%=============================================================
+
+\textbf{Conflicto de intereses:} Los autores declaran no tener conflicto de intereses.
+
+\textbf{Financiamiento:} Esta investigaci\'{o}n no recibi\'{o} financiamiento externo.
+
+\textbf{Contribuciones (CRediT):}
+\begin{itemize}
+  \item \textbf{Mayta Arotaype, W. A.}: Conceptualizaci\'{o}n, Metodolog\'{i}a, Curaci\'{o}n de datos, An\'{a}lisis formal, Redacci\'{o}n --- borrador original.
+  \item \textbf{Choquechambi Luque, W.}: Investigaci\'{o}n, Validaci\'{o}n, Visualizaci\'{o}n, Redacci\'{o}n --- revisi\'{o}n y edici\'{o}n.
+  \item \textbf{Prieto Quispe, J. E.}: Investigaci\'{o}n, An\'{a}lisis formal, Verificaci\'{o}n de resultados, Redacci\'{o}n --- revisi\'{o}n y edici\'{o}n.
+\end{itemize}
+
+\textbf{Disponibilidad de datos:} La cadena de b\'{u}squeda, los criterios de evaluaci\'{o}n y los datos extra\'{i}dos de cada estudio primario est\'{a}n disponibles en el repositorio del proyecto: \url{https://github.com/WilbertAlex/deteccion-anomalias-pems-d4}.
+
+%=============================================================
+\bibliographystyle{IEEEtran}
+\bibliography{referencias}
+%=============================================================
+
+\appendix
+
+\section{Protocolo de Revisi\'{o}n Sistem\'{a}tica}
+
+Este anexo resume el protocolo aplicado en Parsifal. La b\'{u}squeda se ejecut\'{o} en seis fuentes acad\'{e}micas: ACM Digital Library, ISI Web of Science, ScienceDirect, Scopus, Taylor \& Francis Online y MDPI. El periodo de cobertura fue 2020--2026, con estudios publicados en ingl\'{e}s o espa\~{n}ol, disponibles a texto completo y relacionados con detecci\'{o}n de anomal\'{i}as en tr\'{a}fico vehicular mediante \textit{Deep Learning}. El registro inicial fue de 758 estudios importados, 37 citas duplicadas eliminadas, 721 registros depurados, 77 registros candidatos y 25 estudios finales incluidos.
+
+\subsection*{Cadenas de b\'{u}squeda por base de datos}
+
+\noindent\textit{Scopus:}
+\begin{center}
+\fbox{\parbox{0.92\linewidth}{\scriptsize\ttfamily\raggedright
+("traffic anomaly detection" OR "anomaly detection" OR "incident detection") AND ("deep learning" OR "LSTM" OR "autoencoder" OR "transformer" OR "ConvLSTM" OR "graph neural network") AND ("time series" OR "spatio-temporal") AND ("urban traffic" OR "vehicular traffic" OR "road traffic" OR "intelligent transportation")
+}}
+\end{center}
+
+\noindent\textit{ScienceDirect:}
+\begin{center}
+\fbox{\parbox{0.92\linewidth}{\scriptsize\ttfamily\raggedright
+("anomaly detection" OR "traffic anomaly") AND ("deep learning" OR "neural network") AND ("time series" OR "spatio-temporal") AND ("urban traffic" OR "vehicular traffic")
+}}
+\end{center}
+
+\noindent\textit{ACM Digital Library:}
+\begin{center}
+\fbox{\parbox{0.92\linewidth}{\scriptsize\ttfamily\raggedright
+("traffic flow" OR "urban traffic" OR "vehicular traffic") AND ("anomaly detection" OR "traffic anomaly" OR "incident detection") AND ("deep learning" OR "LSTM" OR "autoencoder" OR "transformer") AND ("time series" OR "spatio-temporal")
+}}
+\end{center}
+
+\noindent\textit{ISI Web of Science:}
+\begin{center}
+\fbox{\parbox{0.92\linewidth}{\scriptsize\ttfamily\raggedright
+("anomaly detection" OR "outlier detection") AND ("road traffic" OR "urban traffic" OR "vehicular traffic" OR "highway traffic" OR "traffic congestion" OR "traffic incident") AND ("deep learning" OR "LSTM" OR "autoencoder" OR "transformer" OR "graph neural network" OR "ConvLSTM" OR "GRU") AND ("time series" OR "spatio-temporal" OR "traffic flow" OR "traffic speed" OR "traffic volume")
+}}
+\end{center}
+
+\noindent\textit{MDPI:}
+\begin{center}
+\fbox{\parbox{0.92\linewidth}{\scriptsize\ttfamily\raggedright
+(("anomaly detection" OR "traffic anomaly" OR "incident detection" OR "congestion detection") AND ("deep learning" OR "neural network" OR LSTM OR GRU OR transformer OR autoencoder) AND ("traffic flow" OR "urban traffic" OR "vehicular traffic" OR "road traffic" OR transportation))
+}}
+\end{center}
+
+\noindent\textit{Taylor \& Francis Online:}
+\begin{center}
+\fbox{\parbox{0.92\linewidth}{\scriptsize\ttfamily\raggedright
+("traffic anomaly detection" OR "anomaly detection" OR "incident detection") AND ("deep learning" OR "LSTM" OR "autoencoder" OR "transformer" OR "ConvLSTM" OR "graph neural network") AND ("time series" OR "spatio-temporal") AND ("urban traffic" OR "vehicular traffic" OR "road traffic" OR "intelligent transportation")
+}}
+\end{center}
+
+\subsection*{Registro de cambios del protocolo}
+
+\begin{table}[H]
+\centering
+\caption{Historial de versiones del protocolo.}
+\label{tab:historial_protocolo}
+\begin{tabularx}{\linewidth}{p{2cm}p{3cm}X}
+\toprule
+\textbf{Versi\'{o}n} & \textbf{Fecha} & \textbf{Cambio realizado} \\
+\midrule
+V1.0 & DD/MM/AAAA & Definici\'{o}n inicial del tema, preguntas de investigaci\'{o}n y PICOC. \\
+V1.1 & DD/MM/AAAA & Ajuste de cadenas de b\'{u}squeda por base de datos y normalizaci\'{o}n de t\'{e}rminos. \\
+V1.2 & DD/MM/AAAA & Aplicaci\'{o}n de criterios de inclusi\'{o}n/exclusi\'{o}n y depuraci\'{o}n de duplicados en Parsifal. \\
+V1.3 & DD/MM/AAAA & Evaluaci\'{o}n de calidad, extracci\'{o}n de datos y selecci\'{o}n final de 25 estudios primarios. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Lista Completa de Estudios Primarios}
+
+\begin{longtable}{cp{3.2cm}p{5.0cm}cc}
+\caption{Estudios primarios incluidos en la RSL.\label{tab:ap_estudios}}\\
+\toprule
+\textbf{ID} & \textbf{Autores} & \textbf{T\'{i}tulo abreviado} & \textbf{A\~{n}o} & \textbf{Fuente} \\
+\midrule\endfirsthead
+\midrule\textbf{ID}&\textbf{Autores}&\textbf{T\'{i}tulo abreviado}&\textbf{A\~{n}o}&\textbf{Fuente}\\
+\midrule\endhead\endfoot\bottomrule\endlastfoot
+E01 & Taheri et al.            & Applicability of time series anomaly detection methods                         & 2026 & ScienceDirect \\
+E02 & Abdallah \& Alghamdi     & AIP-Urban: Edge DL for predictive maintenance                                  & 2025 & MDPI \\
+E03 & Mao et al.               & Detecting urban traffic anomalies                                               & 2024 & MDPI \\
+E04 & Zhang et al.             & Automatic traffic anomaly detection with ST-GNN                                 & 2022 & WoS \\
+E05 & Hu et al.                & Detecting extreme traffic events via context graph autoencoder                  & 2022 & ACM \\
+E06 & Pawar \& Attar           & Deep learning based detection and localization of road accidents                & 2022 & ScienceDirect \\
+E07 & Fang et al.              & Deep cycle limit learning machine for urban expressway incident detection       & 2020 & WoS \\
+E08 & Mehrannia et al.         & Deep representation of imbalanced spatio-temporal traffic flow                  & 2023 & WoS \\
+E09 & Jadhav et al.            & Multi-stage classification of abnormal traffic events                           & 2025 & Scopus \\
+E10 & Huang et al.             & Intelligent intersection: two-stream CNN for near-accident detection            & 2020 & ACM \\
+E11 & Park et al.              & Graph multi-resolution transformer for road traffic anomaly detection           & 2025 & IEEE \\
+E12 & Duan et al.              & Multimodal deep fusion framework for highway traffic anomaly detection          & 2025 & Scopus \\
+E13 & Cai et al.               & Road closure detection based upon multi-feature fusion                          & 2021 & ACM \\
+E14 & Ren et al.               & Graph autoencoder with mirror temporal convolutional networks                   & 2024 & Scopus \\
+E15 & Nouri \& Ilbeigi         & Self-imputing deep multitask sequence model for traffic disruption              & 2025 & IEEE \\
+E16 & Jia et al.               & Prediction-based anomaly detection with multi-domain feature extraction        & 2025 & MDPI \\
+E17 & Chakraborty et al.       & Structural attention-based recurrent VAE for highway anomaly detection         & 2023 & arXiv \\
+E18 & Khan et al.              & Anomaly detection in traffic surveillance videos using deep learning           & 2022 & MDPI \\
+E19 & Chai \& Silamu           & Road traffic anomaly detection by human-attention text-vision learning         & 2026 & MDPI \\
+E20 & Riaz et al.              & Traffic anomaly prediction system using predictive network                     & 2022 & MDPI \\
+E21 & Zhao et al.              & Multi-adjacent camera-based dangerous driving trajectory recognition           & 2024 & MDPI \\
+E22 & Wang et al.              & Multi-scale detection of anomalous spatio-temporal trajectories               & 2024 & ACM \\
+E23 & Giasemis \& Sopasakis    & Learning traffic anomalies from generative models on real-time observations   & 2025 & arXiv \\
+E24 & Feng et al.              & Traffic anomaly detection and identification based on multi-instance learning  & 2021 & ACM \\
+E25 & Lu et al.                & Vehicle abnormal behavior detection based on dense block and soft thresholding & 2024 & Taylor \& Francis \\
+\end{longtable}
+
+\section{Formulario de Extracci\'{o}n de Datos}
+
+El formulario de extracci\'{o}n fue gestionado en Parsifal y complementado con una matriz de s\'{i}ntesis. Para cada estudio primario se registraron los siguientes campos: identificador, autor y a\~{n}o, t\'{i}tulo, fuente, pa\'{i}s o regi\'{o}n del dataset, objetivo del estudio, modelo de \textit{Deep Learning}, tipo de datos, conjunto de datos utilizado, tipo de dataset, tipo de anomal\'{i}a, m\'{e}tricas, comparaci\'{o}n de modelos, resultado principal y limitaciones.
+
+\begin{table}[H]
+\centering
+\caption{Estructura resumida del formulario de extracci\'{o}n individual.}
+\label{tab:ap_formulario}
+\begin{tabularx}{\linewidth}{p{4cm}X}
+\toprule
+\textbf{Campo} & \textbf{Contenido esperado} \\
+\midrule
+Identificador & C\'{o}digo del estudio primario, por ejemplo E01, E02, E03. \\
+Referencia & Autores, a\~{n}o, t\'{i}tulo y fuente de publicaci\'{o}n. \\
+Objetivo & Prop\'{o}sito principal del estudio y problema abordado. \\
+Modelo de \textit{Deep Learning} & Arquitectura utilizada: CNN, LSTM, GRU, autoencoder, Transformer, GNN, h\'{i}brido u otro. \\
+Tipo de datos & Sensores, c\'{a}maras, GPS, series temporales, datos espacio-temporales o multimodales. \\
+Dataset & Nombre del conjunto de datos o descripci\'{o}n de la fuente. \\
+Tipo de dataset & Real, simulado o mixto. \\
+Tipo de anomal\'{i}a & Accidentes, congesti\'{o}n, eventos inusuales, trayectorias peligrosas, cierres de v\'{i}as o patrones an\'{o}malos. \\
+M\'{e}tricas & Accuracy, Precision, Recall, F1-score, AUC-ROC, PR-AUC, FPR, latencia u otras. \\
+Comparaci\'{o}n & Indicaci\'{o}n de si el estudio compara contra baselines o modelos alternativos. \\
+Resultado principal & Hallazgo cuantitativo o cualitativo m\'{a}s relevante. \\
+Limitaciones & Debilidades metodol\'{o}gicas, restricciones del dataset o desaf\'{i}os reportados. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\end{document}

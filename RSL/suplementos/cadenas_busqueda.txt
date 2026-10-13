@@ -1,0 +1,58 @@
+# Cadenas de búsqueda — versión 2 del protocolo
+# Alcance: tráfico vehicular urbano y de autopista; datos de sensores, trayectorias, movilidad agregada y video.
+# Periodo: 2020-01-01 a la fecha de ejecución (2026 parcial). Idiomas: inglés o español.
+# Tipos de documento: artículo de revista y artículo de conferencia.
+# Campo: título, resumen y palabras clave (salvo indicación).
+# Fecha de ejecución y número de resultados por base: [POR COMPLETAR por los autores al re-ejecutar]
+#
+# Validación: la cadena base se contrastó con los estudios incluidos (conjunto de control) mediante
+# prueba_sensibilidad_cadena.py. La versión inicial de la v2 recuperaba 13/21; tras añadir
+# sinónimos (anomal*, abnormal*, expressway, highway, vehicle, taxi, road closure, near-accident...)
+# y normalizar ligaduras tipográficas, recupera 19/21. Los dos restantes (S03 Cai et al. 2021 y
+# S14 Wang et al. 2024) no mencionan ningún término de DL en título, resumen ni palabras clave; se
+# identificaron en la búsqueda de la v1 en ACM DL (sin restricción de campo, es decir, texto completo)
+# y se reportan en la rama «otros métodos» del diagrama PRISMA 2020.
+
+## Bloques conceptuales
+A (anomalía):
+  anomal* OR abnormal* OR outlier* OR "incident detection" OR "accident detection" OR "accident prediction"
+  OR "accident anticipation" OR "road closure*" OR "dangerous driving" OR "near-accident*" OR "near-miss*"
+  OR "extreme event*"
+B (Deep Learning):
+  "deep learning" OR "deep neural" OR "neural network*" OR LSTM OR GRU OR CNN OR convolutional
+  OR autoencoder* OR transformer* OR "graph neural" OR "self-attention" OR "attention mechanism"
+C (tráfico vehicular):
+  "road traffic" OR "urban traffic" OR "vehicular traffic" OR "highway traffic" OR "freeway traffic"
+  OR "traffic flow" OR "traffic video*" OR "traffic surveillance" OR "traffic camera*"
+  OR "intelligent transportation" OR "transportation network*" OR expressway* OR highway* OR freeway*
+  OR vehicle* OR "road network*" OR taxi* OR "traffic event*" OR "traffic scenario*"
+  OR "traffic incident*" OR "traffic accident*" OR "traffic anomal*"
+Cadena base: (A) AND (B) AND (C)
+
+## Scopus (Advanced search)
+TITLE-ABS-KEY ( ( anomal* OR abnormal* OR outlier* OR "incident detection" OR "accident detection" OR "accident prediction" OR "accident anticipation" OR "road closure*" OR "dangerous driving" OR "near-accident*" OR "near-miss*" OR "extreme event*" ) AND ( "deep learning" OR "deep neural" OR "neural network*" OR lstm OR gru OR cnn OR convolutional OR autoencoder* OR transformer* OR "graph neural" OR "self-attention" OR "attention mechanism" ) AND ( "road traffic" OR "urban traffic" OR "vehicular traffic" OR "highway traffic" OR "freeway traffic" OR "traffic flow" OR "traffic video*" OR "traffic surveillance" OR "traffic camera*" OR "intelligent transportation" OR "transportation network*" OR expressway* OR highway* OR freeway* OR vehicle* OR "road network*" OR taxi* OR "traffic event*" OR "traffic scenario*" OR "traffic incident*" OR "traffic accident*" OR "traffic anomal*" ) ) AND PUBYEAR > 2019 AND PUBYEAR < 2027 AND ( LIMIT-TO ( DOCTYPE , "ar" ) OR LIMIT-TO ( DOCTYPE , "cp" ) ) AND ( LIMIT-TO ( LANGUAGE , "English" ) OR LIMIT-TO ( LANGUAGE , "Spanish" ) )
+
+## Web of Science Core Collection (Advanced search; TS = título, resumen, palabras clave del autor y Keywords Plus)
+TS=((anomal* OR abnormal* OR outlier* OR "incident detection" OR "accident detection" OR "accident prediction" OR "accident anticipation" OR "road closure*" OR "dangerous driving" OR "near-accident*" OR "near-miss*" OR "extreme event*") AND ("deep learning" OR "deep neural" OR "neural network*" OR LSTM OR GRU OR CNN OR convolutional OR autoencoder* OR transformer* OR "graph neural" OR "self-attention" OR "attention mechanism") AND ("road traffic" OR "urban traffic" OR "vehicular traffic" OR "highway traffic" OR "freeway traffic" OR "traffic flow" OR "traffic video*" OR "traffic surveillance" OR "traffic camera*" OR "intelligent transportation" OR "transportation network*" OR expressway* OR highway* OR freeway* OR vehicle* OR "road network*" OR taxi* OR "traffic event*" OR "traffic scenario*" OR "traffic incident*" OR "traffic accident*" OR "traffic anomal*"))
+Filtros: Publication Years 2020–2026; Document Types: Article, Proceeding Paper; Languages: English, Spanish.
+
+## IEEE Xplore (Advanced Search > Command Search; campos Document Title, Abstract y Author Keywords)
+# IEEE Xplore admite como máximo 25 términos y 8 comodines por consulta; por eso el bloque C se divide
+# en dos consultas (C1 y C2) y se unen los resultados.
+Consulta 1:
+(("Document Title":anomal* OR "Abstract":anomal* OR "Author Keywords":anomal* OR "Abstract":abnormal* OR "Abstract":"incident detection" OR "Abstract":"accident detection" OR "Abstract":"road closure" OR "Abstract":"dangerous driving" OR "Abstract":"near-accident") AND ("Abstract":"deep learning" OR "Abstract":"neural network" OR "Abstract":LSTM OR "Abstract":convolutional OR "Abstract":autoencoder OR "Abstract":transformer) AND ("Abstract":"road traffic" OR "Abstract":"urban traffic" OR "Abstract":"traffic flow" OR "Abstract":"traffic video" OR "Abstract":"traffic surveillance" OR "Abstract":"intelligent transportation"))
+Consulta 2:
+(("Document Title":anomal* OR "Abstract":anomal* OR "Abstract":abnormal* OR "Abstract":"incident detection" OR "Abstract":"accident detection" OR "Abstract":"extreme event") AND ("Abstract":"deep learning" OR "Abstract":"neural network" OR "Abstract":LSTM OR "Abstract":convolutional OR "Abstract":autoencoder OR "Abstract":transformer) AND ("Abstract":expressway OR "Abstract":highway OR "Abstract":freeway OR "Abstract":vehicle OR "Abstract":taxi OR "Abstract":"road network"))
+Filtros: Publication Year 2020–2026; Content Type: Journals, Conferences.
+
+## ScienceDirect (Advanced search; campo "Title, abstract or author-specified keywords")
+# ScienceDirect no admite comodines y limita a 8 los operadores booleanos por campo. La cadena se
+# divide en consultas con las combinaciones principales y se unen los resultados.
+Consulta 1: ("anomaly detection" OR "incident detection" OR "accident detection") AND ("deep learning" OR "neural network") AND ("road traffic" OR "urban traffic" OR "traffic flow")
+Consulta 2: ("anomaly detection" OR "incident detection" OR "accident detection") AND ("deep learning" OR "neural network") AND ("traffic video" OR "traffic surveillance" OR "highway")
+Consulta 3: ("abnormal" OR "anomalous") AND ("deep learning" OR "neural network") AND ("vehicle" OR "expressway" OR "trajectory")
+Filtros: Years 2020–2026; Article type: Research articles.
+
+## ACM Digital Library (Advanced search; campo Abstract)
+[[Abstract: anomal*] OR [Abstract: abnormal*] OR [Abstract: outlier*] OR [Abstract: "incident detection"] OR [Abstract: "accident detection"] OR [Abstract: "road closure*"] OR [Abstract: "dangerous driving"] OR [Abstract: "near-accident*"] OR [Abstract: "extreme event*"]] AND [[Abstract: "deep learning"] OR [Abstract: "neural network*"] OR [Abstract: lstm] OR [Abstract: convolutional] OR [Abstract: autoencoder*] OR [Abstract: transformer*] OR [Abstract: "graph neural"]] AND [[Abstract: "road traffic"] OR [Abstract: "urban traffic"] OR [Abstract: "vehicular traffic"] OR [Abstract: "traffic flow"] OR [Abstract: "traffic video*"] OR [Abstract: "traffic surveillance"] OR [Abstract: "intelligent transportation"] OR [Abstract: expressway*] OR [Abstract: highway*] OR [Abstract: vehicle*] OR [Abstract: taxi*] OR [Abstract: "road network*"]] AND [E-Publication Date: (01/01/2020 TO 12/31/2026)]
+Filtros: Content type: Research Article.

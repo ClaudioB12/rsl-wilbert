@@ -1,0 +1,56 @@
+%=============================================================
+%  DATOS DE LA BÚSQUEDA Y DEL CRIBADO — COMPLETAR POR LOS AUTORES
+%  Estas cifras salen de la re-ejecución de la búsqueda (5 bases,
+%  cadenas de ../suplementos/cadenas_busqueda.txt) y del cribado en
+%  Parsif.al con dos revisores. Reemplazar cada \pend{...} por el
+%  valor real. Cuando no quede ningún \pend, el PDF no mostrará texto rojo.
+%=============================================================
+
+% --- Fechas y registro ---------------------------------------
+\newcommand{\FechaBusqueda}{\pend{dd/mm/2026}}
+\newcommand{\FechaBusquedaEN}{\pend{dd Month 2026}}
+\newcommand{\RegistroOSF}{\pend{OSF, DOI 10.17605/OSF.IO/XXXXX}}
+\newcommand{\RepositorioDatos}{\url{https://github.com/ClaudioB12/rsl-wilbert}}
+
+% --- Revisores ----------------------------------------------
+\newcommand{\RevisoresCribado}{\pend{W.\,A.\,M.\,A. y E.\,P.\,Q.}}
+\newcommand{\RevisorTercero}{\pend{W.\,C.\,L.}}
+\newcommand{\KappaTA}{\pend{0,xx}}
+\newcommand{\KappaTC}{\pend{0,xx}}
+\newcommand{\KappaCalidad}{\pend{0,xx}}
+
+% --- Registros por base (Tabla de bases) ----------------------
+\newcommand{\NScopus}{\pend{n}}
+\newcommand{\NWoS}{\pend{n}}
+\newcommand{\NIEEE}{\pend{n}}
+\newcommand{\NScienceDirect}{\pend{n}}
+\newcommand{\NACM}{\pend{n}}
+\newcommand{\FScopus}{\pend{fecha}}
+\newcommand{\FWoS}{\pend{fecha}}
+\newcommand{\FIEEE}{\pend{fecha}}
+\newcommand{\FScienceDirect}{\pend{fecha}}
+\newcommand{\FACM}{\pend{fecha}}
+
+% --- Flujo PRISMA 2020 ----------------------------------------
+\newcommand{\Pidentificados}{\pend{n}}   % suma de las cinco bases
+\newcommand{\Pduplicados}{\pend{n}}
+\newcommand{\Pcribados}{\pend{n}}
+\newcommand{\PexclTA}{\pend{n}}
+\newcommand{\Pbuscados}{\pend{n}}        % solicitados a texto completo
+\newcommand{\PnoRecuperados}{\pend{n}}
+\newcommand{\Pevaluados}{\pend{n}}
+\newcommand{\PexclTC}{\pend{n}}
+% Motivos de exclusión a texto completo (deben sumar \PexclTC)
+\newcommand{\PexclCEdos}{\pend{n}}      % CE-2 no es tráfico vehicular
+\newcommand{\PexclCEtres}{\pend{n}}     % CE-3 solo pronóstico/clasificación
+\newcommand{\PexclCEcuatro}{\pend{n}}   % CE-4 sin DL como método principal
+\newcommand{\PexclCEcinco}{\pend{n}}    % CE-5 tipo de documento / preprint
+\newcommand{\PexclCIseis}{\pend{n}}     % CI-6 sin evaluación cuantitativa de la detección
+\newcommand{\PexclCEseis}{\pend{n}}     % CE-6 información insuficiente
+% Otros métodos (búsqueda v1 en ACM DL a texto completo)
+\newcommand{\POtrosIdentificados}{2}
+\newcommand{\POtrosIncluidos}{2}
+
+% --- Base de recuperación de cada estudio (Anexo B) -----------
+% Indicar la(s) base(s) en que apareció cada estudio al re-ejecutar la búsqueda.
+\newcommand{\BaseRecup}[1]{\pend{base}}

@@ -1,0 +1,22 @@
+% Generado por suplementos/generar_conteos.py. No editar a mano.
+\begin{table}[H]
+\centering
+\small
+\caption{Familias de arquitectura presentes en los estudios (RQ1).}\label{tab:familias}
+\begin{tabularx}{\linewidth}{lccX}
+\toprule
+\textbf{Familia} & \textbf{n} & \textbf{\%} & \textbf{Estudios} \\
+\midrule
+Recurrentes (LSTM, GRU, Bi-LSTM) & 14 & 67~\% & S03, S06, S07, S09, S10, S11, S12, S13, S14, S15, S16, S17, S18, S21 \\
+Convolucionales (CNN, TCN, 3D-CNN) & 12 & 57~\% & S01, S02, S03, S05, S06, S07, S11, S12, S13, S15, S16, S17 \\
+Autoencoders y reconstrucci\'{o}n & 6 & 29~\% & S04, S06, S09, S13, S14, S16 \\
+Grafos (GNN, GCN, GAT) & 8 & 38~\% & S03, S04, S08, S13, S14, S17, S18, S19 \\
+Transformers y atenci\'{o}n & 10 & 48~\% & S08, S09, S14, S15, S16, S17, S18, S19, S20, S21 \\
+Generativos (GAN, VAE, difusi\'{o}n) & 2 & 10~\% & S09, S14 \\
+\midrule
+Combinan dos o m\'{a}s familias (h\'{i}bridos) & 17 & 81~\% & S01, S02, S03, S04, S06, S07, S09, S11, S12, S13, S14, S15, S16, S17, S18, S19, S21 \\
+Integran varias modalidades de datos (multimodales) & 4 & 19~\% & S16, S17, S20, S21 \\
+\bottomrule
+\end{tabularx}
+\par\vspace{2pt}{\footnotesize\raggedright Un estudio puede combinar varias familias. ``H\'{i}brido'' se refiere a la arquitectura y ``multimodal'' a los datos de entrada.\par}
+\end{table}

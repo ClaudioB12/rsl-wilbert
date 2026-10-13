@@ -1,0 +1,812 @@
+%=============================================================
+%  REVISIÓN SISTEMÁTICA — Deep Learning para la detección de
+%  anomalías en tráfico vehicular (sensores, trayectorias y video)
+%  Guías: Kitchenham y Charters (2007); PRISMA 2020; PRISMA-S
+%  Versión 2 (respuesta al reporte de revisión del 13/10/2026)
+%
+%  Las cifras de resultados se generan con
+%      python3 ../suplementos/generar_conteos.py
+%  y se cargan desde generado/*.tex. No escribir conteos a mano.
+%  Los datos que solo pueden aportar los autores aparecen como
+%  \pend{...} (en rojo en el PDF) y se listan en PENDIENTES.md.
+%=============================================================
+
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-nodecimaldot, es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage[top=3cm, bottom=2.5cm, left=3cm, right=2.5cm]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx, float, caption}
+\captionsetup{font=small, labelfont=bf}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, calc}
+\usepackage{booktabs, tabularx, array, multirow, longtable}
+\renewcommand{\arraystretch}{1.25}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage{pdflscape}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1.5em, itemsep=2pt}
+\setlist[enumerate]{leftmargin=1.5em, itemsep=2pt}
+\usepackage[table]{xcolor}
+\definecolor{azulPrincipal}{RGB}{0, 70, 127}
+\definecolor{azulMedio}{RGB}{0, 102, 179}
+\definecolor{azulClaro}{RGB}{204, 229, 255}
+\definecolor{grisClaro}{RGB}{245, 245, 245}
+\definecolor{verdeOsc}{RGB}{0, 100, 60}
+\definecolor{rojoAlerta}{RGB}{180, 0, 0}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+\newtcolorbox{preguntabox}[1][]{enhanced,colback=azulClaro!50,colframe=azulPrincipal,
+  fonttitle=\bfseries\color{white},coltitle=white,colbacktitle=azulPrincipal,
+  title={Preguntas de investigaci\'{o}n},#1}
+\newtcolorbox{hallazgo}[1][]{enhanced,breakable,colback=verdeOsc!8,colframe=verdeOsc,
+  fonttitle=\bfseries\color{white},coltitle=white,colbacktitle=verdeOsc,
+  title={Hallazgo},#1}
+
+% \input primitivo: permite cargar filas dentro de tabular/longtable.
+\makeatletter\newcommand{\tabinput}[1]{\@@input #1 }\makeatother
+
+% Datos que deben completar los autores (aparecen en rojo).
+\newcommand{\pend}[1]{\textcolor{rojoAlerta}{\textbf{[#1]}}}
+
+\usepackage{fancyhdr}
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textcolor{azulPrincipal}{\textit{Deep Learning para la detecci\'{o}n de anomal\'{i}as en tr\'{a}fico vehicular}}}
+\fancyhead[R]{\small\textcolor{azulPrincipal}{\textit{Art\'{i}culo de revisi\'{o}n}}}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries\color{azulPrincipal}}{\thesection.}{0.6em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries\color{azulMedio}}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\itshape\color{azulPrincipal}}{\thesubsubsection.}{0.4em}{}
+
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=azulPrincipal,citecolor=azulMedio,urlcolor=azulMedio,
+  pdftitle={Deep Learning para la detecci\'{o}n de anomal\'{i}as en tr\'{a}fico vehicular: revisi\'{o}n sistem\'{a}tica},
+  pdfauthor={W. A. Mayta Arotaype; W. Choquechambi Luque; E. Prieto Quispe}}
+\usepackage{cite}
+
+%--- Cifras generadas desde la matriz de extracción ---------------------
+\input{generado/macros.tex}
+\input{generado/sensibilidad.tex}
+\input{datos_busqueda.tex}
+
+%=============================================================
+\begin{document}
+%=============================================================
+
+\begin{center}
+  {\LARGE\bfseries\color{azulPrincipal}
+   Detecci\'{o}n de anomal\'{i}as en tr\'{a}fico vehicular mediante \textit{Deep Learning} a partir de datos de sensores, trayectorias y video: una revisi\'{o}n sistem\'{a}tica de la literatura}\\[1em]
+
+  {\large Wilbert Alex Mayta Arotaype\textsuperscript{1}}\\[0.4em]
+  {\large Wrangler Choquechambi Luque\textsuperscript{1}}\\[0.4em]
+  {\large Ender Prieto Quispe\textsuperscript{1}}\\[0.6em]
+
+  {\small
+    \textsuperscript{1}Escuela Profesional de Ingenier\'{i}a de Sistemas,
+    Universidad Peruana Uni\'{o}n, Juliaca, Per\'{u}.\\
+    \href{mailto:wilbert.mayta@upeu.edu.pe}{wilbert.mayta@upeu.edu.pe} \quad
+    \href{mailto:wrangler.choquechambi@upeu.edu.pe}{wrangler.choquechambi@upeu.edu.pe} \quad
+    \pend{correo institucional del tercer autor}
+  }\\[0.8em]
+\end{center}
+\noindent\rule{\linewidth}{1pt}
+
+%--- RESUMEN --------------------------------------------------
+\section*{Resumen}
+\textbf{Antecedentes:} la detecci\'{o}n de anomal\'{i}as en tr\'{a}fico vehicular (accidentes, congesti\'{o}n no recurrente, conducci\'{o}n peligrosa o disrupciones) se aborda cada vez m\'{a}s con \textit{Deep Learning} (DL) sobre datos de sensores, trayectorias y video. Las revisiones previas son narrativas, se limitan a un tipo de dato o no cubren el periodo reciente.
+\textbf{Objetivo:} sintetizar los modelos de DL empleados para detectar anomal\'{i}as en tr\'{a}fico vehicular urbano y de autopista, junto con las m\'{e}tricas y los protocolos de evaluaci\'{o}n, los tipos de anomal\'{i}a, los conjuntos de datos, las l\'{i}neas base de comparaci\'{o}n y las limitaciones reportadas.
+\textbf{M\'{e}todo:} revisi\'{o}n sistem\'{a}tica seg\'{u}n Kitchenham y Charters, reportada conforme a PRISMA 2020 y PRISMA-S. Se buscaron estudios de 2020 a 2026 en Scopus, Web of Science, IEEE Xplore, ScienceDirect y ACM Digital Library (\'{u}ltima b\'{u}squeda: \FechaBusqueda). Dos revisores seleccionaron los estudios de forma independiente. La calidad metodol\'{o}gica se evalu\'{o} con un instrumento de ocho \'{i}tems adaptado a estudios de aprendizaje autom\'{a}tico (procedencia de etiquetas, partici\'{o}n sin fuga, l\'{i}neas base, variabilidad, disponibilidad de c\'{o}digo y datos, validaci\'{o}n externa, protocolo y limitaciones). Protocolo registrado en \RegistroOSF.
+\textbf{Resultados:} se incluyeron \Nestudios{} estudios primarios (\AnioMin--\AnioMax). Predominan las arquitecturas recurrentes (\NfamRec{} estudios), convolucionales (\NfamConv{}) y de atenci\'{o}n o Transformer (\NfamTransf{}); \Nhibrido{} estudios combinan varias familias. La categor\'{i}a de anomal\'{i}a m\'{a}s estudiada es accidentes e incidentes (\NcatA{} estudios, \PcatA). Solo \NetiqVerificadas{} estudios eval\'{u}an con etiquetas reales verificadas; \NetiqNoReales{} usan anomal\'{i}as inyectadas, pseudo-etiquetas o ninguna etiqueta. Solo \Ntasa{} reportan la proporci\'{o}n de anomal\'{i}as, \Nvariabilidad{} reportan variabilidad entre ejecuciones y \NcodigoURL{} publican su c\'{o}digo. La puntuaci\'{o}n media de calidad fue \QAmedia{} sobre 8 (rango \QAmin--\QAmax).
+\textbf{Conclusiones:} el tipo de dato condiciona la familia de arquitectura m\'{a}s que el tipo de anomal\'{i}a. La comparabilidad entre estudios est\'{a} limitada sobre todo por la procedencia heterog\'{e}nea de las etiquetas y por protocolos de evaluaci\'{o}n incompletos, m\'{a}s que por la elecci\'{o}n del modelo. Se requieren benchmarks con etiquetas verificadas y un reporte m\'{i}nimo del protocolo de evaluaci\'{o}n.
+
+\noindent\textbf{Palabras clave:} detecci\'{o}n de anomal\'{i}as; tr\'{a}fico vehicular; \textit{Deep Learning}; sistemas inteligentes de transporte; revisi\'{o}n sistem\'{a}tica.
+
+%--- ABSTRACT -------------------------------------------------
+\section*{Abstract}
+\textbf{Background:} anomaly detection in vehicular traffic (crashes, non-recurrent congestion, dangerous driving or disruptions) is increasingly addressed with Deep Learning (DL) on sensor, trajectory and video data. Prior reviews are narrative, limited to a single data type, or do not cover the recent period.
+\textbf{Objective:} to synthesize the DL models used to detect anomalies in urban and highway traffic, together with the evaluation metrics and protocols, anomaly types, datasets, comparison baselines and reported limitations.
+\textbf{Method:} systematic review following Kitchenham and Charters, reported according to PRISMA 2020 and PRISMA-S. Studies from 2020 to 2026 were searched in Scopus, Web of Science, IEEE Xplore, ScienceDirect and the ACM Digital Library (last search: \FechaBusquedaEN). Two reviewers independently selected the studies. Methodological quality was assessed with an eight-item instrument adapted to machine learning studies (label provenance, leakage-free split, baselines, variability, code and data availability, external validation, protocol, and limitations). Protocol registered at \RegistroOSF.
+\textbf{Results:} \Nestudios{} primary studies (\AnioMin--\AnioMax) were included. Recurrent (\NfamRec{} studies), convolutional (\NfamConv{}) and attention/Transformer (\NfamTransf{}) architectures predominate; \Nhibrido{} studies combine several families. The most studied anomaly category is crashes and incidents (\NcatA{} studies, \PcatA). Only \NetiqVerificadas{} studies evaluate on verified real labels; \NetiqNoReales{} use injected anomalies, pseudo-labels or no labels at all. Only \Ntasa{} report the anomaly ratio, \Nvariabilidad{} report run-to-run variability and \NcodigoURL{} release their code. The mean quality score was \QAmedia{} out of 8 (range \QAmin--\QAmax).
+\textbf{Conclusions:} the data type shapes the choice of architecture more than the anomaly type does. Comparability across studies is limited mainly by heterogeneous label provenance and incomplete evaluation protocols rather than by model choice. Benchmarks with verified labels and minimum reporting of the evaluation protocol are needed.
+
+\noindent\textbf{Keywords:} anomaly detection; vehicular traffic; Deep Learning; intelligent transportation systems; systematic review.
+
+%=============================================================
+\section{Introducci\'{o}n}
+\label{sec:intro}
+%=============================================================
+
+El crecimiento de las ciudades y del parque automotor ha aumentado la complejidad de la gesti\'{o}n del tr\'{a}fico vehicular, tanto en redes urbanas como en autopistas. El flujo vehicular presenta alta variabilidad temporal, ruido de medici\'{o}n y dependencia espacial entre v\'{i}as, sensores e intersecciones, por lo que debe analizarse como un fen\'{o}meno temporal y espacio-temporal y no como una secuencia aislada de mediciones~\cite{djenouri2019survey,zhang2020urban}.
+
+Los Sistemas Inteligentes de Transporte (\textit{Intelligent Transportation Systems}, ITS) integran detectores de lazo y de microondas, c\'{a}maras de vigilancia, dispositivos GPS y plataformas de monitoreo. Sus datos se representan como series temporales (flujo, velocidad u ocupaci\'{o}n en un punto), como datos espacio-temporales (varias ubicaciones conectadas por la red vial), como trayectorias o como secuencias de video~\cite{djenouri2019survey,santhosh2020anomaly}. En este contexto, la \textit{detecci\'{o}n de anomal\'{i}as} busca identificar desviaciones relevantes respecto al comportamiento esperado: accidentes, congesti\'{o}n no recurrente, cierres de v\'{i}as, conducci\'{o}n peligrosa o disrupciones causadas por eventos extremos. Detectarlas a tiempo mejora la respuesta a incidentes y la seguridad vial~\cite{elsahly2022systematic,razi2023deep}.
+
+Tradicionalmente, este problema se abord\'{o} con algoritmos comparativos y de umbral, modelos autorregresivos y aprendizaje autom\'{a}tico convencional~\cite{elsahly2022systematic,olugbade2022review}. Estos enfoques encuentran dificultades con el desbalance entre eventos normales y an\'{o}malos, con la dependencia espacial y con los datos incompletos o ruidosos. El \textit{Deep Learning} (DL) ofrece arquitecturas capaces de aprender representaciones temporales (redes recurrentes), espaciales (redes de grafos), visuales (redes convolucionales) o de reconstrucci\'{o}n (autoencoders), y su uso para detectar anomal\'{i}as en series temporales se ha generalizado~\cite{darban2024deep}.
+
+\subsection{Revisiones previas y vac\'{i}o que aborda esta revisi\'{o}n}
+\label{sec:previas}
+
+Existen revisiones previas sobre el tema, pero ninguna cubre a la vez el periodo reciente, los distintos tipos de dato y el an\'{a}lisis del protocolo de evaluaci\'{o}n (Tabla~\ref{tab:previas}). Los \textit{surveys} de Djenouri et al.~\cite{djenouri2019survey} y Zhang et al.~\cite{zhang2020urban} cubren la literatura anterior a 2020, con predominio de m\'{e}todos estad\'{i}sticos y de miner\'{i}a de datos. Santhosh et al.~\cite{santhosh2020anomaly}, Fang et al.~\cite{fang2024vision} y Lin et al.~\cite{lin2025deep} se limitan al video. Belhadi et al.~\cite{belhadi2020trajectory} se limitan a trayectorias. Darban et al.~\cite{darban2024deep} tratan series temporales gen\'{e}ricas, no espec\'{i}ficas de tr\'{a}fico. La \'{u}nica revisi\'{o}n sistem\'{a}tica identificada, la de ElSahly y Abdelfatah~\cite{elsahly2022systematic}, trata la detecci\'{o}n autom\'{a}tica de incidentes en general, no se centra en DL y no cubre el periodo 2022--2026. Ninguna de ellas examina c\'{o}mo se obtienen las etiquetas de anomal\'{i}a ni c\'{o}mo se fijan el umbral y la unidad de evaluaci\'{o}n, aspectos que en detecci\'{o}n de anomal\'{i}as pueden cambiar los resultados m\'{a}s que la propia arquitectura~\cite{darban2024deep}.
+
+\input{generado/previas.tex}
+
+Esta revisi\'{o}n se diferencia de las anteriores en tres aspectos: (i) es sistem\'{a}tica y reproducible (PRISMA 2020 y PRISMA-S) y cubre 2020--2026; (ii) integra en un mismo an\'{a}lisis los estudios basados en sensores, trayectorias, movilidad agregada y video, lo que permite relacionar el tipo de dato con la familia de arquitectura; y (iii) extrae y sintetiza, para cada estudio, la procedencia de las etiquetas, el protocolo de evaluaci\'{o}n y las l\'{i}neas base, y eval\'{u}a la calidad metodol\'{o}gica con un instrumento espec\'{i}fico para estudios de aprendizaje autom\'{a}tico.
+
+Las contribuciones son: (1) una matriz de extracci\'{o}n abierta de los estudios incluidos, de la que se derivan con un script todas las cifras de este art\'{i}culo; (2) un an\'{a}lisis cruzado entre tipo de dato, familia de arquitectura, tipo de anomal\'{i}a y periodo; (3) una s\'{i}ntesis del protocolo de evaluaci\'{o}n (procedencia de etiquetas, umbral, unidad de evaluaci\'{o}n y partici\'{o}n) y de las l\'{i}neas base; y (4) una agenda de investigaci\'{o}n basada en esas brechas.
+
+\begin{preguntabox}
+  \begin{enumerate}[label=\textbf{RQ\arabic*:}, leftmargin=3em]
+    \item \textquestiondown Qu\'{e} t\'{e}cnicas de \textit{Deep Learning} se han utilizado para detectar anomal\'{i}as en tr\'{a}fico vehicular urbano y de autopista, y c\'{o}mo se relacionan con el tipo de dato?
+    \item \textquestiondown Qu\'{e} m\'{e}tricas y qu\'{e} protocolos de evaluaci\'{o}n (procedencia de etiquetas, umbral, unidad de evaluaci\'{o}n y partici\'{o}n) se emplean para medir el rendimiento de estos modelos?
+    \item \textquestiondown Qu\'{e} tipos de anomal\'{i}as de tr\'{a}fico se han abordado?
+    \item \textquestiondown Qu\'{e} conjuntos de datos se han utilizado y con qu\'{e} tipo de etiquetas?
+    \item \textquestiondown Qu\'{e} limitaciones y desaf\'{i}os reportan los estudios?
+    \item \textquestiondown Contra qu\'{e} l\'{i}neas base se comparan los modelos de \textit{Deep Learning} y qu\'{e} ventaja reportan?
+  \end{enumerate}
+\end{preguntabox}
+
+El resto del art\'{i}culo se organiza as\'{i}: la Secci\'{o}n~\ref{sec:marco} presenta el marco conceptual; la Secci\'{o}n~\ref{sec:metodo}, el m\'{e}todo; la Secci\'{o}n~\ref{sec:resultados}, los resultados por pregunta; la Secci\'{o}n~\ref{sec:discusion}, la discusi\'{o}n y las amenazas a la validez; y la Secci\'{o}n~\ref{sec:conclusiones}, las conclusiones.
+
+%=============================================================
+\section{Marco conceptual}
+\label{sec:marco}
+%=============================================================
+
+\subsection{Datos de tr\'{a}fico y su representaci\'{o}n}
+
+Una \textit{serie temporal de tr\'{a}fico} es una secuencia de observaciones de una variable de movilidad (flujo, velocidad u ocupaci\'{o}n) registrada por un detector en un punto de la red; puede ser univariada o multivariada. Cuando se observan simult\'{a}neamente varias ubicaciones, los datos son \textit{espacio-temporales} y suelen representarse como un grafo cuyos nodos son sensores, segmentos o zonas, y cuyas aristas son conexiones viales o relaciones origen-destino~\cite{djenouri2019survey}. Las \textit{trayectorias} son secuencias de posiciones de un veh\'{i}culo obtenidas por GPS o por seguimiento en video~\cite{belhadi2020trajectory}. El \textit{video de vigilancia} es una secuencia de im\'{a}genes de c\'{a}maras fijas o a bordo~\cite{santhosh2020anomaly}. El tipo de dato condiciona qu\'{e} anomal\'{i}as son observables y qu\'{e} arquitectura es adecuada.
+
+\subsection{Anomal\'{i}as de tr\'{a}fico}
+
+Una \textit{anomal\'{i}a de tr\'{a}fico} es un evento o patr\'{o}n que se aparta del comportamiento esperado de la red o de un veh\'{i}culo. En esta revisi\'{o}n se agrupan en cuatro categor\'{i}as: (i) accidentes e incidentes; (ii) congesti\'{o}n o flujo an\'{o}malo no recurrente; (iii) trayectorias o conducci\'{o}n peligrosa (contramano, exceso de velocidad, maniobras de riesgo); y (iv) disrupciones y eventos extremos (cierres de v\'{i}as, eventos meteorol\'{o}gicos, fallos de infraestructura). Las anomal\'{i}as son poco frecuentes, lo que produce conjuntos de datos desbalanceados y dificulta tanto el entrenamiento como la evaluaci\'{o}n~\cite{darban2024deep}.
+
+\subsection{Enfoques de \textit{Deep Learning} para la detecci\'{o}n de anomal\'{i}as}
+
+Los modelos de DL detectan anomal\'{i}as mediante cuatro mecanismos, que no dependen de la arquitectura concreta~\cite{darban2024deep}:
+\begin{itemize}
+  \item \textbf{Predicci\'{o}n:} el modelo (p.~ej., LSTM, GRU, TCN o Transformer) pronostica el comportamiento esperado y marca como an\'{o}malas las desviaciones grandes entre lo predicho y lo observado.
+  \item \textbf{Reconstrucci\'{o}n:} un autoencoder, posiblemente de grafos o variacional, aprende a reconstruir datos normales y usa el error de reconstrucci\'{o}n como puntuaci\'{o}n de anomal\'{i}a. Es \'{u}til cuando hay pocas etiquetas.
+  \item \textbf{Clasificaci\'{o}n supervisada:} con etiquetas de eventos normales y an\'{o}malos, una red (CNN, LSTM, GNN o h\'{i}brida) aprende directamente la frontera entre clases. Es frecuente en video y en detecci\'{o}n de incidentes con registros hist\'{o}ricos.
+  \item \textbf{Similitud o contraste:} el modelo compara representaciones (por ejemplo, de video y de texto) y decide por similitud.
+\end{itemize}
+Los tres primeros mecanismos requieren un \textit{umbral} o una regla de decisi\'{o}n para convertir la puntuaci\'{o}n en una alarma. La elecci\'{o}n del umbral, junto con la \textit{unidad de evaluaci\'{o}n} (punto, ventana, frame, evento o trayectoria), determina las m\'{e}tricas resultantes; por eso esta revisi\'{o}n los extrae de cada estudio.
+
+%=============================================================
+\section{M\'{e}todo}
+\label{sec:metodo}
+%=============================================================
+
+La revisi\'{o}n sigue las directrices de Kitchenham y Charters~\cite{Kitchenham2007} y se reporta conforme a PRISMA 2020~\cite{page2021prisma} y a su extensi\'{o}n para la b\'{u}squeda, PRISMA-S~\cite{rethlefsen2021prismas}. La lista de verificaci\'{o}n PRISMA 2020 con la ubicaci\'{o}n de cada \'{i}tem se presenta en el Anexo~\ref{ap:prisma}.
+
+\subsection{Protocolo y registro}
+
+El protocolo (PICOC, preguntas, criterios, estrategia de b\'{u}squeda, instrumento de calidad y plan de s\'{i}ntesis) se gestion\'{o} en Parsif.al y se registr\'{o} en Open Science Framework (\RegistroOSF). Las desviaciones respecto de la versi\'{o}n inicial (ampliaci\'{o}n del alcance a video y autopistas, sustituci\'{o}n de MDPI y Taylor \& Francis por IEEE Xplore, regla general sobre \textit{preprints}, nuevo instrumento de calidad y nueva pregunta RQ6) se documentan en el historial del protocolo (Anexo~\ref{ap:protocolo}, Tabla~\ref{tab:historial}).
+
+\subsection{PICOC y alineamiento del alcance}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Marco PICOC de la revisi\'{o}n.}
+\label{tab:picoc}
+\begin{tabularx}{\linewidth}{>{\bfseries}lY}
+\toprule
+Elemento & Descripci\'{o}n \\
+\midrule
+Poblaci\'{o}n    & Tr\'{a}fico vehicular en redes urbanas y autopistas, observado mediante sensores fijos, trayectorias GPS, datos de movilidad agregada o video de vigilancia \\
+Intervenci\'{o}n & Modelos de \textit{Deep Learning} (recurrentes, convolucionales, autoencoders, grafos, Transformers, generativos o h\'{i}bridos) usados como m\'{e}todo principal para detectar anomal\'{i}as \\
+Comparaci\'{o}n  & L\'{i}neas base reportadas por cada estudio: otros modelos de DL, aprendizaje autom\'{a}tico convencional, m\'{e}todos estad\'{i}sticos o reglas (RQ6) \\
+Resultado        & Desempe\~{n}o de detecci\'{o}n y protocolo con que se mide (m\'{e}tricas, procedencia de etiquetas, umbral, unidad de evaluaci\'{o}n, partici\'{o}n) \\
+Contexto         & Sistemas inteligentes de transporte; estudios revisados por pares publicados entre 2020 y 2026 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Para evitar que el alcance declarado difiera del corpus, el t\'{i}tulo, las preguntas, el PICOC, la cadena de b\'{u}squeda y los criterios se alinearon expl\'{i}citamente (Tabla~\ref{tab:alineamiento}).
+
+\begin{table}[H]
+\centering
+\small
+\caption{Alineamiento del alcance entre los componentes del protocolo.}
+\label{tab:alineamiento}
+\begin{tabularx}{\linewidth}{lYYY}
+\toprule
+\textbf{Componente} & \textbf{Entorno vial} & \textbf{Tipo de dato} & \textbf{M\'{e}todo} \\
+\midrule
+T\'{i}tulo y RQ1 & Urbano y autopista & Sensores, trayectorias y video & DL \\
+PICOC (P, I) & Redes urbanas y autopistas & Sensores, GPS, movilidad agregada, video & DL como m\'{e}todo principal \\
+Cadena (bloque C) & \textit{road/urban/vehicular/highway/freeway traffic} & \textit{traffic flow}, \textit{traffic video}, \textit{traffic surveillance}, \textit{traffic camera} & Bloque B (arquitecturas de DL) \\
+Criterios & CI-4, CE-2 & CI-4 & CI-5, CE-4 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Fuentes de informaci\'{o}n y estrategia de b\'{u}squeda}
+\label{sec:busqueda}
+
+Se consultaron cinco bases bibliogr\'{a}ficas: Scopus, Web of Science Core Collection, IEEE Xplore, ScienceDirect y ACM Digital Library. Se incorpor\'{o} IEEE Xplore por su peso en el \'{a}rea de transporte inteligente y visi\'{o}n por computador. MDPI y Taylor \& Francis Online, que figuraban en la versi\'{o}n anterior del protocolo, se retiraron como fuentes porque son plataformas editoriales y no bases bibliogr\'{a}ficas. Sus revistas indexadas (p.~ej., \textit{Sensors} o \textit{Applied Sciences}) se recuperan a trav\'{e}s de Scopus y Web of Science, de modo que su retiro no excluye esos art\'{i}culos. Se us\'{o} Parsif.al para gestionar los registros.
+
+La cadena se construy\'{o} a partir del PICOC con tres bloques unidos por AND: (A) t\'{e}rminos de detecci\'{o}n de anomal\'{i}as, incidentes o accidentes; (B) t\'{e}rminos de DL y de sus arquitecturas; y (C) t\'{e}rminos de tr\'{a}fico vehicular, incluidos los de video y vigilancia. La cadena anterior exig\'{i}a adem\'{a}s \textit{time series} o \textit{spatio-temporal}, lo que recuperaba solo parcialmente los estudios basados en video. Ese bloque se elimin\'{o} al ampliar el alcance. En todas las bases se busc\'{o} en t\'{i}tulo, resumen y palabras clave, salvo en ACM (resumen) e IEEE Xplore (\textit{All Metadata}). Se filtr\'{o} por a\~{n}o de publicaci\'{o}n (2020--2026), por tipo de documento (art\'{i}culo de revista o de conferencia) y por idioma (ingl\'{e}s o espa\~{n}ol). Las cadenas exactas por base, con sus campos y filtros, se presentan en el Anexo~\ref{ap:protocolo}; la fecha de ejecuci\'{o}n y el n\'{u}mero de registros de cada base se reportan en la Tabla~\ref{tab:bases}. Como el periodo incluye el a\~{n}o en curso, los resultados de 2026 son parciales hasta la fecha de b\'{u}squeda.
+
+La cadena fue elaborada por el primer autor y revisada por los otros dos; no fue validada por un especialista en informaci\'{o}n externo, lo que se discute en la Secci\'{o}n~\ref{sec:amenazas}. La cadena se valid\'{o} con un conjunto de control formado por los estudios incluidos: se comprob\'{o} de forma autom\'{a}tica si el t\'{i}tulo, el resumen y las palabras clave de cada uno satisfacen los tres bloques (script \texttt{prueba\_sensibilidad\_cadena.py}). La primera formulaci\'{o}n de la versi\'{o}n 2 recuperaba 13 de 21 estudios. Tras a\~{n}adir sin\'{o}nimos (\textit{anomal*}, \textit{abnormal*}, \textit{expressway}, \textit{highway}, \textit{vehicle}, \textit{road closure}, entre otros), la cadena definitiva recupera \NsensibOK{} de \Nestudios{}. Los dos restantes (\IDsensibNo) no mencionan ning\'{u}n t\'{e}rmino de DL en el t\'{i}tulo, el resumen ni las palabras clave. Se identificaron en la b\'{u}squeda de la versi\'{o}n 1 en ACM Digital Library, que no restring\'{i}a el campo y por tanto buscaba en el texto completo, y se reportan en la rama ``otros m\'{e}todos'' del diagrama PRISMA (Figura~\ref{fig:prisma}).
+
+\begin{table}[H]
+\centering
+\small
+\caption{Bases consultadas: fecha de ejecuci\'{o}n, campos y registros recuperados.}
+\label{tab:bases}
+\begin{tabularx}{\linewidth}{lYcc}
+\toprule
+\textbf{Base} & \textbf{Campos y filtros} & \textbf{Fecha} & \textbf{Registros} \\
+\midrule
+Scopus & TITLE-ABS-KEY; 2020--2026; art\'{i}culo y conferencia; ingl\'{e}s/espa\~{n}ol & \FScopus & \NScopus \\
+Web of Science & TS (t\'{i}tulo, resumen, palabras clave y Keywords Plus); mismos filtros & \FWoS & \NWoS \\
+IEEE Xplore & T\'{i}tulo, resumen y palabras clave del autor; dos consultas; revistas y conferencias & \FIEEE & \NIEEE \\
+ScienceDirect & T\'{i}tulo, resumen y palabras clave; tres consultas (l\'{i}mite de 8 operadores) & \FScienceDirect & \NScienceDirect \\
+ACM Digital Library & Resumen; art\'{i}culos de investigaci\'{o}n & \FACM & \NACM \\
+\midrule
+\textbf{Total} & & & \Pidentificados \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Criterios de elegibilidad}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Criterios de inclusi\'{o}n (CI) y exclusi\'{o}n (CE).}
+\label{tab:criterios}
+\begin{tabularx}{\linewidth}{lY}
+\toprule
+\textbf{C\'{o}d.} & \textbf{Criterio} \\
+\midrule
+\multicolumn{2}{l}{\cellcolor{azulClaro!40}\textbf{Inclusi\'{o}n}} \\
+CI-1 & Art\'{i}culo de revista o de conferencia revisado por pares \\
+CI-2 & En ingl\'{e}s o espa\~{n}ol, con acceso al texto completo \\
+CI-3 & Publicado entre 2020 y 2026 \\
+CI-4 & Aborda la detecci\'{o}n de anomal\'{i}as en tr\'{a}fico vehicular (urbano o de autopista) a partir de sensores, trayectorias, datos de movilidad o video \\
+CI-5 & Usa \textit{Deep Learning} como m\'{e}todo principal de la detecci\'{o}n; en modelos h\'{i}bridos, la componente profunda aprende la representaci\'{o}n sobre la que se decide la anomal\'{i}a \\
+CI-6 & Reporta una evaluaci\'{o}n cuantitativa de la tarea de detecci\'{o}n (no solo de una tarea auxiliar como pron\'{o}stico o reconocimiento de acciones) \\
+\midrule
+\multicolumn{2}{l}{\cellcolor{rojoAlerta!10}\textbf{Exclusi\'{o}n}} \\
+CE-1 & Duplicado entre bases; se conserva la versi\'{o}n publicada m\'{a}s completa \\
+CE-2 & No trata de tr\'{a}fico vehicular (p.~ej., tr\'{a}fico de red, peatones, transporte mar\'{i}timo) \\
+CE-3 & Solo pronostica o clasifica tr\'{a}fico sin evaluar la detecci\'{o}n de anomal\'{i}as \\
+CE-4 & La detecci\'{o}n no se basa en DL (SVM, ARIMA, reglas o umbrales sin componente profunda) \\
+CE-5 & Revisi\'{o}n, \textit{survey}, cap\'{i}tulo, tesis, resumen, p\'{o}ster o \textit{preprint}; un \textit{preprint} se incluye solo si existe su versi\'{o}n revisada por pares, y entonces se cita esta \'{u}ltima \\
+CE-6 & No describe el modelo, los datos o los resultados de forma suficiente para la extracci\'{o}n \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Los casos l\'{i}mite (estudios en los que el DL no decide directamente la anomal\'{i}a o en los que la evaluaci\'{o}n cuantitativa corresponde a otra tarea) se resolvieron con CI-5 y CI-6, y la decisi\'{o}n se documenta estudio por estudio en el Anexo~\ref{ap:limite}.
+
+\subsection{Proceso de selecci\'{o}n}
+
+Tras eliminar duplicados en Parsif.al, dos revisores (\RevisoresCribado) examinaron de forma independiente los t\'{i}tulos y res\'{u}menes, y luego los textos completos, aplicando los criterios de la Tabla~\ref{tab:criterios}. Las discrepancias se resolvieron por consenso y, de persistir, con un tercer revisor (\RevisorTercero). El acuerdo entre revisores se midi\'{o} con el coeficiente kappa de Cohen~\cite{cohen1960coefficient}: $\kappa = \KappaTA$ en t\'{i}tulo y resumen, y $\kappa = \KappaTC$ en texto completo. Los motivos de exclusi\'{o}n a texto completo se registraron con el c\'{o}digo del criterio correspondiente (Figura~\ref{fig:prisma}).
+
+\subsection{Extracci\'{o}n de datos}
+
+Un revisor extrajo los datos de cada estudio con el formulario de la Tabla~\ref{tab:formulario} y un segundo revisor verific\'{o} la extracci\'{o}n contra el texto completo; las discrepancias se resolvieron por consenso. Adem\'{a}s de los campos descriptivos, se extrajeron la procedencia de las etiquetas, la proporci\'{o}n de anomal\'{i}as, la unidad de evaluaci\'{o}n, el criterio de umbral, la partici\'{o}n de los datos y las l\'{i}neas base, porque son los elementos que determinan la comparabilidad entre estudios. La matriz completa (un registro por estudio) se publica como material suplementario y todas las cifras de este art\'{i}culo se generan a partir de ella con un script (\texttt{generar\_conteos.py}).
+
+\begin{table}[H]
+\centering
+\small
+\caption{Formulario de extracci\'{o}n de datos.}
+\label{tab:formulario}
+\begin{tabularx}{\linewidth}{lY}
+\toprule
+\textbf{Campo} & \textbf{Contenido} \\
+\midrule
+Identificaci\'{o}n & ID, autores, a\~{n}o, t\'{i}tulo, revista o conferencia, DOI, base de recuperaci\'{o}n \\
+Contexto & Entorno (urbano, autopista), pa\'{i}s o regi\'{o}n de los datos \\
+Datos & Tipo de dato, variables de entrada, datasets (real, simulado o mixto; p\'{u}blico o no) \\
+Etiquetas & Procedencia (registros reales, anotaci\'{o}n experta, benchmark de terceros, inyectadas), proporci\'{o}n de anomal\'{i}as \\
+Modelo & Familias de arquitectura, h\'{i}brido o no, multimodal o no, paradigma (supervisado, semisupervisado, no supervisado) y mecanismo (predicci\'{o}n, reconstrucci\'{o}n, clasificaci\'{o}n, similitud) \\
+Protocolo & Partici\'{o}n entrenamiento/prueba, unidad de evaluaci\'{o}n, criterio de umbral \\
+Resultados & M\'{e}tricas, resultado principal, l\'{i}neas base y ventaja frente a la mejor \\
+Anomal\'{i}a & Categor\'{i}a principal y secundaria \\
+Limitaciones & Limitaciones declaradas por los autores (codificadas en seis categor\'{i}as) \\
+Reproducibilidad & Disponibilidad de c\'{o}digo y datos \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Evaluaci\'{o}n de la calidad metodol\'{o}gica}
+
+La versi\'{o}n anterior del instrumento repet\'{i}a los criterios de elegibilidad, de modo que todo estudio incluido los cumpl\'{i}a por definici\'{o}n. Se sustituy\'{o} por un instrumento de ocho \'{i}tems, adaptado de la lista de calidad de Kitchenham y Charters~\cite{Kitchenham2007} y de las recomendaciones REFORMS para estudios basados en aprendizaje autom\'{a}tico~\cite{kapoor2024reforms}. Los \'{i}tems eval\'{u}an riesgos de sesgo propios de este tipo de estudios (Tabla~\ref{tab:cqi}). Cada \'{i}tem se punt\'{u}a como S\'{i} (1), Parcial (0,5) o No (0), con un m\'{a}ximo de 8. La puntuaci\'{o}n \textbf{no} se us\'{o} para excluir estudios: se reporta por \'{i}tem y por estudio, y se usa en la s\'{i}ntesis para contrastar los hallazgos principales con el subconjunto de calidad alta ($\geq$\,\QAumbralAlta). Dos revisores puntuaron cada estudio de forma independiente ($\kappa = \KappaCalidad$) y resolvieron las discrepancias por consenso.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Instrumento de evaluaci\'{o}n de calidad metodol\'{o}gica (QA).}
+\label{tab:cqi}
+\begin{tabularx}{\linewidth}{lP{3.6cm}Y}
+\toprule
+\textbf{\'{I}tem} & \textbf{Criterio} & \textbf{S\'{i} (1) / Parcial (0,5) / No (0)} \\
+\midrule
+QA1 & Procedencia de etiquetas & 1: registros reales o anotaci\'{o}n verificada; 0,5: mixtas, autom\'{a}ticas o verificaci\'{o}n parcial; 0: solo inyectadas o no reportado \\
+QA2 & Partici\'{o}n sin fuga & 1: partici\'{o}n temporal o prueba independiente descrita; 0,5: partici\'{o}n aleatoria o descripci\'{o}n incompleta; 0: no reportada \\
+QA3 & L\'{i}neas base comparables & 1: dos o m\'{a}s l\'{i}neas base con el mismo protocolo, incluida una del estado del arte o no DL; 0,5: una sola o solo ablaci\'{o}n; 0: ninguna \\
+QA4 & Variabilidad & 1: varias ejecuciones con dispersi\'{o}n, intervalos o pruebas de significancia; 0,5: parcial; 0: una sola ejecuci\'{o}n \\
+QA5 & C\'{o}digo y datos & 1: ambos p\'{u}blicos; 0,5: uno de los dos; 0: ninguno \\
+QA6 & M\'{a}s de un escenario & 1: dos o m\'{a}s datasets, ciudades o v\'{i}as independientes; 0,5: varios subconjuntos de un dataset; 0: un \'{u}nico escenario \\
+QA7 & Protocolo expl\'{i}cito & 1: reporta la unidad de evaluaci\'{o}n y el criterio de umbral o decisi\'{o}n; 0,5: solo uno; 0: ninguno \\
+QA8 & Limitaciones & 1: secci\'{o}n o p\'{a}rrafo expl\'{i}cito; 0,5: menci\'{o}n breve; 0: ninguna \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{S\'{i}ntesis}
+
+Los estudios se agruparon por familia de arquitectura, tipo de dato, categor\'{i}a de anomal\'{i}a y periodo de publicaci\'{o}n. Para sustentar las tendencias se construyeron tablas cruzadas (tipo de dato $\times$ familia, anomal\'{i}a $\times$ familia y periodo $\times$ familia). Se identificaron los conjuntos de datos usados por m\'{a}s de un estudio para comparar su desempe\~{n}o bajo el protocolo de cada uno. No se realiz\'{o} metaan\'{a}lisis porque los estudios difieren en tarea, datos, etiquetas, unidad de evaluaci\'{o}n y m\'{e}trica, y ning\'{u}n par de estudios comparte a la vez dataset y protocolo. Por la misma raz\'{o}n no se aplic\'{o} GRADE para valorar la certeza de la evidencia ni se evalu\'{o} formalmente el sesgo de publicaci\'{o}n (PRISMA, \'{i}tems 14 y 15). Como aproximaci\'{o}n, se registr\'{o} si cada estudio compara contra l\'{i}neas base y si reporta resultados desfavorables para su propuesta (Secci\'{o}n~\ref{sec:rq6}).
+
+%=============================================================
+\section{Resultados}
+\label{sec:resultados}
+%=============================================================
+
+\subsection{Selecci\'{o}n de estudios}
+
+La Figura~\ref{fig:prisma} resume el proceso de selecci\'{o}n seg\'{u}n PRISMA 2020. De \Pidentificados{} registros identificados en las cinco bases se eliminaron \Pduplicados{} duplicados y se cribaron \Pcribados{} por t\'{i}tulo y resumen. Se evaluaron \Pevaluados{} textos completos, de los que se excluyeron \PexclTC{} con los motivos indicados en la figura. A los estudios procedentes de las bases se sumaron \POtrosIncluidos{} estudios identificados en la b\'{u}squeda de la versi\'{o}n 1 en ACM Digital Library (\IDsensibNo). En total se incluyeron \Nestudios{} estudios. \NexcluidosLimite{} estudios incluidos en la versi\'{o}n anterior de esta revisi\'{o}n o en la planilla de Parsif.al se excluyeron al aplicar los criterios actualizados; estas exclusiones y las \NincluidosLimite{} inclusiones dudosas se justifican estudio por estudio en el Anexo~\ref{ap:limite}.
+
+\begin{figure}[H]
+\centering
+\small
+\begin{tikzpicture}[
+  caja/.style={draw, rectangle, rounded corners=2pt, align=left, text width=5.0cm, minimum height=1.0cm, font=\footnotesize, fill=white},
+  excl/.style={draw, rectangle, rounded corners=2pt, align=left, text width=4.4cm, font=\footnotesize, fill=grisClaro},
+  otro/.style={draw, rectangle, rounded corners=2pt, align=left, text width=2.9cm, font=\footnotesize, fill=azulClaro!40},
+  fase/.style={draw, fill=azulPrincipal, text=white, font=\footnotesize\bfseries, minimum width=0.55cm, rotate=90, align=center},
+  flecha/.style={-{Stealth[length=2mm]}, thick}]
+\node[caja] (id) {Registros identificados en bases ($n=\Pidentificados$):\\Scopus ($n=\NScopus$), WoS ($n=\NWoS$),\\IEEE Xplore ($n=\NIEEE$), ScienceDirect ($n=\NScienceDirect$), ACM DL ($n=\NACM$)};
+\node[excl, right=0.5cm of id] (dup) {Eliminados antes del cribado:\\duplicados ($n=\Pduplicados$)};
+\node[caja, below=0.7cm of id] (crib) {Registros cribados por t\'{i}tulo y resumen\\($n=\Pcribados$)};
+\node[excl, right=0.5cm of crib] (exta) {Registros excluidos ($n=\PexclTA$)};
+\node[caja, below=0.7cm of crib] (bus) {Informes buscados a texto completo\\($n=\Pbuscados$)};
+\node[excl, right=0.5cm of bus] (norec) {Informes no recuperados ($n=\PnoRecuperados$)};
+\node[caja, below=0.7cm of bus] (eleg) {Informes evaluados para elegibilidad\\($n=\Pevaluados$)};
+\node[excl, right=0.5cm of eleg] (extc) {Informes excluidos ($n=\PexclTC$):\\CE-2 no es tr\'{a}fico vehicular ($n=\PexclCEdos$)\\CE-3 solo pron\'{o}stico ($n=\PexclCEtres$)\\CE-4 sin DL principal ($n=\PexclCEcuatro$)\\CE-5 tipo de documento ($n=\PexclCEcinco$)\\CI-6 sin evaluaci\'{o}n de la detecci\'{o}n ($n=\PexclCIseis$)\\CE-6 informaci\'{o}n insuficiente ($n=\PexclCEseis$)};
+\node[caja, below=1.6cm of eleg] (inc) {\textbf{Estudios incluidos en la revisi\'{o}n ($n=\Nestudios$)}};
+\node[otro, left=0.4cm of eleg] (otros) {Otros m\'{e}todos: b\'{u}squeda v1 en ACM DL a texto completo ($n=\POtrosIdentificados$; incluidos $n=\POtrosIncluidos$)};
+\draw[flecha] (id) -- (crib);
+\draw[flecha] (id) -- (dup);
+\draw[flecha] (crib) -- (bus);
+\draw[flecha] (crib) -- (exta);
+\draw[flecha] (bus) -- (eleg);
+\draw[flecha] (bus) -- (norec);
+\draw[flecha] (eleg) -- (inc);
+\draw[flecha] (eleg) -- (extc);
+\draw[flecha] (otros) |- (inc);
+\node[fase, left=4.0cm of id.west, anchor=south] {Identificaci\'{o}n};
+\node[fase, left=4.0cm of bus.west, anchor=south] {Cribado};
+\node[fase, left=4.0cm of inc.west, anchor=south] {Incluidos};
+\end{tikzpicture}
+\caption{Diagrama de flujo PRISMA 2020 de la selecci\'{o}n de estudios.}
+\label{fig:prisma}
+\end{figure}
+
+\subsection{Caracter\'{i}sticas de los estudios}
+
+Los \Nestudios{} estudios se publicaron entre \AnioMin{} y \AnioMax{}: \AnioA{} en 2020, \AnioB{} en 2021, \AnioC{} en 2022, \AnioD{} en 2023, \AnioE{} en 2024, \AnioF{} en 2025 y \AnioG{} en 2026 (a\~{n}o parcial, hasta la fecha de b\'{u}squeda). \NrecientesVeintidosVeintiseis{} estudios son de 2024 en adelante. Por entorno, \Nurbano{} estudios analizan tr\'{a}fico urbano, \Nautopista{} tr\'{a}fico de autopista, \Nambos{} ambos y \NentornoNE{} no lo especifican. Por tipo de dato, \NdatoVideo{} usan video o im\'{a}genes, \NdatoSensores{} series de sensores, \NdatoTrayectorias{} trayectorias, \NdatoMovilidad{} datos de movilidad agregada u origen-destino, \NdatoMultimodal{} combinan varias fuentes y \NdatoSimulado{} usan exclusivamente datos simulados. La Tabla~\ref{tab:caracteristicas} presenta las caracter\'{i}sticas y el resultado principal de cada estudio.
+
+\begin{landscape}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{llcP{2.5cm}P{1.3cm}P{3.0cm}P{2.0cm}P{2.4cm}P{3.5cm}P{3.0cm}}
+\caption{Caracter\'{i}sticas de los estudios incluidos.\label{tab:caracteristicas}}\\
+\toprule
+\textbf{ID} & \textbf{Ref.} & \textbf{A\~{n}o} & \textbf{Tipo de dato} & \textbf{Entorno} & \textbf{Datasets} & \textbf{Etiquetas} & \textbf{Anomal\'{i}a} & \textbf{Modelo} & \textbf{Resultado principal} \\
+\midrule\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Ref.} & \textbf{A\~{n}o} & \textbf{Tipo de dato} & \textbf{Entorno} & \textbf{Datasets} & \textbf{Etiquetas} & \textbf{Anomal\'{i}a} & \textbf{Modelo} & \textbf{Resultado principal} \\
+\midrule\endhead
+\bottomrule\endfoot
+\tabinput{generado/caracteristicas.tex}
+\end{longtable}
+\end{landscape}
+
+\subsection{Calidad metodol\'{o}gica}
+
+La puntuaci\'{o}n media fue \QAmedia{} sobre 8 (desviaci\'{o}n est\'{a}ndar \QAde; rango \QAmin--\QAmax). El instrumento discrimina entre estudios, a diferencia de la versi\'{o}n anterior (Tabla~\ref{tab:calidad}). Los \'{i}tems con menor cumplimiento son la variabilidad entre ejecuciones (QA4: \QACuatrosi{} estudios con S\'{i}) y la disponibilidad de c\'{o}digo y datos (QA5: \QACincosi{}), seguidos de la procedencia verificada de las etiquetas (QA1: \QAUnosi{}). Los de mayor cumplimiento son las l\'{i}neas base (QA3: \QATressi{}) y el protocolo expl\'{i}cito (QA7: \QASietesi{}). \NaltaCalidad{} estudios alcanzan la calidad alta ($\geq$\,\QAumbralAlta): \IDaltaCalidad.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Evaluaci\'{o}n de calidad por \'{i}tem y estudio (1 = S\'{i}, 0.5 = Parcial, 0 = No).}
+\label{tab:calidad}
+\begin{tabular}{lccccccccc}
+\toprule
+\textbf{ID} & \textbf{QA1} & \textbf{QA2} & \textbf{QA3} & \textbf{QA4} & \textbf{QA5} & \textbf{QA6} & \textbf{QA7} & \textbf{QA8} & \textbf{Total} \\
+\midrule
+\tabinput{generado/calidad.tex}
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{RQ1: T\'{e}cnicas de \textit{Deep Learning} y su relaci\'{o}n con el tipo de dato}
+
+La Tabla~\ref{tab:familias} muestra la presencia de cada familia de arquitectura. Predominan las redes recurrentes (\NfamRec{} estudios), las convolucionales (\NfamConv{}) y los mecanismos de atenci\'{o}n o Transformer (\NfamTransf{}), seguidos de las redes de grafos (\NfamGrafo{}), los autoencoders (\NfamAE{}) y los modelos generativos (\NfamGen{}). La mayor\'{i}a de los estudios (\Nhibrido{} de \Nestudios) combina dos o m\'{a}s familias, por lo que la clasificaci\'{o}n en una sola familia, usada en la versi\'{o}n anterior, ocultaba esta composici\'{o}n. Se distingue entre modelos \textit{h\'{i}bridos}, que combinan arquitecturas, y \textit{multimodales}, que integran varias modalidades de datos (\Nmultimodal{} estudios). Seg\'{u}n el mecanismo de detecci\'{o}n, \NenfoqueClasif{} estudios clasifican de forma supervisada, \NenfoquePred{} detectan por error de predicci\'{o}n y \NenfoqueRecon{} por error de reconstrucci\'{o}n.
+
+\input{generado/familias.tex}
+
+El cruce entre tipo de dato y familia (Tabla~\ref{tab:cruce_dato}) muestra que la arquitectura depende sobre todo del dato disponible. En video, \XVideoConv{} de \NdatoVideo{} estudios usan redes convolucionales, frecuentemente combinadas con redes recurrentes para la dimensi\'{o}n temporal (\XVideoRec{}), y ninguno usa grafos. Los \NgrafoNoVideo{} estudios con redes de grafos trabajan con sensores, movilidad agregada, trayectorias, datos multimodales o simulados, es decir, con datos que tienen una estructura de red vial expl\'{i}cita~\cite{hu2022detecting,ren2024graph,zhang2022automatic,park2025graph}. Los autoencoders aparecen sobre todo cuando no hay etiquetas suficientes: con matrices origen-destino~\cite{hu2022detecting,ren2024graph}, con trayectorias~\cite{wang2024multiscale} o con video entrenado solo con datos normales~\cite{pawar2022deep}.
+
+\input{generado/cruce_dato.tex}
+
+El cruce por periodo (Tabla~\ref{tab:cruce_anio}) sustenta la tendencia temporal con datos y no solo con impresiones. Ninguno de los \NperiodoAntes{} estudios de 2020--2021 usa atenci\'{o}n o Transformers, mientras que \XRecienteTransf{} de los \NperiodoReciente{} estudios de 2024--2026 los incorporan. Las redes de grafos pasan de \XAntesGrafo{} estudio en 2020--2021 a \XRecienteGrafo{} en 2024--2026. Las redes convolucionales y recurrentes siguen presentes en todos los periodos. Dado el tama\~{n}o del corpus, estas diferencias son descriptivas y no permiten inferir una tendencia estad\'{i}stica.
+
+\input{generado/cruce_anio.tex}
+
+\begin{hallazgo}
+El tipo de dato condiciona la arquitectura: las redes convolucionales dominan en video y las de grafos solo aparecen cuando el dato tiene estructura de red vial. La mayor\'{i}a de los modelos son h\'{i}bridos, y desde 2024 la atenci\'{o}n o los Transformers est\'{a}n presentes en la mayor\'{i}a de los estudios.
+\end{hallazgo}
+
+\subsection{RQ2: M\'{e}tricas y protocolos de evaluaci\'{o}n}
+
+\paragraph{M\'{e}tricas.} La Tabla~\ref{tab:metricas} muestra las m\'{e}tricas reportadas. La m\'{a}s frecuente es la \textit{accuracy} (\Nmetaccuracy{} estudios), seguida de recall (\Nmetrecall{}), AUC-ROC (\Nmetaucroc{}), precision (\Nmetprecision{}) y F1-score (\NmetFuno{}). Solo \Nmetprauc{} estudios reportan PR-AUC~\cite{chakraborty2023structural,wang2024multiscale}, pese a ser m\'{a}s informativa que la AUC-ROC con clases desbalanceadas. Las m\'{e}tricas propias de la detecci\'{o}n de incidentes (tasa de detecci\'{o}n, tasa de falsas alarmas y tiempo medio de detecci\'{o}n) aparecen en pocos estudios~\cite{fang2020deep,mehrannia2023deep,zhang2022automatic}. \Nmetoperativaslatenciafpsenergia{} estudios informan alguna m\'{e}trica operativa (latencia, FPS, tiempo de inferencia o energ\'{i}a). Varios estudios usan definiciones no est\'{a}ndar: por ejemplo, Mao et al.~\cite{mao2024detecting} llaman \textit{accuracy} a lo que corresponde a la precisi\'{o}n, y Park et al.~\cite{park2025graph} llaman \textit{recall} a una f\'{o}rmula de precisi\'{o}n.
+
+\input{generado/metricas.tex}
+
+\paragraph{Procedencia de las etiquetas.} En detecci\'{o}n de anomal\'{i}as, el origen de las etiquetas de prueba condiciona el resultado tanto como el modelo. Solo \NetiqReal{} estudios eval\'{u}an con registros reales de incidentes y \NetiqManual{} con anotaci\'{o}n manual propia (Tabla~\ref{tab:etiquetas}). \NetiqInyect{} estudios eval\'{u}an \'{u}nicamente con anomal\'{i}as inyectadas o sint\'{e}ticas~\cite{hu2022detecting,ren2024graph,wang2024multiscale,park2025graph}, \NetiqMixto{} con pseudo-etiquetas generadas autom\'{a}ticamente (por ejemplo, con Isolation Forest o con un autoencoder previo)~\cite{abdallah2025aipurban,duan2025multimodal,jadhav2026multistage} y \NetiqSin{} sin etiquetas, contrastando sus detecciones con el consenso de otros detectores~\cite{jia2025prediction}.
+
+\input{generado/etiquetas.tex}
+
+\paragraph{Protocolo.} La Tabla~\ref{tab:protocolo} muestra qu\'{e} elementos del protocolo reporta cada estudio. Casi todos indican la unidad de evaluaci\'{o}n (\Nunidad{} de \Nestudios) y la partici\'{o}n de los datos (\Nparticion), aunque varios usan particiones aleatorias sobre series temporales, con riesgo de fuga de informaci\'{o}n (QA2). Del criterio de decisi\'{o}n, \NumbralExplicito{} estudios describen expl\'{i}citamente c\'{o}mo fijan el umbral y \NumbralNoAplica{} usan clasificadores que deciden sin umbral expl\'{i}cito o eval\'{u}an con m\'{e}tricas independientes del umbral. En varios casos el umbral se ajusta sobre los mismos eventos etiquetados que se usan para evaluar~\cite{cai2021road} o sobre una parte del conjunto de prueba~\cite{chakraborty2023structural}. Solo \Ntasa{} estudios reportan la proporci\'{o}n de anomal\'{i}as en los datos de evaluaci\'{o}n, un dato necesario para interpretar precision, F1 y PR-AUC.
+
+\input{generado/protocolo.tex}
+
+\paragraph{Desempe\~{n}o sobre datasets compartidos.} Ning\'{u}n par de estudios comparte a la vez dataset, etiquetas y protocolo, lo que impide un metaan\'{a}lisis. Dos casos ilustran el problema. Primero, cuatro estudios usan datos de PeMS (PEMS-BAY, METR-LA, PEMS04/08 o estaciones de PeMS), pero cada uno define las anomal\'{i}as de forma distinta: pseudo-etiquetas de un autoencoder (F1 = 0,93 en PEMS-BAY)~\cite{abdallah2025aipurban}, registros de eventos combinados con patrones detectados autom\'{a}ticamente (F1 = 0,967)~\cite{duan2025multimodal}, ninguna etiqueta~\cite{jia2025prediction} y anomal\'{i}as generadas con Isolation Forest al 1~\% (F1 = 0,81)~\cite{jadhav2026multistage}. Las cifras no son comparables entre s\'{i}. Segundo, en NYC taxi con anomal\'{i}as inyectadas, Hu et al.~\cite{hu2022detecting} obtienen AUC entre 0,84 y 0,90 con Con-GAE, mientras que Ren et al.~\cite{ren2024graph} reportan AUC = 1,000 en todas las configuraciones, con un protocolo de inyecci\'{o}n distinto. Un AUC perfecto con anomal\'{i}as sint\'{e}ticas sugiere que la tarea de evaluaci\'{o}n es demasiado f\'{a}cil y no que el problema est\'{e} resuelto.
+
+\begin{hallazgo}
+La comparabilidad entre estudios est\'{a} limitada sobre todo por la procedencia de las etiquetas y por el protocolo, no por la arquitectura. Menos de un tercio de los estudios eval\'{u}a con etiquetas reales verificadas y pocos reportan la proporci\'{o}n de anomal\'{i}as o la variabilidad entre ejecuciones.
+\end{hallazgo}
+
+\subsection{RQ3: Tipos de anomal\'{i}as}
+
+Seg\'{u}n la categor\'{i}a principal (Tabla~\ref{tab:categorias}), la m\'{a}s estudiada es accidentes e incidentes (\NcatA{} estudios, \PcatA), seguida de congesti\'{o}n o flujo an\'{o}malo (\NcatB, \PcatB), trayectorias o conducci\'{o}n peligrosa (\NcatC, \PcatC) y disrupciones y eventos extremos (\NcatD, \PcatD). Si se cuentan tambi\'{e}n las categor\'{i}as secundarias, los accidentes aparecen en \NcatAnyA{} estudios y la congesti\'{o}n en \NcatAnyB. A diferencia de la versi\'{o}n anterior, cada estudio se asigna a una sola categor\'{i}a principal, de modo que los porcentajes suman 100~\%.
+
+\input{generado/categorias.tex}
+
+El cruce con la familia de arquitectura (Tabla~\ref{tab:cruce_anomalia}) refleja la relaci\'{o}n con el tipo de dato. Los accidentes se estudian sobre todo con video y redes convolucionales. La congesti\'{o}n y las disrupciones se estudian con series de sensores, movilidad agregada o trayectorias, y con modelos recurrentes o de grafos. Las trayectorias peligrosas concentran los modelos generativos y de reconstrucci\'{o}n~\cite{chakraborty2023structural,wang2024multiscale}.
+
+\input{generado/cruce_anomalia.tex}
+
+\subsection{RQ4: Conjuntos de datos}
+
+La Tabla~\ref{tab:datos} agrupa los conjuntos de datos por tipo de dato. Los m\'{a}s reutilizados son los de PeMS (PEMS-BAY, METR-LA, PEMS04 y PEMS08) y los de taxis (NYC, Chicago, Porto y Chengdu). En video predominan los conjuntos espec\'{i}ficos de cada estudio o de competiciones (TNAD, VAID, IITH, DoTA, TADS, HTA y AI City Challenge). \NdatasetPropio{} estudios usan exclusivamente datos no p\'{u}blicos y \NdatosSimuladosAny{} usan datos simulados, en dos de ellos de forma exclusiva~\cite{chakraborty2023structural,park2025graph}. Ninguno de los datasets de sensores m\'{a}s usados (PeMS) incluye etiquetas de anomal\'{i}a verificadas, lo que explica el recurso a anomal\'{i}as inyectadas o a pseudo-etiquetas.
+
+\input{generado/datos.tex}
+
+\subsection{RQ5: Limitaciones reportadas}
+
+La limitaci\'{o}n m\'{a}s declarada es la generalizaci\'{o}n a otros escenarios (\Nlimgeneralizacion{} estudios), seguida del etiquetado de anomal\'{i}as (\Nlimetiquetado), el costo computacional y de despliegue (\Nlimcostodespliegue) y el uso de datos propios o de acceso limitado (\Nlimdatosreplicabilidad{}; Tabla~\ref{tab:limitaciones}). Llama la atenci\'{o}n lo que los autores casi no declaran: solo \Nlimmetricasnouniformes{} estudio menciona la falta de comparabilidad de las m\'{e}tricas y solo \Nliminterpretabilidad{} la interpretabilidad, aunque ambas aparecen como problemas en esta s\'{i}ntesis (Secci\'{o}n~\ref{sec:discusion}).
+
+\input{generado/limitaciones.tex}
+
+\subsection{RQ6: L\'{i}neas base y ventaja reportada}
+\label{sec:rq6}
+
+Todos los estudios comparan su propuesta con alguna l\'{i}nea base, pero con alcance desigual (Tabla~\ref{tab:baselines}). \NbaselineNoDL{} estudios incluyen al menos una l\'{i}nea base que no es DL (estad\'{i}stica, de aprendizaje autom\'{a}tico convencional o basada en reglas), lo que permite valorar el aporte del DL frente a alternativas m\'{a}s simples. En otros casos, la comparaci\'{o}n se limita a ablaciones del propio modelo~\cite{huang2020intelligent,khan2022anomaly}, a cifras copiadas de art\'{i}culos con otros datos~\cite{jadhav2026multistage} o a un componente auxiliar y no a la detecci\'{o}n~\cite{zhao2024multiadjacent}. Las ventajas reportadas frente a la mejor l\'{i}nea base suelen ser moderadas (de 1 a 6 puntos porcentuales en la m\'{e}trica principal) cuando la comparaci\'{o}n es con modelos recientes bajo el mismo protocolo~\cite{chai2026road,park2025graph,abdallah2025aipurban,duan2025multimodal}, y mayores en algunos casos, como +0,15 de AUC frente a redes de grafos gen\'{e}ricas~\cite{hu2022detecting} o $\approx$\,+17 puntos de F1 frente a m\'{e}todos de umbral~\cite{cai2021road}. Hay resultados desfavorables que los estudios reportan, pero no destacan: con ventanas cortas, Autoformer supera al modelo propuesto por Park et al.~\cite{park2025graph}, y el FPR de Chakraborty et al.~\cite{chakraborty2023structural} es peor que el de su mejor l\'{i}nea base. Fuera del corpus, Taheri Sarteshnizi et al.~\cite{taheri2026applicability} eval\'{u}an detectores de DL sobre datos reales de volumen vehicular con etiquetas expertas y encuentran que un m\'{e}todo simple basado en distancias supera a todos ellos (F1 = 0,676 frente a 0,278 del mejor detector profundo). Este estudio se excluy\'{o} por CE-4, pero es relevante para valorar la ventaja del DL.
+
+\begin{landscape}
+\footnotesize
+\begin{longtable}{lP{7.5cm}cP{8.5cm}}
+\caption{L\'{i}neas base y ventaja frente a la mejor de ellas (RQ6).\label{tab:baselines}}\\
+\toprule
+\textbf{ID} & \textbf{L\'{i}neas base} & \textbf{No DL} & \textbf{Ventaja frente a la mejor l\'{i}nea base} \\
+\midrule\endfirsthead
+\toprule
+\textbf{ID} & \textbf{L\'{i}neas base} & \textbf{No DL} & \textbf{Ventaja frente a la mejor l\'{i}nea base} \\
+\midrule\endhead
+\bottomrule\endfoot
+\tabinput{generado/baselines.tex}
+\end{longtable}
+\end{landscape}
+
+\paragraph{An\'{a}lisis de sensibilidad por calidad.} Restringida a los \NaltaCalidad{} estudios de calidad alta (\IDaltaCalidad), la s\'{i}ntesis mantiene sus conclusiones principales: \NaltaHibrido{} de ellos son h\'{i}bridos y la arquitectura sigue el tipo de dato. Sin embargo, solo \NaltaEtiqReal{} eval\'{u}an con etiquetas reales o anotadas, de modo que la escasez de etiquetas verificadas afecta tambi\'{e}n a los mejores estudios del corpus.
+
+%=============================================================
+\section{Discusi\'{o}n}
+\label{sec:discusion}
+%=============================================================
+
+\subsection{Interpretaci\'{o}n de los hallazgos y contraste con revisiones previas}
+
+\paragraph{El dato antes que el modelo.} El hallazgo principal es que la familia de arquitectura se explica mejor por el tipo de dato que por el tipo de anomal\'{i}a. Las revisiones previas trataban por separado el video~\cite{santhosh2020anomaly,fang2024vision}, las trayectorias~\cite{belhadi2020trajectory} y las series de sensores~\cite{djenouri2019survey}, por lo que no pod\'{i}an observar esta relaci\'{o}n. Al integrarlos, esta revisi\'{o}n muestra que no existe una arquitectura dominante para el problema en general: las redes convolucionales son la opci\'{o}n natural cuando la anomal\'{i}a es visible en la imagen, las de grafos cuando el dato tiene estructura de red y los autoencoders cuando faltan etiquetas. Este resultado coincide con la observaci\'{o}n de Darban et al.~\cite{darban2024deep} para series temporales gen\'{e}ricas: la idoneidad de un detector depende de la estructura de los datos y del tipo de anomal\'{i}a, no de su complejidad.
+
+\paragraph{Hibridaci\'{o}n y atenci\'{o}n.} La hibridaci\'{o}n es la norma y no la excepci\'{o}n, y la atenci\'{o}n o los Transformers se han generalizado desde 2024. Djenouri et al.~\cite{djenouri2019survey} y Zhang et al.~\cite{zhang2020urban} reportaban un campo dominado por m\'{e}todos estad\'{i}sticos y de miner\'{i}a de datos, por lo que el cambio hacia modelos profundos h\'{i}bridos es claro. Sin embargo, la evidencia de que esta complejidad mejore la detecci\'{o}n en condiciones reales es limitada: las ventajas frente a l\'{i}neas base recientes son moderadas, y Taheri Sarteshnizi et al.~\cite{taheri2026applicability} encuentran que, con etiquetas reales, m\'{e}todos simples pueden superar a los profundos.
+
+\paragraph{Etiquetas y protocolo.} La aportaci\'{o}n m\'{a}s espec\'{i}fica de esta revisi\'{o}n es mostrar que la comparabilidad depende de la procedencia de las etiquetas y del protocolo. Ninguna de las revisiones previas analiza estos aspectos de forma estructurada. Que un mismo dataset (PeMS) se use con cuatro definiciones distintas de anomal\'{i}a, y que con anomal\'{i}as inyectadas se obtengan AUC perfectos, indica que las cifras de desempe\~{n}o publicadas no pueden ordenarse en un ranking. Esto coincide con la cr\'{i}tica de Darban et al.~\cite{darban2024deep} sobre los benchmarks de series temporales y con las recomendaciones REFORMS para estudios de aprendizaje autom\'{a}tico~\cite{kapoor2024reforms}.
+
+\paragraph{Alcance de las conclusiones.} Los estudios incluidos aplican DL con resultados favorables en escenarios controlados, pero con validaci\'{o}n limitada en contextos reales: \NdatosSimuladosAny{} usan datos simulados, \NetiqNoReales{} no eval\'{u}an con etiquetas reales y solo \QASeissi{} validan en m\'{a}s de un escenario independiente. Por tanto, no se puede afirmar que el DL haya alcanzado madurez operativa para la detecci\'{o}n de anomal\'{i}as de tr\'{a}fico.
+
+\subsection{Implicaciones para sistemas inteligentes de transporte}
+
+Para un operador de tr\'{a}fico, la elecci\'{o}n del modelo deber\'{i}a partir del dato disponible: video en intersecciones y t\'{u}neles, detectores en autopistas, trayectorias de flotas en redes urbanas. Antes de adoptar un modelo publicado, conviene verificar con qu\'{e} etiquetas se evalu\'{o}, con qu\'{e} proporci\'{o}n de anomal\'{i}as y con qu\'{e} unidad de evaluaci\'{o}n, porque un F1 obtenido con anomal\'{i}as inyectadas no anticipa el desempe\~{n}o con incidentes reales. Las m\'{e}tricas operativas (latencia, tiempo medio de detecci\'{o}n, tasa de falsas alarmas por hora) se reportan poco y son las que determinan el valor pr\'{a}ctico de una alerta.
+
+\subsection{Brechas y agenda de investigaci\'{o}n}
+
+\begin{enumerate}[label=(\arabic*)]
+  \item \textbf{Benchmarks con etiquetas verificadas.} Solo \NetiqVerificadas{} estudios eval\'{u}an con etiquetas reales verificadas. Se necesitan conjuntos de datos p\'{u}blicos de sensores y trayectorias con incidentes registrados por operadores, en la l\'{i}nea de AnoLT~\cite{taheri2026applicability}.
+  \item \textbf{Reporte m\'{i}nimo del protocolo.} Se propone reportar siempre la procedencia de las etiquetas, la proporci\'{o}n de anomal\'{i}as, la unidad de evaluaci\'{o}n, el criterio de umbral, la partici\'{o}n temporal y la variabilidad entre ejecuciones, junto con PR-AUC cuando las clases est\'{e}n desbalanceadas.
+  \item \textbf{Validaci\'{o}n externa.} Pocos estudios eval\'{u}an en m\'{a}s de una ciudad o v\'{i}a. La transferencia entre ciudades y la adaptaci\'{o}n de dominio siguen sin evaluarse sistem\'{a}ticamente.
+  \item \textbf{Reproducibilidad.} Solo \NcodigoURL{} estudios publican su c\'{o}digo. La publicaci\'{o}n de c\'{o}digo y datos deber\'{i}a acompa\~{n}ar a los resultados.
+  \item \textbf{Interpretabilidad.} Casi ning\'{u}n estudio la aborda ni la declara como limitaci\'{o}n, pese a que los operadores necesitan entender el origen de una alerta.
+\end{enumerate}
+
+\subsection{Amenazas a la validez}
+\label{sec:amenazas}
+
+\paragraph{Validez de construcci\'{o}n (b\'{u}squeda).} La cadena no fue validada por un especialista en informaci\'{o}n externo. Para mitigarlo, se valid\'{o} con un conjunto de control (\NsensibOK{} de \Nestudios{} estudios recuperados por la cadena definitiva). Dos estudios solo se recuperan con b\'{u}squeda en texto completo, lo que indica que pueden existir otros estudios relevantes que no mencionan DL en el resumen. La revisi\'{o}n se limita a cinco bases y no incluye literatura gris ni \textit{preprints}, lo que excluye trabajos recientes a\'{u}n no publicados.
+
+\paragraph{Validez interna (selecci\'{o}n y extracci\'{o}n).} La versi\'{o}n anterior de la revisi\'{o}n aplic\'{o} los criterios de forma no uniforme: incluy\'{o} un \textit{preprint} como excepci\'{o}n y estudios sin evaluaci\'{o}n cuantitativa de la detecci\'{o}n. En esta versi\'{o}n los criterios se aplicaron a todos los estudios y los casos l\'{i}mite se documentan en el Anexo~\ref{ap:limite}. La selecci\'{o}n y la evaluaci\'{o}n de calidad se hicieron con dos revisores independientes ($\kappa$ reportado en la Secci\'{o}n~\ref{sec:metodo}). La extracci\'{o}n se verific\'{o} contra el texto completo, y durante esa verificaci\'{o}n se encontraron errores en las fichas iniciales (fichas duplicadas, categor\'{i}as y datasets mal asignados), que se corrigieron.
+
+\paragraph{Validez externa.} El corpus es peque\~{n}o (\Nestudios{} estudios), est\'{a} concentrado en datos de China y Estados Unidos y se limita a estudios en ingl\'{e}s. El a\~{n}o 2026 es parcial. Las proporciones deben interpretarse como descripci\'{o}n del corpus y no como estimaciones de la literatura completa.
+
+\paragraph{Validez de conclusi\'{o}n.} La heterogeneidad de tareas, datos, etiquetas y protocolos impide el metaan\'{a}lisis y la valoraci\'{o}n formal de la certeza de la evidencia. Por ello, las conclusiones sobre la ventaja del DL se formulan con prudencia. Varios estudios presentan inconsistencias internas entre texto y tablas, registradas en la matriz de extracci\'{o}n, que reducen la confianza en sus resultados num\'{e}ricos.
+
+%=============================================================
+\section{Conclusiones}
+\label{sec:conclusiones}
+%=============================================================
+
+Esta revisi\'{o}n sistem\'{a}tica analiz\'{o} \Nestudios{} estudios (\AnioMin--\AnioMax) que aplican \textit{Deep Learning} a la detecci\'{o}n de anomal\'{i}as en tr\'{a}fico vehicular urbano y de autopista a partir de sensores, trayectorias, movilidad agregada y video.
+
+\textbf{RQ1.} Predominan las redes recurrentes, convolucionales y de atenci\'{o}n, casi siempre combinadas en modelos h\'{i}bridos. La familia de arquitectura sigue al tipo de dato: convolucionales en video, grafos en datos con estructura de red y autoencoders cuando faltan etiquetas. Desde 2024 la atenci\'{o}n y los Transformers est\'{a}n presentes en la mayor\'{i}a de los estudios.
+
+\textbf{RQ2.} Las m\'{e}tricas m\'{a}s usadas son \textit{accuracy}, recall, AUC-ROC, precision y F1, con definiciones a veces no est\'{a}ndar. El principal obst\'{a}culo para comparar estudios es el protocolo: la procedencia de las etiquetas (reales, inyectadas o pseudo-etiquetas), la proporci\'{o}n de anomal\'{i}as y el criterio de umbral var\'{i}an entre estudios y a menudo no se reportan.
+
+\textbf{RQ3.} Las anomal\'{i}as m\'{a}s estudiadas son los accidentes e incidentes (\PcatA), seguidos de la congesti\'{o}n o flujo an\'{o}malo, las trayectorias peligrosas y las disrupciones.
+
+\textbf{RQ4.} Los datasets m\'{a}s reutilizados (PeMS y taxis) carecen de etiquetas de anomal\'{i}a verificadas. En video predominan conjuntos espec\'{i}ficos de cada estudio, y una parte del corpus depende de datos simulados o no p\'{u}blicos.
+
+\textbf{RQ5.} Los autores declaran sobre todo problemas de generalizaci\'{o}n, etiquetado y costo computacional. Casi ninguno declara la falta de comparabilidad de las m\'{e}tricas o la interpretabilidad.
+
+\textbf{RQ6.} Todos los estudios comparan con l\'{i}neas base, pero solo \NbaselineNoDL{} de \Nestudios{} incluyen una alternativa no profunda y varios se limitan a ablaciones o a cifras de otros art\'{i}culos. Las ventajas frente a modelos recientes son moderadas.
+
+Como implicaci\'{o}n pr\'{a}ctica, la elecci\'{o}n del modelo deber\'{i}a partir del dato disponible y de c\'{o}mo se evalu\'{o} el modelo, no solo de la cifra de desempe\~{n}o reportada. Como trabajo futuro se proponen benchmarks p\'{u}blicos con etiquetas verificadas, un reporte m\'{i}nimo del protocolo de evaluaci\'{o}n y la validaci\'{o}n entre ciudades.
+
+%=============================================================
+\section*{Declaraciones}
+%=============================================================
+
+\textbf{Registro y protocolo:} protocolo registrado en \RegistroOSF. La lista de verificaci\'{o}n PRISMA 2020 se presenta en el Anexo~\ref{ap:prisma}.
+
+\textbf{Disponibilidad de datos y c\'{o}digo:} la matriz de extracci\'{o}n, la evaluaci\'{o}n de calidad por \'{i}tem y estudio, las cadenas de b\'{u}squeda, la planilla de cribado y los scripts que generan todas las cifras (\texttt{generar\_conteos.py} y \texttt{prueba\_sensibilidad\_cadena.py}) est\'{a}n disponibles en \RepositorioDatos.
+
+\textbf{Conflicto de intereses:} los autores declaran no tener conflicto de intereses.
+
+\textbf{Financiamiento:} esta investigaci\'{o}n no recibi\'{o} financiamiento externo.
+
+\textbf{Uso de inteligencia artificial generativa:} \pend{Los autores utilizaron [herramienta] como apoyo para [revisar la redacci\'{o}n, verificar la extracci\'{o}n de datos contra los textos completos y generar los scripts de conteo]. Todo el contenido fue revisado y validado por los autores, que asumen la responsabilidad del trabajo.}
+
+\textbf{Contribuciones (CRediT):}
+\begin{itemize}
+  \item \textbf{Mayta Arotaype, W. A.}: conceptualizaci\'{o}n, metodolog\'{i}a, curaci\'{o}n de datos, an\'{a}lisis formal, redacci\'{o}n del borrador original.
+  \item \textbf{Choquechambi Luque, W.}: investigaci\'{o}n, validaci\'{o}n, visualizaci\'{o}n, redacci\'{o}n (revisi\'{o}n y edici\'{o}n).
+  \item \textbf{Prieto Quispe, E.}: investigaci\'{o}n, an\'{a}lisis formal, verificaci\'{o}n de resultados, redacci\'{o}n (revisi\'{o}n y edici\'{o}n).
+\end{itemize}
+
+%=============================================================
+\bibliographystyle{IEEEtran}
+\bibliography{referencias}
+%=============================================================
+
+\appendix
+
+\section{Protocolo de revisi\'{o}n}
+\label{ap:protocolo}
+
+\subsection*{Cadena de b\'{u}squeda por base de datos}
+
+Las cadenas se reproducen literalmente. Los filtros de a\~{n}o, tipo de documento e idioma se aplicaron con las opciones de cada interfaz (Tabla~\ref{tab:bases}).
+
+{\footnotesize
+\noindent\textbf{Scopus} (b\'{u}squeda avanzada)
+\begin{verbatim}
+TITLE-ABS-KEY ( ( anomal* OR abnormal* OR outlier* OR "incident detection"
+ OR "accident detection" OR "accident prediction" OR "accident anticipation"
+ OR "road closure*" OR "dangerous driving" OR "near-accident*" OR "near-miss*"
+ OR "extreme event*" )
+ AND ( "deep learning" OR "deep neural" OR "neural network*" OR lstm OR gru
+ OR cnn OR convolutional OR autoencoder* OR transformer* OR "graph neural"
+ OR "self-attention" OR "attention mechanism" )
+ AND ( "road traffic" OR "urban traffic" OR "vehicular traffic"
+ OR "highway traffic" OR "freeway traffic" OR "traffic flow" OR "traffic video*"
+ OR "traffic surveillance" OR "traffic camera*" OR "intelligent transportation"
+ OR "transportation network*" OR expressway* OR highway* OR freeway* OR vehicle*
+ OR "road network*" OR taxi* OR "traffic event*" OR "traffic scenario*"
+ OR "traffic incident*" OR "traffic accident*" OR "traffic anomal*" ) )
+ AND PUBYEAR > 2019 AND PUBYEAR < 2027
+ AND ( LIMIT-TO ( DOCTYPE , "ar" ) OR LIMIT-TO ( DOCTYPE , "cp" ) )
+ AND ( LIMIT-TO ( LANGUAGE , "English" ) OR LIMIT-TO ( LANGUAGE , "Spanish" ) )
+\end{verbatim}
+
+\noindent\textbf{Web of Science Core Collection} (TS = t\'{i}tulo, resumen, palabras clave y Keywords Plus)
+\begin{verbatim}
+TS=((anomal* OR abnormal* OR outlier* OR "incident detection"
+ OR "accident detection" OR "accident prediction" OR "accident anticipation"
+ OR "road closure*" OR "dangerous driving" OR "near-accident*" OR "near-miss*"
+ OR "extreme event*")
+ AND ("deep learning" OR "deep neural" OR "neural network*" OR LSTM OR GRU
+ OR CNN OR convolutional OR autoencoder* OR transformer* OR "graph neural"
+ OR "self-attention" OR "attention mechanism")
+ AND ("road traffic" OR "urban traffic" OR "vehicular traffic"
+ OR "highway traffic" OR "freeway traffic" OR "traffic flow" OR "traffic video*"
+ OR "traffic surveillance" OR "traffic camera*" OR "intelligent transportation"
+ OR "transportation network*" OR expressway* OR highway* OR freeway* OR vehicle*
+ OR "road network*" OR taxi* OR "traffic event*" OR "traffic scenario*"
+ OR "traffic incident*" OR "traffic accident*" OR "traffic anomal*"))
+Filtros: 2020-2026; Article, Proceeding Paper; English, Spanish.
+\end{verbatim}
+
+\noindent\textbf{IEEE Xplore} (Command Search; m\'{a}ximo 25 t\'{e}rminos por consulta)
+\begin{verbatim}
+Consulta 1:
+(("Document Title":anomal* OR "Abstract":anomal* OR "Author Keywords":anomal*
+ OR "Abstract":abnormal* OR "Abstract":"incident detection"
+ OR "Abstract":"accident detection" OR "Abstract":"road closure"
+ OR "Abstract":"dangerous driving" OR "Abstract":"near-accident")
+ AND ("Abstract":"deep learning" OR "Abstract":"neural network"
+ OR "Abstract":LSTM OR "Abstract":convolutional OR "Abstract":autoencoder
+ OR "Abstract":transformer)
+ AND ("Abstract":"road traffic" OR "Abstract":"urban traffic"
+ OR "Abstract":"traffic flow" OR "Abstract":"traffic video"
+ OR "Abstract":"traffic surveillance" OR "Abstract":"intelligent transportation"))
+Consulta 2:
+(("Document Title":anomal* OR "Abstract":anomal* OR "Abstract":abnormal*
+ OR "Abstract":"incident detection" OR "Abstract":"accident detection"
+ OR "Abstract":"extreme event")
+ AND ("Abstract":"deep learning" OR "Abstract":"neural network"
+ OR "Abstract":LSTM OR "Abstract":convolutional OR "Abstract":autoencoder
+ OR "Abstract":transformer)
+ AND ("Abstract":expressway OR "Abstract":highway OR "Abstract":freeway
+ OR "Abstract":vehicle OR "Abstract":taxi OR "Abstract":"road network"))
+Filtros: 2020-2026; Journals, Conferences.
+\end{verbatim}
+
+\noindent\textbf{ScienceDirect} (t\'{i}tulo, resumen y palabras clave; m\'{a}ximo 8 operadores, sin comodines)
+\begin{verbatim}
+Consulta 1: ("anomaly detection" OR "incident detection" OR "accident detection")
+ AND ("deep learning" OR "neural network")
+ AND ("road traffic" OR "urban traffic" OR "traffic flow")
+Consulta 2: ("anomaly detection" OR "incident detection" OR "accident detection")
+ AND ("deep learning" OR "neural network")
+ AND ("traffic video" OR "traffic surveillance" OR "highway")
+Consulta 3: ("abnormal" OR "anomalous") AND ("deep learning" OR "neural network")
+ AND ("vehicle" OR "expressway" OR "trajectory")
+Filtros: 2020-2026; Research articles.
+\end{verbatim}
+
+\noindent\textbf{ACM Digital Library} (campo Abstract)
+\begin{verbatim}
+[[Abstract: anomal*] OR [Abstract: abnormal*] OR [Abstract: outlier*]
+ OR [Abstract: "incident detection"] OR [Abstract: "accident detection"]
+ OR [Abstract: "road closure*"] OR [Abstract: "dangerous driving"]
+ OR [Abstract: "near-accident*"] OR [Abstract: "extreme event*"]]
+AND [[Abstract: "deep learning"] OR [Abstract: "neural network*"]
+ OR [Abstract: lstm] OR [Abstract: convolutional] OR [Abstract: autoencoder*]
+ OR [Abstract: transformer*] OR [Abstract: "graph neural"]]
+AND [[Abstract: "road traffic"] OR [Abstract: "urban traffic"]
+ OR [Abstract: "vehicular traffic"] OR [Abstract: "traffic flow"]
+ OR [Abstract: "traffic video*"] OR [Abstract: "traffic surveillance"]
+ OR [Abstract: "intelligent transportation"] OR [Abstract: expressway*]
+ OR [Abstract: highway*] OR [Abstract: vehicle*] OR [Abstract: taxi*]
+ OR [Abstract: "road network*"]]
+AND [E-Publication Date: (01/01/2020 TO 12/31/2026)]
+\end{verbatim}
+}
+
+\subsection*{Historial del protocolo}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Historial de versiones del protocolo.}
+\label{tab:historial}
+\begin{tabularx}{\linewidth}{llY}
+\toprule
+\textbf{Versi\'{o}n} & \textbf{Fecha} & \textbf{Cambio} \\
+\midrule
+V1.0 & \pend{fecha} & Definici\'{o}n del tema, preguntas de investigaci\'{o}n y PICOC. \\
+V1.1 & \pend{fecha} & Cadenas por base (seis fuentes, incluidas MDPI y Taylor \& Francis). \\
+V1.2 & \pend{fecha} & Cribado y eliminaci\'{o}n de duplicados en Parsif.al. \\
+V1.3 & \pend{fecha} & Evaluaci\'{o}n de calidad (instrumento de 6 \'{i}tems) y extracci\'{o}n; 25 estudios. \\
+V2.0 & \pend{fecha} & Respuesta a la revisi\'{o}n: alcance ampliado a video y autopistas; cinco bases (se a\~{n}ade IEEE Xplore y se retiran MDPI y Taylor \& Francis por ser editoriales); cadena validada con un conjunto de control; regla general para \textit{preprints} (CE-5); CI-5 y CI-6 precisados; nuevo instrumento de calidad de 8 \'{i}tems; nueva RQ6; re-cribado con dos revisores. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Estudios incluidos}
+\label{ap:estudios}
+
+\begin{landscape}
+\footnotesize
+\begin{longtable}{lllP{2.8cm}cP{3.0cm}P{5.5cm}P{3.0cm}}
+\caption{Estudios incluidos con su identificador en la versi\'{o}n anterior, DOI y base de recuperaci\'{o}n.\label{tab:ap_estudios}}\\
+\toprule
+\textbf{ID} & \textbf{ID v1} & \textbf{Ref.} & \textbf{Autores} & \textbf{A\~{n}o} & \textbf{Editorial} & \textbf{DOI} & \textbf{Base de recuperaci\'{o}n} \\
+\midrule\endfirsthead
+\toprule
+\textbf{ID} & \textbf{ID v1} & \textbf{Ref.} & \textbf{Autores} & \textbf{A\~{n}o} & \textbf{Editorial} & \textbf{DOI} & \textbf{Base de recuperaci\'{o}n} \\
+\midrule\endhead
+\bottomrule\endfoot
+\tabinput{generado/lista_estudios.tex}
+\end{longtable}
+\end{landscape}
+
+\section{Decisiones sobre casos l\'{i}mite}
+\label{ap:limite}
+
+\begin{small}
+\begin{longtable}{P{2.6cm}P{2.2cm}P{9.6cm}}
+\caption{Decisiones de elegibilidad sobre estudios dudosos, con el criterio aplicado.\label{tab:limite}}\\
+\toprule
+\textbf{Estudio} & \textbf{Decisi\'{o}n} & \textbf{Justificaci\'{o}n} \\
+\midrule\endfirsthead
+\toprule
+\textbf{Estudio} & \textbf{Decisi\'{o}n} & \textbf{Justificaci\'{o}n} \\
+\midrule\endhead
+\bottomrule\endfoot
+\tabinput{generado/limite.tex}
+\end{longtable}
+\end{small}
+
+\section{Lista de verificaci\'{o}n PRISMA 2020}
+\label{ap:prisma}
+
+\begin{small}
+\begin{longtable}{lP{8.8cm}P{4.0cm}}
+\caption{Ubicaci\'{o}n de los \'{i}tems de PRISMA 2020 en el manuscrito.\label{tab:prisma_check}}\\
+\toprule
+\textbf{\'{I}tem} & \textbf{Requisito} & \textbf{Ubicaci\'{o}n} \\
+\midrule\endfirsthead
+\toprule
+\textbf{\'{I}tem} & \textbf{Requisito} & \textbf{Ubicaci\'{o}n} \\
+\midrule\endhead
+\bottomrule\endfoot
+1 & T\'{i}tulo que identifica el trabajo como revisi\'{o}n sistem\'{a}tica & T\'{i}tulo \\
+2 & Resumen estructurado (PRISMA for Abstracts) & Resumen \\
+3 & Justificaci\'{o}n en relaci\'{o}n con el conocimiento existente & Sec.~\ref{sec:intro}, \ref{sec:previas}; Tabla~\ref{tab:previas} \\
+4 & Objetivos o preguntas & Sec.~\ref{sec:intro} (RQ1--RQ6) \\
+5 & Criterios de elegibilidad & Tabla~\ref{tab:criterios} \\
+6 & Fuentes de informaci\'{o}n y fecha de \'{u}ltima b\'{u}squeda & Sec.~\ref{sec:busqueda}; Tabla~\ref{tab:bases} \\
+7 & Estrategia de b\'{u}squeda completa & Anexo~\ref{ap:protocolo} \\
+8 & Proceso de selecci\'{o}n & Sec.~\ref{sec:metodo} (Proceso de selecci\'{o}n) \\
+9 & Proceso de extracci\'{o}n & Sec.~\ref{sec:metodo} (Extracci\'{o}n de datos) \\
+10 & Variables extra\'{i}das & Tabla~\ref{tab:formulario} \\
+11 & Evaluaci\'{o}n del riesgo de sesgo & Sec.~\ref{sec:metodo}; Tabla~\ref{tab:cqi} \\
+12 & Medidas de efecto & No aplica (s\'{i}ntesis sin metaan\'{a}lisis); Sec.~\ref{sec:metodo} (S\'{i}ntesis) \\
+13a--f & M\'{e}todos de s\'{i}ntesis & Sec.~\ref{sec:metodo} (S\'{i}ntesis) \\
+14 & Sesgo de reporte & Sec.~\ref{sec:metodo} (S\'{i}ntesis), justificaci\'{o}n \\
+15 & Certeza de la evidencia & Sec.~\ref{sec:metodo} (S\'{i}ntesis), justificaci\'{o}n \\
+16a & Resultados de la b\'{u}squeda y selecci\'{o}n & Figura~\ref{fig:prisma} \\
+16b & Estudios excluidos que parec\'{i}an cumplir los criterios & Anexo~\ref{ap:limite} \\
+17 & Caracter\'{i}sticas de los estudios & Tabla~\ref{tab:caracteristicas} \\
+18 & Riesgo de sesgo por estudio & Tabla~\ref{tab:calidad} \\
+19 & Resultados de cada estudio & Tablas~\ref{tab:caracteristicas} y \ref{tab:baselines} \\
+20a--d & Resultados de las s\'{i}ntesis & Sec.~\ref{sec:resultados} (RQ1--RQ6) \\
+21 & Sesgo de reporte en la s\'{i}ntesis & Sec.~\ref{sec:rq6} \\
+22 & Certeza de la evidencia & Sec.~\ref{sec:amenazas} \\
+23a--d & Discusi\'{o}n, limitaciones e implicaciones & Sec.~\ref{sec:discusion} \\
+24a--c & Registro y protocolo & Declaraciones; Anexo~\ref{ap:protocolo} \\
+25 & Financiamiento & Declaraciones \\
+26 & Conflicto de intereses & Declaraciones \\
+27 & Disponibilidad de datos, c\'{o}digo y materiales & Declaraciones \\
+\end{longtable}
+\end{small}
+
+\end{document}

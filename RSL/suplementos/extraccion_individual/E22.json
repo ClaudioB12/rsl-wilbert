@@ -1,0 +1,127 @@
+{
+  "key": "E22",
+  "autores": "Wang, Chenhao; Chen, Lisi; Shang, Shuo; Jensen, Christian S.; Kalnis, Panos",
+  "primer_autor": "Wang",
+  "anio": 2024,
+  "titulo": "Multi-Scale Detection of Anomalous Spatio-Temporal Trajectories in Evolving Trajectory Datasets",
+  "venue": "Proceedings of the 30th ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD '24), Barcelona, Spain",
+  "tipo_doc": "conferencia",
+  "volumen": "",
+  "numero": "",
+  "paginas_o_articulo": "pp. 2980–2990",
+  "doi": "10.1145/3637528.3671874",
+  "editorial": "ACM",
+  "pais_region_datos": "Oporto, Portugal; Chengdu, China",
+  "entorno": "urbano",
+  "tipo_dato": "trayectorias GPS",
+  "tipo_dato_detalle": "Trayectorias de taxis (secuencias de puntos con marca de tiempo) mapeadas a celdas de una grilla de 100 m x 100 m; embedding espacial de celdas y embedding temporal (fecha, hora, minuto, segundo) tipo Time2Vec",
+  "datasets": [
+    {
+      "nombre": "Porto taxi trajectory dataset (442 taxis, 1 año, muestreo cada 15 s; 1.198.551 trayectorias)",
+      "tipo": "real",
+      "publico": "sí"
+    },
+    {
+      "nombre": "Chengdu taxi trajectory dataset (≈14.000 taxis, 3–30 ago 2014; subconjunto de 10 días; 2.124.763 trayectorias)",
+      "tipo": "real",
+      "publico": "sí"
+    }
+  ],
+  "origen_etiquetas": "anomalías inyectadas/sintéticas",
+  "origen_etiquetas_detalle": "Ante la falta de un dataset etiquetado, se generan anomalías espaciales y temporales mediante un esquema de perturbación (se desplaza una fracción continua α de la trayectoria d celdas, con ajuste de marcas de tiempo).",
+  "tasa_anomalias": "5 % de muestras anómalas generadas en todos los experimentos",
+  "paradigma": "no supervisado",
+  "enfoque": "reconstrucción",
+  "unidad_evaluacion": "trayectoria",
+  "umbral": "No reportado (puntuación de anomalía continua en [0, 1] evaluada con PR-AUC, sin umbral fijo)",
+  "particion": "Aleatoria: 80 % de trayectorias para entrenamiento y 20 % para prueba; además, en Porto se usan los primeros 2 meses (y en Chengdu los primeros 3 días) para evaluación y el resto, en orden temporal, para la actualización evolutiva",
+  "familia_principal": "generativo",
+  "familias": {
+    "recurrente": true,
+    "convolucional": false,
+    "autoencoder": true,
+    "grafos": true,
+    "transformer_atencion": true,
+    "generativo": true
+  },
+  "hibrido": true,
+  "multimodal": false,
+  "arquitectura": "MST-OATD: embeddings espaciales de celdas con matriz de agregación tipo GCN, embeddings temporales tipo Time2Vec, fusión multiescala con atención cruzada (escalas 1, 2 y 4), inferencia de ruta con RNN y mezcla gaussiana (variacional) y red generativa RNN que reconstruye la trayectoria (detección por generación); un modelo de ranking aprendido (regresión logística) actualiza el conjunto de entrenamiento.",
+  "metricas": [
+    "PR-AUC",
+    "tiempo medio de detección por trayectoria (ms)"
+  ],
+  "metricas_flags": {
+    "accuracy": false,
+    "precision": false,
+    "recall": false,
+    "f1": false,
+    "auc_roc": false,
+    "pr_auc": true,
+    "dr": false,
+    "far_fpr": false,
+    "mttd": false,
+    "error_mae_rmse_mape": false,
+    "iou_map": false,
+    "operativas_latencia_fps_energia": true
+  },
+  "resultado_principal": "PR-AUC = 0.970 en Porto y 0.969 en Chengdu (α=0.3, d=2, trayectoria completa); 0.413 ms y 0.636 ms por trayectoria en una RTX 3090",
+  "baselines": [
+    "iBAT",
+    "SAE",
+    "VSAE",
+    "TPRRO",
+    "GM-VSAE",
+    "DeepTEA"
+  ],
+  "baseline_no_dl": true,
+  "ventaja_vs_mejor_baseline": "Mejora media relativa de PR-AUC del 18,6 % en Porto y del 2,9 % en Chengdu frente a DeepTEA (p. ej., 0.739 vs 0.408 en Porto con α=0.1, d=3, ρ=1.0)",
+  "limitaciones_autores": "Mención breve: no existen datasets etiquetados y el etiquetado manual es costoso y sin estándares (por eso se usan anomalías sintéticas); el horizonte temporal más corto de Chengdu limita el uso de información temporal; como trabajo futuro, extender el modelo a otras tareas de minería de trayectorias. No hay sección de limitaciones.",
+  "limitaciones_flags": {
+    "datos_replicabilidad": false,
+    "etiquetado": true,
+    "generalizacion": true,
+    "metricas_no_uniformes": false,
+    "costo_despliegue": false,
+    "interpretabilidad": false
+  },
+  "codigo_disponible": "https://github.com/chwang0721/MST-OATD",
+  "categoria_anomalia": "trayectorias/conducción peligrosa",
+  "categoria_anomalia_secundaria": "",
+  "calidad": {
+    "QA1": {
+      "p": 0,
+      "ev": "Solo anomalías sintéticas generadas por perturbación (α, d) con una proporción del 5 %."
+    },
+    "QA2": {
+      "p": 0.5,
+      "ev": "Partición aleatoria 80/20 de las trayectorias descrita explícitamente; la evaluación evolutiva usa bloques temporales posteriores, pero la partición principal es aleatoria."
+    },
+    "QA3": {
+      "p": 1,
+      "ev": "Seis baselines bajo el mismo protocolo, entre ellos métodos no DL (iBAT, TPRRO) y el estado del arte (GM-VSAE, DeepTEA), más ablación."
+    },
+    "QA4": {
+      "p": 0,
+      "ev": "Resultados puntuales de PR-AUC sin desviación estándar, sin repeticiones ni pruebas de significancia."
+    },
+    "QA5": {
+      "p": 1,
+      "ev": "Código en GitHub (chwang0721/MST-OATD) y enlaces a los datasets públicos de Porto (Kaggle) y Chengdu."
+    },
+    "QA6": {
+      "p": 1,
+      "ev": "Dos datasets independientes de dos ciudades (Oporto y Chengdu)."
+    },
+    "QA7": {
+      "p": 0.5,
+      "ev": "Unidad de evaluación clara (trayectoria, con ratio observado ρ), pero no se define umbral ni criterio de decisión (PR-AUC sin umbral)."
+    },
+    "QA8": {
+      "p": 0.5,
+      "ev": "Solo menciones breves (falta de etiquetas, horizonte corto de Chengdu, trabajo futuro); no hay párrafo de limitaciones."
+    }
+  },
+  "caso_limite": "",
+  "notas": "La ficha_17 coincide con el PDF en los valores de PR-AUC (Tabla 2), datasets, código, split 80/20 y proporción del 5 %; la tabla de trayectorias más largas que cita está en el Apéndice D.2 (Tabla 4) y también coincide. Datos añadidos desde el PDF: pp. 2980–2990 y DOI 10.1145/3637528.3671874. Se marcó la familia 'grafos' porque el embedding espacial usa una matriz de agregación normalizada inspirada en GCN (componente menor)."
+}
