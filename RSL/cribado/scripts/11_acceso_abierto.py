@@ -110,6 +110,10 @@ def oa_de_las_bases():
     return marcas, presentes
 
 
+class LimiteDiario(ConnectionError):
+    pass
+
+
 def pedir(url):
     """JSON de la URL; None si OpenAlex responde que la consulta no tiene respuesta (404, 400…).
 
@@ -127,6 +131,9 @@ def pedir(url):
                 return None
             ultimo = f"HTTP {e.code}"
             espera = max(int(e.headers.get("Retry-After") or 0) if e.headers else 0, 2 ** intento)
+            if espera > 300:  # límite diario de OpenAlex agotado: no tiene sentido esperar horas
+                hora = time.strftime("%H:%M", time.localtime(time.time() + espera))
+                raise LimiteDiario(f"OpenAlex alcanzó su límite diario de consultas; se puede continuar después de las {hora}")
             print(f"    (OpenAlex respondió {ultimo}; reintento {intento + 1} de 7 en {espera} s)", flush=True)
             time.sleep(espera)
         except Exception as e:
@@ -200,13 +207,25 @@ def main():
     hoy = date.today().isoformat()
 
     if not a.sin_internet:
-        pendientes = [r for r in registros if r["id"] not in cache]
+        # Primero los que siguen en juego (Incluir/Duda): para ellos el acceso abierto decide; los ya
+        # excluidos por otro criterio van al final.
+        try:
+            from hojas import leer_hoja
+            dec = {i: v["decision"] for i, v in leer_hoja(REVISION / "TA.xlsx").items()}
+        except Exception:
+            dec = {}
+        pendientes = sorted((r for r in registros if r["id"] not in cache), key=lambda r: dec.get(r["id"]) == "Excluir")
+        en_juego = sum(1 for r in pendientes if dec.get(r["id"]) != "Excluir")
+        print(f"  De ellos, {en_juego} están en Incluir/Duda (se consultan primero).")
         print(f"Consultando OpenAlex: {len(pendientes)} registros (ya consultados: {len(cache)}).")
         try:
             for n, r in enumerate(pendientes, 1):
                 try:
                     cache[r["id"]] = consultar_openalex(r, a.correo) or {"no_encontrado": True}
                     cache[r["id"]]["fecha"] = hoy
+                except LimiteDiario as e:
+                    print(f"\n{e}. Lo consultado se guardó.")
+                    break
                 except ConnectionError as e:
                     print(f"\nSin conexión ({e}). Lo consultado se guardó; vuelve a ejecutar el script para continuar.")
                     break
