@@ -1,0 +1,2 @@
+ACM Digital Library: seleccionar todos > Export Citations > BibTeX (el BibTeX de ACM incluye el resumen).
+Exportar página por página si hay muchos resultados, y dejar todos los archivos aquí.

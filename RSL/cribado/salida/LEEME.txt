@@ -1,0 +1,1 @@
+Archivos generados por los scripts. No editar a mano, salvo los consolidado_*.xlsx en la reunión de consenso.

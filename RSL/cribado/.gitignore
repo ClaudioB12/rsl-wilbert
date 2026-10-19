@@ -1,0 +1,4 @@
+# PDF de artículos: tienen derechos de autor, no se suben
+pdf/
+# Exportaciones crudas: se suben (son la evidencia de la búsqueda)
+salida/*.zip

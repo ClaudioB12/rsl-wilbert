@@ -1,0 +1,2 @@
+IEEE Xplore: seleccionar todos > Export > "Results" en CSV, o "Citations" en RIS/BibTeX con "Citation and Abstract".
+Se hacen dos consultas: exportar ambas y dejar los dos archivos aquí (los duplicados entre ellas se eliminan solos).

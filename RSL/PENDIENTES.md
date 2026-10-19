@@ -1,6 +1,6 @@
 # Pendientes para los autores (versión 2 de la RSL)
 
-> **Paso a paso detallado (Git, cribado, kappa, OSF): ver `RSL/GUIA_TRABAJO.md`.** La plantilla `RSL/suplementos/plantilla_cribado.xlsx` calcula el kappa y los conteos PRISMA, y `suplementos/actualizar_datos_busqueda.py` los copia al manuscrito.
+> **Paso a paso detallado: `RSL/cribado/README.md`** (búsqueda, Parsif.al, cribado con scripts, PRISMA, calidad y Overleaf). **Criterios de cribado con su fundamento: `RSL/cribado/MANUAL_CRIBADO.md`.** Los scripts escriben solos las fechas, los conteos PRISMA y los kappa en `datos_busqueda.tex`.
 
 Lo que sigue solo pueden hacerlo ustedes. En el PDF, cada dato pendiente aparece **en rojo y entre corchetes**. Casi todos se completan en un único archivo: `RSL/manuscrito/datos_busqueda.tex`.
 

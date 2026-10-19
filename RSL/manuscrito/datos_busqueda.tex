@@ -1,9 +1,9 @@
 %=============================================================
-%  DATOS DE LA BÚSQUEDA Y DEL CRIBADO — COMPLETAR POR LOS AUTORES
-%  Estas cifras salen de la re-ejecución de la búsqueda (5 bases,
-%  cadenas de ../suplementos/cadenas_busqueda.txt) y del cribado en
-%  Parsif.al con dos revisores. Reemplazar cada \pend{...} por el
-%  valor real. Cuando no quede ningún \pend, el PDF no mostrará texto rojo.
+%  DATOS DE LA BÚSQUEDA Y DEL CRIBADO
+%  Las fechas, los conteos por base, el flujo PRISMA y los kappa los
+%  escribe automáticamente cribado/scripts/06_resultados_prisma.py.
+%  A mano solo: \RegistroOSF, \RevisoresCribado, \RevisorTercero y
+%  \RepositorioDatos. Lo pendiente aparece en rojo en el PDF.
 %=============================================================
 
 % --- Fechas y registro ---------------------------------------
@@ -18,6 +18,7 @@
 \newcommand{\KappaTA}{\pend{0,xx}}
 \newcommand{\KappaTC}{\pend{0,xx}}
 \newcommand{\KappaCalidad}{\pend{0,xx}}
+\newcommand{\KappaPiloto}{\pend{0,xx}}
 
 % --- Registros por base (Tabla de bases) ----------------------
 \newcommand{\NScopus}{\pend{n}}
@@ -47,10 +48,11 @@
 \newcommand{\PexclCEcinco}{\pend{n}}    % CE-5 tipo de documento / preprint
 \newcommand{\PexclCIseis}{\pend{n}}     % CI-6 sin evaluación cuantitativa de la detección
 \newcommand{\PexclCEseis}{\pend{n}}     % CE-6 información insuficiente
+\newcommand{\PexclOtros}{\pend{n}}      % CE-1, CI-2, CI-3
 % Otros métodos (búsqueda v1 en ACM DL a texto completo)
 \newcommand{\POtrosIdentificados}{2}
 \newcommand{\POtrosIncluidos}{2}
 
 % --- Base de recuperación de cada estudio (Anexo B) -----------
-% Indicar la(s) base(s) en que apareció cada estudio al re-ejecutar la búsqueda.
-\newcommand{\BaseRecup}[1]{\pend{base}}
+% La escribe cribado/scripts/06_resultados_prisma.py en generado/base_recuperacion.tex.
+\newcommand{\BaseRecup}[1]{\ifcsname baserecup#1\endcsname\csname baserecup#1\endcsname\else\pend{base}\fi}

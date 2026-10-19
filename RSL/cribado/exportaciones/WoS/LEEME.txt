@@ -1,0 +1,2 @@
+Web of Science: Export > "Tab delimited file" (Record Content: "Full Record") o "RIS (other reference software)".
+WoS exporta como máximo 1000 registros por vez: hacer lotes 1-1000, 1001-2000... y dejar todos los archivos aquí.

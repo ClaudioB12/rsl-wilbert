@@ -1,0 +1,2 @@
+ScienceDirect: seleccionar todos > Export > "Export citation to RIS" o BibTeX (incluye el resumen).
+Exporta por páginas: repetir en cada página de resultados. Hay tres consultas: exportar todas y dejar los archivos aquí.

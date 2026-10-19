@@ -1,0 +1,2 @@
+Scopus: Export > CSV, marcando "Citation information", "Bibliographical information" y "Abstract & keywords".
+(También vale RIS.) Si hay más de 2000 resultados, exportar por lotes y dejar todos los archivos aquí.

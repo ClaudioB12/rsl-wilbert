@@ -80,6 +80,7 @@
 \input{generado/macros.tex}
 \input{generado/sensibilidad.tex}
 \input{datos_busqueda.tex}
+\IfFileExists{generado/base_recuperacion.tex}{\input{generado/base_recuperacion.tex}}{}
 
 %=============================================================
 \begin{document}
@@ -266,36 +267,36 @@ ACM Digital Library & Resumen; art\'{i}culos de investigaci\'{o}n & \FACM & \NAC
 \begin{table}[H]
 \centering
 \small
-\caption{Criterios de inclusi\'{o}n (CI) y exclusi\'{o}n (CE).}
+\caption{Criterios de inclusi\'{o}n (CI) y exclusi\'{o}n (CE), con su fundamento en el protocolo.}
 \label{tab:criterios}
-\begin{tabularx}{\linewidth}{lY}
+\begin{tabularx}{\linewidth}{lYP{3.4cm}}
 \toprule
-\textbf{C\'{o}d.} & \textbf{Criterio} \\
+\textbf{C\'{o}d.} & \textbf{Criterio} & \textbf{Fundamento} \\
 \midrule
-\multicolumn{2}{l}{\cellcolor{azulClaro!40}\textbf{Inclusi\'{o}n}} \\
-CI-1 & Art\'{i}culo de revista o de conferencia revisado por pares \\
-CI-2 & En ingl\'{e}s o espa\~{n}ol, con acceso al texto completo \\
-CI-3 & Publicado entre 2020 y 2026 \\
-CI-4 & Aborda la detecci\'{o}n de anomal\'{i}as en tr\'{a}fico vehicular (urbano o de autopista) a partir de sensores, trayectorias, datos de movilidad o video \\
-CI-5 & Usa \textit{Deep Learning} como m\'{e}todo principal de la detecci\'{o}n; en modelos h\'{i}bridos, la componente profunda aprende la representaci\'{o}n sobre la que se decide la anomal\'{i}a \\
-CI-6 & Reporta una evaluaci\'{o}n cuantitativa de la tarea de detecci\'{o}n (no solo de una tarea auxiliar como pron\'{o}stico o reconocimiento de acciones) \\
+\multicolumn{3}{l}{\cellcolor{azulClaro!40}\textbf{Inclusi\'{o}n}} \\
+CI-1 & Art\'{i}culo de revista o de conferencia revisado por pares & Calidad m\'{i}nima de la evidencia \\
+CI-2 & En ingl\'{e}s o espa\~{n}ol, con acceso al texto completo & Viabilidad; la extracci\'{o}n exige el texto completo \\
+CI-3 & Publicado entre 2020 y 2026 & Contexto (C): periodo del DL reciente; vac\'{i}o de las revisiones previas \\
+CI-4 & Aborda la detecci\'{o}n de anomal\'{i}as en tr\'{a}fico vehicular (urbano o de autopista) a partir de sensores, trayectorias, datos de movilidad o video & Poblaci\'{o}n (P) y alcance; RQ3, RQ4 \\
+CI-5 & Usa \textit{Deep Learning} como m\'{e}todo principal de la detecci\'{o}n; en modelos h\'{i}bridos, la componente profunda aprende la representaci\'{o}n sobre la que se decide la anomal\'{i}a & Intervenci\'{o}n (I); RQ1 \\
+CI-6 & Reporta una evaluaci\'{o}n cuantitativa de la tarea de detecci\'{o}n (no solo de una tarea auxiliar como pron\'{o}stico o reconocimiento de acciones) & Resultado (O); RQ2 y RQ6 \\
 \midrule
-\multicolumn{2}{l}{\cellcolor{rojoAlerta!10}\textbf{Exclusi\'{o}n}} \\
-CE-1 & Duplicado entre bases; se conserva la versi\'{o}n publicada m\'{a}s completa \\
-CE-2 & No trata de tr\'{a}fico vehicular (p.~ej., tr\'{a}fico de red, peatones, transporte mar\'{i}timo) \\
-CE-3 & Solo pronostica o clasifica tr\'{a}fico sin evaluar la detecci\'{o}n de anomal\'{i}as \\
-CE-4 & La detecci\'{o}n no se basa en DL (SVM, ARIMA, reglas o umbrales sin componente profunda) \\
-CE-5 & Revisi\'{o}n, \textit{survey}, cap\'{i}tulo, tesis, resumen, p\'{o}ster o \textit{preprint}; un \textit{preprint} se incluye solo si existe su versi\'{o}n revisada por pares, y entonces se cita esta \'{u}ltima \\
-CE-6 & No describe el modelo, los datos o los resultados de forma suficiente para la extracci\'{o}n \\
+\multicolumn{3}{l}{\cellcolor{rojoAlerta!10}\textbf{Exclusi\'{o}n}} \\
+CE-1 & Duplicado entre bases, o versi\'{o}n menos completa del mismo estudio (p.~ej., conferencia ampliada luego en revista); se conserva la m\'{a}s completa & Evitar doble conteo \\
+CE-2 & No trata de tr\'{a}fico vehicular por carretera (p.~ej., tr\'{a}fico de red, ciberseguridad del veh\'{i}culo, peatones, transporte mar\'{i}timo, a\'{e}reo o ferroviario, estado del pavimento, monitoreo del conductor) & Poblaci\'{o}n (P) \\
+CE-3 & Solo pronostica o clasifica tr\'{a}fico, o estima riesgo a largo plazo, sin detectar ni anticipar anomal\'{i}as & Resultado (O); objetivo de la RSL \\
+CE-4 & La detecci\'{o}n no se basa en DL (SVM, ARIMA, reglas o umbrales sin componente profunda entrenada) & Intervenci\'{o}n (I) \\
+CE-5 & Revisi\'{o}n, \textit{survey}, cap\'{i}tulo, tesis, resumen, p\'{o}ster, editorial o \textit{preprint}; un \textit{preprint} se incluye solo si existe su versi\'{o}n revisada por pares, y entonces se cita esta \'{u}ltima & Solo estudios primarios revisados por pares \\
+CE-6 & No describe el modelo, los datos o los resultados de forma suficiente para la extracci\'{o}n & Viabilidad de la extracci\'{o}n (Tabla~\ref{tab:formulario}) \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Los casos l\'{i}mite (estudios en los que el DL no decide directamente la anomal\'{i}a o en los que la evaluaci\'{o}n cuantitativa corresponde a otra tarea) se resolvieron con CI-5 y CI-6, y la decisi\'{o}n se documenta estudio por estudio en el Anexo~\ref{ap:limite}.
+Los criterios se aplicaron como un \'{a}rbol de decisi\'{o}n en orden fijo (CE-1, CE-5, CI-3, CI-2, CE-2, CE-3, CE-4 y, a texto completo, CI-6 y CE-6), de modo que cada exclusi\'{o}n se asigna al primer criterio que no se cumple. Las definiciones operativas, con ejemplos de inclusi\'{o}n y de exclusi\'{o}n, se recogen en el manual de cribado del material suplementario. Los casos l\'{i}mite (estudios en los que el DL no decide directamente la anomal\'{i}a o en los que la evaluaci\'{o}n cuantitativa corresponde a otra tarea) se resolvieron con CI-5 y CI-6, y la decisi\'{o}n se documenta estudio por estudio en el Anexo~\ref{ap:limite}.
 
 \subsection{Proceso de selecci\'{o}n}
 
-Tras eliminar duplicados en Parsif.al, dos revisores (\RevisoresCribado) examinaron de forma independiente los t\'{i}tulos y res\'{u}menes, y luego los textos completos, aplicando los criterios de la Tabla~\ref{tab:criterios}. Las discrepancias se resolvieron por consenso y, de persistir, con un tercer revisor (\RevisorTercero). El acuerdo entre revisores se midi\'{o} con el coeficiente kappa de Cohen~\cite{cohen1960coefficient}: $\kappa$~=~\KappaTA en t\'{i}tulo y resumen, y $\kappa$~=~\KappaTC en texto completo. Los motivos de exclusi\'{o}n a texto completo se registraron con el c\'{o}digo del criterio correspondiente (Figura~\ref{fig:prisma}).
+Los registros exportados de las cinco bases se unificaron y se deduplicaron con un script (coincidencia de DOI o de t\'{i}tulo normalizado con a\~{n}o igual o contiguo), cuyo registro de duplicados forma parte del material suplementario; los registros \'{u}nicos se importaron en Parsif.al. Antes del cribado completo, los dos revisores (\RevisoresCribado) calibraron la aplicaci\'{o}n de los criterios con una muestra aleatoria de 50 registros ($\kappa$~=~\KappaPiloto); los desacuerdos se discutieron y se precisaron las definiciones del manual. Despu\'{e}s, ambos examinaron de forma independiente, en hojas separadas, los t\'{i}tulos y res\'{u}menes y luego los textos completos. En t\'{i}tulo y resumen se excluy\'{o} solo cuando el incumplimiento era claro; los casos dudosos pasaron a texto completo. Cada exclusi\'{o}n a texto completo se registr\'{o} con su criterio y con la cita del art\'{i}culo que la justifica, y la decisi\'{o}n de consenso de cada registro se consign\'{o} en Parsif.al. Las discrepancias se resolvieron por consenso y, de persistir, con un tercer revisor (\RevisorTercero). El acuerdo entre revisores se midi\'{o} con el coeficiente kappa de Cohen~\cite{cohen1960coefficient}: $\kappa$~=~\KappaTA en t\'{i}tulo y resumen, y $\kappa$~=~\KappaTC en texto completo. Los motivos de exclusi\'{o}n a texto completo se registraron con el c\'{o}digo del criterio correspondiente (Figura~\ref{fig:prisma}).
 
 \subsection{Extracci\'{o}n de datos}
 
@@ -378,7 +379,7 @@ La Figura~\ref{fig:prisma} resume el proceso de selecci\'{o}n seg\'{u}n PRISMA 2
 \node[caja, below=0.7cm of crib] (bus) {Informes buscados a texto completo\\($n=\Pbuscados$)};
 \node[excl, right=0.5cm of bus] (norec) {Informes no recuperados ($n=\PnoRecuperados$)};
 \node[caja, below=0.7cm of bus] (eleg) {Informes evaluados para elegibilidad\\($n=\Pevaluados$)};
-\node[excl, right=0.5cm of eleg] (extc) {Informes excluidos ($n=\PexclTC$):\\CE-2 no es tr\'{a}fico vehicular ($n=\PexclCEdos$)\\CE-3 solo pron\'{o}stico ($n=\PexclCEtres$)\\CE-4 sin DL principal ($n=\PexclCEcuatro$)\\CE-5 tipo de documento ($n=\PexclCEcinco$)\\CI-6 sin evaluaci\'{o}n de la detecci\'{o}n ($n=\PexclCIseis$)\\CE-6 informaci\'{o}n insuficiente ($n=\PexclCEseis$)};
+\node[excl, right=0.5cm of eleg] (extc) {Informes excluidos ($n=\PexclTC$):\\CE-2 no es tr\'{a}fico vehicular ($n=\PexclCEdos$)\\CE-3 solo pron\'{o}stico ($n=\PexclCEtres$)\\CE-4 sin DL principal ($n=\PexclCEcuatro$)\\CE-5 tipo de documento ($n=\PexclCEcinco$)\\CI-6 sin evaluaci\'{o}n de la detecci\'{o}n ($n=\PexclCIseis$)\\CE-6 informaci\'{o}n insuficiente ($n=\PexclCEseis$)\\Otros: CE-1, CI-2, CI-3 ($n=\PexclOtros$)};
 \node[caja, below=1.6cm of eleg] (inc) {\textbf{Estudios incluidos en la revisi\'{o}n ($n=\Nestudios$)}};
 \node[otro, left=0.4cm of eleg] (otros) {Otros m\'{e}todos: b\'{u}squeda v1 en ACM DL a texto completo ($n=\POtrosIdentificados$; incluidos $n=\POtrosIncluidos$)};
 \draw[flecha] (id) -- (crib);
