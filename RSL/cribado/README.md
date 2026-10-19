@@ -80,7 +80,7 @@ Entra a cada base **desde la biblioteca virtual de la UPeU**, para tener acceso 
 
 ### 2.1 Scopus
 1. *Search* → *Advanced document search*.
-2. Borra lo que haya y pega la cadena de la sección **«## Scopus»**. Esa cadena ya incluye los filtros de año, tipo e idioma → *Search*.
+2. Borra lo que haya y pega la cadena de la sección **«## Scopus»**. Debe empezar con `TITLE-ABS-KEY` (si pegas la cadena general sin eso, Scopus busca en todos los campos y salen más de 100 000 resultados). Esa cadena ya incluye los filtros de año, tipo e idioma → *Search*.
 3. Anota el **número de resultados** (por ejemplo, «312 documents found»).
 4. Toma una **captura de pantalla** (tecla Windows + Shift + S) y guárdala en `RSL\suplementos\capturas_busqueda\Scopus.png`.
 5. Marca la casilla *All* → *Export* → **CSV** → marca todo, sobre todo **«Abstract & keywords»** → *Export*.
@@ -99,7 +99,7 @@ Entra a cada base **desde la biblioteca virtual de la UPeU**, para tener acceso 
 2. Filtra: *Year* 2020–2026; *Content Type*: Journals y Conferences.
 3. Anota el número de resultados y toma la captura (`IEEE_1.png`).
 4. *Select All on Page* → **Export** → pestaña *Results* → **CSV** → *Export*. Si hay varias páginas, cambia a 100 resultados por página y exporta cada página.
-5. Repite todo con la **Consulta 2** (`IEEE_2.png`).
+5. Repite todo con la **Consulta 2** (`IEEE_2.png`) y la **Consulta 3** (`IEEE_3.png`).
 6. Mueve todos los CSV a `RSL\cribado\exportaciones\IEEE\`.
 
 ### 2.4 ScienceDirect
@@ -107,7 +107,7 @@ Entra a cada base **desde la biblioteca virtual de la UPeU**, para tener acceso 
 2. Filtra: *Years* 2020–2026; *Article type*: Research articles.
 3. Anota el número de resultados y toma la captura (`SD_1.png`).
 4. Marca la casilla de selección (arriba) → *Export* → **Export citation to RIS**. ScienceDirect exporta **por página**: muestra 100 por página y repite en cada una.
-5. Repite con las **Consultas 2 y 3**.
+5. Repite con las **Consultas 2, 3, 4 y 5**.
 6. Mueve todos los archivos a `RSL\cribado\exportaciones\ScienceDirect\`.
 
 ### 2.5 ACM Digital Library
@@ -123,8 +123,8 @@ Abre `RSL\cribado\exportaciones\fechas_busqueda.csv` con el Bloc de notas y comp
 base,fecha,resultados_en_pantalla,responsable,observaciones
 Scopus,20/10/2026,312,W. Mayta,
 WoS,20/10/2026,198,W. Mayta,
-IEEE,20/10/2026,240,W. Mayta,consulta 1 = 180; consulta 2 = 60
-ScienceDirect,21/10/2026,150,W. Mayta,consultas 1+2+3
+IEEE,20/10/2026,240,W. Mayta,consulta 1 = 150; consulta 2 = 60; consulta 3 = 30
+ScienceDirect,21/10/2026,150,W. Mayta,suma de las consultas 1 a 5
 ACM,21/10/2026,95,W. Mayta,
 ```
 - La fecha va como **dd/mm/aaaa**.

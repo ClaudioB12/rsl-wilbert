@@ -17,18 +17,20 @@ import unicodedata
 import subprocess
 from pathlib import Path
 
-# Bloques de la cadena v2 (ver cadenas_busqueda.txt). Los comodines (*) se traducen a \w*.
+# Bloques de la cadena v2.1 (ver cadenas_busqueda.txt). Los comodines (*) se traducen a \w*.
 BLOQUES = {
-    "A": [r"\banomal\w*", r"\babnormal\w*", r"\boutlier\w*", r"incident detection", r"accident detection",
+    "A": [r"\banomal\w*", r"\babnormal\w*", r"outlier detection", r"incident detection", r"accident detection",
           r"accident (prediction|anticipation)", r"road closure\w*", r"dangerous driving", r"near[- ]accident\w*",
           r"near[- ]miss\w*", r"extreme events?"],
     "B": [r"deep learning", r"deep neural", r"neural networks?", r"\blstm", r"\bgru\b", r"\bcnns?\b",
           r"convolutional", r"autoencoders?", r"transformers?", r"graph neural", r"self-attention",
           r"attention mechanism"],
-    "C": [r"road traffic", r"urban traffic", r"vehicular traffic", r"highway traffic", r"freeway traffic",
-          r"traffic flow", r"traffic videos?", r"traffic surveillance", r"traffic cameras?",
-          r"intelligent transportation", r"transportation networks?", r"\bexpressways?", r"\bhighways?",
-          r"\bfreeways?", r"\bvehicles?\b", r"road networks?", r"\btaxis?\b", r"traffic (events?|scenarios?|incidents?|accidents?|anomal\w*)"],
+    "C": [r"(road|urban|vehicular|highway|freeway|expressway) traffic", r"traffic flows?", r"traffic speed",
+          r"traffic volumes?", r"traffic data", r"traffic monitoring", r"traffic videos?", r"traffic surveillance",
+          r"traffic cameras?", r"traffic scenes?", r"traffic scenarios?", r"traffic events?", r"traffic incidents?",
+          r"traffic accidents?", r"traffic anomal\w*", r"traffic congestion", r"road accidents?", r"road closures?",
+          r"intelligent transportation", r"transportation networks?", r"road networks?", r"vehicle trajector\w*",
+          r"vehicle behavio\w*", r"driving behavio\w*", r"\btaxi\w*"],
 }
 
 

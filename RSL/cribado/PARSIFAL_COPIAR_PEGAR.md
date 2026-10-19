@@ -83,14 +83,28 @@ RQ6: ¿Contra qué líneas base se comparan los modelos de Deep Learning y qué 
 
 | Keyword (copia esto) | Synonyms (copia esto) |
 |---|---|
-| `anomaly detection` | `anomal*, abnormal*, outlier*, incident detection, accident detection, accident prediction, accident anticipation, road closure, dangerous driving, near-accident, near-miss, extreme event` |
+| `anomaly detection` | `anomal*, abnormal*, outlier detection, incident detection, accident detection, accident prediction, accident anticipation, road closure, dangerous driving, near-accident, near-miss, extreme event` |
 | `deep learning` | `deep neural, neural network*, LSTM, GRU, CNN, convolutional, autoencoder*, transformer*, graph neural, self-attention, attention mechanism` |
-| `vehicular traffic` | `road traffic, urban traffic, highway traffic, freeway traffic, traffic flow, traffic video, traffic surveillance, traffic camera, intelligent transportation, transportation network, expressway, highway, freeway, vehicle, road network, taxi, traffic event, traffic scenario, traffic incident, traffic accident, traffic anomaly` |
+| `vehicular traffic` | `road traffic, urban traffic, highway traffic, freeway traffic, expressway traffic, traffic flow, traffic speed, traffic volume, traffic data, traffic monitoring, traffic video, traffic surveillance, traffic camera, traffic scene, traffic scenario, traffic event, traffic incident, traffic accident, traffic anomaly, traffic congestion, road accident, road closure, intelligent transportation, transportation network, road network, vehicle trajectory, vehicle behavior, driving behavior, taxi` |
 
-### 2.5 Search String (cadena genérica)
+### 2.5 Search String → «Base String» (cadena genérica v2.1)
+Si ya habías pegado la anterior, **reemplázala** por esta:
 ```
-(anomal* OR abnormal* OR outlier* OR "incident detection" OR "accident detection" OR "accident prediction" OR "accident anticipation" OR "road closure*" OR "dangerous driving" OR "near-accident*" OR "near-miss*" OR "extreme event*") AND ("deep learning" OR "deep neural" OR "neural network*" OR LSTM OR GRU OR CNN OR convolutional OR autoencoder* OR transformer* OR "graph neural" OR "self-attention" OR "attention mechanism") AND ("road traffic" OR "urban traffic" OR "vehicular traffic" OR "highway traffic" OR "freeway traffic" OR "traffic flow" OR "traffic video*" OR "traffic surveillance" OR "traffic camera*" OR "intelligent transportation" OR "transportation network*" OR expressway* OR highway* OR freeway* OR vehicle* OR "road network*" OR taxi* OR "traffic event*" OR "traffic scenario*" OR "traffic incident*" OR "traffic accident*" OR "traffic anomal*")
+(anomal* OR abnormal* OR "outlier detection" OR "incident detection" OR "accident detection" OR "accident prediction" OR "accident anticipation" OR "road closure*" OR "dangerous driving" OR "near-accident*" OR "near-miss*" OR "extreme event*") AND ("deep learning" OR "deep neural" OR "neural network*" OR LSTM OR GRU OR CNN OR convolutional OR autoencoder* OR transformer* OR "graph neural" OR "self-attention" OR "attention mechanism") AND ("road traffic" OR "urban traffic" OR "vehicular traffic" OR "highway traffic" OR "freeway traffic" OR "expressway traffic" OR "traffic flow*" OR "traffic speed" OR "traffic volume*" OR "traffic data" OR "traffic monitoring" OR "traffic video*" OR "traffic surveillance" OR "traffic camera*" OR "traffic scene*" OR "traffic scenario*" OR "traffic event*" OR "traffic incident*" OR "traffic accident*" OR "traffic anomal*" OR "traffic congestion" OR "road accident*" OR "road closure*" OR "intelligent transportation" OR "transportation network*" OR "road network*" OR "vehicle trajector*" OR "vehicle behavio*" OR "driving behavio*" OR taxi*)
 ```
+
+### 2.5.1 Cadenas específicas por base (botón «Add source-specific search string»)
+Pulsa el botón una vez por base, elige la fuente y pega la cadena de su sección en `RSL\suplementos\cadenas_busqueda.txt`:
+
+| Fuente | Sección del archivo |
+|---|---|
+| Scopus | «## Scopus» (empieza con `TITLE-ABS-KEY`) |
+| Web of Science | «## Web of Science» (empieza con `TS=`) |
+| IEEE Xplore | «## IEEE Xplore»: pega las **Consultas 1, 2 y 3**, una debajo de otra |
+| ScienceDirect | «## ScienceDirect»: pega las **Consultas 1 a 5**, una debajo de otra |
+| ACM Digital Library | «## ACM Digital Library» |
+
+> **No uses la búsqueda automática de Parsif.al** (la integración con Scopus y ScienceDirect). Haz cada búsqueda en la web de la base y exporta, como indica la Parte 2 de la guía. Así obtienes el número exacto de resultados, la captura de pantalla y los resúmenes.
 
 ### 2.6 Sources
 Agrega estas cinco. Si en tu proyecto aparecen MDPI o Taylor & Francis, **quítalos**.
