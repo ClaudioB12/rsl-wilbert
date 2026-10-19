@@ -155,6 +155,8 @@ python cribado\scripts\02_deduplicar.py
 
 ## PARTE 4 — Cribado por título y resumen (la parte larga; con el asistente, 1 a 3 días)
 
+> **Atajo con Parsif.al:** si quieres revisar directamente en Parsif.al con la propuesta ya cargada (estado, criterio y comentario de cada estudio), sigue **`PARSIFAL_CARGAR_DECISIONES.md`** (scripts 09 y 10) en lugar de las secciones 4.2 y 4.3.
+
 ### 4.1 Antes de empezar
 Lee completo `MANUAL_CRIBADO.md` (unos 20 minutos). Ten abierta la hoja «Criterios» del Excel mientras trabajas.
 

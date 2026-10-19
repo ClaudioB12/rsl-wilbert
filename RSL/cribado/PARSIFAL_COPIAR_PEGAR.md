@@ -244,6 +244,8 @@ Esto se hace **después** del paso 2 de la guía (los scripts 01 y 02).
 Estos archivos ya vienen **sin duplicados**. Cada estudio lleva su ID (R0001…) en el campo *note*, para encontrarlo luego.
 
 ### 3.2 Study Selection
+> Para cargar las decisiones automáticamente (sin marcarlas una por una), usa `PARSIFAL_CARGAR_DECISIONES.md`.
+
 Se llena **al final del cribado**, con `RSL\cribado\salida\06_estado_para_parsifal.csv` (ábrelo en Excel):
 - `Accepted` → márcalo **Accepted**.
 - `Rejected` → márcalo **Rejected**, y en el comentario pega el criterio:
