@@ -105,6 +105,12 @@ def main():
         v["AcuerdoIATA"] = f"{round(100 * a['acuerdo'])}~\\%"
         v["KappaIATA"] = coma(a["kappa"]) if a["kappa"] is not None else "---"
         v["NCambiosIATA"] = str(a["decisiones_cambiadas"])
+    v["NexclOA"] = str(sum(1 for x in ta.values() if x["decision"] == "Excluir" and x["criterio"] == "CI-2"))
+    if (SALIDA / "11_openalex_cache.json").exists():
+        fechas_oa = [x.get("fecha") for x in cargar_json(SALIDA / "11_openalex_cache.json", {}).values() if x.get("fecha")]
+        if fechas_oa:
+            f = fecha(max(fechas_oa))
+            v["FechaOA"] = f.strftime("%d/%m/%Y") if f else max(fechas_oa)
     if (SALIDA / "01_fuera_de_filtros.csv").exists():
         v["NFueraFiltros"] = str(len(leer_csv(SALIDA / "01_fuera_de_filtros.csv")))
     if "calidad" in fiab:

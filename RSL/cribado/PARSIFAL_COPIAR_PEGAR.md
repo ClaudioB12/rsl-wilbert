@@ -125,7 +125,7 @@ En cada fuente, en el campo de la cadena (*search string* de la fuente), pega la
 CI-1: Artículo de revista o de conferencia revisado por pares.
 ```
 ```
-CI-2: En inglés o español, con acceso al texto completo.
+CI-2: En inglés o español, con texto completo en acceso abierto (gold, diamond, hybrid, bronze o green).
 ```
 ```
 CI-3: Publicado entre 2020 y 2026.

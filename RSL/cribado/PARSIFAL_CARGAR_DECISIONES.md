@@ -40,7 +40,7 @@ Deben aparecer `Scopus.bib`, `WoS.bib`, `IEEE.bib`, `ScienceDirect.bib`, `ACM.bi
 
 ## Paso 1. Quitar de Parsif.al lo que importaste antes
 
-Lo que importaste antes (1124 estudios) se hizo con el filtro *Open Access*, que **no** es un criterio del protocolo. Por eso hay que reemplazarlo.
+Lo que importaste antes (1124 estudios) tiene duplicados, y el filtro *Open Access* se aplicó solo en Scopus e IEEE, no en las otras bases. Se reemplaza por los registros ya deduplicados. El acceso abierto se aplica después, **igual para todas las bases**, en el Paso 3b. Así ningún artículo se queda sin contar en el PRISMA.
 
 1. En Parsif.al abre tu revisión → **Conducting → Study Selection**.
 2. Haz clic en **All Sources** (la primera pestaña).
@@ -77,6 +77,35 @@ CE-2: No trata de tráfico vehicular por carretera (tráfico de red, ...)
 ```
 
 El script elige el criterio por ese código (CE-1, CE-2, CE-3, CE-4, CE-5, CI-2…). Si a un criterio le falta el código, añádeselo. Si no, ese criterio solo quedará escrito en el comentario.
+
+---
+
+## Paso 3b. Clasificar el acceso abierto (obligatorio, ≈ 5 minutos, necesita internet)
+
+Tu protocolo exige que **todos** los artículos sean de acceso abierto (criterio **CI-2**). En la búsqueda, ese filtro solo se puso en Scopus e IEEE. WoS, ScienceDirect y ACM no lo tienen o no lo exportan. Por eso se verifica **artículo por artículo**, con la misma regla para todas las bases:
+
+- **Es de acceso abierto** si OpenAlex (que integra Unpaywall) o la propia base (Scopus, WoS, IEEE) dicen que el texto completo se puede leer gratis: *gold*, *diamond*, *hybrid*, *bronze* o *green*.
+- **No es de acceso abierto:** pasa a **Excluir — CI-2**, con el comentario «No es de acceso abierto (…)». Si ya estaba excluido por CE-1, CE-5 o CI-3, conserva ese criterio, porque en el árbol van antes.
+- **Por verificar:** no hay datos, casi siempre registros de ACM sin DOI. Se revisan a mano.
+
+En CMD, desde la carpeta `RSL`:
+
+```bat
+cd "C:\Users\mayta\OneDrive\Documents\Cursos\2026-2\Investigación IV\rsl-wilbert\RSL"
+python cribado\scripts\11_acceso_abierto.py --correo TU_CORREO@gmail.com --aplicar
+python cribado\scripts\09_generar_script_parsifal.py
+```
+
+- El primer comando consulta los 1240 registros (verás `… 50 de 1240`, `… 100 de 1240`…). Si se corta el internet, vuelve a ejecutarlo: continúa donde quedó. Al final muestra cuántos son abiertos por base y aplica CI-2 en `TA.xlsx`.
+- El segundo vuelve a generar `cargar_en_parsifal.js`, ya con el acceso abierto incluido.
+- En `RSL\cribado\salida\11_acceso_abierto.csv` queda, para cada artículo, si es abierto, de qué tipo y el **enlace al PDF gratuito**. Te servirá para descargar los textos completos.
+
+**Los «Por verificar»:** en `TA.xlsx` filtra la columna «Acceso abierto» por «Por verificar» y, para cada uno:
+
+1. Busca el título en Google Scholar y mira «Todas las versiones».
+2. Si encuentras un PDF gratuito legal (de la editorial, arXiv con la versión publicada o un repositorio institucional), déjalo como está.
+3. Si no lo encuentras, pon **Excluir** con el criterio **CI-2** y el comentario «No es de acceso abierto (verificado a mano)».
+4. Si cambiaste alguno, vuelve a ejecutar `09_generar_script_parsifal.py`.
 
 ---
 

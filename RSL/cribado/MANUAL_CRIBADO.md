@@ -11,7 +11,7 @@ Los criterios no son arbitrarios: cada uno se deriva de un componente del protoc
 | Código | Criterio | Fundamento | Se puede juzgar en… |
 |---|---|---|---|
 | CI-1 / CE-5 | Estudio primario revisado por pares (revista o conferencia). Se excluyen revisiones, surveys, capítulos, tesis, resúmenes, pósteres, editoriales y preprints | Calidad mínima de la evidencia; una RSL sintetiza estudios **primarios** | Título y resumen |
-| CI-2 | Inglés o español, con texto completo accesible | Viabilidad: la extracción requiere leer el texto completo | Título y resumen (idioma) / texto completo (acceso) |
+| CI-2 | Inglés o español, con texto completo en **acceso abierto** | Viabilidad y reproducibilidad: la extracción requiere el texto completo y cualquier lector debe poder verificarla sin suscripción | Título y resumen (idioma y acceso abierto, con el script 11) |
 | CI-3 | Publicado entre 2020 y 2026 | Contexto (C) del PICOC: periodo del DL reciente, que las revisiones previas no cubren | Título y resumen |
 | CI-4 / CE-2 | Tráfico **vehicular por carretera** (urbano o autopista), observado con sensores, trayectorias, datos de movilidad o video | Población (P) del PICOC; RQ3 y RQ4 | Título y resumen |
 | CE-3 | Debe **detectar o anticipar anomalías**, no solo pronosticar o clasificar el tráfico | Resultado (O) y objetivo de la RSL | Título y resumen (si es claro) / texto completo |
@@ -30,7 +30,7 @@ Se recorre de arriba abajo. **La primera pregunta que se responda «Sí» determ
  1. ¿Es el mismo estudio que otro registro ya visto (o una versión menos completa)? ...... Sí → Excluir CE-1
  2. ¿Es revisión/survey, capítulo, tesis, resumen, póster, editorial o preprint? .......... Sí → Excluir CE-5
  3. ¿Se publicó fuera de 2020-2026? .................................................... Sí → Excluir CI-3
- 4. ¿Está en un idioma distinto de inglés o español? .................................... Sí → Excluir CI-2
+ 4. ¿Idioma distinto de inglés/español, o NO es de acceso abierto? ...................... Sí → Excluir CI-2
  5. ¿El objeto de estudio NO es el tráfico vehicular por carretera? ....................... Sí → Excluir CE-2
  6. ¿NO detecta ni anticipa anomalías del tráfico (solo pronóstico, clasificación, riesgo)?  Sí → Excluir CE-3
  7. ¿La detección NO usa Deep Learning como método principal? ............................ Sí → Excluir CE-4
@@ -65,8 +65,13 @@ Se recorre de arriba abajo. **La primera pregunta que se responda «Sí» determ
 ### CI-3 — Periodo
 Se usa el **año de publicación de la versión final** (volumen o número). Si el artículo salió en línea en 2019 y en un número de 2020, cuenta como 2020. El año 2026 se incluye hasta la fecha de búsqueda.
 
-### CI-2 — Idioma y acceso
-Inglés o español. La falta de acceso **no** es CI-2 en título y resumen: el artículo pasa y, si a texto completo no se consigue tras intentarlo con la biblioteca UPeU, Google Scholar, ResearchGate y un correo al autor, se marca **«No recuperado»**. PRISMA lo reporta en una casilla aparte.
+### CI-2 — Idioma y acceso abierto
+- **Idioma:** inglés o español.
+- **Acceso abierto:** el texto completo debe poder leerse legalmente sin suscripción (*gold*, *diamond*, *hybrid*, *bronze* o *green*: una versión del autor en un repositorio también cuenta).
+- **Cómo se verifica:** con el script `11_acceso_abierto.py`, que consulta OpenAlex (integra Unpaywall) y el indicador de acceso abierto de Scopus, WoS e IEEE. Es de acceso abierto si **cualquiera** de esas fuentes lo indica. Los registros sin datos quedan «Por verificar» y se revisan a mano (sitio de la editorial, Google Scholar → «Todas las versiones»).
+- **Por qué se verifica registro por registro:** el filtro «Open Access» de las bases no es uniforme (ScienceDirect y ACM no lo exportan), así que se aplica la misma regla a todas las bases.
+- **Orden:** si un registro ya se excluye por CE-1, CE-5 o CI-3, conserva ese criterio; si no, la falta de acceso abierto se registra como CI-2.
+- A texto completo, si el enlace abierto no funciona y no aparece otra versión gratuita, se marca **«No recuperado»**.
 
 ### CE-2 — No es tráfico vehicular por carretera
 **Sí es tráfico vehicular (pasa):**
