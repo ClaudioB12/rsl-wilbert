@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """PASO 6. Calcula las cifras del diagrama PRISMA y actualiza los datos del manuscrito.
 
-Requisitos: etapas TA y TC cerradas (04_consolidar.py --cerrar) y
+Requisitos: etapas TA y TC cerradas (04_cerrar_etapa.py) y
             cribado/exportaciones/fechas_busqueda.csv completo.
 Uso (desde la carpeta RSL):   python cribado/scripts/06_resultados_prisma.py
 
@@ -58,10 +58,10 @@ def main():
     asegurar_utf8_consola()
     todos = leer_csv(SALIDA / "01_registros_todos.csv")
     unicos = leer_csv(SALIDA / "02_registros_unicos.csv")
-    ta, tc = cargar_json(SALIDA / "consenso_TA.json"), cargar_json(SALIDA / "consenso_TC.json")
+    ta, tc = cargar_json(SALIDA / "decision_TA.json"), cargar_json(SALIDA / "decision_TC.json")
     if not ta or not tc:
-        raise SystemExit("Faltan etapas cerradas: ejecuta 04_consolidar.py --etapa TA --cerrar y --etapa TC --cerrar.")
-    kappas = cargar_json(SALIDA / "kappa.json", {})
+        raise SystemExit("Faltan etapas cerradas: ejecuta 04_cerrar_etapa.py --etapa TA y --etapa TC.")
+    fiab = cargar_json(SALIDA / "fiabilidad.json", {})
     fechas = {f["base"]: f for f in leer_csv(EXPORTACIONES / "fechas_busqueda.csv")}
 
     por_base = Counter(r["base"] for r in todos)
@@ -87,10 +87,21 @@ def main():
     for c, macro in MACRO_CRITERIO.items():
         v[macro] = str(crit.get(c, 0))
     v["PexclOtros"] = str(sum(n for c, n in crit.items() if c not in MACRO_CRITERIO))
-    for etapa, macro in (("TA", "KappaTA"), ("TC", "KappaTC"), ("calidad", "KappaCalidad"), ("piloto", "KappaPiloto")):
-        k = kappas.get(etapa, {}).get("kappa")
-        if k not in (None, "-"):
+    for clave, macro in (("recribado_TA", "KappaRecribadoTA"), ("recribado_TC", "KappaRecribadoTC"),
+                         ("asistente_TA", "KappaAsistenteTA")):
+        k = fiab.get(clave, {}).get("kappa")
+        if k is not None:
             v[macro] = coma(k)
+    for clave, macro in (("recribado_TA", "NRecribadoTA"), ("recribado_TC", "NRecribadoTC")):
+        if clave in fiab:
+            v[macro] = str(fiab[clave]["n"])
+    if "asistente_TA" in fiab:
+        a = fiab["asistente_TA"]
+        v["AcuerdoAsistenteTA"] = f"{round(100 * a['acuerdo'])}~\\%"
+        v["NExclRegla"] = str(a["exclusiones_regla"])
+        v["NExclReglaConfirmadas"] = str(a["exclusiones_regla_confirmadas"])
+    if "calidad" in fiab:
+        v["AcuerdoCalidad"] = f"{round(100 * fiab['calidad']['acuerdo'])}~\\%"
 
     # Incluidos frente al corpus actual
     incluidos = {i for i, x in tc.items() if x["decision"] == "Incluir"}
@@ -152,9 +163,8 @@ def main():
         res.append(f"   {c} {DESCRIPCION_CRITERIO.get(c, '')[:55]:<55} {crit[c]:>4}")
     res += [f"{'Incluidos desde bases':<22} {len(incluidos):>6}", f"{'Otros métodos':<22} {len(otros):>6}  ({', '.join(otros)})",
             f"{'TOTAL INCLUIDOS':<22} {len(incluidos) + len(otros):>6}", ""]
-    for etapa in ("piloto", "TA", "TC", "calidad"):
-        if etapa in kappas:
-            res.append(f"Kappa {etapa:<8} {kappas[etapa]}")
+    for clave, valor in fiab.items():
+        res.append(f"{clave:<16} {valor}")
     res += ["", f"Macros actualizadas en datos_busqueda.tex: {len(hechos)}"]
     if avisos:
         res += ["", "AVISOS (resolver antes de enviar):"] + ["  - " + a for a in avisos]

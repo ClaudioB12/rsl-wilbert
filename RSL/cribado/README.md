@@ -1,343 +1,383 @@
-# Guía completa del cribado (búsqueda → Parsif.al → cribado → PRISMA → Overleaf)
+# Guía completa — de cero a la RSL terminada (autor único: Wilbert A. Mayta Arotaype)
 
-Esta guía se sigue **parte por parte, en orden**. Cada parte dice **quién** la hace, **qué** se hace, **qué comando** se ejecuta y **qué se sube a GitHub**. Antes de cribar, lean **`MANUAL_CRIBADO.md`**: ahí están los criterios con su fundamento y ejemplos.
+Esta guía se sigue **en orden**, sin saltarse partes. Cada parte dice qué hacer, qué comando copiar y qué revisar. Si algo sale distinto de lo que dice la guía, **copia lo que salió en pantalla y pégamelo en el chat**.
 
-**Roles sugeridos** (ajústenlos, pero que R1 y R2 no cambien durante todo el proceso):
+**Documentos que acompañan esta guía:**
 
-| Rol | Persona | Hace |
-|---|---|---|
-| Coordinador (R3) | Wrangler | Búsqueda, scripts, Parsif.al y desempates |
-| Revisor 1 (R1) | Wilbert | Cribado independiente y calidad |
-| Revisor 2 (R2) | Ender | Cribado independiente y calidad |
+| Documento | Para qué |
+|---|---|
+| `MANUAL_CRIBADO.md` | Criterios de inclusión y exclusión con su fundamento y ejemplos. Léelo **antes** de cribar |
+| `PARSIFAL_COPIAR_PEGAR.md` | Todos los textos de Parsif.al listos para Ctrl+C / Ctrl+V |
+| `..\suplementos\cadenas_busqueda.txt` | Cadenas de búsqueda exactas de cada base |
 
-Todos los comandos se ejecutan en la consola de Windows (CMD) **desde la carpeta `RSL`** del repositorio:
+**Cómo te ayuda el asistente (los scripts):**
+- **Título y resumen:** pre-clasifica cada registro como «Excluir (regla)», «Probable incluir» o «Revisar». Solo propone exclusiones por criterios objetivos (survey, año, idioma o dominio claramente no vial), que tú verificas. Todo lo demás lo decides tú, ayudado por el motivo que te muestra.
+- **Texto completo:** lee cada PDF y te muestra, con página, las frases donde aparecen las métricas de detección, lo que proponen los autores y los términos de Deep Learning. Así no tienes que leer el artículo entero para encontrar la evidencia, pero **la decisión es tuya**.
+- **PRISMA:** calcula todas las cifras y las escribe en el manuscrito.
+
+> **Por qué no decide todo solo:** el ingeniero pidió que la selección sea verificable y no sesgada. Un script que excluye sin que nadie lo verifique es justo lo que un revisor rechazaría. Con este esquema, el asistente te ahorra la mayor parte del tiempo, cada decisión tiene una persona responsable y el artículo puede reportar cuánto coincidieron tú y el asistente.
+
+---
+
+## PARTE 0 — Preparar tu computadora (una sola vez, ~20 min)
+
+### 0.1 Actualizar el repositorio
+Abre **CMD** (tecla Windows → escribe `cmd` → Enter) y copia:
+```bat
+cd "C:\Users\mayta\OneDrive\Documents\Cursos\2026-2\Investigación IV\rsl-wilbert"
+git checkout claude/loving-volta-papmwq
+git pull
+```
+
+### 0.2 Instalar Python
+1. Ve a https://www.python.org/downloads/ → *Download Python 3.x*.
+2. Al instalar, **marca la casilla «Add python.exe to PATH»** (abajo, en la primera pantalla) → *Install Now*.
+3. Cierra el CMD, ábrelo de nuevo y comprueba:
+```bat
+python --version
+```
+Debe decir `Python 3.x.x`. Si dice que no se reconoce el comando, prueba con `py --version`. Si funciona `py`, usa **`py` en lugar de `python`** en todos los comandos de esta guía.
+
+### 0.3 Instalar las dos librerías
+```bat
+pip install openpyxl pypdf
+```
+
+### 0.4 Ir a la carpeta de trabajo y probar
+Todos los comandos de la guía se ejecutan **desde la carpeta `RSL`**:
 ```bat
 cd "C:\Users\mayta\OneDrive\Documents\Cursos\2026-2\Investigación IV\rsl-wilbert\RSL"
+python cribado\scripts\01_unificar_exportaciones.py
 ```
-Si `python` no funciona, usen `py` en su lugar (por ejemplo, `py cribado\scripts\01_unificar_exportaciones.py`).
+Si responde *«No se encontraron exportaciones…»*, **todo está bien instalado**: aún no hay datos.
+
+### 0.5 Rutina de Git (cada vez que termines una parte)
+```bat
+cd "C:\Users\mayta\OneDrive\Documents\Cursos\2026-2\Investigación IV\rsl-wilbert"
+git add RSL
+git commit -m "Describe lo que hiciste"
+git push
+```
 
 ---
 
-## Parte 0. Preparación (una vez, cada integrante)
+## PARTE 1 — Crear el proyecto en Parsif.al: Planning (~40 min)
 
-1. Instalar **Python 3** (https://www.python.org, marcando *Add Python to PATH*) y luego:
-   ```bat
-   pip install openpyxl
-   ```
-2. Actualizar el repositorio:
-   ```bat
-   git checkout claude/loving-volta-papmwq
-   git pull
-   ```
-3. Comprobar que todo funciona:
-   ```bat
-   python cribado\scripts\01_unificar_exportaciones.py
-   ```
-   Si dice *«No se encontraron exportaciones…»*, la instalación está bien: aún no hay datos.
+Abre `PARSIFAL_COPIAR_PEGAR.md` y sigue sus secciones **1 y 2**: crear la revisión, objetivos, PICOC, preguntas, palabras clave, cadena, fuentes, criterios, lista de calidad y formulario de extracción. Todo es copiar y pegar.
 
-**Rutina de Git durante todo el proceso:**
-- antes de trabajar: `git pull`
-- al terminar: `git add RSL` → `git commit -m "qué hiciste"` → `git pull` → `git push`
+Al terminar, en Parsif.al deben aparecer:
+- **5 fuentes**: Scopus, Web of Science, IEEE Xplore, ScienceDirect y ACM DL;
+- **12 criterios**: CI-1 a CI-6 y CE-1 a CE-6;
+- **8 preguntas de calidad**: QA1 a QA8.
 
 ---
 
-## Parte 1. Ejecutar la búsqueda y descargar los resultados (R3)
+## PARTE 2 — Hacer la búsqueda y descargar los resultados (~1 día)
 
-Las cadenas exactas están en `RSL\suplementos\cadenas_busqueda.txt`. Entren a cada base desde la **biblioteca virtual UPeU**, para tener acceso completo.
+**Hazlo todo el mismo día o en días seguidos:** la fecha de la última búsqueda se reporta en el artículo.
 
-Para **cada base**:
-1. Abrir la **búsqueda avanzada** y pegar la cadena de esa base.
-2. Aplicar los filtros indicados: años 2020–2026, artículo y conferencia, inglés o español.
-3. Anotar el **número de resultados que muestra la pantalla**.
-4. Tomar una **captura de pantalla** que muestre la cadena, los filtros y el número de resultados. Guardarla en `RSL\suplementos\capturas_busqueda\` (por ejemplo, `Scopus_2026-11-12.png`).
-5. **Exportar todos los resultados con el resumen** y guardar los archivos en la carpeta de la base:
+Entra a cada base **desde la biblioteca virtual de la UPeU**, para tener acceso completo. Abre `RSL\suplementos\cadenas_busqueda.txt` y, para cada base:
 
-| Base | Carpeta | Cómo exportar |
-|---|---|---|
-| Scopus | `cribado\exportaciones\Scopus\` | *Export* → **CSV**, marcando *Citation information*, *Bibliographical information* y *Abstract & keywords* |
-| Web of Science | `cribado\exportaciones\WoS\` | *Export* → **Tab delimited file**, *Full Record*. Máximo 1000 por vez: exportar en lotes (1–1000, 1001–2000…) |
-| IEEE Xplore | `cribado\exportaciones\IEEE\` | Seleccionar todo → *Export* → **CSV**. Son **dos consultas**: exportar las dos |
-| ScienceDirect | `cribado\exportaciones\ScienceDirect\` | Seleccionar todo → *Export* → **RIS**. Exporta por página: repetir en cada página. Son **tres consultas** |
-| ACM DL | `cribado\exportaciones\ACM\` | Seleccionar todo → *Export Citations* → **BibTeX**, página por página |
+### 2.1 Scopus
+1. *Search* → *Advanced document search*.
+2. Borra lo que haya y pega la cadena de la sección **«## Scopus»**. Esa cadena ya incluye los filtros de año, tipo e idioma → *Search*.
+3. Anota el **número de resultados** (por ejemplo, «312 documents found»).
+4. Toma una **captura de pantalla** (tecla Windows + Shift + S) y guárdala en `RSL\suplementos\capturas_busqueda\Scopus.png`.
+5. Marca la casilla *All* → *Export* → **CSV** → marca todo, sobre todo **«Abstract & keywords»** → *Export*.
+6. Mueve el archivo descargado a `RSL\cribado\exportaciones\Scopus\`.
 
-6. Llenar `cribado\exportaciones\fechas_busqueda.csv` (se puede abrir con Excel y guardar como CSV):
-   ```
-   base,fecha,resultados_en_pantalla,responsable,observaciones
-   Scopus,12/11/2026,312,Wrangler,
-   WoS,12/11/2026,198,Wrangler,lotes 1-198
-   IEEE,13/11/2026,240,Wrangler,consulta 1 = 180; consulta 2 = 60
-   ...
-   ```
-   La fecha va como **dd/mm/aaaa**. En IEEE y ScienceDirect, `resultados_en_pantalla` es la **suma** de sus consultas.
+### 2.2 Web of Science
+1. *Advanced search* → pega la cadena **«## Web of Science»** (empieza con `TS=`) → *Search*.
+2. A la izquierda, filtra: *Publication Years* 2020–2026; *Document Types*: Article y Proceeding Paper; *Languages*: English y Spanish.
+3. Anota el número de resultados y toma la captura (`WoS.png`).
+4. *Export* → **Tab delimited file** → *Records from*: 1 to 1000 → *Record Content*: **Full Record** → *Export*.
+5. Si hay más de 1000 resultados, repite con 1001 a 2000, y así sucesivamente.
+6. Mueve los archivos a `RSL\cribado\exportaciones\WoS\`.
 
-> **Es importante hacer todas las búsquedas el mismo día o en días seguidos.** La fecha de la última búsqueda es la que se reporta en el artículo.
+### 2.3 IEEE Xplore
+1. *Advanced Search* → pestaña **Command Search** → pega la **Consulta 1** de la sección «## IEEE Xplore» → *Search*.
+2. Filtra: *Year* 2020–2026; *Content Type*: Journals y Conferences.
+3. Anota el número de resultados y toma la captura (`IEEE_1.png`).
+4. *Select All on Page* → **Export** → pestaña *Results* → **CSV** → *Export*. Si hay varias páginas, cambia a 100 resultados por página y exporta cada página.
+5. Repite todo con la **Consulta 2** (`IEEE_2.png`).
+6. Mueve todos los CSV a `RSL\cribado\exportaciones\IEEE\`.
+
+### 2.4 ScienceDirect
+1. *Advanced search* → campo **«Title, abstract or author-specified keywords»** → pega la **Consulta 1** de la sección «## ScienceDirect» → *Search*.
+2. Filtra: *Years* 2020–2026; *Article type*: Research articles.
+3. Anota el número de resultados y toma la captura (`SD_1.png`).
+4. Marca la casilla de selección (arriba) → *Export* → **Export citation to RIS**. ScienceDirect exporta **por página**: muestra 100 por página y repite en cada una.
+5. Repite con las **Consultas 2 y 3**.
+6. Mueve todos los archivos a `RSL\cribado\exportaciones\ScienceDirect\`.
+
+### 2.5 ACM Digital Library
+1. *Advanced Search* → pega la cadena **«## ACM Digital Library»** (o arma los tres bloques en el formulario, en el campo *Abstract*) → *Search*.
+2. Filtra: *Publication Date* 2020–2026; *Content Type*: Research Article.
+3. Anota el número de resultados y toma la captura (`ACM.png`).
+4. *Select All* → **Export Citations** → **BibTeX** → *Download*. Si hay varias páginas, exporta cada una.
+5. Mueve los archivos a `RSL\cribado\exportaciones\ACM\`.
+
+### 2.6 Anotar fechas y conteos
+Abre `RSL\cribado\exportaciones\fechas_busqueda.csv` con el Bloc de notas y complétalo así (con tus números reales):
+```
+base,fecha,resultados_en_pantalla,responsable,observaciones
+Scopus,20/10/2026,312,W. Mayta,
+WoS,20/10/2026,198,W. Mayta,
+IEEE,20/10/2026,240,W. Mayta,consulta 1 = 180; consulta 2 = 60
+ScienceDirect,21/10/2026,150,W. Mayta,consultas 1+2+3
+ACM,21/10/2026,95,W. Mayta,
+```
+- La fecha va como **dd/mm/aaaa**.
+- En IEEE y ScienceDirect, el número es la **suma** de sus consultas.
+
+**Sube a GitHub** (Parte 0.5) con el mensaje `"Búsqueda v2 ejecutada"`.
 
 ---
 
-## Parte 2. Unir, contar y eliminar duplicados (R3)
+## PARTE 3 — Unir, quitar duplicados e importar en Parsif.al (~15 min)
 
 ```bat
 python cribado\scripts\01_unificar_exportaciones.py
 python cribado\scripts\02_deduplicar.py
 ```
 
-**Qué revisar en la pantalla:**
-- **Script 01:** «leídos» debe coincidir con «pantalla» en cada base. Si dice *NO COINCIDE*, falta exportar algún lote o una página: corríjanlo **antes** de seguir, porque el PRISMA exige el número exacto.
-- **Script 02:** «Conjunto de control». Los 21 estudios ya incluidos en la RSL deberían aparecer, **salvo S03 y S14**, que se declaran como «otros métodos». Si falta otro:
-  - revisen que se exportó todo;
-  - si de verdad la cadena no lo recupera, avísenme: hay que decidir si se ajusta la cadena o se declara en «otros métodos».
+**Revisa en la pantalla:**
+- **Script 01:** en cada base, «leídos» debe ser igual a «pantalla». Si dice **NO COINCIDE**, falta exportar una página o un lote: búscalo y vuelve a ejecutar.
+- **Script 02:** «Conjunto de control: 19 de 21 estudios incluidos aparecen». Lo esperado es que **solo falten S03 y S14**. Si falta otro, **pégame la salida**.
 
-**Qué se genera** en `cribado\salida\`:
+**Importar en Parsif.al:** sigue la sección **3.1** de `PARSIFAL_COPIAR_PEGAR.md`. Los archivos están en `RSL\cribado\salida\parsifal\`.
 
-| Archivo | Para qué |
-|---|---|
-| `01_registros_todos.csv` | Todos los registros (identificados por base) |
-| `02_registros_unicos.csv` | Registros únicos con su ID (R0001…), que es el que se usa en todo el cribado |
-| `02_duplicados.csv` | Evidencia de cada duplicado eliminado y con cuál coincidió |
-| `02_conjunto_control.csv` | En qué bases apareció cada estudio del corpus |
-| `parsifal\<Base>.bib` | Un archivo por base, **ya sin duplicados**, para importar en Parsif.al |
+**Pégame en el chat** lo que imprimieron los scripts 01 y 02: reviso contigo que la búsqueda esté completa antes de cribar.
 
-**Subir:** `git add RSL` → `git commit -m "Búsqueda v2 y deduplicación"` → `git pull` → `git push`.
+**Sube a GitHub** con el mensaje `"Deduplicación e importación a Parsif.al"`.
 
 ---
 
-## Parte 3. Preparar Parsif.al (R3)
+## PARTE 4 — Cribado por título y resumen (la parte larga; con el asistente, 1 a 3 días)
 
-Parsif.al es el **registro oficial** del protocolo y de las decisiones finales. Guarda **un solo estado por estudio**, no la decisión de cada revisor por separado. Por eso el cribado independiente se hace en las hojas Excel (Partes 4 a 6), y en Parsif.al se registra la **decisión de consenso** (Parte 7).
+### 4.1 Antes de empezar
+Lee completo `MANUAL_CRIBADO.md` (unos 20 minutos). Ten abierta la hoja «Criterios» del Excel mientras trabajas.
 
-1. En https://parsif.al creen un proyecto nuevo **«RSL v2 – Detección de anomalías en tráfico (DL)»**, o dupliquen el anterior. Agreguen a los otros dos como coautores (*Co-authors*).
-2. **Planning:**
-   - *Objectives*, *PICOC* y *Research Questions*: copien los de la v2 desde el manuscrito (Tabla 2 y RQ1–RQ6).
-   - *Keywords and Synonyms* y *Search String*: los bloques A, B y C de `cadenas_busqueda.txt`.
-   - *Sources*: **Scopus, Web of Science, IEEE Xplore, ScienceDirect y ACM Digital Library**. Quiten MDPI y Taylor & Francis. En cada fuente peguen su cadena exacta.
-   - *Selection Criteria*: cargar los criterios **exactamente** como en el manual (CI-1 a CI-6 y CE-1 a CE-6).
-   - *Quality Assessment Checklist*: las preguntas QA1–QA8, con respuestas Sí (1), Parcial (0.5) y No (0).
-   - *Data Extraction Form*: los campos de la Tabla 6 del manuscrito.
-3. **Conducting → Search:** en cada fuente, *Import BibTeX file* con su archivo `cribado\salida\parsifal\<Base>.bib`. El número de estudios por fuente debe coincidir con lo que imprimió el script 02.
-4. Pueden ejecutar el buscador de duplicados de Parsif.al como control. Si encuentra alguno, márquenlo como *Duplicated* y avísenme para que el script lo considere.
-5. Exporten el protocolo de Parsif.al (Planning → *Export*) en PDF: sirve para registrarlo en OSF (Parte 9).
-
----
-
-## Parte 4. Piloto de calibración (R1 y R2, ~1 hora cada uno)
-
-**R3 ejecuta:**
-```bat
-python cribado\scripts\03_preparar_cribado_TA.py --piloto 50
-```
-Esto crea `cribado\revision\piloto_R1.xlsx` y `piloto_R2.xlsx`, con los mismos 50 registros al azar. Luego hay que subirlos con `git add RSL`, `git commit` y `git push`.
-
-**R1 y R2, cada uno por su cuenta:**
-1. `git pull`.
-2. Abrir **solo su archivo**. **No abran el del otro.**
-3. Leer la hoja *Criterios* y el `MANUAL_CRIBADO.md`.
-4. En la hoja *Cribado*, para cada registro, elegir en DECISIÓN *Incluir*, *Duda* o *Excluir*. Si es *Excluir*, elegir el CRITERIO según el árbol del manual (el primero que falla).
-5. La hoja *Avance* muestra cuántos faltan. Al terminar, «Excluir SIN criterio» debe ser 0.
-6. Guardar y subir **solo su archivo**:
-   ```bat
-   git add cribado\revision\piloto_R1.xlsx
-   git commit -m "Piloto R1"
-   git pull
-   git push
-   ```
-   R2 hace lo mismo con su archivo. Como son archivos distintos, no hay conflicto.
-
-**R3, cuando ambos terminaron:**
-```bat
-git pull
-python cribado\scripts\04_consolidar.py --etapa piloto
-```
-- Si **κ ≥ 0,60**, hacen la reunión de consenso (Parte 5) y siguen.
-- Si **κ < 0,60**, se reúnen los tres, revisan cada desacuerdo con el manual, **escriben las aclaraciones** en la sección 7 del manual y repiten el piloto con otra muestra:
-  ```bat
-  python cribado\scripts\03_preparar_cribado_TA.py --piloto 50 --semilla 2027 --forzar
-  ```
-
----
-
-## Parte 5. Reunión de consenso (se repite en piloto, TA y TC)
-
-1. R3 abre `cribado\salida\consolidado_<etapa>.xlsx` (por ejemplo, `consolidado_piloto.xlsx`). Donde los revisores coinciden, la decisión final ya viene llenada.
-2. Filtren la columna **ACUERDO** por «NO» (rojo) y por «criterio distinto» (amarillo).
-3. Discutan cada caso **con el manual**, no por votación. Escriban la **DECISIÓN FINAL**, el **CRITERIO FINAL** y la **nota**; en texto completo, también la **EVIDENCIA FINAL**. Si no hay acuerdo, decide R3.
-4. Guardar y cerrar la etapa:
-   ```bat
-   python cribado\scripts\04_consolidar.py --etapa piloto --cerrar
-   ```
-   Si falta algo, el script dice qué registro está incompleto y no cierra.
-5. Subir: `git add RSL` → `git commit -m "Consenso piloto"` → `git pull` → `git push`.
-
----
-
-## Parte 6. Cribado por título y resumen (R1 y R2, varios días)
-
-**R3:**
+### 4.2 Crear la hoja con las sugerencias del asistente
 ```bat
 python cribado\scripts\03_preparar_cribado_TA.py
 ```
-Esto crea `TA_R1.xlsx` y `TA_R2.xlsx` con **todos** los registros; los del piloto vienen ya decididos. Luego `git add`, `commit` y `push`.
+La pantalla muestra cuántos registros cayeron en cada grupo. Abre **`RSL\cribado\revision\TA.xlsx`**.
 
-**R1 y R2:** igual que en el piloto, cada uno en su archivo y sin consultarse.
-- Consejo: avancen por bloques de 100 y guarden seguido. Pueden subir avances parciales de **su** archivo.
-- **Ante la duda, *Duda* (no *Excluir*).**
-- Si un registro **no tiene resumen** (la señal lo avisa), búsquenlo por su DOI o en Google Scholar antes de decidir.
+### 4.3 Cómo trabajar en el Excel (en este orden)
+Las filas ya vienen ordenadas: primero «Excluir (regla)», luego «Probable incluir» y al final «Revisar».
 
-**R3, al terminar ambos:**
+**Paso A — «Excluir (regla)»** (en rojo; es lo más rápido):
+- La DECISIÓN ya viene puesta como *Excluir*, con su criterio.
+- Lee **solo el título y el motivo**. Si estás de acuerdo, no toques nada.
+- Si no estás de acuerdo (por ejemplo, el título dice «review» pero es un estudio con experimentos), cambia la DECISIÓN a *Incluir* o *Duda*.
+
+**Paso B — «Probable incluir»** (en verde):
+- Lee el título y el resumen. Si cumple, elige *Incluir*.
+- Ojo con los motivos que dicen «ojo: …» o «parece pronóstico»: ahí puede ser CE-2 o CE-3.
+- Para ir rápido: selecciona varias celdas seguidas de DECISIÓN, escribe *Incluir* en la primera y pulsa **Ctrl+D** para rellenar hacia abajo. **Solo** en filas que ya leíste.
+
+**Paso C — «Revisar»** (sin color):
+- Lee el título y el resumen. El motivo te dice qué falta (por ejemplo, «No menciona Deep Learning, posible CE-4»).
+- Aplica el árbol del manual:
+  - Excluye **solo si es claro** → *Excluir* + CRITERIO.
+  - Si no puedes saberlo con el resumen → **Duda**, y pasa a texto completo.
+- Si dice «SIN RESUMEN», busca el artículo por su título en Google Scholar antes de decidir.
+
+**Control:** la hoja «Avance» te dice cuántos faltan. Al terminar, **«Excluir SIN criterio» debe ser 0**.
+
+Guarda seguido (Ctrl+S) y sube a GitHub al final de cada día.
+
+### 4.4 Cerrar la etapa
 ```bat
-git pull
-python cribado\scripts\04_consolidar.py --etapa TA
+python cribado\scripts\04_cerrar_etapa.py --etapa TA
 ```
-Luego la reunión de consenso (Parte 5) y:
+Si falta algo, te dice qué registro y no cierra: complétalo y vuelve a ejecutar. Al cerrar, muestra el acuerdo entre tú y el asistente.
+
+### 4.5 Preparar el re-cribado (para medir tu consistencia)
 ```bat
-python cribado\scripts\04_consolidar.py --etapa TA --cerrar
+python cribado\scripts\04b_recribado.py --etapa TA --preparar
 ```
+Crea `recribado_TA.xlsx` con una muestra al azar, en otro orden. **No lo hagas hoy:** espera al menos 7 días y sigue mientras tanto con la Parte 5. Cuando lo hagas, **no mires TA.xlsx**. Al terminarlo:
+```bat
+python cribado\scripts\04b_recribado.py --etapa TA --calcular
+```
+Te da el kappa intra-revisor:
+- **≥ 0,61** es bueno.
+- Si es menor, revisa los registros que salgan distintos, precisa el manual (sección 7) y corrige en TA.xlsx lo que estaba mal. Luego vuelve a cerrar la etapa con 04.
+
+**Sube a GitHub.**
 
 ---
 
-## Parte 7. Cribado a texto completo (R1 y R2)
+## PARTE 5 — Cribado a texto completo (con el asistente leyendo los PDF)
 
-**R3:**
+### 5.1 Crear la hoja y la lista de PDF
 ```bat
 python cribado\scripts\05_preparar_texto_completo.py
 ```
-Se generan:
-- `TC_R1.xlsx` y `TC_R2.xlsx`;
-- `cribado\salida\05_lista_pdf_a_conseguir.csv`, para repartir la descarga de los PDF.
+Abre `RSL\cribado\salida\05_lista_pdf_a_conseguir.csv` en Excel: tiene el enlace DOI de cada artículo.
 
-**Conseguir los PDF** (los tres): guarden cada uno como `cribado\pdf\R0123.pdf`, usando el ID del registro. **Esa carpeta no se sube a GitHub** (derechos de autor): compártanla por OneDrive o Drive. Si un PDF no se consigue tras intentarlo con la biblioteca, Google Scholar, ResearchGate y un correo al autor, márquenlo como **«No recuperado»**.
+### 5.2 Descargar los PDF
+- Abre cada enlace (conectado a la biblioteca UPeU) y descarga el PDF.
+- **Guárdalo con el nombre del ID**, por ejemplo `R0123.pdf`, en la carpeta **`RSL\cribado\pdf\`**. Esa carpeta no se sube a GitHub, por derechos de autor.
+- Si no lo consigues: prueba con Google Scholar («Todas las versiones»), ResearchGate o un correo al autor. Si no aparece, en TC.xlsx pon «Texto completo» = **No recuperado**.
 
-**R1 y R2**, cada uno en su archivo y leyendo el PDF completo:
-- *Texto completo*: «Sí» o «No recuperado».
-- *DECISIÓN*: Incluir o Excluir, recorriendo el árbol **completo** del manual (incluye CI-6 y CE-6).
-- *CRITERIO*: el primero que falla.
-- *EVIDENCIA*: **obligatoria si se excluye**. Copien la frase del artículo con página o sección. Por ejemplo: `p. 9, Sec. 5: "the anomaly detection results are illustrated in Figure 7"` → CI-6.
-
-**R3, al terminar ambos:**
+### 5.3 Que el asistente lea los PDF
 ```bat
-git pull
-python cribado\scripts\04_consolidar.py --etapa TC
+python cribado\scripts\05b_leer_pdfs.py
 ```
-Luego la reunión de consenso (Parte 5) y:
+Llena en `TC.xlsx`, para cada artículo:
+- la **SUGERENCIA** y su motivo;
+- las **frases con página** donde aparecen las métricas de detección, **qué proponen los autores**, los términos de Deep Learning y los de anomalía o tráfico.
+
+Puedes ejecutarlo de nuevo cada vez que descargues más PDF: **no borra tus decisiones**.
+
+### 5.4 Decidir (abre TC.xlsx y el PDF al lado)
+Para cada artículo:
+1. Mira **«qué proponen»**. ¿El método propio es Deep Learning? Si es un método clásico y el DL solo aparece como comparación → **CE-4**.
+2. Mira **«métricas de detección»**. ¿Hay números de precision, recall, F1, AUC o tasa de detección **sobre la detección de anomalías**?
+   - Si solo hay MAE/RMSE de pronóstico, o métricas de otra tarea (Kinetics, reconocimiento de acciones) → **CI-6**.
+   - Si la detección solo se muestra en figuras → **CI-6**.
+3. Si la sugerencia es «Revisar», lee el motivo y ve a la página indicada del PDF.
+4. Llena **DECISIÓN** y, si excluyes, **CRITERIO** y **EVIDENCIA**. En la evidencia puedes **copiar la frase sugerida** si es la correcta, o escribir la tuya, siempre con la página. Ejemplo:
+```
+p. 9, Sec. 5: "the detection results are shown qualitatively in Fig. 7" (no reporta métricas de detección)
+```
+
+### 5.5 Cerrar la etapa y re-cribar
 ```bat
-python cribado\scripts\04_consolidar.py --etapa TC --cerrar
+python cribado\scripts\04_cerrar_etapa.py --etapa TC
+python cribado\scripts\04b_recribado.py --etapa TC --preparar
 ```
+Pasados 7 días, haz `recribado_TC.xlsx` y ejecuta:
+```bat
+python cribado\scripts\04b_recribado.py --etapa TC --calcular
+```
+
+**Sube a GitHub.**
 
 ---
 
-## Parte 8. Resultados PRISMA y registro en Parsif.al (R3)
+## PARTE 6 — Resultados PRISMA y registro en Parsif.al (~1 hora)
 
 ```bat
 python cribado\scripts\06_resultados_prisma.py
 ```
-**Qué hace:**
-- calcula todas las cifras del diagrama PRISMA;
-- las escribe en `manuscrito\datos_busqueda.tex`, junto con las fechas y los kappa;
-- genera `manuscrito\generado\base_recuperacion.tex`, con la base de cada estudio;
-- muestra un resumen (también queda en `salida\06_resumen_prisma.txt`).
+Muestra el resumen PRISMA completo y lo escribe en `manuscrito\datos_busqueda.tex`.
 
-**Lean los AVISOS del final**, que pueden ser de dos tipos:
-- *«S0X está en el corpus pero el cribado lo dejó como Excluir»*: revisen si la decisión es correcta. Si lo es, **avísenme**: hay que sacarlo del corpus y regenerar las tablas.
-- *«NUEVO estudio incluido R0XXX»*: la nueva búsqueda encontró un estudio que no estaba. **Pásenme el PDF**: lo extraigo con el mismo formato, lo agrego a la matriz y regenero todo.
+**Lee los AVISOS del final y pégamelos en el chat:**
+- *«S0X está en el corpus pero el cribado lo dejó como Excluir»*: revisemos juntos si la decisión es correcta.
+- *«NUEVO estudio incluido R0XXX»*: la búsqueda nueva encontró un estudio que no estaba. **Pásame el PDF por el chat** y lo extraigo con el mismo formato que los demás.
 
-**Registrar en Parsif.al:** con `salida\06_estado_para_parsifal.csv` (ábranlo en Excel), en *Conducting → Study Selection* marquen cada estudio como *Accepted* o *Rejected*. En los rechazados, anoten el criterio (por ejemplo, «CE-3») en el campo de comentarios, o seleccionen el criterio si Parsif.al lo permite. El ID R0XXX aparece en el campo *note* de cada estudio, para encontrarlos rápido.
+**Registrar en Parsif.al:** sigue la sección **3.2** de `PARSIFAL_COPIAR_PEGAR.md`, con `salida\06_estado_para_parsifal.csv`.
 
-**Material suplementario (PRISMA 16b):** `salida\06_excluidos_texto_completo.csv` es la lista de excluidos a texto completo con su motivo y evidencia.
+**Sube a GitHub.**
 
 ---
 
-## Parte 9. Calidad, registro OSF y datos manuales
+## PARTE 7 — Verificar la calidad (QA1–QA8) (~1 a 2 días)
 
-### 9.1 Evaluación de calidad (R1 y R2)
 ```bat
 python cribado\scripts\07_calidad.py --preparar
 ```
-Cada revisor llena **su** archivo `cribado\revision\calidad_R1.xlsx` o `calidad_R2.xlsx`: QA1–QA8 con 1, 0.5 o 0, leyendo el PDF y sin mirar la matriz ni al otro revisor. Las definiciones están en la hoja *Definiciones*.
+Abre `RSL\cribado\revision\calidad.xlsx`. Hay una fila por estudio e ítem (21 × 8), con el **puntaje propuesto** y su **evidencia**. Para cada fila:
+- Lee la evidencia y, si dudas, búscala en el PDF (están en `RSL\Articulos evaluados por calidad\`).
+- Escribe **TU PUNTAJE** (1, 0.5 o 0). Si cambias el propuesto, escribe la **justificación**.
 
-Luego R3 ejecuta:
+Al terminar:
 ```bat
-python cribado\scripts\07_calidad.py --consolidar
+python cribado\scripts\07_calidad.py --aplicar
+python suplementos\generar_conteos.py
+python cribado\scripts\06_resultados_prisma.py
 ```
-- Discutan las celdas rojas de `salida\consolidado_calidad.xlsx` y escriban el consenso.
-- Apliquen el resultado y regeneren las tablas:
-  ```bat
-  python cribado\scripts\07_calidad.py --aplicar
-  python suplementos\generar_conteos.py
-  python cribado\scripts\06_resultados_prisma.py
-  ```
-
-### 9.2 Registro del protocolo en OSF (R3)
-1. Crear una cuenta en https://osf.io → *Create new project* («RSL detección de anomalías de tráfico con DL»).
-2. Subir: el protocolo exportado de Parsif.al, `cadenas_busqueda.txt`, `MANUAL_CRIBADO.md` y las capturas de búsqueda.
-3. *Registrations* → *New registration* → plantilla «OSF Preregistration» u «Open-Ended Registration» → enviar.
-4. Copiar el DOI que da OSF.
-
-### 9.3 Datos que se escriben a mano
-En `manuscrito\datos_busqueda.tex` (o directamente en Overleaf, Parte 10), reemplacen el texto rojo de:
-- `\RegistroOSF` → `OSF, DOI 10.17605/OSF.IO/XXXXX`
-- `\RevisoresCribado` → iniciales de R1 y R2
-- `\RevisorTercero` → iniciales de R3
+Copia los puntajes también a Parsif.al (sección **3.3** de `PARSIFAL_COPIAR_PEGAR.md`). **Sube a GitHub.**
 
 ---
 
-## Parte 10. Overleaf (el manuscrito se trabaja ahí)
+## PARTE 8 — Registrar el protocolo en OSF (~30 min)
 
-### Crear el proyecto (una vez)
-1. Ejecutar:
-   ```bat
-   python cribado\scripts\08_paquete_overleaf.py
-   ```
-2. En https://www.overleaf.com: *New Project* → *Upload Project* → elegir `cribado\salida\overleaf_proyecto_completo.zip`.
-3. *Menu*:
-   - **Main document**: `RSL_v2.tex`
-   - **Compiler**: `pdfLaTeX`
-4. *Recompile*. Overleaf procesa la bibliografía solo.
-5. *Share*: inviten a los demás. Revisen el límite de colaboradores de su plan; si la universidad tiene licencia institucional de Overleaf, úsenla.
+1. Crea una cuenta en https://osf.io (puede ser con tu correo UPeU).
+2. *Create new project* → título: «RSL Detección de anomalías en tráfico vehicular con Deep Learning (v2)».
+3. *Files* → sube:
+   - el protocolo exportado de Parsif.al (Reporting);
+   - `RSL\suplementos\cadenas_busqueda.txt`;
+   - `RSL\cribado\MANUAL_CRIBADO.md`;
+   - las capturas de `RSL\suplementos\capturas_busqueda\`.
+4. *Registrations* → *New registration* → plantilla **«Open-Ended Registration»** → en el resumen pega la *Description* de Parsif.al → *Register*.
+5. Copia el **DOI** que te da OSF (algo como `10.17605/OSF.IO/ABCDE`) y pégalo en `RSL\manuscrito\datos_busqueda.tex`, en la línea de `\RegistroOSF`:
+```
+\newcommand{\RegistroOSF}{OSF, DOI 10.17605/OSF.IO/ABCDE}
+```
 
-### Reglas en Overleaf
-- **Sí se edita en Overleaf:** `RSL_v2.tex` (redacción) y `referencias.bib`.
-- **No se edita en Overleaf:** `datos_busqueda.tex` y la carpeta `generado/`. Los escriben los scripts; si los editan a mano, se pierde el cambio en la próxima actualización. La única excepción son los tres datos manuales de la Parte 9.3, que conviene poner en `datos_busqueda.tex` **del repositorio** para que no se pierdan.
+---
 
-### Actualizar Overleaf cuando cambian los datos
-Cada vez que ejecuten `06_resultados_prisma.py`, `07_calidad.py --aplicar` o `generar_conteos.py`:
+## PARTE 9 — Overleaf (el manuscrito se trabaja ahí)
+
+### 9.1 Crear el proyecto (una vez)
 ```bat
 python cribado\scripts\08_paquete_overleaf.py
 ```
-Luego, en Overleaf:
-1. Descomprimir `cribado\salida\overleaf_actualizar.zip`.
-2. Subir (*Upload*) `datos_busqueda.tex` y los archivos de `generado/`, **reemplazando** los existentes.
-3. Recompilar.
+En https://www.overleaf.com:
+1. *New Project* → *Upload Project* → elige `RSL\cribado\salida\overleaf_proyecto_completo.zip`.
+2. *Menu* (arriba a la izquierda):
+   - **Main document** = `RSL_v2.tex`
+   - **Compiler** = `pdfLaTeX`
+3. *Recompile*.
 
-### Guardar el manuscrito en GitHub
-Al final de cada semana, o antes de entregar: en Overleaf, *Menu → Download → Source*. Copien `RSL_v2.tex` y `referencias.bib` a `RSL\manuscrito\` y suban con `git add`, `commit` y `push`. Así el repositorio tiene siempre la última versión.
+### 9.2 Reglas
+- En Overleaf **solo editas** `RSL_v2.tex` (redacción) y `referencias.bib`.
+- **No edites en Overleaf** `datos_busqueda.tex` ni la carpeta `generado`: los escriben los scripts y se reemplazan en cada actualización.
+
+### 9.3 Actualizar Overleaf cuando cambian los datos
+Después de los scripts 06 o 07, o de `generar_conteos.py`:
+```bat
+python cribado\scripts\08_paquete_overleaf.py
+```
+Luego:
+1. Descomprime `RSL\cribado\salida\overleaf_actualizar.zip`.
+2. En Overleaf, *Upload*: sube `datos_busqueda.tex` y los archivos de la carpeta `generado`, **reemplazando** los existentes.
+3. *Recompile*.
+
+### 9.4 Guardar en GitHub lo que escribas en Overleaf
+Cada cierto tiempo: Overleaf → *Menu* → *Download* → *Source*. Copia `RSL_v2.tex` y `referencias.bib` a `RSL\manuscrito\` y sube a GitHub.
 
 ---
 
-## Parte 11. Cierre
+## PARTE 10 — Cierre
 
-1. Comprueben que en el PDF de Overleaf **no queda nada en rojo**.
-2. Avísenme. Reviso la coherencia de todo el documento (resumen, tablas, PRISMA y conclusiones) y actualizo la matriz de respuesta al ingeniero.
-3. Se hace un *Pull Request* de la rama hacia `main`.
-4. Se entrega al ingeniero:
+1. En el PDF de Overleaf **no debe quedar nada en rojo**.
+2. Avísame en el chat. Reviso la coherencia de todo (resumen, tablas, PRISMA y conclusiones) y actualizo la respuesta al ingeniero (`RSL\respuesta_revision.docx`).
+3. Entrega al ingeniero:
    - el PDF de Overleaf;
-   - la matriz de respuesta;
-   - el material suplementario: `matriz_extraccion.xlsx`, los consolidados del cribado, `06_excluidos_texto_completo.csv`, `02_duplicados.csv`, `cadenas_busqueda.txt`, el manual de cribado y el enlace a OSF.
+   - la respuesta;
+   - el material suplementario: `suplementos\matriz_extraccion.xlsx`, `cribado\revision\TA.xlsx` y `TC.xlsx`, `cribado\salida\06_excluidos_texto_completo.csv`, `cribado\salida\02_duplicados.csv`, `suplementos\cadenas_busqueda.txt` y `cribado\MANUAL_CRIBADO.md`;
+   - el enlace a OSF.
 
 ---
 
-## Resumen de comandos
+## Resumen de comandos (en orden)
 
-| Parte | Quién | Comando |
-|---|---|---|
-| 2 | R3 | `python cribado\scripts\01_unificar_exportaciones.py` |
-| 2 | R3 | `python cribado\scripts\02_deduplicar.py` |
-| 4 | R3 | `python cribado\scripts\03_preparar_cribado_TA.py --piloto 50` |
-| 4–5 | R3 | `python cribado\scripts\04_consolidar.py --etapa piloto` → consenso → `... --cerrar` |
-| 6 | R3 | `python cribado\scripts\03_preparar_cribado_TA.py` |
-| 6 | R3 | `python cribado\scripts\04_consolidar.py --etapa TA` → consenso → `... --cerrar` |
-| 7 | R3 | `python cribado\scripts\05_preparar_texto_completo.py` |
-| 7 | R3 | `python cribado\scripts\04_consolidar.py --etapa TC` → consenso → `... --cerrar` |
-| 8 | R3 | `python cribado\scripts\06_resultados_prisma.py` |
-| 9 | R3 | `python cribado\scripts\07_calidad.py --preparar` / `--consolidar` / `--aplicar` |
-| 10 | R3 | `python cribado\scripts\08_paquete_overleaf.py` |
+```bat
+python cribado\scripts\01_unificar_exportaciones.py
+python cribado\scripts\02_deduplicar.py
+python cribado\scripts\03_preparar_cribado_TA.py
+python cribado\scripts\04_cerrar_etapa.py --etapa TA
+python cribado\scripts\04b_recribado.py --etapa TA --preparar
+python cribado\scripts\05_preparar_texto_completo.py
+python cribado\scripts\05b_leer_pdfs.py
+python cribado\scripts\04_cerrar_etapa.py --etapa TC
+python cribado\scripts\04b_recribado.py --etapa TC --preparar
+python cribado\scripts\04b_recribado.py --etapa TA --calcular
+python cribado\scripts\04b_recribado.py --etapa TC --calcular
+python cribado\scripts\06_resultados_prisma.py
+python cribado\scripts\07_calidad.py --preparar
+python cribado\scripts\07_calidad.py --aplicar
+python suplementos\generar_conteos.py
+python cribado\scripts\06_resultados_prisma.py
+python cribado\scripts\08_paquete_overleaf.py
+```
 
-Si un script muestra un error, copien el mensaje completo y me lo pasan.
+**Si un script da error:** copia todo lo que salió en pantalla y pégamelo en el chat.
+
+**Ninguno de los scripts borra tu trabajo:** si una hoja ya existe, se niegan a sobrescribirla, salvo que agregues `--forzar`.

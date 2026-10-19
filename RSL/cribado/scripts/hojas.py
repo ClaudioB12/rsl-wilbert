@@ -1,4 +1,4 @@
-"""Creación y lectura de las hojas Excel que llenan los revisores."""
+"""Creación y lectura de las hojas Excel del cribado (un solo revisor, con sugerencias del asistente)."""
 from pathlib import Path
 
 from openpyxl import Workbook, load_workbook
@@ -9,11 +9,18 @@ from openpyxl.worksheet.datavalidation import DataValidation
 from comun import CRITERIOS, CRITERIOS_TA, DESCRIPCION_CRITERIO
 
 AZUL = PatternFill("solid", fgColor="00467F")
+VERDE_OSC = PatternFill("solid", fgColor="375623")
 GRIS = PatternFill("solid", fgColor="F2F2F2")
 AMARILLO = PatternFill("solid", fgColor="FFF2CC")
 ROJO = PatternFill("solid", fgColor="F8CBAD")
+VERDE = PatternFill("solid", fgColor="E2EFDA")
 BLANCO_NEGRITA = Font(bold=True, color="FFFFFF")
 AJUSTE = Alignment(wrap_text=True, vertical="top")
+
+COL_DECISION = "DECISIÓN"
+COL_CRITERIO = "CRITERIO (si excluye)"
+COL_EVIDENCIA = "EVIDENCIA (cita textual + página o sección)"
+COL_TEXTO = "Texto completo"
 
 ARBOL_TA = [
     ("1", "¿Es el mismo estudio que otro registro (duplicado o versión menos completa)?", "Sí → Excluir, CE-1"),
@@ -30,16 +37,6 @@ ARBOL_TC = ARBOL_TA[:7] + [
     ("9", "¿No describe modelo, datos o resultados lo suficiente para extraerlos?", "Sí → Excluir, CE-6"),
     ("10", "Si pasó todo:", "Incluir"),
 ]
-
-
-def _cabecera(ws, columnas):
-    ws.append([c for c, _ in columnas])
-    for i, (c, ancho) in enumerate(columnas, 1):
-        celda = ws.cell(row=1, column=i)
-        celda.fill, celda.font, celda.alignment = AZUL, BLANCO_NEGRITA, Alignment(wrap_text=True, vertical="center")
-        ws.column_dimensions[celda.column_letter].width = ancho
-    ws.row_dimensions[1].height = 34
-    ws.freeze_panes = "C2"
 
 
 def _lista(ws, rango, valores):
@@ -72,95 +69,97 @@ def _hoja_criterios(wb, etapa):
             c.alignment = AJUSTE
 
 
-def crear_hoja_revisor(ruta, revisor, etapa, registros, previas=None):
-    """etapa: 'piloto', 'TA' o 'TC'. previas: {id: (decision, criterio, comentario)} para prellenar."""
-    previas = previas or {}
+def crear_hoja(ruta, etapa, registros, columnas, prefill=None, titulo_avance="Wilbert A. Mayta Arotaype"):
+    """Crea la hoja de cribado.
+
+    columnas: lista de (encabezado, ancho, clave_en_registro | None). Las columnas de decisión
+    (DECISIÓN, CRITERIO, Comentario y, en TC, Texto completo y EVIDENCIA) se agregan al final.
+    prefill: {id: {encabezado: valor}} para prellenar celdas.
+    """
+    prefill = prefill or {}
+    es_tc = etapa == "TC"
     wb = Workbook()
     ws = wb.active
     ws.title = "Cribado"
-    es_tc = etapa == "TC"
-    cols = [("ID", 8), ("Título", 45)]
-    if es_tc:
-        cols += [("Autores", 22), ("Año", 6), ("Fuente", 22), ("DOI / enlace", 24),
-                 ("Texto completo", 13), ("DECISIÓN", 11), ("CRITERIO (si excluye)", 12),
-                 ("EVIDENCIA (cita textual + página o sección)", 45), ("Comentario", 30)]
-    else:
-        cols += [("Resumen", 80), ("Palabras clave", 22), ("Año", 6), ("Fuente", 20), ("Tipo doc.", 12),
-                 ("Señales automáticas (solo apoyo, NO deciden)", 26), ("DECISIÓN", 11),
-                 ("CRITERIO (si excluye)", 12), ("Comentario", 30)]
-    _cabecera(ws, cols)
-    nombres = [c for c, _ in cols]
-    i_dec = nombres.index("DECISIÓN") + 1
-    i_cri = nombres.index("CRITERIO (si excluye)") + 1
+    decision_cols = ([(COL_TEXTO, 13)] if es_tc else []) + [(COL_DECISION, 11), (COL_CRITERIO, 12)] + \
+                    ([(COL_EVIDENCIA, 45)] if es_tc else []) + [("Comentario", 30)]
+    cab = [c[0] for c in columnas] + [c[0] for c in decision_cols]
+    anchos = [c[1] for c in columnas] + [c[1] for c in decision_cols]
+    ws.append(cab)
+    for i, (c, ancho) in enumerate(zip(ws[1], anchos), 1):
+        c.fill = VERDE_OSC if c.value in dict(decision_cols) else AZUL
+        c.font, c.alignment = BLANCO_NEGRITA, Alignment(wrap_text=True, vertical="center")
+        ws.column_dimensions[c.column_letter].width = ancho
+    ws.row_dimensions[1].height = 36
     for r in registros:
-        if es_tc:
-            fila = [r["id"], r["titulo"], r["autores"], r["anio"], r["fuente"],
-                    f"https://doi.org/{r['doi']}" if r.get("doi") else r.get("url", ""), None, None, None, None, None]
-        else:
-            fila = [r["id"], r["titulo"], r["resumen"], r["palabras_clave"], r["anio"], r["fuente"],
-                    r["tipo_doc"], r["senales"], None, None, None]
-        if r["id"] in previas:
-            d, c, com = previas[r["id"]]
-            fila[i_dec - 1], fila[i_cri - 1], fila[-1] = d or None, c or None, com or None
+        fila = [r.get(clave, "") if clave else "" for _, _, clave in columnas] + [None] * len(decision_cols)
+        for enc, val in prefill.get(r["id"], {}).items():
+            if enc in cab:
+                fila[cab.index(enc)] = val
         ws.append(fila)
     n = len(registros) + 1
+    alto = 30 if es_tc else 105
     for fila in ws.iter_rows(min_row=2, max_row=n):
         for c in fila:
             c.alignment = AJUSTE
-        ws.row_dimensions[fila[0].row].height = 30 if es_tc else 110
-    L = lambda i: ws.cell(row=1, column=i).column_letter
-    _lista(ws, f"{L(i_dec)}2:{L(i_dec)}{n}", ["Incluir", "Excluir"] if es_tc else ["Incluir", "Duda", "Excluir"])
-    _lista(ws, f"{L(i_cri)}2:{L(i_cri)}{n}", CRITERIOS if es_tc else CRITERIOS_TA)
+        ws.row_dimensions[fila[0].row].height = alto
+    L = lambda nombre: ws.cell(row=1, column=cab.index(nombre) + 1).column_letter
+    _lista(ws, f"{L(COL_DECISION)}2:{L(COL_DECISION)}{n}", ["Incluir", "Excluir"] if es_tc else ["Incluir", "Duda", "Excluir"])
+    _lista(ws, f"{L(COL_CRITERIO)}2:{L(COL_CRITERIO)}{n}", CRITERIOS if es_tc else CRITERIOS_TA)
     if es_tc:
-        i_tc = nombres.index("Texto completo") + 1
-        i_ev = nombres.index("EVIDENCIA (cita textual + página o sección)") + 1
-        _lista(ws, f"{L(i_tc)}2:{L(i_tc)}{n}", ["Sí", "No recuperado"])
-        ws.conditional_formatting.add(f"{L(i_ev)}2:{L(i_ev)}{n}",
-                                      FormulaRule(formula=[f'AND(${L(i_dec)}2="Excluir",{L(i_ev)}2="")'], fill=AMARILLO))
-    ws.conditional_formatting.add(f"{L(i_cri)}2:{L(i_cri)}{n}",
-                                  FormulaRule(formula=[f'AND(${L(i_dec)}2="Excluir",{L(i_cri)}2="")'], fill=ROJO))
-    for i in (i_dec, i_cri):
-        for fila in ws.iter_rows(min_row=2, max_row=n, min_col=i, max_col=i):
-            fila[0].fill = AMARILLO if fila[0].value is None else PatternFill()
-    # Hoja de avance
+        _lista(ws, f"{L(COL_TEXTO)}2:{L(COL_TEXTO)}{n}", ["Sí", "No recuperado"])
+        ws.conditional_formatting.add(f"{L(COL_EVIDENCIA)}2:{L(COL_EVIDENCIA)}{n}",
+                                      FormulaRule(formula=[f'AND(${L(COL_DECISION)}2="Excluir",{L(COL_EVIDENCIA)}2="")'], fill=AMARILLO))
+    ws.conditional_formatting.add(f"{L(COL_CRITERIO)}2:{L(COL_CRITERIO)}{n}",
+                                  FormulaRule(formula=[f'AND(${L(COL_DECISION)}2="Excluir",{L(COL_CRITERIO)}2="")'], fill=ROJO))
+    ws.conditional_formatting.add(f"{L(COL_DECISION)}2:{L(COL_DECISION)}{n}",
+                                  FormulaRule(formula=[f'{L(COL_DECISION)}2=""'], fill=AMARILLO))
+    if "SUGERENCIA" in cab:
+        s = L("SUGERENCIA")
+        ws.conditional_formatting.add(f"{s}2:{s}{n}", FormulaRule(formula=[f'LEFT({s}2,7)="Excluir"'], fill=ROJO))
+        ws.conditional_formatting.add(f"{s}2:{s}{n}", FormulaRule(formula=[f'LEFT({s}2,8)="Probable"'], fill=VERDE))
+    ws.freeze_panes = "C2"
+    ws.auto_filter.ref = f"A1:{ws.cell(row=1, column=len(cab)).column_letter}{n}"
+
     av = wb.create_sheet("Avance", 0)
-    av.column_dimensions["A"].width = 34
-    av.column_dimensions["B"].width = 20
-    datos = [("Revisor", revisor), ("Etapa", {"piloto": "Piloto (calibración)", "TA": "Título y resumen",
-                                               "TC": "Texto completo"}[etapa]),
+    av.column_dimensions["A"].width = 36
+    av.column_dimensions["B"].width = 90
+    D, C = L(COL_DECISION), L(COL_CRITERIO)
+    datos = [("Revisor", titulo_avance),
+             ("Etapa", {"TA": "Título y resumen", "TC": "Texto completo", "retest": "Re-cribado (fiabilidad)"}[etapa]),
              ("Registros en la hoja", n - 1),
-             ("Decididos", f"=COUNTA(Cribado!{L(i_dec)}2:{L(i_dec)}{n})"),
-             ("Faltan", f"=B4-B5"),
-             ("Incluir", f'=COUNTIF(Cribado!{L(i_dec)}2:{L(i_dec)}{n},"Incluir")'),
-             ("Duda", f'=COUNTIF(Cribado!{L(i_dec)}2:{L(i_dec)}{n},"Duda")'),
-             ("Excluir", f'=COUNTIF(Cribado!{L(i_dec)}2:{L(i_dec)}{n},"Excluir")'),
-             ("Excluir SIN criterio (debe ser 0)", f'=COUNTIFS(Cribado!{L(i_dec)}2:{L(i_dec)}{n},"Excluir",Cribado!{L(i_cri)}2:{L(i_cri)}{n},"")')]
+             ("Decididos", f"=COUNTA(Cribado!{D}2:{D}{n})"),
+             ("Faltan", "=B4-B5"),
+             ("Incluir", f'=COUNTIF(Cribado!{D}2:{D}{n},"Incluir")'),
+             ("Duda", f'=COUNTIF(Cribado!{D}2:{D}{n},"Duda")'),
+             ("Excluir", f'=COUNTIF(Cribado!{D}2:{D}{n},"Excluir")'),
+             ("Excluir SIN criterio (debe ser 0)", f'=COUNTIFS(Cribado!{D}2:{D}{n},"Excluir",Cribado!{C}2:{C}{n},"")')]
     for a, b in datos:
         av.append([a, b])
-    for c in av["A"]:
-        c.font = Font(bold=True)
+        av.cell(row=av.max_row, column=1).font = Font(bold=True)
     av.append([])
-    av.append(["IMPORTANTE", "Trabaja SOLO en esta hoja, sin mirar la del otro revisor. No cambies el nombre del archivo, "
-                             "ni el orden o los nombres de las columnas. Lee la hoja «Criterios» antes de empezar."])
+    av.append(["Cómo trabajar", "Filtra la columna SUGERENCIA (flecha del encabezado). Empieza por «Excluir (regla)»: "
+                                "verifica cada uno leyendo el título y, si estás de acuerdo, deja la decisión prellenada. "
+                                "Luego «Probable incluir» y al final «Revisar». La SUGERENCIA es solo una ayuda: la decisión es tuya. "
+                                "Lee la hoja «Criterios» y el MANUAL_CRIBADO.md."])
     av.cell(row=av.max_row, column=2).alignment = AJUSTE
-    av.column_dimensions["B"].width = 90
     _hoja_criterios(wb, "TC" if es_tc else "TA")
     Path(ruta).parent.mkdir(parents=True, exist_ok=True)
     wb.save(ruta)
 
 
-def leer_hoja_revisor(ruta):
-    """Devuelve {id: {'decision', 'criterio', 'comentario', 'texto_completo', 'evidencia'}}."""
+def leer_hoja(ruta):
+    """Devuelve {id: {encabezado: valor}} y añade claves normalizadas: decision, criterio, evidencia, etc."""
     wb = load_workbook(ruta, data_only=True)
     ws = wb["Cribado"]
     cab = [c.value for c in ws[1]]
-    idx = {nombre: i for i, nombre in enumerate(cab)}
     out = {}
     for fila in ws.iter_rows(min_row=2, values_only=True):
         if not fila or not fila[0]:
             continue
-        g = lambda nombre: (str(fila[idx[nombre]]).strip() if nombre in idx and fila[idx[nombre]] is not None else "")
-        out[str(fila[0]).strip()] = {
-            "decision": g("DECISIÓN"), "criterio": g("CRITERIO (si excluye)"), "comentario": g("Comentario"),
-            "texto_completo": g("Texto completo"), "evidencia": g("EVIDENCIA (cita textual + página o sección)")}
+        d = {cab[i]: ("" if v is None else str(v).strip()) for i, v in enumerate(fila) if i < len(cab) and cab[i]}
+        d.update({"decision": d.get(COL_DECISION, ""), "criterio": d.get(COL_CRITERIO, ""),
+                  "comentario": d.get("Comentario", ""), "texto_completo": d.get(COL_TEXTO, ""),
+                  "evidencia": d.get(COL_EVIDENCIA, ""), "sugerencia": d.get("SUGERENCIA", "")})
+        out[str(fila[0]).strip()] = d
     return out

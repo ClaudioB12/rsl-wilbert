@@ -1,8 +1,8 @@
-# Pendientes para los autores (versión 2 de la RSL)
+# Pendientes (versión 2 de la RSL, autor único)
 
 > **Paso a paso detallado: `RSL/cribado/README.md`** (búsqueda, Parsif.al, cribado con scripts, PRISMA, calidad y Overleaf). **Criterios de cribado con su fundamento: `RSL/cribado/MANUAL_CRIBADO.md`.** Los scripts escriben solos las fechas, los conteos PRISMA y los kappa en `datos_busqueda.tex`.
 
-Lo que sigue solo pueden hacerlo ustedes. En el PDF, cada dato pendiente aparece **en rojo y entre corchetes**. Casi todos se completan en un único archivo: `RSL/manuscrito/datos_busqueda.tex`.
+Lo que sigue solo puedes hacerlo tú. En el PDF, cada dato pendiente aparece **en rojo y entre corchetes**. Casi todos se completan en un único archivo: `RSL/manuscrito/datos_busqueda.tex`.
 
 ## 1. Re-ejecutar la búsqueda (Obs. 3, 7)
 - Ejecutar las cadenas de `RSL/suplementos/cadenas_busqueda.txt` en Scopus, Web of Science, IEEE Xplore, ScienceDirect y ACM DL.
@@ -11,29 +11,19 @@ Lo que sigue solo pueden hacerlo ustedes. En el PDF, cada dato pendiente aparece
 - Comprobar que los 21 estudios incluidos aparecen. Anotar la base de cada uno en `\BaseRecup` (Anexo B). S03 y S14 solo aparecen buscando en texto completo, por eso van en la rama «otros métodos».
 - **E23 (Giasemis y Sopasakis):** la planilla de Parsif.al enlaza un documento de IEEE Xplore (n.º 11171552). Si es una versión revisada por pares y la búsqueda en IEEE Xplore la recupera, el estudio debe reincorporarse citando esa versión (avísenme y regenero todo).
 
-## 2. Re-cribar con dos revisores (Obs. 6)
-- Cribado independiente por título y resumen, y después por texto completo, con dos revisores; un tercero resuelve los desacuerdos.
-- Calcular el kappa de Cohen en cada etapa y en la evaluación de calidad (`\KappaTA`, `\KappaTC`, `\KappaCalidad`).
-- Registrar el motivo de cada exclusión a texto completo (CE-2 a CE-6, CI-6) y completar el flujo PRISMA (`\Pidentificados` … `\PexclCEseis`).
-- Si en realidad el cribado lo hizo una sola persona, **no lo oculten**: cambien el texto de §3.5 y añádanlo a las amenazas (§5.4).
+## 2. Cribado asistido y fiabilidad (Obs. 6)
+- Cribado por título y resumen y a texto completo con el asistente (scripts 03, 04, 05 y 05b). Cada exclusión a texto completo lleva su cita.
+- Re-cribado ciego de una muestra, al menos 7 días después de cada etapa (script 04b), para el kappa intra-revisor.
+- El manuscrito ya declara la revisión de autor único y sus medidas de mitigación (§3.5 y §5.4).
 
 ## 3. Verificar la evaluación de calidad y la extracción
-- La matriz (`RSL/suplementos/matriz_extraccion.xlsx`) y la puntuación de calidad se prellenaron leyendo cada PDF, con la evidencia de cada puntaje en la hoja «Calidad». **Dos de ustedes deben revisarla de forma independiente**, porque así se declara en el método.
-- Si cambian un valor, edítenlo en `RSL/suplementos/extraccion_individual/<clave>.json` (o en `curacion.json`) y ejecuten:
-  ```
-  cd RSL
-  python3 suplementos/generar_conteos.py
-  python3 suplementos/prueba_sensibilidad_cadena.py
-  cd manuscrito && pdflatex RSL_v2 && bibtex RSL_v2 && pdflatex RSL_v2 && pdflatex RSL_v2
-  ```
-  Todas las cifras del texto se actualizan solas.
+- La matriz (`RSL/suplementos/matriz_extraccion.xlsx`) y los puntajes de calidad se prellenaron leyendo cada PDF (con asistencia de IA), con la evidencia de cada dato. **Debes verificarlos tú** (script 07, Parte 7 de la guía), porque así se declara en el método.
 
-## 4. Registro, declaraciones y autoría (Obs. 14, 16)
-- Registrar el protocolo en OSF (osf.io → Registrations) y poner el DOI en `\RegistroOSF`.
-- Completar las fechas del historial del protocolo (Anexo A, Tabla «Historial»).
-- Completar el **correo institucional del tercer autor** y confirmar su nombre exacto. La versión 1 usaba «Ender Prieto Quispe», «Prieto Quispe, J. E.» y el correo `juan.prieto`.
-- Completar la **declaración de uso de IA generativa** (Declaraciones). En esta revisión se usó un asistente de IA para verificar la extracción contra los PDF, redactar y generar los scripts; decláralo según la política de la revista.
-- **Repositorio de datos:** la disponibilidad de datos apunta a este repositorio. **No lo hagan público con los PDF de los artículos** (`RSL/Articulos evaluados por calidad/`), porque tienen derechos de autor. Publiquen solo `RSL/suplementos/` y el manuscrito, por ejemplo en OSF o en un repositorio aparte, y actualicen `\RepositorioDatos`.
+## 4. Registro y declaraciones (Obs. 16)
+- Registrar el protocolo en OSF y poner el DOI en `\RegistroOSF` (Parte 8 de la guía).
+- Completar las fechas del historial del protocolo (Anexo A, Tabla «Historial»), directamente en Overleaf.
+- Revisar la **declaración de uso de IA** que ya está en el manuscrito y ajustarla si el curso o la revista pide otro formato.
+- **Repositorio de datos:** no hagas público el repositorio con los PDF de los artículos (tienen derechos de autor). Comparte solo `RSL/suplementos`, `RSL/cribado` (sin la carpeta `pdf`) y el manuscrito, por ejemplo en OSF.
 
 ## 5. Verificaciones bibliográficas que no pude cerrar sin acceso a las editoriales
 - Cai et al. 2021 (SIGSPATIAL): pp. 354–364 se tomaron de la v1; el PDF no imprime la paginación.

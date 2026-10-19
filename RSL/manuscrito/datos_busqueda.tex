@@ -2,8 +2,8 @@
 %  DATOS DE LA BÚSQUEDA Y DEL CRIBADO
 %  Las fechas, los conteos por base, el flujo PRISMA y los kappa los
 %  escribe automáticamente cribado/scripts/06_resultados_prisma.py.
-%  A mano solo: \RegistroOSF, \RevisoresCribado, \RevisorTercero y
-%  \RepositorioDatos. Lo pendiente aparece en rojo en el PDF.
+%  A mano solo: \RegistroOSF y \RepositorioDatos.
+%  Lo pendiente aparece en rojo en el PDF.
 %=============================================================
 
 % --- Fechas y registro ---------------------------------------
@@ -12,13 +12,17 @@
 \newcommand{\RegistroOSF}{\pend{OSF, DOI 10.17605/OSF.IO/XXXXX}}
 \newcommand{\RepositorioDatos}{\url{https://github.com/ClaudioB12/rsl-wilbert}}
 
-% --- Revisores ----------------------------------------------
-\newcommand{\RevisoresCribado}{\pend{W.\,A.\,M.\,A. y E.\,P.\,Q.}}
-\newcommand{\RevisorTercero}{\pend{W.\,C.\,L.}}
-\newcommand{\KappaTA}{\pend{0,xx}}
-\newcommand{\KappaTC}{\pend{0,xx}}
-\newcommand{\KappaCalidad}{\pend{0,xx}}
-\newcommand{\KappaPiloto}{\pend{0,xx}}
+% --- Revisor y fiabilidad del cribado (autor único) ------------
+\newcommand{\Revisor}{W.\,A.\,M.\,A.}
+\newcommand{\KappaRecribadoTA}{\pend{0,xx}}     % re-cribado ciego, título y resumen
+\newcommand{\NRecribadoTA}{\pend{n}}
+\newcommand{\KappaRecribadoTC}{\pend{0,xx}}     % re-cribado ciego, texto completo
+\newcommand{\NRecribadoTC}{\pend{n}}
+\newcommand{\KappaAsistenteTA}{\pend{0,xx}}     % acuerdo autor-asistente (TA)
+\newcommand{\AcuerdoAsistenteTA}{\pend{xx~\%}}
+\newcommand{\NExclRegla}{\pend{n}}             % exclusiones propuestas por regla
+\newcommand{\NExclReglaConfirmadas}{\pend{n}}  % ... confirmadas por el autor
+\newcommand{\AcuerdoCalidad}{\pend{xx~\%}}     % puntaje propuesto vs. verificado
 
 % --- Registros por base (Tabla de bases) ----------------------
 \newcommand{\NScopus}{\pend{n}}

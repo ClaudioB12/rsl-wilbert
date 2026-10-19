@@ -279,6 +279,57 @@ def senales(r):
     return " | ".join(s)
 
 
+RE_VIAL = re.compile(r"\broad|\bvehic|\bhighway|\bfreeway|\bexpressway|motorway|\bintersection|\btaxi|\bcars?\b|"
+                     r"\bdriving|\bdriver|transportation|traffic (flow|accident|incident|congestion|video|camera|surveillance|speed|volume|state|event)|"
+                     r"urban traffic|road traffic|\blanes?\b|\bcrash|\bcollision", re.I)
+RE_REVISION_DOC = re.compile(r"review|survey|chapter|book|thesis|dissertation|editorial|erratum|note|letter|retracted|preprint", re.I)
+
+
+def sugerencia_TA(r):
+    """Pre-clasificación por reglas para el cribado por título y resumen.
+
+    Devuelve (sugerencia, criterio, motivo, puntaje). Las sugerencias posibles son:
+      «Excluir (regla)»   incumplimiento objetivo y claro: tipo de documento, año, idioma o dominio
+                          claramente no vial. El autor lo VERIFICA antes de cerrar la etapa.
+      «Probable incluir»  menciona anomalía/incidente + Deep Learning + tráfico vehicular.
+      «Revisar»           todo lo demás (el autor decide leyendo el título y el resumen).
+    Nunca excluye por ausencia de términos (CE-3 o CE-4): eso siempre lo decide el autor.
+    """
+    titulo, texto = r["titulo"], " ".join([r["titulo"], r["resumen"], r["palabras_clave"]])
+    tipo = (r["tipo_doc"] or "").lower()
+    if RE_REVISION_DOC.search(tipo):
+        return "Excluir (regla)", "CE-5", f"Tipo de documento: «{r['tipo_doc']}»", 0
+    m = RE_REVISION.search(titulo)
+    if m:
+        return "Excluir (regla)", "CE-5", f"El título indica revisión («{m.group(0)}»): confirma que no es un estudio primario", 0
+    if (r["fuente"] or "").lower().find("arxiv") >= 0:
+        return "Excluir (regla)", "CE-5", "Preprint (arXiv): buscar versión publicada antes de confirmar", 0
+    if r["anio"] and not (2020 <= int(r["anio"]) <= 2026):
+        return "Excluir (regla)", "CI-3", f"Año {r['anio']}", 0
+    if r["idioma"] and not re.search(r"english|ingl|spanish|espa|^en$|^es$", r["idioma"], re.I):
+        return "Excluir (regla)", "CI-2", f"Idioma: {r['idioma']}", 0
+    no_vial = RE_NO_VIAL.search(texto)
+    vial = RE_VIAL.search(texto)
+    if no_vial and not vial:
+        return "Excluir (regla)", "CE-2", f"Dominio no vial («{no_vial.group(0)}») y sin términos de tráfico por carretera", 0
+    a, b, c = RE_ANOMALIA.findall(texto), RE_DL.findall(texto), RE_VIAL.findall(texto)
+    puntaje = min(len(a), 5) + min(len(b), 5) + min(len(c), 5)
+    faltan = [n for n, x in (("anomalía/incidente", a), ("Deep Learning", b), ("tráfico vial", c)) if not x]
+    if not faltan:
+        motivo = "Menciona anomalía + DL + tráfico vial"
+        if no_vial:
+            motivo += f"; ojo: también «{no_vial.group(0)}» (posible CE-2)"
+        if RE_PRONOSTICO.search(texto) and len(a) <= 1:
+            motivo += "; parece sobre todo pronóstico (posible CE-3)"
+            return "Revisar", "", motivo, puntaje
+        return "Probable incluir", "", motivo, puntaje
+    pistas = {"anomalía/incidente": "posible CE-3", "Deep Learning": "posible CE-4", "tráfico vial": "posible CE-2"}
+    motivo = "No menciona " + ", ".join(f"{f} ({pistas[f]})" for f in faltan)
+    if not r["resumen"]:
+        motivo = "SIN RESUMEN: búscalo por el DOI antes de decidir. " + motivo
+    return "Revisar", "", motivo, puntaje
+
+
 # ---------------------------------------------------------------- utilidades de tablas
 def escribir_csv(ruta, filas, campos):
     Path(ruta).parent.mkdir(parents=True, exist_ok=True)

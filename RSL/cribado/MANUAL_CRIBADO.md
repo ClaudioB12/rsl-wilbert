@@ -1,6 +1,6 @@
 # Manual de cribado — RSL «Detección de anomalías en tráfico vehicular mediante Deep Learning»
 
-Versión 2.0 del protocolo. Los dos revisores **deben leer este manual completo antes del piloto** y tenerlo abierto durante todo el cribado. Si en la reunión de consenso se precisa una definición, **se anota aquí** (sección 7) y en el historial del protocolo del manuscrito.
+Versión 2.0 del protocolo. Revisor único: Wilbert A. Mayta Arotaype. **Léelo completo antes de empezar el cribado** y tenlo abierto mientras trabajas. Si durante el cribado precisas una definición (un caso que el manual no cubre), **anótala aquí** (sección 7) y aplícala a todos los casos parecidos.
 
 ---
 
@@ -24,7 +24,7 @@ Los criterios no son arbitrarios: cada uno se deriva de un componente del protoc
 
 ## 2. Árbol de decisión (aplicar SIEMPRE en este orden)
 
-Se recorre de arriba abajo. **La primera pregunta que se responda «Sí» determina el criterio de exclusión.** Así, dos revisores que excluyen el mismo artículo asignan el mismo código, y el PRISMA reporta motivos coherentes.
+Se recorre de arriba abajo. **La primera pregunta que se responda «Sí» determina el criterio de exclusión.** Así, el mismo tipo de artículo recibe siempre el mismo código, y el PRISMA reporta motivos coherentes.
 
 ```
  1. ¿Es el mismo estudio que otro registro ya visto (o una versión menos completa)? ...... Sí → Excluir CE-1
@@ -47,7 +47,7 @@ Se recorre de arriba abajo. **La primera pregunta que se responda «Sí» determ
 - Se excluye en título y resumen **solo si el incumplimiento es claro en el texto que se lee**. «No menciona Deep Learning en el resumen» **no** es suficiente para CE-4 si el título o el resumen sugieren un modelo aprendido: márquenlo como Duda.
 - **Texto completo: toda exclusión lleva una cita.** En la columna EVIDENCIA copien la frase del artículo que justifica la decisión, con página o sección. Por ejemplo: `p. 7, Sec. 5.2: "the detection results are shown qualitatively in Fig. 9"` → CI-6. Esto es lo que da fundamento ante el ingeniero (PRISMA 2020, ítem 16b).
 - **Las «señales automáticas» de la hoja son solo un apoyo.** Avisan de palabras clave sospechosas, pero se equivocan: por ejemplo, «vehicle» puede referirse a un vehículo autónomo y «attention» puede no ser un Transformer. **Nunca decidan solo por la señal.**
-- **Cada revisor trabaja solo.** No se consulten durante el cribado. Las diferencias se resuelven después, en la reunión de consenso.
+- **Sé consistente.** Si cambias de criterio a mitad del camino, anótalo en la sección 7 y revisa los casos ya decididos.
 
 ---
 
@@ -137,19 +137,16 @@ Excluir solo si **no se puede llenar el formulario de extracción**: no se sabe 
 
 ---
 
-## 4. Procedimiento paso a paso
+## 4. Procedimiento (revisor único con asistente)
 
-1. **Piloto (calibración):** ambos revisores criban los mismos 50 registros al azar (script 03 `--piloto 50`).
-   - Si κ ≥ 0,60, se sigue.
-   - Si κ < 0,60, se discuten los desacuerdos, se precisa este manual (sección 7) y se repite con otra muestra.
-2. **Título y resumen:** cada revisor criba todos los registros en su hoja. Los registros del piloto vienen ya decididos.
-3. **Consenso TA:** reunión de los dos revisores sobre los registros en rojo. Si no hay acuerdo, decide el tercer revisor. Se anota el porqué en la nota.
-4. **Texto completo:** se consiguen los PDF y cada revisor decide con el árbol completo, **con evidencia textual** para cada exclusión.
-5. **Consenso TC:** igual que en TA. Cuidado con los registros marcados «criterio distinto»: ambos excluyen, pero hay que acordar **un solo** criterio, el primero que falla en el árbol.
-6. **Registro en Parsif.al:** se marca la decisión de consenso de cada registro (archivo `06_estado_para_parsifal.csv`).
+Como la revisión la hace una sola persona, el sesgo de selección se controla de tres maneras, que se reportan en el artículo:
 
-### Cómo se mide el acuerdo
-Se usa el kappa de Cohen, que corrige el acuerdo que se daría por azar. En título y resumen, *Incluir* y *Duda* cuentan como «pasa». Interpretación (Landis y Koch, 1977):
+1. **Asistente por reglas (título y resumen).** Pre-clasifica cada registro y propone exclusiones **solo por criterios objetivos**: tipo de documento, año, idioma o dominio claramente no vial. Tú verificas cada una. Lo demás lo decides tú; el asistente solo te muestra el motivo. El script reporta cuánto coincidieron tú y el asistente.
+2. **Exclusiones con evidencia (texto completo).** El asistente extrae de cada PDF las frases candidatas con su página. Tú decides y, si excluyes, pegas la cita que lo justifica.
+3. **Re-cribado ciego (fiabilidad intra-revisor).** Al menos 7 días después de cerrar cada etapa, vuelves a cribar una muestra aleatoria (10 %, entre 30 y 100 registros) **sin mirar tus decisiones anteriores**. El kappa de Cohen entre ambas pasadas mide tu consistencia.
+
+### Cómo se interpreta el kappa
+El kappa de Cohen corrige el acuerdo que se daría por azar. En título y resumen, *Incluir* y *Duda* cuentan como «pasa». Interpretación (Landis y Koch, 1977):
 
 | κ | Acuerdo |
 |---|---|
@@ -159,17 +156,21 @@ Se usa el kappa de Cohen, que corrige el acuerdo que se daría por azar. En tít
 | 0,61–0,80 | bueno |
 | > 0,80 | muy bueno |
 
-Se reporta lo que salga, aunque sea bajo; ocultarlo sería peor. Un κ bajo en texto completo suele indicar que un criterio está mal definido: discútanlo y precisen el manual.
+Se reporta lo que salga. Si el kappa intra-revisor es menor que 0,61:
+1. revisa los registros que cambiaron entre las dos pasadas;
+2. identifica qué criterio aplicaste distinto;
+3. precisa su definición en la sección 7;
+4. corrige las decisiones afectadas.
 
 ---
 
-## 5. Reunión de consenso (cómo se hace bien)
+## 5. Revisar tus propios casos difíciles
 
-1. Abran `salida/consolidado_<etapa>.xlsx` y filtren la columna ACUERDO por «NO» y por «criterio distinto».
-2. Para cada registro, cada revisor explica su decisión **citando el criterio y el texto**. Se busca la regla del manual que aplica, no se vota.
-3. Si el caso no está cubierto por el manual, se acuerda una regla, se **escribe en la sección 7** y se aplica a todos los casos parecidos, incluso a los ya decididos. Así se evitan los «criterios aplicados de forma selectiva» que señaló el ingeniero.
-4. Si no hay acuerdo, decide el tercer revisor.
-5. Se escribe la DECISIÓN FINAL, el CRITERIO FINAL, la EVIDENCIA FINAL (en texto completo) y una nota breve.
+Antes de cerrar cada etapa:
+1. En el Excel, filtra DECISIÓN = *Duda* (en título y resumen) y repasa cada caso con el árbol. En texto completo no existe *Duda*.
+2. Filtra SUGERENCIA = «Revisar» donde decidiste *Excluir* y comprueba que el criterio es el **primero** que falla en el árbol.
+3. Si un caso no está cubierto por el manual, decide una regla, **escríbela en la sección 7** y aplícala a todos los casos parecidos, también a los ya decididos. Así se evitan los «criterios aplicados de forma selectiva» que señaló el ingeniero.
+4. Si sigues dudando de un caso, **pégame en el chat** el título, el resumen o la cita, y lo analizamos con el manual.
 
 ---
 
@@ -183,6 +184,7 @@ Se reporta lo que salga, aunque sea bajo; ocultarlo sería peor. Un κ bajo en t
 | Incluir un pronóstico de flujo «porque menciona outliers» | No evalúa la detección | CE-3 (o CI-6 a texto completo) |
 | Excluir a texto completo sin cita | No es verificable ni defendible | Siempre con evidencia |
 | Cambiar la regla a mitad del cribado sin anotarla | Aplicación no uniforme de criterios | Anotar en la sección 7 y reaplicar |
+| Aceptar en bloque las sugerencias sin leerlas | El asistente se equivoca; la decisión es tuya | Leer al menos el título y el motivo de cada fila |
 
 ---
 

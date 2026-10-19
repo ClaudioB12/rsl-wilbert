@@ -1,51 +1,57 @@
 #!/usr/bin/env python3
-"""PASO 3. Crea las hojas de cribado por título y resumen (una por revisor).
+"""PASO 3. Crea la hoja de cribado por título y resumen, con la pre-clasificación del asistente.
 
-Uso (desde la carpeta RSL):
-  python cribado/scripts/03_preparar_cribado_TA.py --piloto 50   # 1.º: muestra de calibración
-  python cribado/scripts/03_preparar_cribado_TA.py               # 2.º: todos los registros
+Uso (desde la carpeta RSL):   python cribado/scripts/03_preparar_cribado_TA.py
 
-Salidas en cribado/revision/:
-  piloto_R1.xlsx / piloto_R2.xlsx     (con --piloto)
-  TA_R1.xlsx / TA_R2.xlsx             (sin --piloto). Si el piloto ya se cerró (paso 4 --cerrar),
-                                      sus registros vienen prellenados con la decisión de consenso
-                                      para no cribarlos dos veces; esos registros no cuentan para el
-                                      kappa de la etapa TA (su acuerdo se reporta como kappa del piloto).
-Por seguridad, NO sobrescribe hojas existentes salvo con --forzar.
+Salida: cribado/revision/TA.xlsx
+  - SUGERENCIA del asistente por reglas (ver comun.sugerencia_TA):
+      «Excluir (regla)»   → la DECISIÓN viene prellenada como Excluir + criterio. Verifícala.
+      «Probable incluir»  → menciona anomalía + Deep Learning + tráfico vial.
+      «Revisar»           → decides tú leyendo el título y el resumen.
+  - Las filas vienen ordenadas: primero «Excluir (regla)», luego «Probable incluir» y al final
+    «Revisar» (de mayor a menor puntaje), para que avances rápido.
+Por seguridad, NO sobrescribe la hoja si ya existe (usa --forzar si estás seguro).
 """
 import argparse
-import random
 import sys
 
-from comun import REVISION, SALIDA, asegurar_utf8_consola, cargar_json, leer_csv
-from hojas import crear_hoja_revisor
+from comun import REVISION, SALIDA, asegurar_utf8_consola, escribir_csv, leer_csv, sugerencia_TA
+from hojas import COL_CRITERIO, COL_DECISION, crear_hoja
+
+COLUMNAS = [("ID", 8, "id"), ("Título", 45, "titulo"), ("Resumen", 80, "resumen"),
+            ("Palabras clave", 22, "palabras_clave"), ("Año", 6, "anio"), ("Fuente", 20, "fuente"),
+            ("Tipo doc.", 12, "tipo_doc"), ("SUGERENCIA", 14, "sugerencia"),
+            ("Motivo de la sugerencia", 32, "motivo"), ("Puntaje", 8, "puntaje")]
+ORDEN = {"Excluir (regla)": 0, "Probable incluir": 1, "Revisar": 2}
 
 
 def main():
     asegurar_utf8_consola()
     ap = argparse.ArgumentParser()
-    ap.add_argument("--piloto", type=int, default=0, help="tamaño de la muestra de calibración (p. ej., 50)")
-    ap.add_argument("--semilla", type=int, default=2026)
-    ap.add_argument("--forzar", action="store_true", help="sobrescribir hojas existentes (¡se pierde lo llenado!)")
+    ap.add_argument("--forzar", action="store_true", help="sobrescribir la hoja existente (¡se pierde lo llenado!)")
     args = ap.parse_args()
+    ruta = REVISION / "TA.xlsx"
+    if ruta.exists() and not args.forzar:
+        sys.exit(f"Ya existe {ruta}. No se sobrescribe para no perder tu trabajo (usa --forzar si estás seguro).")
 
     registros = leer_csv(SALIDA / "02_registros_unicos.csv")
-    etapa = "piloto" if args.piloto else "TA"
-    previas = {}
-    if args.piloto:
-        random.seed(args.semilla)
-        registros = sorted(random.sample(registros, min(args.piloto, len(registros))), key=lambda r: r["id"])
-    else:
-        consenso = cargar_json(SALIDA / "consenso_piloto.json", {})
-        previas = {i: (v["decision"], v["criterio"], "Decidido en el piloto (consenso)") for i, v in consenso.items()}
+    prefill = {}
+    for r in registros:
+        r["sugerencia"], r["criterio_sug"], r["motivo"], r["puntaje"] = sugerencia_TA(r)
+        if r["sugerencia"] == "Excluir (regla)":
+            prefill[r["id"]] = {COL_DECISION: "Excluir", COL_CRITERIO: r["criterio_sug"],
+                                "Comentario": "Regla automática: VERIFICAR"}
+    registros.sort(key=lambda r: (ORDEN[r["sugerencia"]], -int(r["puntaje"]), r["id"]))
+    crear_hoja(ruta, "TA", registros, COLUMNAS, prefill)
+    escribir_csv(SALIDA / "03_sugerencias_TA.csv", registros,
+                 ["id", "titulo", "anio", "sugerencia", "criterio_sug", "motivo", "puntaje"])
 
-    for rev in ("R1", "R2"):
-        ruta = REVISION / f"{etapa}_{rev}.xlsx"
-        if ruta.exists() and not args.forzar:
-            sys.exit(f"Ya existe {ruta}. No se sobrescribe para no perder trabajo (usa --forzar si estás seguro).")
-        crear_hoja_revisor(ruta, rev, "TA" if etapa == "TA" else "piloto", registros, previas)
-        print(f"Creado {ruta}  ({len(registros)} registros{', ' + str(len(previas)) + ' prellenados del piloto' if previas else ''})")
-    print("Entreguen cada archivo a su revisor. Cada uno trabaja por separado y devuelve SU archivo a la carpeta cribado/revision/.")
+    from collections import Counter
+    c = Counter(r["sugerencia"] for r in registros)
+    print(f"Creado {ruta}  ({len(registros)} registros)")
+    for k in ORDEN:
+        print(f"  {k:<18} {c.get(k, 0):>5}")
+    print("Abre TA.xlsx, filtra SUGERENCIA y decide. Lo prellenado («Excluir (regla)») también se verifica.")
 
 
 if __name__ == "__main__":
