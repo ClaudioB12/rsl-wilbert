@@ -126,10 +126,12 @@ def pedir(url):
             if 400 <= e.code < 500 and e.code != 429:
                 return None
             ultimo = f"HTTP {e.code}"
-            espera = int(e.headers.get("Retry-After") or 0) if e.headers else 0
-            time.sleep(max(espera, 2 ** intento))
+            espera = max(int(e.headers.get("Retry-After") or 0) if e.headers else 0, 2 ** intento)
+            print(f"    (OpenAlex respondió {ultimo}; reintento {intento + 1} de 7 en {espera} s)", flush=True)
+            time.sleep(espera)
         except Exception as e:
             ultimo = type(e).__name__
+            print(f"    (sin respuesta: {ultimo}; reintento {intento + 1} de 7 en {2 ** intento} s)", flush=True)
             time.sleep(2 ** intento)
     raise ConnectionError(f"{ultimo} al consultar {url}")
 
@@ -200,17 +202,22 @@ def main():
     if not a.sin_internet:
         pendientes = [r for r in registros if r["id"] not in cache]
         print(f"Consultando OpenAlex: {len(pendientes)} registros (ya consultados: {len(cache)}).")
-        for n, r in enumerate(pendientes, 1):
-            try:
-                cache[r["id"]] = consultar_openalex(r, a.correo) or {"no_encontrado": True}
-                cache[r["id"]]["fecha"] = hoy
-            except ConnectionError as e:
-                print(f"\nSin conexión ({e}). Lo consultado se guardó; vuelve a ejecutar el script para continuar.")
-                break
-            if n % 50 == 0:
-                CACHE.write_text(json.dumps(cache, ensure_ascii=False), encoding="utf-8")
-                print(f"  … {n} de {len(pendientes)}")
-            time.sleep(0.12)
+        try:
+            for n, r in enumerate(pendientes, 1):
+                try:
+                    cache[r["id"]] = consultar_openalex(r, a.correo) or {"no_encontrado": True}
+                    cache[r["id"]]["fecha"] = hoy
+                except ConnectionError as e:
+                    print(f"\nSin conexión ({e}). Lo consultado se guardó; vuelve a ejecutar el script para continuar.")
+                    break
+                if n % 10 == 0:
+                    CACHE.write_text(json.dumps(cache, ensure_ascii=False), encoding="utf-8")
+                if n % 50 == 0:
+                    print(f"  … {n} de {len(pendientes)}", flush=True)
+                time.sleep(0.12)
+        except KeyboardInterrupt:
+            CACHE.write_text(json.dumps(cache, ensure_ascii=False), encoding="utf-8")
+            sys.exit("\nDetenido con Ctrl+C. Lo consultado se guardó; vuelve a ejecutar el script para continuar.")
         CACHE.write_text(json.dumps(cache, ensure_ascii=False), encoding="utf-8")
 
     filas, estado = [], {}
