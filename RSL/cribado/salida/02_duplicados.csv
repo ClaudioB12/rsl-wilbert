@@ -1,0 +1,338 @@
+﻿base,titulo,anio,doi,coincide_con_base,id_conservado,motivo
+Scopus,Big Data and Deep Learning in Smart Cities: A Comprehensive Dataset for AI-Driven Traffic Accident Detection and Computer Vision Systems,2024,10.1109/ICMI60790.2024.10586073,Scopus,R0260,título
+WoS,Fast and Precise: Parallel Processing of Vehicle Traffic Videos Using Big Data Analytics,2022,10.1109/TITS.2021.3109625,Scopus,R0496,DOI
+WoS,Automatic Traffic Anomaly Detection on the Road Network with Spatial-Temporal Graph Neural Network Representation Learning,2022,10.1155/2022/4222827,Scopus,R0243,DOI
+WoS,Automated detection of vehicles with anomalous trajectories in traffic surveillance videos,2023,10.3233/ICA-230706,Scopus,R0235,DOI
+WoS,Dual-Stream Anomaly Detection Network for Real-World Traffic Scenarios,2024,10.1109/TITS.2024.3476276,Scopus,R0441,DOI
+WoS,Early Detection of Freeway Traffic Anomalies With a Cycle-Consistent Bidirectional Generative Adversarial Network,2026,10.1109/ACCESS.2026.3660765,Scopus,R0444,DOI
+WoS,Abnormal Trajectory Detection Based on Geospatial Consistent Modeling,2020,10.1109/ACCESS.2020.3028847,Scopus,R0024,DOI
+WoS,Unsupervised detection of inflows and outflows in intersection traffic videos,2026,10.1177/10692509261442319,Scopus,R1200,DOI
+WoS,A multimodal deep fusion framework for highway traffic anomaly detection,2025,10.1038/s41598-025-18671-x,Scopus,R0102,DOI
+WoS,A data-driven approach for road accident detection in surveillance videos,2024,10.1007/s11042-023-16193-0,Scopus,R0046,DOI
+WoS,Traffic Anomaly Detection based on Spatio-Temporal Hypergraph Convolution Neural Networks,2024,10.1016/j.physa.2024.129891,Scopus,R1147,DOI
+WoS,A framework for detecting and predicting highway traffic anomalies via multimodal fusion and heterogeneous graph neural networks,2025,10.1371/journal.pone.0326313,Scopus,R0072,DOI
+WoS,GMAT-DU: Traffic Anomaly Prediction With Fine Spatiotemporal Granularity in Sparse Data,2023,10.1109/TITS.2023.3249409,Scopus,R0536,DOI
+WoS,A novel framework for detecting non-recurrent road traffic anomalies by combining a temporal graph convolutional network and hierarchical time memory detector,2023,10.1111/tgis.13022,Scopus,R0157,DOI
+WoS,Road traffic anomaly monitoring and warning based on DeepWalk algorithm,2023,10.1093/tse/tdac049,Scopus,R1014,DOI
+WoS,Attention-based Recurrent Neural Network for Traffic Flow Prediction,2020,10.3966/160792642020052103020,Scopus,R0232,DOI
+WoS,Anomalous Sub-Trajectory Detection With Graph Contrastive Self-Supervised Learning,2024,10.1109/TVT.2024.3382685,Scopus,R0137,DOI
+WoS,Detecting Urban Traffic Anomalies Using Traffic-Monitoring Data,2024,10.3390/ijgi13100351,Scopus,R0380,DOI
+WoS,Lightweight multimodal feature graph convolutional network for dangerous driving behavior detection,2023,10.1007/s11554-023-01277-9,Scopus,R0630,DOI
+WoS,Real-time traffic anomaly detection based on Gaussian mixture model and hidden Markov model,2021,10.1002/cpe.6714,Scopus,R0946,DOI
+WoS,TriNet-RTAD: An efficient ensemble-based deep CNN framework for road traffic anomaly detection,2026,10.1016/j.array.2026.100920,Scopus,R1185,DOI
+WoS,MG-TAR: Multi-View Graph Convolutional Networks for Traffic Accident Risk Prediction,2023,10.1109/TITS.2023.3237072,Scopus,R0654,DOI
+WoS,Development of a Road Surface Conditions Prediction Model for Snow Removal Decision-Making,2025,10.3390/su17198794,Scopus,R0394,DOI
+WoS,Recognition method of abnormal driving behavior using the bidirectional gated recurrent unit and convolutional neural network,2023,10.1016/j.physa.2022.128317,Scopus,R0955,DOI
+WoS,Risk-Optimal and Equitable Retrofitting Strategy Using a Siamese Graph Neural Network for Earthquake-Induced Landslide Hazards,2025,10.1061/JCCEE5.CPENG-6100,Scopus,R1008,DOI
+WoS,How Generative Adversarial Networks Promote the Development of Intelligent Transportation Systems: A Survey,2023,10.1109/JAS.2023.123744,Scopus,R0562,DOI
+WoS,A data-centric weak supervised learning for highway traffic incident detection,2022,10.1016/j.aap.2022.106779,Scopus,R0045,DOI
+WoS,A Network Traffic Classification Method Based on Graph Convolution and LSTM,2021,10.1109/ACCESS.2021.3128181,Scopus,R0123,DOI
+WoS,Parallel recurrent neural network with transformer for anomalous trajectory detection,2025,10.1007/s10489-024-06069-7,Scopus,R0719,DOI
+WoS,Graph autoencoder with mirror temporal convolutional networks for traffic anomaly detection,2024,10.1038/s41598-024-51374-3,Scopus,R0539,DOI
+WoS,Traffic Accident Detection Using Background Subtraction and CNN Encoder-Transformer Decoder in Video Frames,2023,10.3390/math11132884,Scopus,R1138,DOI
+WoS,A Dual Channel Cyber-Physical Transportation Network for Detecting Traffic Incidents and Driver Emotion,2024,10.1109/TCE.2023.3325335,Scopus,R0064,DOI
+WoS,Real-time traffic incident detection based on a hybrid deep learning model,2022,10.1080/23249935.2020.1813214,Scopus,R0949,DOI
+WoS,From Prediction to Prevention: Leveraging Deep Learning in Traffic Accident Prediction Systems,2023,10.3390/electronics12204335,Scopus,R0512,DOI
+WoS,HCNNet: a hybrid convolutional neural network for abnormal human driver behaviour detection,2025,10.1007/s12046-024-02656-z,Scopus,R0553,DOI
+WoS,UIT-ADrone: A Novel Drone Dataset for Traffic Anomaly Detection,2023,10.1109/JSTARS.2023.3285905,Scopus,R1192,DOI
+WoS,Network Traffic Anomaly Detection via Deep Learning,2021,10.3390/info12050215,Scopus,R0688,DOI
+WoS,Automatic Detection of Traffic Accidents from Video Using Deep Learning Techniques,2021,10.3390/computers10110148,Scopus,R0239,DOI
+WoS,Vehicle Trajectory Anomaly Detection Based on Reconstruction Error,2023,10.4018/IJDWM.316460,Scopus,R1000,DOI
+WoS,A flexible deep learning-aware framework for travel time prediction considering traffic event,2021,10.1016/j.engappai.2021.104491,Scopus,R0071,DOI
+WoS,Efficient Directed Hypergraph Network for Unsupervised Traffic Anomaly Detection,2026,10.1109/MITS.2025.3645281,Scopus,R0450,DOI
+WoS,An Overview of Different Deep Learning Techniques Used in Road Accident Detection,2023,,Scopus,R0163,título
+WoS,Traffic Accident Detection Method Using Trajectory Tracking and Influence Maps,2023,10.3390/math11071743,Scopus,R1137,DOI
+WoS,Road Traffic Anomaly Detection by Human-Attention-Assisted Text-Vision Learning,2026,10.3390/s26092638,Scopus,R1013,DOI
+WoS,Suspicious detection in road traffic based on Kd-SLIC-K-means and SBAF-CNN using aerial view surveillance video,2026,10.1038/s41598-026-51420-2,Scopus,R1092,DOI
+WoS,RT-Cabi: an Internet of Things based framework for anomaly behavior detection with data correction through edge collaboration and dynamic feature fusion,2024,10.7717/peerj-cs.2306,Scopus,R1020,DOI
+WoS,Traffic Accident Risk Prediction via Multi-View Multi-Task Spatio-Temporal Networks,2023,10.1109/TKDE.2021.3135621,Scopus,R1141,DOI
+WoS,Long short-term memory and convolutional neural network for abnormal driving behaviour recognition,2020,10.1049/iet-its.2019.0200,Scopus,R0637,DOI
+WoS,SO-TAD: A surveillance-oriented benchmark for traffic accident detection,2025,10.1016/j.neucom.2024.129061,Scopus,R1064,DOI
+WoS,TA-NET: Empowering Highly Efficient Traffic Anomaly Detection Through Multi-Head Local Self-Attention and Adaptive Hierarchical Feature Reconstruction,2024,10.1109/TITS.2024.3365820,Scopus,R1097,DOI
+WoS,Recognition of DDoS attacks based on images correlation analysis within deep learning framework,2022,10.1007/s00500-022-07428-7,Scopus,R0957,DOI
+WoS,Graph Convolutional Adversarial Networks for Spatiotemporal Anomaly Detection,2022,10.1109/TNNLS.2021.3136171,Scopus,R0540,DOI
+WoS,Analyzing Important Elements for Improving the Safety of Motorways,2024,10.3390/app142311115,Scopus,R0115,DOI
+WoS,AI-Based Vehicular Network toward 6G and IoT: Deep Learning Approaches,2022,10.1145/3466691,Scopus,R0082,DOI
+WoS,SHIP TRAJECTORY CLUSTERING METHOD BASED ON DEEP NEURAL NETWORKS,2022,,Scopus,R1044,título
+WoS,Traffic Accident Prediction without Object Detection for Single-Vehicle Accidents,2025,10.1587/transfun.2024IMP0005,Scopus,R1140,DOI
+WoS,Automated traffic incident detection with a smaller dataset based on generative adversarial networks,2020,10.1016/j.aap.2020.105628,Scopus,R0238,DOI
+WoS,CMAD: a cooperative multi-agent framework leveraging transformer-contextual q-networks for unsupervised traffic anomaly detection,2026,10.1080/23249935.2026.2652382,Scopus,R0283,DOI
+WoS,Smart Diagnosis: Deep Learning Boosted Driver Inattention Detection and Abnormal Driving Prediction,2022,10.1109/JIOT.2021.3103852,Scopus,R1053,DOI
+WoS,Design of an AI-based security anomaly detection system for IoT terminals based on the ViT-transformer fusion model,2026,10.1038/s41598-026-55476-y,Scopus,R0367,DOI
+WoS,DSGF-YOLO: A Lightweight Deep Neural Network for Traffic Accident Detection and Severity Classifications,2025,10.3390/vehicles7040153,Scopus,R0438,DOI
+WoS,Attention-based Deep Feature Class Proximity for Detection of Traffic Anomaly in Imbalanced Dataset,2025,10.1007/s11760-025-04798-x,Scopus,R0231,DOI
+WoS,Robustness of Traffic Anomaly Detection in UAV Videos: Cross-Weather Generalization,2026,10.1007/s13177-026-00661-6,Scopus,R1017,DOI
+WoS,Unsupervised anomaly detection based method of risk evaluation for road traffic accident,2023,10.1007/s10489-022-03501-8,Scopus,R1197,DOI
+WoS,Graph Multi-Resolution Transformer for Road Traffic Anomaly Detection,2025,10.1109/ACCESS.2025.3538836,Scopus,R0545,DOI
+WoS,The self supervised multimodal semantic transmission mechanism for complex network environments,2025,10.1038/s41598-025-15162-x,Scopus,R1110,DOI
+WoS,On the applicability of time series anomaly detection methods to real-world traffic volume data,2026,10.1016/j.trc.2026.105536,Scopus,R0705,DOI
+WoS,Simulation-based early detection and classification of severity of traffic incident using deep learning and dynamical reservoir features,2026,10.1016/j.trip.2026.102269,Scopus,R1049,DOI
+WoS,Transformer-Based Spatio-Temporal Unsupervised Traffic Anomaly Detection in Aerial Videos,2024,10.1109/TCSVT.2024.3376399,Scopus,R1184,DOI
+WoS,Abnormal Cockpit Pilot Driving Behavior Detection Using YOLOv4 Fused Attention Mechanism,2022,10.3390/electronics11162538,Scopus,R0011,DOI
+WoS,TempoLearn Network: Leveraging Spatio-Temporal Learning for Traffic Accident Detection,2023,10.1109/ACCESS.2023.3343410,Scopus,R1100,DOI
+WoS,Traffic-Prior-Guided State-Aware Framework for Robust Urban Traffic Anomaly Detection,2026,10.3390/urbansci10080457,Scopus,R1172,DOI
+WoS,Transformer-based modeling of abnormal driving events for freeway crash risk evaluation,2024,10.1016/j.trc.2024.104727,Scopus,R1183,DOI
+WoS,A Risk Identification and Prediction Model for Intelligent Driving Under Multi-Vehicle Interactions in Mountain Tunnel Environments,2026,10.1109/OJITS.2025.3647953,Scopus,R0185,DOI
+WoS,TU-DAT: A Computer Vision Dataset on Road Traffic Anomalies,2025,10.3390/s25113259,Scopus,R1187,DOI
+WoS,A shock wave diagram based deep learning model for early alerting an upcoming public event,2021,10.1016/j.trc.2020.102862,Scopus,R0193,DOI
+WoS,"Special Traffic Event Detection: Framework, Dataset Generation, and Deep Neural Network Perspectives",2023,10.3390/s23198129,Scopus,R1074,DOI
+WoS,Application effect of short-term traffic flow prediction method based on CNNBLSTM algorithm,2025,10.1371/journal.pone.0327460,Scopus,R0169,DOI
+WoS,Macroscopic Big Data Analysis and Prediction of Driving Behavior With an Adaptive Fuzzy Recurrent Neural Network on the Internet of Vehicles,2022,10.1109/ACCESS.2022.3171247,Scopus,R0646,DOI
+WoS,Directed-edge-based mining of regular routes for enhanced traffic pattern recognition from travel trajectories,2025,10.1371/journal.pone.0338954,Scopus,R0398,DOI
+WoS,Abnormal traffic detection-based on memory augmented generative adversarial IIoT-assisted network,2022,10.1007/s11276-022-02992-0,Scopus,R0021,DOI
+WoS,"Outlier Vehicle Trajectory Detection Using Deep Autoencoders in Santiago, Chile",2023,10.3390/s23031440,Scopus,R0716,DOI
+WoS,Causally-guided graph Mamba for detecting socially abnormal vehicle trajectories,2025,10.1016/j.neucom.2025.130649,Scopus,R0270,DOI
+WoS,Traffic Flow Prediction Model Based on Attention Mechanism Spatio-Temporal Graph Convolutional Network on US Highways,2026,10.3390/app16010559,Scopus,R1160,DOI
+WoS,Abnormal Behavior Detection and Safety Early Warning in Electric Vehicle Network Interaction Systems Using Deep Learning Algorithms,2025,10.1177/03611981251346475,Scopus,R0006,DOI
+WoS,Research on road traffic condition prediction of smart city based on spatio-temporal multi-source information fusion,2026,10.1038/s41598-025-18300-7,Scopus,R0988,DOI
+WoS,Low-cost and high-performance abnormal trajectory detection based on the GRU model with deep spatiotemporal sequence analysis in cloud computing,2024,10.1186/s13677-024-00611-1,Scopus,R0638,DOI
+WoS,CPA-MAC: A Collision Prediction and Avoidance MAC for Safety Message Dissemination in MEC-Assisted VANETs,2022,10.1109/TNSE.2021.3133480,Scopus,R0304,DOI
+WoS,GNN-RMNet: Leveraging graph neural networks and GPS analytics for driver behavior and route optimization in logistics,2025,10.1371/journal.pone.0328899,Scopus,R0537,DOI
+WoS,Driving Behavior Tracking and Recognition Based on Multisensors Data Fusion,2020,10.1109/JSEN.2020.2995401,Scopus,R0427,DOI
+WoS,A Self-Imputing Deep Multitask Sequence Model for Traffic Disruption Detection in Extreme Conditions,2025,10.1109/ACCESS.2025.3612407,Scopus,R0192,DOI
+WoS,A Data Augmentation Approach to Distracted Driving Detection,2021,10.3390/fi13010001,Scopus,R0044,DOI
+WoS,SafeDriving: An Effective Abnormal Driving Behavior Detection System Based on EMG Signals,2021,10.1109/JIOT.2021.3135512,Scopus,R1023,DOI
+WoS,STTD: spatial-temporal transformer with double recurrent graph convolutional cooperative network for traffic flow prediction,2024,10.1007/s10586-024-04583-4,Scopus,R1085,DOI
+WoS,MF-YOLO: A Lightweight Method for Real-Time Dangerous Driving Behavior Detection,2024,10.1109/TIM.2024.3472868,Scopus,R0653,DOI
+WoS,Intelligent Urban Traffic Congestion Prediction Through Accident-Aware and Time-Dependent Traffic Analytics,2026,10.3390/s26144629,Scopus,R0605,DOI
+WoS,Spatiotemporal subgraph learning for abnormal urban congestion diffusion prediction,2026,10.1016/j.tre.2026.104855,Scopus,R1072,DOI
+WoS,A robust deep learning-based system for pedestrian-aware collision prevention in autonomous vehicles,2026,10.1016/j.ijtst.2025.05.007,Scopus,R0187,DOI
+WoS,On the possibility of short-term traffic prediction during disaster with machine learning approaches: An exploratory analysis,2020,10.1016/j.tranpol.2020.05.023,Scopus,R0708,DOI
+WoS,An empirical study for the traffic flow rate prediction-based anomaly detection in software-defined networking: a challenging overview,2023,10.1007/s13278-023-01057-0,Scopus,R0120,DOI
+WoS,A Joint Trajectory Completion Method Combined Spatiotemporal Motion for Long-Span Bridge Surveillance System With Dead Zone,2025,10.1109/TIM.2025.3538091,Scopus,R0089,DOI
+WoS,Two-Tier Anomaly Detection for V2I Alerting on IoT Vehicle Counts: A Kuwait Corridor Benchmark,2026,10.3390/s26175368,Scopus,R1190,DOI
+WoS,Network traffic prediction based on PSO-LightGBM-TM,2024,10.1016/j.comnet.2024.110810,Scopus,R0690,DOI
+WoS,A vision-based abnormal trajectory detection framework for online traffic incident alert on freeways,2022,10.1007/s00521-022-07335-w,Scopus,R0250,DOI
+WoS,"A variational autoencoder solution for road traffic forecasting systems: Missing data imputation, dimension reduction, model selection and anomaly detection",2020,10.1016/j.trc.2020.102622,Scopus,R0249,DOI
+WoS,Prediction of traffic accident risk based on vehicle trajectory data,2025,10.1080/15389588.2024.2402936,Scopus,R0732,DOI
+WoS,A depthwise convolutional variational autoencoder for anomaly detection in complex traffic scenarios from UAV views,2026,10.1016/j.eswa.2026.131425,Scopus,R0055,DOI
+WoS,Vision-Based Traffic Accident Detection and Anticipation: A Survey,2024,10.1109/TCSVT.2023.3307655,Scopus,R1227,DOI
+WoS,Cross-Modality Interaction-Based Traffic Accident Classification,2024,10.3390/app14051958,Scopus,R0307,DOI
+WoS,Expressway Traffic Incident Detection Using a Deep Learning Approach Based on Spatiotemporal Features with Multilevel Fusion,2024,10.1061/JTEPBS.TEENG-8001,Scopus,R0490,DOI
+WoS,SCTNet: Structured and causality-guided spatiotemporal diffusion network for unsupervised traffic accident detection,2026,10.1016/j.ipm.2025.104598,Scopus,R1034,DOI
+WoS,Intelligent traffic accident detection system in complex dynamic scenarios based on the dual-stream spatiotemporal-fusion model,2025,10.1016/j.engappai.2025.112675,Scopus,R0601,DOI
+WoS,Spatio-Temporal Feature Encoding for Traffic Accident Detection in VANET Environment,2022,10.1109/TITS.2022.3147826,Scopus,R1069,DOI
+WoS,Backbone-Level Enhancements in YOLOv9 for Traffic Accident Detection from Video Footage,2026,10.3390/electronics15102178,Scopus,R0255,DOI
+WoS,TADS: a novel dataset for road traffic accident detection from a surveillance perspective,2024,10.1007/s11227-024-06429-7,Scopus,R1096,DOI
+WoS,Multisource traffic incident reporting and evidence management in Internet of Vehicles using machine learning and blockchain,2023,10.1016/j.engappai.2022.105630,Scopus,R0680,DOI
+WoS,Traffic accident detection and condition analysis based on social networking data,2021,10.1016/j.aap.2021.105973,Scopus,R1134,DOI
+WoS,A Deep Learning Framework for Traffic Accident Detection Based on Improved YOLO11,2025,10.3390/vehicles7030081,Scopus,R0051,DOI
+WoS,Detection of anomalous vehicle trajectories using federated learning,2022,10.1016/j.ophoto.2022.100013,Scopus,R0385,DOI
+WoS,Deep representation of imbalanced spatio-temporal traffic flow data for traffic accident detection,2023,10.1049/itr2.12287,Scopus,R0356,DOI
+WoS,Feasibility Analysis of Static-Image-Based Traffic Accident Detection Under Domain Shift for Edge-AI Surveillance Systems,2026,10.3390/electronics15091803,Scopus,R0501,DOI
+WoS,A Deep Cycle Limit Learning Machine Method for Urban Expressway Traffic Incident Detection,2020,10.1155/2020/5965089,Scopus,R0049,DOI
+WoS,Multi-Scene Traffic Light Detection and Fault Identification via Dual-Attention Image Fusion,2026,10.32604/cmes.2026.078601,Scopus,R0676,DOI
+WoS,Utilizing LSTM Networks for the Prediction of Driver Behavior,2024,10.15199/48.2024.04.34,Scopus,R1211,DOI
+WoS,TARA-Net: A Fusion Network for Detecting Takeaway Rider Accidents,2021,10.1145/3457218,Scopus,R1098,DOI
+WoS,Research on Automatic Detection and Spatiotemporal Positioning Algorithm for Traffic Incidents Based on Video Sequence Analysis,2026,10.1142/S0219467828500398,Scopus,R0968,DOI
+WoS,A Hybrid Method for Traffic Incident Detection Using Random Forest-Recursive Feature Elimination and Long Short-Term Memory Network With Bayesian Optimization Algorithm,2021,10.1109/ACCESS.2020.3047340,Scopus,R0080,DOI
+WoS,A Dangerous Driving Behavior Detection Method Based on Improved YOLOv8s,2025,,Scopus,R0040,título
+WoS,Smartphone Sensors-Based Abnormal Driving Behaviors Detection: Serial-Feature Network,2021,10.1109/JSEN.2020.3036862,Scopus,R1055,DOI
+WoS,Dual Encoder-Decoder-Encoder with Adversarial Training for Unsupervised Traffic Accident Detection in Surveillance Videos,2025,10.3791/68731,Scopus,R0440,DOI
+WoS,Driver Emotion Recognition With a Hybrid Attentional Multimodal Fusion Framework,2023,10.1109/TAFFC.2023.3250460,Scopus,R0415,DOI
+WoS,Real-time taxi spatial anomaly detection based on vehicle trajectory prediction,2024,10.1016/j.tbs.2023.100698,Scopus,R0940,DOI
+WoS,Intelligent surveillance system for accident detection using machine learning,2026,10.1016/j.trip.2026.102192,Scopus,R0600,DOI
+WoS,Real-time driver activity detection using advanced deep learning models,2025,10.1007/s11571-025-10376-1,Scopus,R0935,DOI
+WoS,An abnormal driving behavior recognition algorithm based on the temporal convolutional network and soft thresholding,2022,10.1002/int.22842,Scopus,R0106,DOI
+WoS,Smart City Transportation: Deep Learning Ensemble Approach for Traffic Accident Detection,2024,10.1109/ACCESS.2024.3387972,Scopus,R1052,DOI
+WoS,Interaction-Aware Vehicle Trajectory Imputation via Scalable Graph Transformer With Spatiotemporal Semantic,2026,10.1109/TVT.2025.3618401,Scopus,R0606,DOI
+WoS,Toward Efficient Traffic Incident Detection via Explicit Edge-Level Incident Modeling,2024,10.1109/JIOT.2024.3371482,Scopus,R1116,DOI
+WoS,Identification of dangerous driving state based on lightweight deep learning model,2023,10.1016/j.compeleceng.2022.108509,Scopus,R0568,DOI
+WoS,Traffic Flow Prediction with Random Walks on Graph and Spatiotemporal Bidirectional Attention Transformer,2024,10.3390/app14114481,Scopus,R1162,DOI
+WoS,A Bayesian Method for Real-time Unsupervised Detection of Anomalous Road Vehicle Trajectories,2025,10.1007/s13177-024-00446-9,Scopus,R0004,DOI
+WoS,Pattern Anomaly Detection based on Sequence-to-Sequence Regularity Learning,2023,10.17559/TV-20230325000479,Scopus,R0721,DOI
+WoS,Fuzzy-based driver monitoring system to assess dangerous driving on roads,2026,10.1080/15389588.2025.2539923,Scopus,R0517,DOI
+WoS,SWencoder: a succinct shockwave diagram encoding and interpretable deep learning model design to enhance learning efficiency and assurance,2026,10.1016/j.trc.2026.105648,Scopus,R1094,DOI
+WoS,Unusual Driver Behavior Detection in Videos Using Deep Learning Models,2023,10.3390/s23010311,Scopus,R1204,DOI
+WoS,Real-Time Driver State Detection Using mmWave Radar: A Spatiotemporal Fusion Network for Behavior Monitoring on Edge Platforms,2025,10.3390/electronics14173556,Scopus,R0937,DOI
+WoS,FedDAF: Federated deep attention fusion for dangerous driving behavior detection,2024,10.1016/j.inffus.2024.102584,Scopus,R0502,DOI
+WoS,Incident duration reliability assessment using Monte-Carlo simulation and kernel density estimation of machine learning-based models,2025,10.1016/j.ijtst.2024.11.005,Scopus,R0584,DOI
+WoS,"MVim: A high-accuracy, lightweight neural network for real-time driver behavior recognition",2026,10.1016/j.eswa.2025.129091,Scopus,R0684,DOI
+WoS,Lightweight highway accident scene recognition based on improved Yolov8n,2026,10.1088/2631-8695/ae9501,Scopus,R0629,DOI
+WoS,RFDANet: an FMCW and TOF radar fusion approach for driver activity recognition using multi-level attention based CNN and LSTM network,2024,10.1007/s40747-023-01236-8,Scopus,R1004,DOI
+WoS,A Real-Time Consensus-Free Accident Detection Framework for Internet of Vehicles Using Vision Transformer and EfficientNet,2025,10.3390/ai7010004,Scopus,R0175,DOI
+WoS,SLAFusion: Attention fusion based on SAX and LSTM for dangerous driving behavior detection,2023,10.1016/j.ins.2023.119063,Scopus,R1051,DOI
+WoS,Deep Unsupervised Transfer Adversarial Network for Abnormal Driving Behavior Recognition Based on Smartphone Sensors,2024,10.1109/JSEN.2024.3478254,Scopus,R0359,DOI
+WoS,Drivers' Comprehensive Emotion Recognition Based on HAM,2023,10.3390/s23198293,Scopus,R0420,DOI
+WoS,Deep Deconvolution for Traffic Analysis With Distributed Acoustic Sensing Data,2023,10.1109/TITS.2022.3223084,Scopus,R0334,DOI
+WoS,Predicting non-recurrent congestion impact: A pattern-based approach for speed drop ratio prediction using weighted K-nearest neighbors,2026,10.1016/j.cie.2025.111769,Scopus,R0730,DOI
+WoS,An improved long short-term memory networks with Takagi-Sugeno fuzzy for traffic speed prediction considering abnormal traffic situation,2020,10.1111/coin.12291,Scopus,R0129,DOI
+WoS,A New Edge Computing Method Based on Deep Learning in Intelligent Transportation System,2025,10.1109/TVT.2024.3408163,Scopus,R0124,DOI
+WoS,"Detecting Human Driver Inattentive and Aggressive Driving Behavior Using Deep Learning: Recent Advances, Requirements and Open Challenges",2020,10.1109/ACCESS.2020.2999829,Scopus,R0378,DOI
+WoS,A dynamic method to predict driving risk on sharp curves using multi-source data,2023,10.1016/j.aap.2023.107228,Scopus,R0068,DOI
+WoS,Safety in Smart Cities-Automatic Recognition of Dangerous Driving Styles,2026,10.3390/info17010044,Scopus,R1029,DOI
+WoS,Multi-Adjacent Camera-Based Dangerous Driving Trajectory Recognition for Ultra-Long Highways,2024,10.3390/app14114593,Scopus,R0666,DOI
+WoS,Identification of Traffic Flow Spatio-Temporal Patterns and Their Associated Weather Factors: A Case Study in the Terminal Airspace of Hong Kong,2024,10.3390/aerospace11070531,Scopus,R0571,DOI
+WoS,ELM-HTM guided bio-inspired unsupervised learning for anomalous trajectory classification,2020,10.1016/j.cogsys.2020.04.003,Scopus,R0456,DOI
+WoS,Real-time detection of abnormal driving behavior based on long short-term memory network and regression residuals,2023,10.1016/j.trc.2022.103983,Scopus,R0933,DOI
+WoS,Text-augmented reinforcement learning for real-time and robust traffic signal control,2026,10.1016/j.engappai.2026.116083,Scopus,R1103,DOI
+WoS,Abnormal Driving Detection With Normalized Driving Behavior Data: A Deep Learning Approach,2020,10.1109/TVT.2020.2993247,Scopus,R0017,DOI
+WoS,HAR-Net: An Hourglass Attention ResNet Network for Dangerous Driving Behavior Detection,2024,10.3390/electronics13061019,Scopus,R0551,DOI
+WoS,MM-LMF: A Low-Rank Multimodal Fusion Dangerous Driving Behavior Recognition Method Based on FMCW Signals,2022,10.3390/electronics11223800,Scopus,R0657,DOI
+WoS,Research on Driver Drowsiness Detection Method based on Deep Learning,2024,10.57417/jrnal.10.4_313,Scopus,R0978,DOI
+WoS,"State-of-the-Art on IoV-Based Deep Learning Framework for Enhanced Driving Behavior Recognition: Recent Progress, Technology Updates, Challenges, and Future Direction",2025,10.1109/ACCESS.2025.3594091,Scopus,R1078,DOI
+WoS,YOLO-AFR: An Improved YOLOv12-Based Model for Accurate and Real-Time Dangerous Driving Behavior Detection,2025,10.3390/app15116090,Scopus,R1236,DOI
+WoS,DANGEROUS DRIVING BEHAVIOR DETECTION IN-CAR BASED ON IMPROVED YOLOV11,2026,10.24507/ijicic.22.04.947,Scopus,R0319,DOI
+WoS,Deep Learning Enhanced Driving Behavior Evaluation Based on Vehicle-Edge-Cloud Architecture,2021,10.1109/TVT.2021.3078482,Scopus,R0350,DOI
+WoS,Abnormal Driving Behavior Detection: A Machine and Deep Learning Based Hybrid Model,2025,10.1007/s13177-025-00471-2,Scopus,R0012,DOI
+WoS,Spatial Deep Learning Approach to Older Driver Classification,2024,10.1109/ACCESS.2024.3516572,Scopus,R1066,DOI
+WoS,Unsupervised Cross-Scenario Abnormal Driving Behavior Recognition Using Smartphone Sensor Data,2024,10.1109/JIOT.2023.3344482,Scopus,R1198,DOI
+WoS,Traffic flow prediction using multi-view graph convolution and masked attention mechanism,2022,10.1016/j.comcom.2022.08.008,Scopus,R1161,DOI
+WoS,A Trusted Supervision Paradigm for Autonomous Driving Based on Multimodal Data Authentication,2024,10.3390/bdcc8090100,Scopus,R0229,DOI
+WoS,Beyond classification and regression: A novel multi-task deep learning framework for driver state understanding in human-machine Co-driving system,2025,10.1016/j.knosys.2025.113777,Scopus,R0256,DOI
+WoS,AI-Driven Driver Behavior Assessment Through Vehicle and Health Monitoring for Safe Driving-A Survey,2024,10.1109/ACCESS.2024.3383775,Scopus,R0084,DOI
+WoS,Driving State Discrimination Algorithm Based on Lightweight Network and Contrast Learning,2022,10.1142/S0218001422520255,Scopus,R0434,DOI
+WoS,Detecting Abnormal Vehicle Behavior With a Diffusion-Transformer Generation Framework,2026,10.1109/JIOT.2026.3686313,Scopus,R0372,DOI
+WoS,Driving fingerprinting enhances drowsy driving detection: Tailoring to individual driver characteristics,2024,10.1016/j.aap.2024.107812,Scopus,R0431,DOI
+IEEE,Spatial-Temporal Analysis for Traffic Incident Detection Using Deep Learning,2023,10.1109/i-PACT58649.2023.10434683,Scopus,R1068,DOI
+IEEE,Traffic Incident Detection Algorithm based on Deep Learning: A Statistical Optimization Approach,2025,10.1109/ICEARS64219.2025.10940611,Scopus,R1163,DOI
+IEEE,AI Video Analytics Based on Traffic Fusion Computing for Road Traffic Incident Detection,2023,10.1109/ICSPCC59353.2023.10400291,Scopus,R0087,DOI
+IEEE,Convolutional Neural Networks for Enhanced Real-Time Traffic Incident Detection and Image Classification,2025,10.1109/InCACCT65424.2025.11011399,Scopus,R0299,DOI
+IEEE,Intelligent Traffic Accident Detection System using Deep Learning Fusion Techniques,2026,10.1109/ICAUC68182.2026.11441302,Scopus,R0602,DOI
+IEEE,Development of a Deep Learning-Based System for Road Traffic Anomaly Detection,2024,10.1109/SEB4SDG60871.2024.10630004,Scopus,R0393,DOI
+IEEE,Graph Multi-Resolution Transformer for Road Traffic Anomaly Detection,2025,10.1109/ACCESS.2025.3538836,Scopus,R0545,DOI
+IEEE,A Spatiotemporal Graph Autoencoder for Early Freeway Traffic Anomaly Detection,2025,10.1109/ICSPIS68676.2025.11551722,Scopus,R0200,DOI
+IEEE,Optimization of Traffic Anomaly Detection under Heavy Rain Weather Based on Deep Learning,2026,10.1109/EITCE70137.2026.11634483,Scopus,R0710,DOI
+IEEE,A Simulation-Based Framework for Urban Traffic Accident Detection,2023,10.1109/ICASSP49357.2023.10094809,Scopus,R0195,DOI
+IEEE,Smart Surveillance System using MobileNetV2-LSTM for Criminal Activity and Traffic Incident Detection,2026,10.1109/ICICT68280.2026.11510773,Scopus,R1058,DOI
+IEEE,The Bigger Picture: Scene Understanding for Recognizing Accidents within Mixed-Traffic Scenario using Deep Learning,2023,10.1109/ICCSCE58721.2023.10237134,Scopus,R1106,DOI
+IEEE,A Hybrid Method for Traffic Incident Detection Using Random Forest-Recursive Feature Elimination and Long Short-Term Memory Network With Bayesian Optimization Algorithm,2021,10.1109/ACCESS.2020.3047340,Scopus,R0080,DOI
+IEEE,Traffic Accident Detection and Classification in Videos based on Deep Network Features,2023,10.1109/ICUFN57995.2023.10199977,Scopus,R1133,DOI
+IEEE,DGC-TAMNet: A Dynamic Graph-Convolutional Transformer Framework for Imbalanced Network Traffic Anomaly Detection,2026,10.1109/ICSEDIS68157.2026.11518270,Scopus,R0396,DOI
+IEEE,A Privacy-Aware Traffic Incident Detection and Emergency Response System Using Federated Learning,2026,10.1109/ICIICS67880.2026.11483563,Scopus,R0173,DOI
+IEEE,"IncidentNet: Traffic Incident Detection, Localization and Severity Estimation with Sparse Sensing",2024,10.1109/ITSC58415.2024.10920070,Scopus,R0585,DOI
+IEEE,Real-time Traffic Incident Detection Using an Autoencoder Model,2020,10.1109/ITSC45102.2020.9294455,Scopus,R0950,DOI
+IEEE,Toward Efficient Traffic Incident Detection via Explicit Edge-Level Incident Modeling,2024,10.1109/JIOT.2024.3371482,Scopus,R1116,DOI
+IEEE,STAnomalyNet: Spatio-Temporal Traffic Anomaly Detection with ConvLSTM,2026,10.1109/IATMSI68868.2026.11465333,Scopus,R1077,DOI
+IEEE,Unsupervised and Decentralized Traffic Incident Detection via Network Lasso,2026,10.1109/CAI68641.2026.11536548,Scopus,R1196,DOI
+IEEE,TA-NET: Empowering Highly Efficient Traffic Anomaly Detection Through Multi-Head Local Self-Attention and Adaptive Hierarchical Feature Reconstruction,2024,10.1109/TITS.2024.3365820,Scopus,R1097,DOI
+IEEE,A supervised approach using transformer networks for the detection of turning-related anomalies in urban intersections,2023,10.1109/ICCKE60553.2023.10326277,Scopus,R0204,DOI
+IEEE,Smart City Transportation: Deep Learning Ensemble Approach for Traffic Accident Detection,2024,10.1109/ACCESS.2024.3387972,Scopus,R1052,DOI
+IEEE,Customized Hybrid Deep Learning Model for Road Accident Detection Based on CCTV Images,2023,10.1109/IPCCC59175.2023.10253870,Scopus,R0312,DOI
+IEEE,Evaluating Traffic Anomaly Detection Performance Using GAN-Generated Synthetic Records,2025,10.1109/ICCNS66249.2025.11428509,Scopus,R0482,DOI
+IEEE,"Towards Accurate Traffic Accident Detection: Developing Deep Learning Strategies with Distant Past, Recent Past, and Adjacency Features",2023,10.1109/ITSC57777.2023.10422052,Scopus,R1118,DOI
+IEEE,Big Data and Deep Learning in Smart Cities: A Comprehensive Dataset for AI-Driven Traffic Accident Detection and Computer Vision Systems,2024,10.1109/SoutheastCon52093.2024.10500288,Scopus,R0260,DOI
+IEEE,Big Data and Deep Learning in Smart Cities: A Comprehensive Dataset for AI-Driven Traffic Accident Detection and Computer Vision Systems,2024,10.1109/ICMI60790.2024.10586073,Scopus,R0260,título
+IEEE,Efficient Directed Hypergraph Network for Unsupervised Traffic Anomaly Detection,2026,10.1109/MITS.2025.3645281,Scopus,R0450,DOI
+IEEE,A Lightweight Spatio-Temporal Traffic Anomaly Detection Using a Resnet-GRU Based Hybrid Framework,2026,10.1109/ESIC68176.2026.11496063,Scopus,R0092,DOI
+IEEE,YOLO-Based Real-Time Traffic Accident Detection for Smart Cities,2026,10.1109/CCIC68129.2026.11485997,Scopus,R1237,DOI
+IEEE,Deep Learning Ensemble Framework for Real-Time Traffic Accident Detection in Smart Cities with AMSE - ADM Data Augmentation,2026,10.1109/ICIPCN67432.2026.11438697,Scopus,R0351,DOI
+IEEE,Traffic Anomaly Detection via Trajectory-Augmented Dynamics and Joint Spatiotemporal Transformer,2025,10.1109/ICCWAMTIP68645.2025.11352625,Scopus,R1154,DOI
+IEEE,A Vision-Based Traffic Accident Analysis and Tracking system from Traffic Surveillance Video,2024,10.1109/INCOS59338.2024.10527531,Scopus,R0252,DOI
+IEEE,Data-Driven Anomaly Detection in Urban Traffic Data: A Deep Learning Approach,2025,10.1109/MT-ITS68460.2025.11223545,Scopus,R0327,DOI
+IEEE,Traffic Incident Detection in Jakarta on Twitter Texts Using a Multi-Label Classification Approach,2023,10.1109/IC3INA60834.2023.10285731,Scopus,R1165,DOI
+IEEE,A Hybrid Neural Network Architecture for Early Detection of DDOS attacks using Deep Learning Models,2021,10.1109/ICOSEC51865.2021.9591969,Scopus,R0081,DOI
+IEEE,UIT-ADrone: A Novel Drone Dataset for Traffic Anomaly Detection,2023,10.1109/JSTARS.2023.3285905,Scopus,R1192,DOI
+IEEE,Real-Time Traffic Accident Detection Using YOLOv11 Based on the Derivative of Traffic Parameters,2026,10.1109/ICSFT66733.2026.11507563,Scopus,R0942,DOI
+IEEE,Accident Detection Using Deep Learning,2020,10.1109/ICACCCN51052.2020.9362808,Scopus,R0028,DOI
+IEEE,Utilizing Graph Neural Networks to Detect Abnormal Driving Patterns in Vehicular Networks,2024,10.1109/CIC62241.2024.00022,Scopus,R1210,DOI
+IEEE,A Novel Learning-Based Collaborative Filtering System for Real-Time Traffic Accident Detection,2025,10.1109/DSIS67228.2025.11390621,Scopus,R0159,DOI
+IEEE,A-VAE: Attention based Variational Autoencoder for Traffic Video Anomaly Detection,2023,10.1109/I2CT57861.2023.10126296,Scopus,R0248,DOI
+IEEE,"Detecting Human Driver Inattentive and Aggressive Driving Behavior Using Deep Learning: Recent Advances, Requirements and Open Challenges",2020,10.1109/ACCESS.2020.2999829,Scopus,R0378,DOI
+IEEE,A Network Traffic Classification Method Based on Graph Convolution and LSTM,2021,10.1109/ACCESS.2021.3128181,Scopus,R0123,DOI
+IEEE,Early Detection of Freeway Traffic Anomalies With a Cycle-Consistent Bidirectional Generative Adversarial Network,2026,10.1109/ACCESS.2026.3660765,Scopus,R0444,DOI
+IEEE,A Meta-Graph Learning and Transformer-Based Temporal Modeling for Dynamic City Traffic Flow Prediction,2025,10.1109/ISMSIT67332.2025.11268199,Scopus,R0098,DOI
+IEEE,Smart Diagnosis: Deep Learning Boosted Driver Inattention Detection and Abnormal Driving Prediction,2022,10.1109/JIOT.2021.3103852,Scopus,R1053,DOI
+IEEE,A Dual Channel Cyber–Physical Transportation Network for Detecting Traffic Incidents and Driver Emotion,2024,10.1109/TCE.2023.3325335,Scopus,R0064,DOI
+IEEE,A Self-Contained Traffic Anomaly Detection System based on Distillation Learning for Resource Constrained Edge Deployment,2026,10.1109/ICOSAAS68663.2026.11648670,Scopus,R0191,DOI
+IEEE,Hybrid Deep Autoencoder with Random Forest in Native SDN Intrusion Detection Environment,2022,10.1109/ICC45855.2022.9838282,Scopus,R0565,DOI
+IEEE,Learning Traffic Anomalies from Generative Models on Real-Time Observations,2025,10.1109/ICSIP65915.2025.11171552,Scopus,R0624,DOI
+IEEE,Smartphone Sensors-Based Abnormal Driving Behaviors Detection: Serial-Feature Network,2021,10.1109/JSEN.2020.3036862,Scopus,R1055,DOI
+IEEE,Ensembling-mRBF-LSTM Framework for Prediction of Abnormal Traffic Flows,2020,10.1109/ICPAI51961.2020.00045,Scopus,R0475,DOI
+IEEE,Research on vehicle trajectory anomaly detection algorithm based on GRU and WGAN,2023,10.1109/ICSP58490.2023.10248894,Scopus,R0994,DOI
+IEEE,A Spatial Attention-based Bidirectional LSTM Graph Convolutional Network for Traffic Flow Anomaly Detection,2026,10.1109/EESPE68405.2026.11649000,Scopus,R0198,DOI
+IEEE,Enhanced VGG19 Model for Accident Detection and Classification from Video,2021,10.1109/ICDATA52997.2021.00017,Scopus,R0461,DOI
+IEEE,MAVAD: Audio-Visual Dataset and Method for Anomaly Detection in Traffic Videos,2024,10.1109/ICIP51287.2024.10647874,Scopus,R0649,DOI
+IEEE,Deep Ensemble-Based Spatiotemporal Traffic Forecasting Using Real-Time Urban Sensor Data,2026,10.1109/ICETICS69505.2026.11651281,Scopus,R0336,DOI
+IEEE,A Review on Road Accident Detection: Learning Techniques and IoT based Techniques,2025,10.1109/ICIMA64861.2025.11074031,Scopus,R0183,DOI
+IEEE,Traffic Incident Generation And Supervised Learning Based Detection Via A Microscopic Simulation Platform,2023,10.1109/CIS-RAM55796.2023.10370973,Scopus,R1168,DOI
+IEEE,Abnormal Traffic Congestion Recognition Based on Video Analysis,2020,10.1109/MIPR49039.2020.00016,Scopus,R0020,DOI
+IEEE,Establishment and Analysis of Dynamic Traffic Condition Model Based on In-Vehicle Video Images,2025,10.1109/CVIDL65390.2025.11085511,Scopus,R0477,DOI
+IEEE,Real-Time Traffic Analysis Using Vehicle Trajectory Similarity in Edge Computing,2025,10.1109/ICAIIC64266.2025.10920713,Scopus,R0945,DOI
+IEEE,Transformer-Based Spatio-Temporal Unsupervised Traffic Anomaly Detection in Aerial Videos,2024,10.1109/TCSVT.2024.3376399,Scopus,R1184,DOI
+IEEE,Interaction-Aware Vehicle Trajectory Imputation via Scalable Graph Transformer With Spatiotemporal Semantic,2026,10.1109/TVT.2025.3618401,Scopus,R0606,DOI
+IEEE,Fast and Precise: Parallel Processing of Vehicle Traffic Videos Using Big Data Analytics,2022,10.1109/TITS.2021.3109625,Scopus,R0496,DOI
+IEEE,GT2D: Unifying Temporal Dynamics and Spatial Topology for Encrypted Traffic Anomaly Detection,2026,10.1109/TCCN.2026.3711089,Scopus,R0550,DOI
+IEEE,A Lightweight Model for Detecting Dangerous Driving Behaviors in Road Transportation,2024,10.1109/CSCWD61410.2024.10580015,Scopus,R0091,DOI
+IEEE,Anomaly Detection of actual IoT traffic flows through Deep Learning,2021,10.1109/ICMLA52953.2021.00275,Scopus,R0151,DOI
+IEEE,Detecting Abnormal Vehicle Behavior With a Diffusion-Transformer Generation Framework,2026,10.1109/JIOT.2026.3686313,Scopus,R0372,DOI
+IEEE,Traffic Vehicle Tracking and Trajectory Classification Using LSTM,2024,10.1109/INDICON63790.2024.10958278,Scopus,R1176,DOI
+IEEE,Risk Analysis of Dangerous Driving Behaviors on Highways: A Prediction-Based Driving Risk Assessment Framework,2026,10.1109/ICCA69928.2026.11618300,Scopus,R1005,DOI
+IEEE,TRACE: Traffic Response Anomaly Capture Engine for Localization of Traffic Incidents,2025,10.1109/SMARTCOMP65954.2025.00067,Scopus,R1130,DOI
+IEEE,Automatic Traffic Accident Detection System Using ResNet and SVM,2020,10.1109/ICRCICN50933.2020.9296156,Scopus,R0241,DOI
+IEEE,Design and Implementation of a Highway Surveillance Video AI Analysis System,2024,10.1109/CVIDL62147.2024.10603833,Scopus,R0364,DOI
+IEEE,Abnormal Behavior Detection Based on D–S Evidence Theory for Air–Ground-Integrated Vehicular Networks,2025,10.1109/JIOT.2025.3549773,WoS,R0007,DOI
+IEEE,A Novel Approach for Accident Detection and Localization Using Deep Learning,2023,10.1109/ICAICCIT60255.2023.10465822,Scopus,R0155,DOI
+IEEE,MG-TAR: Multi-View Graph Convolutional Networks for Traffic Accident Risk Prediction,2023,10.1109/TITS.2023.3237072,Scopus,R0654,DOI
+IEEE,Anomalous Sub-Trajectory Detection With Graph Contrastive Self-Supervised Learning,2024,10.1109/TVT.2024.3382685,Scopus,R0137,DOI
+IEEE,Smart Transportation Revolution: Adaptive Monitoring with Squeeze and Excitation Networks,2025,10.1109/ICoACT63339.2025.11005183,Scopus,R1061,DOI
+IEEE,Design of Multifunctional Integrated Real-Time Traffic Supervision System,2025,10.1109/ICPECA63937.2025.10928836,Scopus,R0370,DOI
+IEEE,Spatiotemporal Forecasting of Incidents and Congestion with Implications for Sustainable Traffic Control,2026,,Scopus,R1070,título
+IEEE,Abnormal Traffic Detection: Traffic Feature Extraction and DAE-GAN With Efficient Data Augmentation,2023,10.1109/TR.2022.3204349,Scopus,R0023,DOI
+IEEE,ATADA: Adaptive Time Aware Anomaly Detection Approach for Real-Time Intelligent Transportation Systems,2023,10.1109/BigData59044.2023.10386785,Scopus,R0220,DOI
+IEEE,A New Edge Computing Method Based on Deep Learning in Intelligent Transportation System,2025,10.1109/TVT.2024.3408163,Scopus,R0124,DOI
+IEEE,RAPID: Integrating AI and Multi-Agent Systems for Enhanced Traffic Management Framework with YOLOv9,2024,10.1109/3ict64318.2024.10824256,Scopus,R0927,DOI
+IEEE,Outlier Detection based Model for Event Pattern Recognition in Vehicular Networks,2024,10.1109/WiMob61911.2024.10770496,Scopus,R0715,DOI
+IEEE,A Review of Unsupervised Learning Based Anomaly Detection in Traffic Videos,2025,10.1109/ICETETSIP64213.2025.11156587,Scopus,R0182,DOI
+IEEE,Deep Reinforcement Learning-Based Traffic Signal Control for Urban Congestion,2025,10.1109/CCNCPS66785.2025.11135668,Scopus,R0353,DOI
+IEEE,Graph Convolutional Adversarial Networks for Spatiotemporal Anomaly Detection,2022,10.1109/TNNLS.2021.3136171,Scopus,R0540,DOI
+IEEE,Encrypted Traffic Classification for Early-Stage Anomaly Detection in Power Grid Communication Network,2023,10.1109/ISGTEUROPE56780.2023.10407155,Scopus,R0458,DOI
+IEEE,A Self-Imputing Deep Multitask Sequence Model for Traffic Disruption Detection in Extreme Conditions,2025,10.1109/ACCESS.2025.3612407,Scopus,R0192,DOI
+IEEE,CPA-MAC: A Collision Prediction and Avoidance MAC for Safety Message Dissemination in MEC-Assisted VANETs,2022,10.1109/TNSE.2021.3133480,Scopus,R0304,DOI
+IEEE,Deep Deconvolution for Traffic Analysis With Distributed Acoustic Sensing Data,2023,10.1109/TITS.2022.3223084,Scopus,R0334,DOI
+IEEE,Dual-Stream Anomaly Detection Network for Real-World Traffic Scenarios,2024,10.1109/TITS.2024.3476276,Scopus,R0441,DOI
+IEEE,Network Traffic Prediction Using PSO-LightGBM- TM,2024,10.1109/INFOCOMWKSHPS61880.2024.10620828,Scopus,R0691,DOI
+IEEE,A risky prediction model of driving behaviors: especially for cognitive distracted driving behaviors,2020,10.1109/CVCI51460.2020.9338665,Scopus,R0186,DOI
+ScienceDirect,TriNet-RTAD: An efficient ensemble-based deep CNN framework for road traffic anomaly detection,2026,https://doi.org/10.1016/j.array.2026.100920,Scopus,R1185,DOI
+ScienceDirect,A data-centric weak supervised learning for highway traffic incident detection,2022,https://doi.org/10.1016/j.aap.2022.106779,Scopus,R0045,DOI
+ScienceDirect,Prediction of Dangerous Driving Behaviour Based on Vehicle Motion,2024,https://doi.org/10.1016/j.procs.2024.04.107,Scopus,R0731,DOI
+ScienceDirect,Intelligent traffic accident detection system in complex dynamic scenarios based on the dual-stream spatiotemporal-fusion model,2025,https://doi.org/10.1016/j.engappai.2025.112675,Scopus,R0601,DOI
+ScienceDirect,Traffic Anomaly Detection based on Spatio-Temporal Hypergraph Convolution Neural Networks,2024,https://doi.org/10.1016/j.physa.2024.129891,Scopus,R1147,DOI
+ScienceDirect,"A variational autoencoder solution for road traffic forecasting systems: Missing data imputation, dimension reduction, model selection and anomaly detection",2020,https://doi.org/10.1016/j.trc.2020.102622,Scopus,R0249,DOI
+ScienceDirect,Enhancing Freeway Safety: LSTM-Based Detection of Traffic Anomalies,2025,https://doi.org/10.1016/j.procs.2025.07.188,Scopus,R0465,DOI
+ScienceDirect,A shock wave diagram based deep learning model for early alerting an upcoming public event,2021,https://doi.org/10.1016/j.trc.2020.102862,Scopus,R0193,DOI
+ScienceDirect,A Bayesian deep learning method for freeway incident detection with uncertainty quantification,2022,https://doi.org/10.1016/j.aap.2022.106796,Scopus,R0002,DOI
+ScienceDirect,Transformer-based modeling of abnormal driving events for freeway crash risk evaluation,2024,https://doi.org/10.1016/j.trc.2024.104727,Scopus,R1183,DOI
+ScienceDirect,Causally-guided graph Mamba for detecting socially abnormal vehicle trajectories,2025,https://doi.org/10.1016/j.neucom.2025.130649,Scopus,R0270,DOI
+ScienceDirect,CMAD: a cooperative multi-agent framework leveraging transformer-contextual q-networks for unsupervised traffic anomaly detection,2026,https://doi.org/10.1080/23249935.2026.2652382,Scopus,R0283,DOI
+ScienceDirect,Towards driver abnormal behavior detection under local occlusion and small object conditions,2026,https://doi.org/10.1016/j.compeleceng.2026.111504,Scopus,R1121,DOI
+ScienceDirect,Automated traffic incident detection with a smaller dataset based on generative adversarial networks,2020,https://doi.org/10.1016/j.aap.2020.105628,Scopus,R0238,DOI
+ScienceDirect,Beyond classification and regression: A novel multi-task deep learning framework for driver state understanding in human-machine Co-driving system,2025,https://doi.org/10.1016/j.knosys.2025.113777,Scopus,R0256,DOI
+ScienceDirect,"MVim: A high-accuracy, lightweight neural network for real-time driver behavior recognition",2026,https://doi.org/10.1016/j.eswa.2025.129091,Scopus,R0684,DOI
+ScienceDirect,Recognition method of abnormal driving behavior using the bidirectional gated recurrent unit and convolutional neural network,2023,https://doi.org/10.1016/j.physa.2022.128317,Scopus,R0955,DOI
+ScienceDirect,Deep learning detection of anomalous patterns from bus trajectories for traffic insight analysis,2021,https://doi.org/10.1016/j.knosys.2021.106833,Scopus,R0348,DOI
+ScienceDirect,Uncovering intra- and inter-driver heterogeneity using driving behavior graphs,2026,https://doi.org/10.1016/j.ijtst.2026.01.004,Scopus,R1193,DOI
+ScienceDirect,Dynamic risk assessment of abnormal driving behaviors under varying traffic complexities,2026,https://doi.org/10.1016/j.asoc.2026.115002,Scopus,R0442,DOI
+ScienceDirect,Real-time detection of abnormal driving behavior based on long short-term memory network and regression residuals,2023,https://doi.org/10.1016/j.trc.2022.103983,Scopus,R0933,DOI
+ScienceDirect,A depthwise convolutional variational autoencoder for anomaly detection in complex traffic scenarios from UAV views,2026,https://doi.org/10.1016/j.eswa.2026.131425,Scopus,R0055,DOI
+ScienceDirect,Simulation-based early detection and classification of severity of traffic incident using deep learning and dynamical reservoir features,2026,https://doi.org/10.1016/j.trip.2026.102269,Scopus,R1049,DOI
+ScienceDirect,Detection of abnormal driving behaviour from autonomous vehicle’s view using Siamese and fully connected neural networks,2026,https://doi.org/10.1139/cjce-2024-0461,Scopus,R0383,DOI
+ScienceDirect,On the applicability of time series anomaly detection methods to real-world traffic volume data,2026,https://doi.org/10.1016/j.trc.2026.105536,Scopus,R0705,DOI
+ScienceDirect,SCTNet: Structured and causality-guided spatiotemporal diffusion network for unsupervised traffic accident detection,2026,https://doi.org/10.1016/j.ipm.2025.104598,Scopus,R1034,DOI
+ScienceDirect,A dynamic method to predict driving risk on sharp curves using multi-source data,2023,https://doi.org/10.1016/j.aap.2023.107228,Scopus,R0068,DOI
+ScienceDirect,Multisource traffic incident reporting and evidence management in Internet of Vehicles using machine learning and blockchain,2023,https://doi.org/10.1016/j.engappai.2022.105630,Scopus,R0680,DOI
+ScienceDirect,A new reconstruction-based method for multivariate time series anomaly detection with diffusion models,2026,https://doi.org/10.1016/j.engappai.2026.114656,Scopus,R0126,DOI
+ScienceDirect,Spatio-temporal traffic accidents detection via graph based generative adversarial network,2026,https://doi.org/10.1016/j.engappai.2025.113488,Scopus,R1073,DOI
+ScienceDirect,LLM-enhanced causal graph learning for real-time crash risk prediction,2026,https://doi.org/10.1016/j.aap.2026.108579,Scopus,R0635,DOI
+ScienceDirect,Generative adversarial network for car following trajectory generation and anomaly detection,2025,https://doi.org/10.1080/15472450.2023.2301691,Scopus,R0526,DOI
+ScienceDirect,Traffic accident detection and condition analysis based on social networking data,2021,https://doi.org/10.1016/j.aap.2021.105973,Scopus,R1134,DOI
+ScienceDirect,SO-TAD: A surveillance-oriented benchmark for traffic accident detection,2025,https://doi.org/10.1016/j.neucom.2024.129061,Scopus,R1064,DOI
+ACM,BiLSTM and Transformer Neural Network for Abnormal Driving Behavior Recognition,2025,10.1145/3712335.3712373,Scopus,R0261,DOI
+ACM,Analysis and Evaluation of Baseline Models for Highway Traffic Incident Detection,2026,10.1145/3788108.3788507,Scopus,R0107,DOI
+ACM,Driver Abnormal Driving Detection Model based on Deep Learning,2024,10.1145/3616901.3616942,Scopus,R0408,DOI
+ACM,DF-TAR: A Deep Fusion Network for Citywide Traffic Accident Risk Prediction with Dangerous Driving Behavior,2021,10.1145/3442381.3450003,Scopus,R0395,DOI
+ACM,Towards Safer Roads: Deep Learning for Rash Driving Detection using Smartphone Sensors Data,2024,10.1145/3674829.3675069,Scopus,R1127,DOI
+ACM,AI-Based Vehicular Network toward 6G and IoT: Deep Learning Approaches,2021,10.1145/3466691,Scopus,R0082,DOI
+ACM,Anomaly Detection in Traffic Surveillance Videos with GAN-based Future Frame Prediction,2020,10.1145/3372278.3390701,Scopus,R0146,DOI
+ACM,Research on ByteTrack target tracking algorithm and target behavior analysis,2024,10.1145/3672758.3672884,Scopus,R0971,DOI
+ACM,Short-term Driving Style Recognition Based on Improved Deep Clustering in High-speed Scenarios,2025,10.1145/3726010.3726093,Scopus,R1046,DOI
+ACM,TARA-Net: A Fusion Network for Detecting Takeaway Rider Accidents,2021,10.1145/3457218,Scopus,R1098,DOI
+ACM,Structural Attention-based Recurrent Variational Autoencoder for Highway Vehicle Anomaly Detection,2023,10.5555/3545946.3598754,Scopus,R1082,título
+ACM,Design and analysis of driver sign safety monitoring system based on multi-algorithm combination,2024,10.1145/3650400.3650636,Scopus,R0363,DOI
+ACM,Detecting Socially Abnormal Highway Driving Behaviors via Recurrent Graph Attention Networks,2023,10.1145/3543507.3583452,Scopus,R0379,DOI
+ACM,Proceedings of the 2025 6th International Conference on Computer Information and Big Data Applications,2025,,ACM,R0836,título
+ACM,Proceedings of the 2023 6th International Conference on Artificial Intelligence and Pattern Recognition,2024,,ACM,R0776,título
+ACM,"Proceedings of the 2023 3rd International Conference on Big Data, Artificial Intelligence and Risk Management",2024,,ACM,R0765,título
+ACM,MTTPRE: a multi-scale spatial-temporal model for travel time prediction,2022,10.1145/3557915.3560986,ACM,R0665,DOI
+ACM,Zero-Configuration Alarms: Towards Reducing Distracting Smartphone Interactions while Driving,2024,10.1145/3675159,ACM,R1239,DOI
+ACM,Traffic Anomaly Detection through Generative Modeling of Multi-Agent Interactions in Traffic Flow,2025,,Scopus,R1151,título

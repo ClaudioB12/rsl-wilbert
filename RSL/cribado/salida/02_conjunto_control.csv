@@ -1,0 +1,22 @@
+﻿id_estudio,titulo,anio,encontrado,id_registro,bases
+S01,A Deep Cycle Limit Learning Machine Method for Urban Expressway Traffic Incident Detection,2020,Sí,R0049,"Scopus, Web of Science"
+S02,Intelligent Intersection: Two-stream Convolutional Networks for Real-time Near-accident Detection in Traffic Video,2020,Sí,R0597,ACM Digital Library
+S03,Road Closure Detection based upon Multi-feature Fusion,2021,Sí,R1009,ACM Digital Library
+S04,Detecting Extreme Traffic Events Via a Context Augmented Graph Autoencoder,2022,Sí,R0376,ACM Digital Library
+S05,Anomaly Detection in Traffic Surveillance Videos Using Deep Learning,2022,No,,
+S06,Deep learning based detection and localization of road accidents from traffic surveillance videos,2022,Sí,R0341,ScienceDirect
+S07,Traffic Anomaly Prediction System Using Predictive Network,2022,No,,
+S08,Automatic Traffic Anomaly Detection on the Road Network with Spatial-Temporal Graph Neural Network Representation Learning,2022,Sí,R0243,"Scopus, Web of Science"
+S09,Structural Attention-Based Recurrent Variational Autoencoder for Highway Vehicle Anomaly Detection,2023,Sí,R1082,"Scopus, ACM Digital Library"
+S10,Deep representation of imbalanced spatio-temporal traffic flow data for traffic accident detection,2023,Sí,R0356,"Scopus, Web of Science"
+S11,Vehicle Abnormal Behavior Detection Based on Dense Block and Soft Thresholding,2024,Sí,R1214,ScienceDirect
+S12,Detecting Urban Traffic Anomalies Using Traffic-Monitoring Data,2024,Sí,R0380,"Scopus, Web of Science"
+S13,Graph autoencoder with mirror temporal convolutional networks for traffic anomaly detection,2024,Sí,R0539,"Scopus, Web of Science"
+S14,Multi-Scale Detection of Anomalous Spatio-Temporal Trajectories in Evolving Trajectory Datasets,2024,Sí,R0674,ACM Digital Library
+S15,Multi-Adjacent Camera-Based Dangerous Driving Trajectory Recognition for Ultra-Long Highways,2024,Sí,R0666,"Scopus, Web of Science"
+S16,AIP-Urban: Edge-Enabled Deep Learning Framework for Predictive Maintenance and Anomaly Detection in Urban Traffic Infrastructure,2025,No,,
+S17,A multimodal deep fusion framework for highway traffic anomaly detection,2025,Sí,R0102,"Scopus, Web of Science"
+S18,A Prediction-Based Anomaly Detection Method for Traffic Flow Data with Multi-Domain Feature Extraction,2025,No,,
+S19,Graph Multi-Resolution Transformer for Road Traffic Anomaly Detection,2025,Sí,R0545,"Scopus, Web of Science, IEEE Xplore"
+S20,Road Traffic Anomaly Detection by Human-Attention-Assisted Text–Vision Learning,2026,Sí,R1013,"Scopus, Web of Science"
+S21,Multi-stage classification of abnormal traffic events using a multi-head + LSTM,2026,Sí,R0682,Scopus

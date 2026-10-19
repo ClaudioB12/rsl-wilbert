@@ -1,6 +1,6 @@
 base,fecha,resultados_en_pantalla,responsable,observaciones
-Scopus,,,,
-WoS,,,,
-IEEE,,,,
-ScienceDirect,,,,
-ACM,,,,
+Scopus,2026-10-19,577,Wilbert A. Mayta Arotaype,"Exportado sin filtros (577). Los filtros del protocolo (2020-2026; Article, Conference paper) se aplican en 01_unificar_exportaciones.py. No se usa el filtro Open Access."
+WoS,2026-10-19,193,Wilbert A. Mayta Arotaype,"Filtros en la base: Publication Years 2020-2026; Document Types: Article, Early Access; Language: English (206 sin filtros)."
+IEEE,2026-10-19,167,Wilbert A. Mayta Arotaype,"Exportado sin filtros en dos archivos (100 + 67). Filtros del protocolo aplicados en 01. No se usa el filtro Open Access (con él quedaban 14)."
+ScienceDirect,2026-10-19,337,Wilbert A. Mayta Arotaype,"Filtros en la base: Years 2020-2026; Article type: Research articles (458 sin filtros)."
+ACM,2026-10-19,426,Wilbert A. Mayta Arotaype,"PENDIENTE: el archivo es una transcripción del listado (9 páginas) sin resúmenes. Reemplazar por la exportación BibTeX oficial de ACM (Export Citations) con resúmenes."

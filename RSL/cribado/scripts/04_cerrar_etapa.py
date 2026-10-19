@@ -53,7 +53,8 @@ def main():
             errores.append(f"{i}: indica en «Texto completo» si lo conseguiste (Sí / No recuperado)")
         decision[i] = {"decision": "Incluir" if d == "Duda" else d, "decision_original": d,
                        "criterio": v["criterio"] if d == "Excluir" else "", "evidencia": v["evidencia"],
-                       "nota": v["comentario"], "sugerencia": v["sugerencia"]}
+                       "nota": v["comentario"], "sugerencia": v["sugerencia"],
+                       "propuesta_IA": v.get("Propuesta IA", "")}
     if errores:
         print(f"No se puede cerrar la etapa {a.etapa}: {len(errores)} pendientes. Primeros:")
         for e in errores[:20]:
@@ -81,6 +82,18 @@ def main():
         detalle = (f"exclusiones por regla confirmadas: {confirmadas} de {len(reglas)}." if a.etapa == "TA" else
                    f"de los {len(reglas)} artículos que el asistente marcó para revisar, excluiste {confirmadas}.")
         print(f"Acuerdo autor-asistente: {po:.1%} (kappa {k:.2f}, {interpretar_kappa(k)}); {detalle}")
+
+    con_ia = [(v["decision_original"], v["propuesta_IA"]) for v in decision.values()
+              if v["propuesta_IA"] and v["decision"] != "No recuperado"]
+    if con_ia:
+        k, n, po = kappa_cohen([(pasa_humano(h), pasa_humano(ia)) for h, ia in con_ia])
+        cambios = sum(1 for h, ia in con_ia if h != ia)
+        info = cargar_json(SALIDA / "fiabilidad.json", {})
+        info[f"IA_{a.etapa}"] = {"kappa": round(k, 2) if k is not None else None, "n": n,
+                                 "acuerdo": round(po, 3) if po is not None else None, "decisiones_cambiadas": cambios}
+        guardar_json(SALIDA / "fiabilidad.json", info)
+        print(f"Acuerdo autor-IA (pasa / no pasa): {po:.1%} (kappa {k:.2f}, {interpretar_kappa(k)}); "
+              f"decisiones que cambiaste respecto de la propuesta de la IA: {cambios} de {n}.")
 
 
 if __name__ == "__main__":

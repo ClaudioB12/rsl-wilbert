@@ -100,6 +100,13 @@ def main():
         v["AcuerdoAsistenteTA"] = f"{round(100 * a['acuerdo'])}~\\%"
         v["NExclRegla"] = str(a["exclusiones_regla"])
         v["NExclReglaConfirmadas"] = str(a["exclusiones_regla_confirmadas"])
+    if "IA_TA" in fiab:
+        a = fiab["IA_TA"]
+        v["AcuerdoIATA"] = f"{round(100 * a['acuerdo'])}~\\%"
+        v["KappaIATA"] = coma(a["kappa"]) if a["kappa"] is not None else "---"
+        v["NCambiosIATA"] = str(a["decisiones_cambiadas"])
+    if (SALIDA / "01_fuera_de_filtros.csv").exists():
+        v["NFueraFiltros"] = str(len(leer_csv(SALIDA / "01_fuera_de_filtros.csv")))
     if "calidad" in fiab:
         v["AcuerdoCalidad"] = f"{round(100 * fiab['calidad']['acuerdo'])}~\\%"
 
