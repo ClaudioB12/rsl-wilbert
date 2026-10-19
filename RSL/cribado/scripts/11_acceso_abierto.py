@@ -111,18 +111,27 @@ def oa_de_las_bases():
 
 
 def pedir(url):
+    """JSON de la URL; None si OpenAlex responde que la consulta no tiene respuesta (404, 400…).
+
+    Si OpenAlex pide esperar (429) o falla de forma temporal (5xx, red), reintenta con pausas
+    crecientes (hasta ~2 minutos) antes de rendirse.
+    """
     req = urllib.request.Request(url, headers={"User-Agent": "RSL-UPeU/1.0 (cribado de acceso abierto)"})
-    for intento in range(4):
+    ultimo = ""
+    for intento in range(7):
         try:
             with urllib.request.urlopen(req, timeout=30) as r:
                 return json.load(r)
         except urllib.error.HTTPError as e:
-            if e.code == 404:
+            if 400 <= e.code < 500 and e.code != 429:
                 return None
+            ultimo = f"HTTP {e.code}"
+            espera = int(e.headers.get("Retry-After") or 0) if e.headers else 0
+            time.sleep(max(espera, 2 ** intento))
+        except Exception as e:
+            ultimo = type(e).__name__
             time.sleep(2 ** intento)
-        except Exception:
-            time.sleep(2 ** intento)
-    raise ConnectionError(f"No se pudo consultar {url}")
+    raise ConnectionError(f"{ultimo} al consultar {url}")
 
 
 def consultar_openalex(r, correo):
@@ -134,8 +143,8 @@ def consultar_openalex(r, correo):
         if w:
             oa = w.get("open_access") or {}
             return {"oa": bool(oa.get("is_oa")), "tipo": oa.get("oa_status") or "", "url": oa.get("oa_url") or "", "por": "doi"}
-    titulo = re.sub(r"[^\w\s]", " ", r["titulo"]).strip()
-    if titulo:
+    titulo = re.sub(r"\s+", " ", re.sub(r"[^\w\s]", " ", r["titulo"])).strip()
+    if titulo and not re.match(r"proceedings of\b", titulo, re.I):  # volúmenes de actas: no son artículos (CE-5)
         q = urllib.parse.quote(f"title.search:{titulo}")
         res = pedir(f"{API}?filter={q}&per-page=5&select=id,title,open_access{extra}") or {}
         for w in res.get("results", []):
