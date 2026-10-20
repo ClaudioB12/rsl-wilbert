@@ -61,6 +61,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("archivo", nargs="?", default=str(SALIDA / "parsifal" / "articles.xls"))
     a = ap.parse_args()
+    from pathlib import Path
+    if not Path(a.archivo).exists():
+        sys.exit(f"No encuentro {a.archivo}.\n"
+                 "Primero expórtalo desde Parsif.al: Conducting > Study Selection > All Sources > «Export Articles».\n"
+                 "Se descarga como articles.xls en tu carpeta Descargas; muévelo a cribado\\salida\\parsifal\\ con:\n"
+                 '   move "%USERPROFILE%\\Downloads\\articles.xls" cribado\\salida\\parsifal\\articles.xls')
     export = leer_export(a.archivo)
     ruta = REVISION / "TA.xlsx"
     wb = load_workbook(ruta)
