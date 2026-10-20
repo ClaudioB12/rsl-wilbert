@@ -37,9 +37,8 @@ def leer_export(ruta):
     for i in range(1, ws.nrows):
         f = {cab[j]: str(ws.cell_value(i, j) or "").strip() for j in range(len(cab))}
         m = re.search(r"ID cribado (R\d+)", f.get("note", ""))  # Parsif.al puede dejar vacía la clave
-        clave = m.group(1) if m else f.get("bibtex_key", "")
-        if clave:
-            filas[clave] = f
+        clave = m.group(1) if m else (f.get("bibtex_key", "") or f"fila{i}")
+        filas[clave] = f
     return filas
 
 
@@ -68,6 +67,24 @@ def main():
                  "Se descarga como articles.xls en tu carpeta Descargas; muévelo a cribado\\salida\\parsifal\\ con:\n"
                  '   move "%USERPROFILE%\\Downloads\\articles.xls" cribado\\salida\\parsifal\\articles.xls')
     export = leer_export(a.archivo)
+    # Si la clave y el campo note no traen el ID, se empareja por título (como el script 09).
+    from comun import leer_csv, normalizar_titulo
+    por_titulo = {normalizar_titulo(r["titulo"]): r["id"] for r in leer_csv(SALIDA / "02_registros_unicos.csv")}
+    for k in [k for k in export if not re.fullmatch(r"R\d+", k)]:
+        f = export.pop(k)
+        i = por_titulo.get(normalizar_titulo(f.get("title", "")))
+        if i:
+            export[i] = f
+    from collections import Counter
+    estados = Counter(f.get("status", "") for f in export.values())
+    print(f"Filas en {Path(a.archivo).name} reconocidas: {len(export)}. Estados: "
+          + ", ".join(f"{k or '(vacío)'} {n}" for k, n in estados.most_common()))
+    if not export:
+        sys.exit("Ningún estudio del archivo coincide con TA.xlsx. ¿Exportaste la revisión correcta, después de "
+                 "importar los .bib de cribado/salida/parsifal/ (Paso 2)? No se cambió nada.")
+    if estados.get("Unclassified", 0) == len(export):
+        sys.exit("Todos los estudios están «Unclassified»: todavía no cargaste las decisiones en Parsif.al "
+                 "(Paso 4, pegar cargar_en_parsifal.js en la consola). No se cambió nada.")
     ruta = REVISION / "TA.xlsx"
     wb = load_workbook(ruta)
     ws = wb["Cribado"]
