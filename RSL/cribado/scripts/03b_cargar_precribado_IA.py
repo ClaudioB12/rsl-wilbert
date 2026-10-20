@@ -65,7 +65,7 @@ def main():
         regla = (ws.cell(row=fila, column=idx["Comentario"]).value or "").startswith("Regla automática")
         if actual in (None, "") or regla:
             ws.cell(row=fila, column=idx[COL_DECISION], value=p["decision"])
-            ws.cell(row=fila, column=idx[COL_CRITERIO], value=crit or None)
+            ws.cell(row=fila, column=idx[COL_CRITERIO]).value = crit or None
             ws.cell(row=fila, column=idx["Comentario"], value="IA (verificar): " + p.get("comentario", ""))
         cargadas += 1
     wb.save(ruta)

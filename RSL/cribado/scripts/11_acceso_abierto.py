@@ -173,7 +173,7 @@ def aplicar_en_TA(estado):
         ws.cell(row=1, column=len(cab) + 1, value="Acceso abierto")
         cab.append("Acceso abierto")
     ca = cab.index("Acceso abierto") + 1
-    cambiados = 0
+    cambiados, revertidos = 0, []
     for fila in range(2, ws.max_row + 1):
         i = ws.cell(row=fila, column=1).value
         e = estado.get(str(i))
@@ -182,6 +182,19 @@ def aplicar_en_TA(estado):
         ws.cell(row=fila, column=ca, value=f"{e['acceso_abierto']} ({e['detalle']})")
         crit_actual = ws.cell(row=fila, column=cc).value or ""
         dec_actual = ws.cell(row=fila, column=cd).value or ""
+        com_actual = ws.cell(row=fila, column=cm).value or ""
+        # Si una corrida anterior lo excluyó por CI-2 con datos parciales y ahora consta como abierto,
+        # se devuelve la propuesta original (columnas «… IA»).
+        if e["acceso_abierto"] != "No" and crit_actual == "CI-2" and com_actual.startswith("No es de acceso abierto") \
+                and "Propuesta IA" in cab:
+            prop = ws.cell(row=fila, column=cab.index("Propuesta IA") + 1).value or ""
+            crit_ia = ws.cell(row=fila, column=cab.index("Criterio IA") + 1).value or ""
+            com_ia = ws.cell(row=fila, column=cab.index("Comentario IA") + 1).value or ""
+            ws.cell(row=fila, column=cd).value = prop or None
+            ws.cell(row=fila, column=cc).value = (crit_ia if prop == "Excluir" else None) or None
+            ws.cell(row=fila, column=cm).value = f"IA (verificar): {com_ia}" if com_ia else None
+            revertidos.append(str(i))
+            continue
         if e["acceso_abierto"] == "No" and not (dec_actual == "Excluir" and crit_actual in CRITERIOS_ANTERIORES):
             if (dec_actual, crit_actual) != ("Excluir", "CI-2"):
                 cambiados += 1
@@ -190,6 +203,8 @@ def aplicar_en_TA(estado):
             ws.cell(row=fila, column=cc, value="CI-2")
             ws.cell(row=fila, column=cm, value=f"No es de acceso abierto ({e['detalle']}) → CI-2.{antes}")
     wb.save(ruta)
+    if revertidos:
+        print(f"Vueltos a la propuesta original (ahora constan como de acceso abierto): {', '.join(revertidos)}")
     return cambiados
 
 

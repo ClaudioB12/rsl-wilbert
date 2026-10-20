@@ -83,7 +83,7 @@ def main():
         if antes != (d, crit):
             cambios.append(f"{i}: {antes[0]} {antes[1]} → {d} {crit}".strip())
         ws.cell(row=fila, column=cd, value=d)
-        ws.cell(row=fila, column=cc, value=crit or None)
+        ws.cell(row=fila, column=cc).value = crit or None
         ws.cell(row=fila, column=cm, value=com)
     wb.save(ruta)
     print(f"Estudios de Parsif.al encontrados en TA.xlsx: {vistos} de {ws.max_row - 1}.")
