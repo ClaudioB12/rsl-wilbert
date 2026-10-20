@@ -113,7 +113,8 @@ def main():
         if d not in ("Incluir", "Duda", "Excluir"):
             continue
         crit = v["criterio"] if d == "Excluir" else ""
-        conf = v.get("Confianza IA", "")
+        # La confianza de la IA solo se muestra mientras el autor no ha verificado la fila.
+        conf = v.get("Confianza IA", "") if v["comentario"].startswith("IA (verificar)") else ""
         etiqueta = "Duda" if d == "Duda" else f"Excluir {crit}" if d == "Excluir" else "Incluir"
         etiqueta = f"[{etiqueta}{' · confianza IA ' + conf if conf else ''}]"
         datos[i] = ["R" if d == "Excluir" else "A", crit, f"{etiqueta} {v['comentario']}"[:4000], norm(v["Título"])]
