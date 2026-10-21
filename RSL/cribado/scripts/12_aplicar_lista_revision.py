@@ -10,6 +10,9 @@ Las filas sin MI DECISIÓN no se tocan.
 Uso (desde la carpeta RSL):
     python cribado/scripts/12_aplicar_lista_revision.py              # revisa y aplica
     python cribado/scripts/12_aplicar_lista_revision.py --probar     # solo muestra lo que haría
+    python cribado/scripts/12_aplicar_lista_revision.py --archivo cribado/revision/OTRA_LISTA.xlsx
+Acepta las columnas «MI COMENTARIO» o «MI COMENTARIO / MOTIVO». En título y resumen CE-6 no
+se usa (es de texto completo); la falta de acceso abierto es CI-2.
 Luego: python cribado/scripts/09_generar_script_parsifal.py y pega el script en Parsif.al.
 El comentario queda sin «IA (verificar):», porque ya lo verificaste tú.
 """
@@ -32,38 +35,44 @@ def texto(v):
     return "" if v is None else str(v).strip()
 
 
-def leer_lista():
-    wb = load_workbook(LISTA, data_only=True)
+def leer_lista(ruta, propuesta):
+    """propuesta: {id: (decisión, criterio, motivo)} tomada de TA.xlsx (columnas «… IA»)."""
+    wb = load_workbook(ruta, data_only=True)
     filas, errores = {}, []
     for ws in wb.worksheets:
         cab = [texto(c.value) for c in ws[1]]
-        if "MI DECISIÓN" not in cab:
+        if "MI DECISIÓN" not in cab or "ID" not in cab:
             continue
-        col = {n: cab.index(n) for n in ("ID", "Propuesta", "Criterio", "Motivo de la IA",
-                                          "MI DECISIÓN", "MI CRITERIO", "MI COMENTARIO")}
+        col_com = next((n for n in ("MI COMENTARIO", "MI COMENTARIO / MOTIVO") if n in cab), None)
         for n, fila in enumerate(ws.iter_rows(min_row=2, values_only=True), 2):
-            g = lambda k: texto(fila[col[k]]) if col[k] < len(fila) else ""
+            g = lambda k: texto(fila[cab.index(k)]) if k in cab and cab.index(k) < len(fila) else ""
             i, mi = g("ID"), g("MI DECISIÓN")
             if not i or not mi:
                 continue
-            motivo_ia = RE_PREFIJO.sub("", g("Motivo de la IA"))
+            if i not in propuesta:
+                errores.append(f"{ws.title} fila {n}: el ID «{i}» no está en TA.xlsx")
+                continue
+            p_dec, p_crit, p_mot = propuesta[i]
             if mi.lower().startswith("de acuerdo"):
-                dec, crit = g("Propuesta"), g("Criterio")
+                dec, crit = p_dec, p_crit
             elif mi in ("Incluir", "Duda", "Excluir"):
                 dec, crit = mi, g("MI CRITERIO").upper()
             else:
                 errores.append(f"{ws.title} fila {n} ({i}): MI DECISIÓN «{mi}» no válida")
                 continue
             if dec == "Excluir":
+                if crit == "CE-6":
+                    errores.append(f"{ws.title} fila {n} ({i}): CE-6 solo se usa a texto completo; si no es de acceso "
+                                   "abierto el criterio es CI-2")
+                    continue
                 if crit not in CRITERIOS:
                     errores.append(f"{ws.title} fila {n} ({i}): Excluir necesita MI CRITERIO válido (tiene «{crit}»)")
                     continue
             else:
                 crit = ""
-            comentario = g("MI COMENTARIO") or motivo_ia
-            filas[i] = {"decision": dec, "criterio": crit, "comentario": comentario,
-                        "cambio": (dec, crit) != (g("Propuesta"), g("Criterio") if g("Propuesta") == "Excluir" else ""),
-                        "hoja": ws.title}
+            comentario = (g(col_com) if col_com else "") or RE_PREFIJO.sub("", p_mot)
+            filas[i] = {"decision": dec, "criterio": crit, "comentario": RE_PREFIJO.sub("", comentario),
+                        "cambio": (dec, crit) != (p_dec, p_crit if p_dec == "Excluir" else ""), "hoja": ws.title}
     return filas, errores
 
 
@@ -71,10 +80,15 @@ def main():
     asegurar_utf8_consola()
     ap = argparse.ArgumentParser()
     ap.add_argument("--probar", action="store_true", help="solo mostrar, sin cambiar TA.xlsx")
+    ap.add_argument("--archivo", default=str(LISTA), help="lista de revisión llenada (por defecto LISTA_REVISION_TA.xlsx)")
     a = ap.parse_args()
-    if not LISTA.exists():
-        sys.exit(f"No encuentro {LISTA}.")
-    filas, errores = leer_lista()
+    from pathlib import Path
+    if not Path(a.archivo).exists():
+        sys.exit(f"No encuentro {a.archivo}.")
+    from hojas import leer_hoja
+    propuesta = {i: (v.get("Propuesta IA", ""), v.get("Criterio IA", ""), v.get("Comentario IA", ""))
+                 for i, v in leer_hoja(REVISION / "TA.xlsx").items()}
+    filas, errores = leer_lista(a.archivo, propuesta)
     if errores:
         print(f"Hay {len(errores)} filas para corregir en la lista (no se aplicó nada):")
         for e in errores[:30]:
@@ -86,7 +100,9 @@ def main():
     por_hoja = Counter(f["hoja"] for f in filas.values())
     cambios = [i for i, f in filas.items() if f["cambio"]]
     print("Filas revisadas por hoja: " + ", ".join(f"{h}: {n}" for h, n in sorted(por_hoja.items())))
-    print(f"Decisiones que cambias respecto de la propuesta: {len(cambios)}")
+    print(f"Decisiones que cambias respecto de la propuesta de la IA: {len(cambios)}")
+    print("Resultado: " + ", ".join(f"{k} {n}" for k, n in sorted(Counter(
+        f["decision"] + (" " + f["criterio"] if f["criterio"] else "") for f in filas.values()).items())))
     for i in cambios[:40]:
         f = filas[i]
         print(f"   {i}: → {f['decision']} {f['criterio']}".rstrip())

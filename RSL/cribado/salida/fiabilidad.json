@@ -1,0 +1,15 @@
+{
+ "asistente_TA": {
+  "kappa": 0.06,
+  "n": 663,
+  "acuerdo": 0.306,
+  "exclusiones_regla": 100,
+  "exclusiones_regla_confirmadas": 100
+ },
+ "IA_TA": {
+  "kappa": 0.77,
+  "n": 663,
+  "acuerdo": 0.928,
+  "decisiones_cambiadas": 62
+ }
+}

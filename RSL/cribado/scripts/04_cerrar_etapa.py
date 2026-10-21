@@ -68,11 +68,15 @@ def main():
         crit = Counter(v["criterio"] for v in decision.values() if v["decision"] == "Excluir")
         print("Exclusiones por criterio: " + ", ".join(f"{k}: {n}" for k, n in sorted(crit.items())))
 
+    # Las exclusiones por acceso abierto (CI-2) vienen de datos objetivos (script 11), no del juicio
+    # del revisor sobre título y resumen: se dejan fuera de las medidas de acuerdo.
+    juzgados = {i: v for i, v in decision.items() if not (v["decision"] == "Excluir" and v["criterio"] == "CI-2"
+                                                         and v["nota"].startswith("No es de acceso abierto"))}
     con_sug = [(pasa_humano(v["decision_original"]), pasa_asistente(v["sugerencia"], a.etapa))
-               for v in decision.values() if v["sugerencia"] and v["decision"] != "No recuperado"]
+               for v in juzgados.values() if v["sugerencia"] and v["decision"] != "No recuperado"]
     if con_sug:
         k, n, po = kappa_cohen(con_sug)
-        reglas = [v for v in decision.values() if pasa_asistente(v["sugerencia"], a.etapa) == "No pasa"]
+        reglas = [v for v in juzgados.values() if pasa_asistente(v["sugerencia"], a.etapa) == "No pasa"]
         confirmadas = sum(1 for v in reglas if v["decision_original"] == "Excluir")
         info = cargar_json(SALIDA / "fiabilidad.json", {})
         info[f"asistente_{a.etapa}"] = {"kappa": round(k, 2) if k is not None else None, "n": n,
@@ -83,7 +87,7 @@ def main():
                    f"de los {len(reglas)} artículos que el asistente marcó para revisar, excluiste {confirmadas}.")
         print(f"Acuerdo autor-asistente: {po:.1%} (kappa {k:.2f}, {interpretar_kappa(k)}); {detalle}")
 
-    con_ia = [(v["decision_original"], v["propuesta_IA"]) for v in decision.values()
+    con_ia = [(v["decision_original"], v["propuesta_IA"]) for v in juzgados.values()
               if v["propuesta_IA"] and v["decision"] != "No recuperado"]
     if con_ia:
         k, n, po = kappa_cohen([(pasa_humano(h), pasa_humano(ia)) for h, ia in con_ia])
