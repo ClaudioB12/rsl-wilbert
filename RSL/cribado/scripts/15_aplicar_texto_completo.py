@@ -330,7 +330,7 @@ def leer(ruta):
         e = {"id": i, "titulo": reg[i]["titulo"], "anio": reg[i]["anio"], "doi": reg[i]["doi"], "decision": d,
              "criterio": a.get("CRITERIO") or "", "evidencia": str(a.get("EVIDENCIA (cita y página)") or "").strip(),
              "nota": str(a.get("Comentario") or "").strip()}
-        if i in PENDIENTES:
+        if i in PENDIENTES and d == "Incluir":
             errores.append(f"{i}: pendiente de rehacer (hojas {PENDIENTES[i][0]}): {PENDIENTES[i][1]}")
         if d not in DECISIONES:
             errores.append(f"{i}: DECISIÓN TC «{d}» no válida")
