@@ -85,6 +85,46 @@ AJUSTES = {
                                                  "(la copia de SSRN no está disponible)."),
     ("R0029", 1, "CRITERIO"): (None, "No recuperado no lleva criterio."),
     ("R0029", 1, "Comentario"): ("[No recuperado] Sin texto completo de acceso abierto.", "Coherente con las demás no recuperadas."),
+    # Auditoría de coherencia de los incluidos (mismos criterios que en decisiones previas del cribado).
+    ("R1014", 1, "DECISIÓN TC"): ("Excluir", "DeepWalk/Node2vec no es Deep Learning; la anomalía la deciden SVDD y reglas."),
+    ("R1014", 1, "CRITERIO"): ("CE-4", "Sin componente profunda entrenada que decida la anomalía."),
+    ("R1014", 1, "EVIDENCIA (cita y página)"): (
+        "DeepWalk genera caminatas aleatorias y aprende embeddings con Skip-Gram; SVDD determina las regiones anómalas "
+        "(sección 3, pp. 3-5); umbral de coincidencia de trayectorias anómalas 0,463 (sección 4.2, p. 6).", "Hoja 2 del autor."),
+    ("R1014", 1, "Comentario"): ("[Excluir CE-4] El detector es DeepWalk/Node2vec (embedding superficial, no DL) más SVDD, "
+                                 "Apriori y umbrales.", "Motivo."),
+    ("R0666", 1, "DECISIÓN TC"): ("Excluir", "YOLOv5s/DeepSORT solo siguen vehículos; la anomalía se decide con umbrales "
+                                             "manuales (igual que R0037, R0235 y R1213, excluidos por CE-4)."),
+    ("R0666", 1, "CRITERIO"): ("CE-4", "La decisión de anomalía no la toma una red profunda."),
+    ("R0666", 1, "EVIDENCIA (cita y página)"): (
+        "Reglas explícitas: sentido contrario si Num/f ≥ 0,2; velocidad anómala si la media de 10 fotogramas supera n o baja "
+        "de m; estacionamiento si la posición no cambia en cinco fotogramas (sección 3.3.5, pp. 10-11; Tabla 1, p. 8).",
+        "Hoja 2 del autor."),
+    ("R0666", 1, "Comentario"): ("[Excluir CE-4] El DL detecta, sigue y reidentifica vehículos; los comportamientos "
+                                 "peligrosos se deciden con umbrales manuales.", "Motivo."),
+    ("R0032", 1, "DECISIÓN TC"): ("Excluir", "Perfilado del conductor por viaje (igual que R0321, R0660 y R1046, CE-3)."),
+    ("R0032", 1, "CRITERIO"): ("CE-3", "Clasifica estilos/perfiles de conducción, no anomalías del tráfico."),
+    ("R0032", 1, "EVIDENCIA (cita y página)"): (
+        "UAH-DriveSet, seis conductores, tres comportamientos (normal, somnoliento y agresivo); clasificación supervisada "
+        "en una de las tres categorías (p. 3, secciones 3.1-3.2).", "Hoja 1 y 2 del autor."),
+    ("R0032", 1, "Comentario"): ("[Excluir CE-3] Compara ML, DL y un ensamble PSO para perfilar al conductor "
+                                 "(normal/somnoliento/agresivo); no detecta eventos anómalos del tráfico.", "Motivo."),
+    ("R0072", 1, "DECISIÓN TC"): ("Excluir", "Mismo modelo (MHGNN-CPLE), mismos autores y mismos datos que R0102; "
+                                             "se conserva R0102 (Scientific Reports, versión más completa)."),
+    ("R0072", 1, "CRITERIO"): ("CE-1", "Versión menos completa del mismo estudio."),
+    ("R0072", 1, "EVIDENCIA (cita y página)"): (
+        "Propone MHGNN-CPLE evaluado en METR-LA y PEMS-BAY con generalización METR-LA→PEMS-BAY (pp. 21-23, Tablas 5, 7 y 8); "
+        "R0102 (Duan, Sun y Liu, 2025) presenta el mismo marco con las mismas bases.", "Hojas 1 y 2 del autor."),
+    ("R0072", 1, "Comentario"): ("[Excluir CE-1] Publicación paralela de R0102 (Sun y Liu, 2025); se incluye R0102 para no "
+                                 "contar dos veces el mismo modelo.", "Motivo."),
+    ("R0185", 1, "DECISIÓN TC"): ("Excluir", "Clasifica niveles de riesgo de interacción, no eventos anómalos "
+                                             "(igual que R0635, excluido por CE-3)."),
+    ("R0185", 1, "CRITERIO"): ("CE-3", "Estimación de riesgo, sin detección de anomalías."),
+    ("R0185", 1, "EVIDENCIA (cita y página)"): (
+        "Clasificación del riesgo de seguimiento y cambio de carril en niveles bajo, moderado y alto: Accuracy 83 % y 76 % "
+        "(p. 6, Tablas 3 y 4).", "Hoja 1 del autor."),
+    ("R0185", 1, "Comentario"): ("[Excluir CE-3] CNN-LSTM-Attention estima el nivel de riesgo de las interacciones en túneles; "
+                                 "no detecta ni anticipa eventos anómalos.", "Motivo."),
     ("R0024", 3, "QA8 Limitaciones"): (0, "La hoja 2 dice «No reportadas»: la cita es trabajo futuro, no una limitación."),
     ("R0024", 3, "QA8 evidencia"): ("No reportado (solo trabajo futuro, p. 10)", "Coherente con la hoja 2."),
     ("R0121", 2, "Entorno"): ("Urbano", "Dos cruces peatonales de calle (35 mph) en Florida."),
@@ -128,8 +168,6 @@ PENDIENTES = {
 AVISOS = {
     "R0986": "El texto analizado corresponde a Systems and Soft Computing (DOI 10.1016/j.sasc.2025.200254), pero el registro tiene "
              "DOI 10.1002/spy2.70136: confirma que el PDF es el del registro.",
-    "R0666": "Caso límite: el DL extrae y reconstruye trayectorias y la anomalía se decide con reglas. Se mantiene incluido "
-             "(regla de híbridos de CI-5); va al anexo de casos límite.",
     "R0025": "Partición «No reportada» en la hoja 2 pero QA2 = 1 en la hoja 3: revisa uno de los dos.",
     "R0051": "Partición aleatoria (411/35/148) pero QA2 = 1: según la escala sería 0.5.",
 }
@@ -403,7 +441,8 @@ def main():
     if a.probar:
         print("(Modo prueba: no se escribió nada.)")
         return
-    guardar_json(SALIDA / "decision_TC.json", {i: {k: e[k] for k in ("decision", "criterio", "evidencia", "nota")}
+    guardar_json(SALIDA / "decision_TC.json", {i: {**{k: e[k] for k in ("decision", "criterio", "evidencia", "nota")},
+                                                    "decision_original": e["decision"]}  # para 04b (re-cribado)
                                                 for i, e in estudios.items()})
     guardar_json(SALIDA / "15_extraccion_TC.json", {i: e for i, e in estudios.items() if e["decision"] == "Incluir"})
     js = script_parsifal(estudios)

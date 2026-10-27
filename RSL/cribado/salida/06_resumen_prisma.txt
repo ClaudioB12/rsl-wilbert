@@ -12,14 +12,16 @@ Excluidos TA             1137
 Buscados a TC             103
 No recuperados             11
 Evaluados TC               92
-Excluidos TC               15
+Excluidos TC               20
+   CE-1 Duplicado o versión menos completa del mismo estudio       1
    CE-2 No trata de tráfico vehicular por carretera                2
-   CE-3 No evalúa detección de anomalías (solo pronóstico, clas    5
+   CE-3 No evalúa detección de anomalías (solo pronóstico, clas    7
+   CE-4 La detección no se basa en Deep Learning                   2
    CE-5 Revisión, survey, capítulo, tesis, resumen, póster, edi    3
    CI-6 Sin evaluación cuantitativa de la tarea de detección       5
-Incluidos desde bases      77
+Incluidos desde bases      72
 Otros métodos               0  ()
-TOTAL INCLUIDOS            77
+TOTAL INCLUIDOS            72
 
 asistente_TA     {'kappa': 0.06, 'n': 663, 'acuerdo': 0.306, 'exclusiones_regla': 100, 'exclusiones_regla_confirmadas': 100}
 IA_TA            {'kappa': 0.77, 'n': 663, 'acuerdo': 0.928, 'decisiones_cambiadas': 62}
@@ -32,23 +34,21 @@ AVISOS (resolver antes de enviar):
   - S04 (Hu 2022) está en el corpus pero el cribado lo dejó como «Excluir» CI-2. Revisen la decisión o avisen para actualizar el corpus.
   - S05 (Khan 2022) no aparece en la búsqueda: sale del corpus.
   - S07 (Riaz 2022) no aparece en la búsqueda: sale del corpus.
+  - S15 (Zhao 2024) está en el corpus pero el cribado lo dejó como «Excluir» CE-4. Revisen la decisión o avisen para actualizar el corpus.
   - S16 (Abdallah 2025) no aparece en la búsqueda: sale del corpus.
   - S18 (Jia 2025) no aparece en la búsqueda: sale del corpus.
   - NUEVO estudio incluido R0024: «Abnormal Trajectory Detection Based on Geospatial Consistent Modeling». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R0025: «Abnormal Vehicle Toll Evasion Detection Based on an Improved Transformer». Hay que extraer sus datos y evaluar su calidad.
-  - NUEVO estudio incluido R0032: «A Comparative Analysis of Machine Learning, Deep Learning, and Metaheuristic-Bas». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R0045: «A data-centric weak supervised learning for highway traffic incident detection». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R0050: «A deep encoder-decoder network for anomaly detection in driving trajectory behav». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R0051: «A Deep Learning Framework for Traffic Accident Detection Based on Improved YOLO1». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R0052: «A deep neural framework for real-time vehicular accident detection based on moti». Hay que extraer sus datos y evaluar su calidad.
-  - NUEVO estudio incluido R0072: «A framework for detecting and predicting highway traffic anomalies via multimoda». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R0080: «A Hybrid Method for Traffic Incident Detection Using Random Forest-Recursive Fea». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R0097: «A memory-augmented multi-task collaborative framework for unsupervised traffic a». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R0119: «An efficient computer vision framework for RSU-based accident recognition and V2». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R0121: «An ensemble time-embedded transformer model for traffic conflict prediction at R». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R0167: «A Personalized Federated Learning Framework for Post-Event Forensic Traffic Anal». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R0175: «A Real-Time Consensus-Free Accident Detection Framework for Internet of Vehicles». Hay que extraer sus datos y evaluar su calidad.
-  - NUEVO estudio incluido R0185: «A Risk Identification and Prediction Model for Intelligent Driving Under Multi-V». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R0221: «A Three-Stage Anomaly Detection Framework for Traffic Videos». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R0227: «A trajectory outlier detection method based on variational auto-encoder». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R0239: «Automatic detection of traffic accidents from video using deep learning techniqu». Hay que extraer sus datos y evaluar su calidad.
@@ -83,7 +83,6 @@ AVISOS (resolver antes de enviar):
   - NUEVO estudio incluido R0958: «Recognition of surrounding vehicle anomalous intent in the vehicle-road-cloud en». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R1000: «RETAD: Vehicle Trajectory Anomaly Detection Based on Reconstruction Error». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R1010: «Road Incident Detection System». Hay que extraer sus datos y evaluar su calidad.
-  - NUEVO estudio incluido R1014: «Road traffic anomaly monitoring and warning based on DeepWalk algorithm». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R1029: «Safety in Smart Cities—Automatic Recognition of Dangerous Driving Styles». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R1049: «Simulation-based early detection and classification of severity of traffic incid». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R1052: «Smart City Transportation: Deep Learning Ensemble Approach for Traffic Accident ». Hay que extraer sus datos y evaluar su calidad.

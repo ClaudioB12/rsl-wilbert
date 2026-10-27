@@ -30,7 +30,7 @@ R0028,Scopus,Accident Detection Using Deep Learning,Rejected,Excluir,CE-5,Títul
 R0029,Scopus,Accident Prediction and Emergency Management for Expressways Using Big Data and Advanced Intelligent Algorithms,Rejected,No recuperado,No recuperado,Texto completo
 R0030,ScienceDirect,Accurate road user localization in aerial images captured by unmanned aerial vehicles,Rejected,Excluir,CI-2,Título y resumen
 R0031,Scopus,A CNN-Based Road Accident Detection and Comparison of Classification Techniques,Rejected,Excluir,CI-2,Título y resumen
-R0032,ACM Digital Library,"A Comparative Analysis of Machine Learning, Deep Learning, and Metaheuristic-Based Ensemble Learning for Driver Behavior Profiling on UAH-DriveSet",Accepted,Incluir,,Texto completo
+R0032,ACM Digital Library,"A Comparative Analysis of Machine Learning, Deep Learning, and Metaheuristic-Based Ensemble Learning for Driver Behavior Profiling on UAH-DriveSet",Rejected,Excluir,CE-3,Texto completo
 R0033,ScienceDirect,A complex network analysis approach for estimation and detection of traffic incidents based on independent component analysis,Rejected,Excluir,CE-4,Título y resumen
 R0034,ScienceDirect,A Comprehensive Analysis of Datasets for Automotive Intrusion Detection Systems,Rejected,Excluir,CE-2,Título y resumen
 R0035,Scopus,A Comprehensive Survey of Driver Behavior Classification in Smart Transportation Systems: From Rule-Based Models to AI Agents,Rejected,Excluir,CE-5,Título y resumen
@@ -70,7 +70,7 @@ R0068,Scopus,A dynamic method to predict driving risk on sharp curves using mult
 R0069,ACM Digital Library,A Fast Method for Identifying Anomalous Traffic in a Ubiquitous Power IoT Access Layer Network,Rejected,Excluir,CI-2,Título y resumen
 R0070,ScienceDirect,A feature extraction and deep learning approach for network traffic volume prediction considering detector reliability,Rejected,Excluir,CE-3,Título y resumen
 R0071,Scopus,A flexible deep learning-aware framework for travel time prediction considering traffic event,Rejected,Excluir,CI-2,Título y resumen
-R0072,Scopus,A framework for detecting and predicting highway traffic anomalies via multimodal fusion and heterogeneous graph neural networks,Accepted,Incluir,,Texto completo
+R0072,Scopus,A framework for detecting and predicting highway traffic anomalies via multimodal fusion and heterogeneous graph neural networks,Rejected,Excluir,CE-1,Texto completo
 R0073,ScienceDirect,A futuristic green service computing approach for smart city: A fog layered intelligent service management model for smart transport system,Rejected,Excluir,CI-2,Título y resumen
 R0074,ScienceDirect,A game theory-based controller approach for identifying incidents caused by aberrant lane changing behavior,Rejected,Excluir,CE-4,Título y resumen
 R0075,Scopus,A Generalizable Approach for Network Flow Image Representation for Deep Learning,Rejected,Excluir,CI-2,Título y resumen
@@ -183,7 +183,7 @@ R0181,ScienceDirect,A review of spatial approaches in road safety,Rejected,Exclu
 R0182,Scopus,A Review of Unsupervised Learning Based Anomaly Detection in Traffic Videos,Rejected,Excluir,CE-5,Título y resumen
 R0183,Scopus,A Review on Road Accident Detection: Learning Techniques and IoT based Techniques,Rejected,Excluir,CE-5,Título y resumen
 R0184,ACM Digital Library,A Risk Assessment Model for Overtaking Behavior Based on Air-Ground Dual Perspectives,Rejected,Excluir,CE-4,Título y resumen
-R0185,Scopus,A Risk Identification and Prediction Model for Intelligent Driving Under Multi-Vehicle Interactions in Mountain Tunnel Environments,Accepted,Incluir,,Texto completo
+R0185,Scopus,A Risk Identification and Prediction Model for Intelligent Driving Under Multi-Vehicle Interactions in Mountain Tunnel Environments,Rejected,Excluir,CE-3,Texto completo
 R0186,Scopus,A risky prediction model of driving behaviors: Especially for cognitive distracted driving behaviors,Rejected,Excluir,CI-2,Título y resumen
 R0187,Scopus,A robust deep learning-based system for pedestrian-aware collision prevention in autonomous vehicles,Rejected,Excluir,CE-2,Título y resumen
 R0188,ACM Digital Library,Artifacts Available / v1.1,Rejected,Excluir,CE-5,Título y resumen
@@ -664,7 +664,7 @@ R0662,ScienceDirect,Modeling the evolution of incident impact in urban road netw
 R0663,Scopus,Monitoring of dangerous driving behavior of drivers based on deep learning,Rejected,Excluir,CI-2,Título y resumen
 R0664,ScienceDirect,MoTIF: An end-to-end multimodal road traffic scene understanding foundation model,Accepted,Incluir,,Texto completo
 R0665,ACM Digital Library,MTTPRE: a multi-scale spatial-temporal model for travel time prediction,Rejected,Excluir,CI-2,Título y resumen
-R0666,Scopus,Multi-Adjacent Camera-Based Dangerous Driving Trajectory Recognition for Ultra-Long Highways,Accepted,Incluir,,Texto completo
+R0666,Scopus,Multi-Adjacent Camera-Based Dangerous Driving Trajectory Recognition for Ultra-Long Highways,Rejected,Excluir,CE-4,Texto completo
 R0667,ACM Digital Library,Multidimensional data fusion detection method based on time series data model,Rejected,Excluir,CI-2,Título y resumen
 R0668,IEEE Xplore,Multi-Form Spatiotemporal Feature Fusion Enhancement Network for Traffic Flow Prediction,Rejected,Excluir,CI-2,Título y resumen
 R0669,Scopus,Multi-Level Disruption Detection in Road Networks Using LSTM and MCUSUM: A Case Study of Hurricane Sandy,Rejected,Excluir,CI-2,Título y resumen
@@ -1012,7 +1012,7 @@ R1010,ACM Digital Library,Road Incident Detection System,Accepted,Incluir,,Texto
 R1011,Scopus,Road Traffic Anomalies Detection Using Deep Learning Algorithm and Computational Data Science,Rejected,Excluir,CI-2,Título y resumen
 R1012,Scopus,Road Traffic Anomaly Detection based on Deep Learning Technology,Rejected,Excluir,CI-2,Título y resumen
 R1013,Scopus,Road Traffic Anomaly Detection by Human-Attention-Assisted Text–Vision Learning,Accepted,Incluir,,Texto completo
-R1014,Scopus,Road traffic anomaly monitoring and warning based on DeepWalk algorithm,Accepted,Incluir,,Texto completo
+R1014,Scopus,Road traffic anomaly monitoring and warning based on DeepWalk algorithm,Rejected,Excluir,CE-4,Texto completo
 R1015,ScienceDirect,Robust control of human-machine collaborative steering based on driver preview characteristics,Rejected,Excluir,CI-2,Título y resumen
 R1016,Scopus,Robustness enhancement of deep reinforcement learning-based traffic signal control model via structure compression,Rejected,Excluir,CI-2,Título y resumen
 R1017,Scopus,Robustness of Traffic Anomaly Detection in UAV Videos: Cross–Weather Generalization,Rejected,Excluir,CI-2,Título y resumen
