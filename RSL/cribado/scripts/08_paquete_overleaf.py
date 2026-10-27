@@ -11,7 +11,7 @@ import zipfile
 
 from comun import MANUSCRITO, SALIDA, asegurar_utf8_consola
 
-FUENTES = ["RSL_v2.tex", "referencias.bib", "datos_busqueda.tex"]
+FUENTES = ["RSL_v3.tex", "referencias.bib", "estudios.bib", "datos_busqueda.tex"]
 
 
 def main():

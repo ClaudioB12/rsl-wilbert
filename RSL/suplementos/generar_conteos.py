@@ -11,6 +11,7 @@ Cada cifra del resumen, del texto y de las tablas proviene de este script; no se
 escriben conteos a mano en el .tex.
 """
 import json
+import re
 import statistics
 from collections import Counter, OrderedDict
 from pathlib import Path
@@ -74,6 +75,38 @@ UMBRAL_BAJA = 4.0  # de 8 (50 %): por debajo, calidad baja (segundo análisis de
 CORPUS = SUPL / "corpus.json"
 
 
+# Conjuntos de datos públicos nombrados (macro, nombre en tabla, patrón sobre datasets + región).
+DATASETS = [
+    ("PeMS", "PeMS / METR-LA / PEMS-BAY", r"pems|metr-?la"),
+    ("FTAED", "I-24 / FT-AED (Nashville)", r"\bi-?24\b|ft-?aed|nashville"),
+    ("NGSIM", "NGSIM", r"ngsim"),
+    ("highD", "highD", r"highd"),
+    ("Iocho", "I-880", r"i-?880"),
+    ("SPMD", "Safety Pilot (SPMD)", r"spmd|safety pilot"),
+    ("Porto", "Porto Taxi", r"porto"),
+    ("Chengdu", "Chengdu / DiDi", r"chengdu|didi"),
+    ("NYC", "NYC Taxi", r"\bnyc\b|new york"),
+    ("CCD", "Car Crash Dataset (CCD)", r"\bccd\b|car ?crash"),
+    ("DoTA", "DoTA", r"\bdota\b"),
+    ("DADA", "DADA-2000", r"dada"),
+    ("DAD", "DAD / A3D", r"\bdad\b|\ba3d\b"),
+    ("UCF", "UCF-Crime", r"ucf"),
+    ("CADP", "CADP", r"cadp"),
+    ("IITH", "IITH Accident", r"iith"),
+    ("AICity", "AI City Challenge", r"ai ?city"),
+    ("UIT", "UIT-ADrone", r"uit-?adrone"),
+    ("TADS", "TADS", r"\btads\b"),
+    ("TAD", "4M-TAD", r"4m-?tad"),
+    ("TrafficNet", "Traffic-Net", r"traffic-?net"),
+    ("DETRAC", "UA-DETRAC", r"detrac"),
+    ("UAH", "UAH-DriveSet", r"uah"),
+]
+
+
+def texto_datos(e):
+    return (str(e.get("datasets", "")) + " " + str(e.get("pais_region_datos", ""))).lower()
+
+
 def esc(s):
     """Escapa texto plano para LaTeX."""
     rep = {"\\": r"\textbackslash{}", "&": r"\&", "%": r"\%", "$": r"\$", "#": r"\#",
@@ -125,24 +158,25 @@ def cargar():
 
 
 def tabla(cabecera, filas, formato, titulo, etiqueta, nota=None, pequena=True):
-    out = ["\\begin{table}[H]", "\\centering"]
+    # xltabular: tabla de ancho \linewidth que puede partirse entre páginas.
+    cab = " & ".join(f"\\textbf{{{c}}}" for c in cabecera) + " \\\\"
+    out = ["\\begingroup"]
     if pequena:
         out.append("\\small")
-    out.append(f"\\caption{{{titulo}}}\\label{{{etiqueta}}}")
-    out.append(f"\\begin{{tabularx}}{{\\linewidth}}{{{formato}}}")
-    out.append("\\toprule")
-    out.append(" & ".join(f"\\textbf{{{c}}}" for c in cabecera) + " \\\\")
-    out.append("\\midrule")
+    out.append(f"\\begin{{xltabular}}{{\\linewidth}}{{{formato}}}")
+    out.append(f"\\caption{{{titulo}}}\\label{{{etiqueta}}}\\\\")
+    out += ["\\toprule", cab, "\\midrule\\endfirsthead",
+            "\\toprule", cab, "\\midrule\\endhead",
+            "\\bottomrule\\endfoot"]
     for f in filas:
         if f == "MIDRULE":
             out.append("\\midrule")
         else:
             out.append(" & ".join(str(c) for c in f) + " \\\\")
-    out.append("\\bottomrule")
-    out.append("\\end{tabularx}")
+    out.append("\\end{xltabular}")
     if nota:
-        out.append(f"\\par\\vspace{{2pt}}{{\\footnotesize\\raggedright {nota}\\par}}")
-    out.append("\\end{table}")
+        out.append(f"\\vspace{{-6pt}}{{\\footnotesize\\raggedright {nota}\\par}}")
+    out.append("\\endgroup")
     return "\n".join(out) + "\n"
 
 
@@ -170,6 +204,8 @@ def generar(estudios):
     baja = [e for e in estudios if e["qa_total"] < UMBRAL_BAJA]
     m.append(macro("QAumbralBaja", f"{UMBRAL_BAJA:.1f}"))
     m.append(macro("NbajaCalidad", len(baja)))
+    m.append(macro("IDbajaCalidad", lista_ids([e["id"] for e in baja])))
+    m.append(macro("NbajaInyect", sum(1 for e in baja if e["origen_etiquetas"] == ETIQUETAS[3])))
     m.append(macro("NmediaCalidad", n - len(alta) - len(baja)))
     m.append(macro("NsinBaja", n - len(baja)))
     for q in QA:
@@ -307,6 +343,36 @@ def generar(estudios):
     alta = [e for e in estudios if e["qa_total"] >= UMBRAL_ALTA]
     cm.append(macro("NaltaEtiqReal", sum(1 for e in alta if e["origen_etiquetas"] in ETIQUETAS[:3])))
     cm.append(macro("NaltaHibrido", sum(1 for e in alta if e["hibrido"])))
+    # Partición, perfiles de sensibilidad y datasets compartidos
+    part = Counter(e["particion"] for e in estudios)
+    for k, nm in [("Temporal", "Temporal"), ("Aleatoria", "Aleatoria"), ("Prueba independiente", "Indep"),
+                  ("Por ubicación", "Ubicacion"), ("No reportada", "NR")]:
+        cm.append(macro(f"Npart{nm}", part.get(k, 0)))
+    reales = lambda e: e["origen_etiquetas"] in ETIQUETAS[:3]
+    perfil = [("Video", lambda e: e["tipo_dato"] == "video/im\u00e1genes"), ("Hib", lambda e: e["hibrido"]),
+              ("Real", reales), ("Transf", lambda e: e["familias"]["transformer_atencion"]),
+              ("Accid", lambda e: e["categoria_anomalia"] == CATEGORIAS[0]), ("NoDL", lambda e: e["baseline_no_dl"]),
+              ("PartOK", lambda e: e["particion"] in ("Temporal", "Prueba independiente", "Por ubicaci\u00f3n")),
+              ("Inyect", lambda e: e["origen_etiquetas"] == ETIQUETAS[3])]
+    grupos = [("Todos", estudios), ("Alta", [e for e in estudios if e["qa_total"] >= UMBRAL_ALTA]),
+              ("SinBaja", [e for e in estudios if e["qa_total"] >= UMBRAL_BAJA]),
+              ("Baja", [e for e in estudios if e["qa_total"] < UMBRAL_BAJA])]
+    for gn, sub in grupos:
+        for pn, cond in perfil:
+            k = sum(1 for e in sub if cond(e))
+            cm.append(macro(f"S{gn}{pn}", k))
+            cm.append(macro(f"P{gn}{pn}", pct(k, len(sub)) if sub else "---"))
+    for nombre, _, patron in DATASETS:
+        cm.append(macro(f"Nds{nombre}", sum(1 for e in estudios if re.search(patron, texto_datos(e)))))
+    cm.append(macro("NsinDatasetPublico", sum(1 for e in estudios
+                                              if not any(re.search(pt, texto_datos(e)) for _, _, pt in DATASETS))))
+    qa_dato = {d: [e["qa_total"] for e in estudios if e["tipo_dato"] == d] for d in TIPOS_DATO}
+    for d, dn in dato_m.items():
+        if qa_dato[d]:
+            cm.append(macro(f"QAdato{dn}", f"{statistics.mean(qa_dato[d]):.1f}".replace(".", ",")))
+    qa_et = {t: [e["qa_total"] for e in estudios if e["origen_etiquetas"] == t] for t in ETIQUETAS}
+    cm.append(macro("QAetiqInyect", f"{statistics.mean(qa_et[ETIQUETAS[3]]):.1f}".replace(".", ",") if qa_et[ETIQUETAS[3]] else "---"))
+    cm.append(macro("QAetiqReales", f"{statistics.mean([q for t in ETIQUETAS[:3] for q in qa_et[t]]):.1f}".replace(".", ",")))
     m.extend(cm)
 
     # Etiquetas
@@ -374,10 +440,18 @@ def generar(estudios):
     for d in TIPOS_DATO:
         xs = ids(estudios, lambda e, d=d: e["tipo_dato"] == d)
         if xs:
-            ejemplos = sorted({x for e in estudios if e["tipo_dato"] == d for x in e["datasets_ejemplo"]})
-            filas.append([dato_lbl[d], len(xs), lista_ids(xs), esc(", ".join(ejemplos))])
-    t["datos"] = tabla(["Tipo de dato", "n", "Estudios", "Datasets"], filas, "lcXX",
-                       "Tipo de dato y conjuntos de datos utilizados (RQ4).", "tab:datos")
+            grupo = [e for e in estudios if e["tipo_dato"] == d]
+            usados = []
+            for _, nombre_ds, patron in DATASETS:
+                con = [e["id"] for e in grupo if re.search(patron, texto_datos(e))]
+                if con:
+                    usados.append(f"{nombre_ds} ({len(con)})")
+            propios = sum(1 for e in grupo if not any(re.search(pt, texto_datos(e)) for _, _, pt in DATASETS))
+            usados.append(f"solo datos propios o no p\\'{{u}}blicos ({propios})")
+            filas.append([dato_lbl[d], len(xs), lista_ids(xs), "; ".join(usados)])
+    t["datos"] = tabla(["Tipo de dato", "n", "Estudios", "Conjuntos p\\'{u}blicos identificados (n.\\textsuperscript{o} de estudios)"], filas, "lcXX",
+                       "Tipo de dato y conjuntos de datos utilizados (RQ4).", "tab:datos",
+                       "Un estudio puede usar varios conjuntos. Se listan los conjuntos p\\'{u}blicos nombrados en la extracci\\'{o}n; el resto son datos propios, de operadores o simulados.")
 
     # Baselines
     filas = []
@@ -411,16 +485,28 @@ def generar(estudios):
                          "lcp{2.2cm}p{2.6cm}Y", "Revisiones previas sobre detecci\\'{o}n de anomal\\'{i}as de tr\\'{a}fico y su diferencia con esta revisi\\'{o}n.",
                          "tab:previas", "Revisiones identificadas mediante b\\'{u}squeda dirigida (2018--2026). Los \\textit{preprints} se indican como tales.")
 
-    # Casos límite (incluidos y excluidos)
-    cur = json.loads(CURACION.read_text(encoding="utf-8"))
+    # Casos límite: inclusiones discutibles (decision_limite) y exclusiones a texto completo (decision_TC.json)
     filas = []
     for e in estudios:
         if e.get("decision_limite"):
-            filas.append(f"{e['id']} \\cite{{{e['bibkey']}}} & Incluido & {esc(e['decision_limite'].split('. ', 1)[1] if e['decision_limite'].startswith('Incluido') else e['decision_limite'])} \\\\")
-    for x in cur["excluidos_texto_completo"]:
-        filas.append(f"--- \\cite{{{x['bibkey']}}} & Excluido ({x['criterio']}) & {esc(x['motivo'])} \\\\")
+            filas.append(f"{e['id']} \\cite{{{e['bibkey']}}} & Incluido & {esc(e['decision_limite'])} \\\\")
+    tc_path = RAIZ / "cribado" / "salida" / "decision_TC.json"
+    reg_path = RAIZ / "cribado" / "salida" / "02_registros_unicos.csv"
+    n_excl = 0
+    if tc_path.exists() and reg_path.exists():
+        import csv
+        reg = {r["id"]: r for r in csv.DictReader(open(reg_path, encoding="utf-8-sig"))}
+        tc = json.loads(tc_path.read_text(encoding="utf-8"))
+        for i, d in sorted(tc.items()):
+            if d["decision"] != "Excluir":
+                continue
+            n_excl += 1
+            r = reg[i]
+            motivo = re.sub(r"^\[[^\]]*\]\s*", "", d["nota"]).split(". Evidencia")[0]
+            filas.append(f"{i}: {esc(r['titulo'][:70])}{'…' if len(r['titulo']) > 70 else ''} ({r['anio']}) & "
+                         f"Excluido ({d['criterio']}) & {esc(motivo[:300])} \\\\")
     t["limite"] = "\n".join(filas) + "\n"
-    m2 = [macro("NexcluidosLimite", len(cur["excluidos_texto_completo"])),
+    m2 = [macro("NexcluidosLimite", n_excl),
           macro("NincluidosLimite", sum(1 for e in estudios if e.get("decision_limite")))]
     with open(SALIDA_TEX / "macros.tex", "a", encoding="utf-8") as f:
         f.write("".join(m2))

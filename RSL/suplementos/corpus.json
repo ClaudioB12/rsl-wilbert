@@ -452,9 +452,9 @@
    "UA-DETRAC",
    "imágenes web scraping"
   ],
-  "origen_etiquetas": "registros reales de incidentes",
+  "origen_etiquetas": "benchmark anotado de terceros",
   "origen_etiquetas_detalle": "Reales/registros",
-  "etiqueta_corta": "Registros reales",
+  "etiqueta_corta": "Benchmark anotado",
   "tasa_anomalias": "54 % accidentes; 46 % no accidentes",
   "paradigma": "supervisado",
   "enfoque": "clasificación",
@@ -1155,7 +1155,7 @@
    {
     "nombre": "IITH Road Accident Dataset: videos CCTV de Hyderabad, India",
     "tipo": "real",
-    "publico": "no"
+    "publico": "sí"
    },
    {
     "nombre": "127138 fotogramas normales y 863 anómalos",
@@ -3151,9 +3151,9 @@
    "desarrollo, 3 sesiones y…",
    "el estudio utiliza 89…"
   ],
-  "origen_etiquetas": "registros reales de incidentes",
+  "origen_etiquetas": "benchmark anotado de terceros",
   "origen_etiquetas_detalle": "Reales/registros",
-  "etiqueta_corta": "Registros reales",
+  "etiqueta_corta": "Benchmark anotado",
   "tasa_anomalias": "El conjunto candidato representa el 1.69% de las grabaciones utilizadas; proporciones por partición: 1.57% entrenamiento, 1.53% desarrollo y 2.44% prueba. Este porcentaje corresponde a segmentos potencialmente anómalos según las anotaciones originales, no a una prevalencia confirmada de anomalías. En la evaluación perceptual balanceada por selección inicial, 175 de 400 segmentos fueron etiquetados como anómalos, equivalente al 43.75%, y 225 como normales, 56.25%; estas proporciones no representan la prevalencia natural del tráfico porque se seleccionaron deliberadamente 200 segmentos candidatos y 200 normales. Páginas 6 y 8.",
   "paradigma": "no supervisado",
   "enfoque": "predicción",
@@ -3587,9 +3587,9 @@
    "Car Accident Detection and…",
    "los autores seleccionan y…"
   ],
-  "origen_etiquetas": "registros reales de incidentes",
+  "origen_etiquetas": "benchmark anotado de terceros",
   "origen_etiquetas_detalle": "Reales/registros",
-  "etiqueta_corta": "Registros reales",
+  "etiqueta_corta": "Benchmark anotado",
   "tasa_anomalias": "El artículo indica 25 fotogramas de accidente y 25 de no accidente por cada segmento de 50 fotogramas procesado; esto corresponde a una distribución nominal equilibrada de 50 % por clase, aunque no presenta una tabla independiente con los recuentos globales por etiqueta. Sección 4.3, p. 10.",
   "paradigma": "supervisado",
   "enfoque": "clasificación",
@@ -3736,9 +3736,9 @@
    "Car Crash Dataset",
    "sección 4.2, pp. 9–10. No…"
   ],
-  "origen_etiquetas": "registros reales de incidentes",
+  "origen_etiquetas": "benchmark anotado de terceros",
   "origen_etiquetas_detalle": "Reales/registros",
-  "etiqueta_corta": "Registros reales",
+  "etiqueta_corta": "Benchmark anotado",
   "tasa_anomalias": "2496 fotogramas etiquetados como accidente de un total de 8950, equivalentes a 27,89 %; 6454 fotogramas sin accidente, equivalentes a 72,11 %. Denominador: fotogramas procesados, no videos ni eventos independientes. Tabla 3, p. 9.",
   "paradigma": "supervisado",
   "enfoque": "clasificación",
@@ -4190,9 +4190,9 @@
    "UCF-Crime, conjunto público…",
    "no especifican…"
   ],
-  "origen_etiquetas": "registros reales de incidentes",
+  "origen_etiquetas": "benchmark anotado de terceros",
   "origen_etiquetas_detalle": "Reales/registros",
-  "etiqueta_corta": "Registros reales",
+  "etiqueta_corta": "Benchmark anotado",
   "tasa_anomalias": "En el corpus UCF-Crime completo, 150 de 1900 videos pertenecen a Road accidents, equivalentes a 7.89% del total; 950 de 1900 son videos normales, equivalentes al 50%. En el subconjunto descrito como 150 accidentes y 950 normales, los accidentes representarían 13.64% de 1100 videos, siempre que todos esos videos hayan sido efectivamente incluidos. No se reporta prevalencia de accidentes en entrenamiento, validación y prueba por separado, ni prevalencia temporal de fotogramas anómalos. Páginas 9–10.",
   "paradigma": "supervisado",
   "enfoque": "clasificación",
@@ -5544,7 +5544,7 @@
    {
     "nombre": "FT-AED (Freeway Traffic Anomalous Event Detection), citado de Coursey et al. (2024)",
     "tipo": "real",
-    "publico": "sí"
+    "publico": "no"
    },
    {
     "nombre": "más de 3.7 millones de registros de sensores de tráfico, procedentes de 18 millas de Interstate 24. Contiene velocidad, ocupación, volumen, marcas temporales, localización por marcador de milla, accidentes oficialmente reportados e indicadores de anomalías etiquetados por humanos. Los autores no especifican cuántos registros originales utilizaron finalmente después de limpieza, interpolación, remuestreo y construcción de secuencias (sección 3.1, p. 3)",
@@ -6796,9 +6796,9 @@
    "DoTA",
    "conjuntos públicos de…"
   ],
-  "origen_etiquetas": "registros reales de incidentes",
+  "origen_etiquetas": "benchmark anotado de terceros",
   "origen_etiquetas_detalle": "Reales/registros",
-  "etiqueta_corta": "Registros reales",
+  "etiqueta_corta": "Benchmark anotado",
   "tasa_anomalias": "División estándar de entrenamiento y prueba utilizada en trabajos anteriores; entrenamiento únicamente con segmentos precursores normales; evaluación en DoTA y DADA-2000",
   "paradigma": "no supervisado",
   "enfoque": "reconstrucción",
@@ -8730,9 +8730,9 @@
    "junto con dos descripciones…",
    "remite al trabajo original…"
   ],
-  "origen_etiquetas": "registros reales de incidentes",
+  "origen_etiquetas": "benchmark anotado de terceros",
   "origen_etiquetas_detalle": "Reales/registros",
-  "etiqueta_corta": "Registros reales",
+  "etiqueta_corta": "Benchmark anotado",
   "tasa_anomalias": "No reportada como proporción global de fotogramas o videos anómalos — Se documentan 800 descripciones de intervalos de anomalía y 648 de intervalos normales, pero esos conteos corresponden a anotaciones textuales, no a una prevalencia calculada sobre todos los fotogramas de TADS. La sección 5.3.3, p. 14, informa proporciones de categorías específicas dentro del entrenamiento: categoría 2 = 2 %, categoría 3 = 0,25 % y categoría 11 = 2 %; no representan la tasa total de anomalías.",
   "paradigma": "supervisado",
   "enfoque": "clasificación",
@@ -8871,7 +8871,7 @@
    {
     "nombre": "IITH Road Accident Dataset: videos de CCTV de accidentes viales en Hyderabad, India",
     "tipo": "real",
-    "publico": "no"
+    "publico": "sí"
    },
    {
     "nombre": "94 720 fotogramas normales para entrenamiento y 33 280 para prueba, de los cuales 863 son de accidente y 32 417 normales. UCF-Crime, subconjunto Road Accident: 150 videos de vigilancia, 127 para entrenamiento y 23 para prueba",
@@ -9320,7 +9320,7 @@
    {
     "nombre": "Freeway Traffic Anomalous Event Detection (FT-AED), presentado por Coursey et al. Datos reales de octubre de 2023, correspondientes a 20 días laborables de 04:00 a 12:00. Incluye más de 3.7 millones de mediciones de sensores radar, 49 posiciones, cuatro carriles y registros cada 30 segundos. Las características son velocidad, ocupación y volumen. Se utilizan 14 días para entrenamiento, cinco para prueba y se excluye un día por exceso de anomalías. No se especifica en este artículo el número total de accidentes etiquetados ni la cantidad de nodos positivos (secciones V.A–V.B, pp. 7–9)",
     "tipo": "real",
-    "publico": "sí"
+    "publico": "no"
    }
   ],
   "datasets_corto": "Freeway Traffic Anomalous Event Detection…",
@@ -9810,9 +9810,9 @@
   "datasets_ejemplo": [
    "Car Crash Dataset"
   ],
-  "origen_etiquetas": "registros reales de incidentes",
+  "origen_etiquetas": "benchmark anotado de terceros",
   "origen_etiquetas_detalle": "Reales/registros",
-  "etiqueta_corta": "Registros reales",
+  "etiqueta_corta": "Benchmark anotado",
   "tasa_anomalias": "33,33 % de clips con accidentes: 1500 de 4500 videos. Los 3000 clips restantes representan conducción normal (66,67 %). La relación accidente:normal es 1:2 y se conserva en cada partición de validación cruzada: 300 accidentes y 600 normales por fold de prueba (Tablas 1 y 2, p. 4). Esta proporción corresponde al dataset experimental y no a la prevalencia real de accidentes en cámaras viales.",
   "paradigma": "supervisado",
   "enfoque": "clasificación",
@@ -9964,9 +9964,9 @@
    "particiones de 2393…",
    "particiones declaradas de…"
   ],
-  "origen_etiquetas": "registros reales de incidentes",
+  "origen_etiquetas": "benchmark anotado de terceros",
   "origen_etiquetas_detalle": "Reales/registros",
-  "etiqueta_corta": "Registros reales",
+  "etiqueta_corta": "Benchmark anotado",
   "tasa_anomalias": "No se informa una prevalencia binaria normal/anómalo válida para ambos conjuntos. Traffic-Net presenta aproximadamente 1100 imágenes por cada una de cuatro clases y RAD aproximadamente 855 por clase, pero el artículo no establece una correspondencia formal entre todas las clases y una variable binaria de anomalía. Por tanto, no debe interpretarse el 75% de categorías de RAD como prevalencia de anomalías vehiculares ni considerar automáticamente todo tráfico denso como incidente. Tabla 2, página 4.",
   "paradigma": "supervisado",
   "enfoque": "clasificación",
@@ -10117,9 +10117,9 @@
    "CADP",
    "CarCrash"
   ],
-  "origen_etiquetas": "registros reales de incidentes",
+  "origen_etiquetas": "benchmark anotado de terceros",
   "origen_etiquetas_detalle": "Reales/registros",
-  "etiqueta_corta": "Registros reales",
+  "etiqueta_corta": "Benchmark anotado",
   "tasa_anomalias": "Aprendizaje supervisado de clasificación binaria Accident/No Accident; modelos entrenados por separado en CarCrash y CADP; partición 80/20 con semilla 42; CADP etiquetado según inicio anotado del accidente; ensamble lógico AND que genera alerta solamente cuando ViT y EfficientNet predicen accidente",
   "paradigma": "supervisado",
   "enfoque": "clasificación",
@@ -10403,7 +10403,7 @@
    {
     "nombre": "VTAD-highway, conjunto elaborado por los autores a partir de vigilancia real en múltiples autopistas chinas. Contiene 6435 secuencias de video, representadas experimentalmente por 6435 imágenes del último fotograma y sus respectivos mapas de trayectorias",
     "tipo": "real",
-    "publico": "sí"
+    "publico": "no"
    },
    {
     "nombre": "cada mapa resume en promedio aproximadamente cinco minutos de trayectorias vehiculares. Distribución de condiciones: despejado y luminoso 3734 casos (58,03 %), húmedo y nublado 1481 (23,01 %), niebla o imagen borrosa 1220 (18,96 %)",

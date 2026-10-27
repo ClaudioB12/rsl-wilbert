@@ -72,14 +72,14 @@ FAM_PRINCIPAL = {"Recurrente (RNN/LSTM/GRU)": "recurrente", "Convolucional (CNN)
                  "Autoencoder/VAE": "autoencoder", "Generativo (GAN/difusión)": "generativo", "Otra": "otra"}
 # Benchmarks públicos anotados por terceros (videos de accidentes, trayectorias y sensores de referencia).
 BENCHMARKS = r"ccd|car ?crash|dota|dada|ucf-?crime|cadp|ai ?city|uit-?adrone|xd-?violence|shanghaitech|street ?scene|" \
-             r"traffic-?net|a3d|\bdad\b|tads|drone-?anomaly|ft-?aed|maad|vtad|4m-?tad|hwid"
+             r"traffic-?net|a3d|\bdad\b|tads|drone-?anomaly|maad|4m-?tad|hwid|iith"
 PUBLICOS = BENCHMARKS + r"|pems|metr-?la|ngsim|highd|porto|nyc|new york|argoverse|comma\.?ai|i-?880|uah|geolife|didi|" \
                         r"chengdu|xi.?an|kaggle|github|i-?24|trafficam|rad\b"
 
 
 def etiquetas(x):
     o = x["Origen de etiquetas"]
-    if o == "Anotación manual" and re.search(BENCHMARKS, s(x["Datasets (nombre, país)"])):
+    if o in ("Anotación manual", "Reales/registros") and re.search(BENCHMARKS, s(x["Datasets (nombre, país)"])):
         return "benchmark anotado de terceros", "Benchmark anotado"
     return {"Reales/registros": ("registros reales de incidentes", "Registros reales"),
             "Anotación manual": ("anotación manual/experta", "Anotación manual"),

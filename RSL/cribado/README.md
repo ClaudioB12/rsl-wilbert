@@ -323,12 +323,12 @@ python cribado\scripts\08_paquete_overleaf.py
 En https://www.overleaf.com:
 1. *New Project* → *Upload Project* → elige `RSL\cribado\salida\overleaf_proyecto_completo.zip`.
 2. *Menu* (arriba a la izquierda):
-   - **Main document** = `RSL_v2.tex`
+   - **Main document** = `RSL_v3.tex`
    - **Compiler** = `pdfLaTeX`
 3. *Recompile*.
 
 ### 9.2 Reglas
-- En Overleaf **solo editas** `RSL_v2.tex` (redacción) y `referencias.bib`.
+- En Overleaf **solo editas** `RSL_v3.tex` (redacción) y `referencias.bib`.
 - **No edites en Overleaf** `datos_busqueda.tex` ni la carpeta `generado`: los escriben los scripts y se reemplazan en cada actualización.
 
 ### 9.3 Actualizar Overleaf cuando cambian los datos
@@ -342,7 +342,7 @@ Luego:
 3. *Recompile*.
 
 ### 9.4 Guardar en GitHub lo que escribas en Overleaf
-Cada cierto tiempo: Overleaf → *Menu* → *Download* → *Source*. Copia `RSL_v2.tex` y `referencias.bib` a `RSL\manuscrito\` y sube a GitHub.
+Cada cierto tiempo: Overleaf → *Menu* → *Download* → *Source*. Copia `RSL_v3.tex` y `referencias.bib` a `RSL\manuscrito\` y sube a GitHub.
 
 ---
 

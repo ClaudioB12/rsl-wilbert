@@ -1,12 +1,15 @@
 % Generado por suplementos/generar_conteos.py. No editar a mano.
-\begin{table}[H]
-\centering
+\begingroup
 \small
-\caption{Familias de arquitectura presentes en los estudios (RQ1).}\label{tab:familias}
-\begin{tabularx}{\linewidth}{lccX}
+\begin{xltabular}{\linewidth}{lccX}
+\caption{Familias de arquitectura presentes en los estudios (RQ1).}\label{tab:familias}\\
 \toprule
 \textbf{Familia} & \textbf{n} & \textbf{\%} & \textbf{Estudios} \\
-\midrule
+\midrule\endfirsthead
+\toprule
+\textbf{Familia} & \textbf{n} & \textbf{\%} & \textbf{Estudios} \\
+\midrule\endhead
+\bottomrule\endfoot
 Recurrentes (LSTM, GRU, Bi-LSTM) & 34 & 47~\% & S02, S03, S04, S05, S09, S10, S13, S14, S15, S16, S18, S20, S21, S22, S23, S24, S27, S28, S29, S30, S32, S33, S34, S38, S40, S41, S46, S47, S50, S62, S65, S66, S69, S72 \\
 Convolucionales (CNN, TCN, 3D-CNN) & 43 & 60~\% & S01, S02, S03, S04, S08, S09, S17, S19, S22, S25, S26, S27, S28, S29, S30, S32, S36, S37, S39, S40, S42, S43, S44, S45, S46, S47, S49, S50, S52, S53, S55, S56, S57, S58, S60, S61, S64, S66, S67, S68, S70, S71, S72 \\
 Autoencoders y reconstrucci\'{o}n & 13 & 18~\% & S09, S11, S14, S15, S18, S20, S23, S31, S32, S47, S50, S60, S63 \\
@@ -16,7 +19,6 @@ Generativos (GAN, VAE, difusi\'{o}n) & 8 & 11~\% & S11, S14, S22, S23, S34, S47,
 \midrule
 Combinan dos o m\'{a}s familias (h\'{i}bridos) & 36 & 50~\% & S02, S03, S04, S09, S12, S14, S17, S18, S20, S22, S23, S24, S26, S27, S29, S30, S31, S32, S34, S35, S36, S39, S40, S42, S46, S47, S48, S50, S53, S57, S58, S61, S62, S63, S68, S69 \\
 Integran varias modalidades de datos (multimodales) & 11 & 15~\% & S22, S28, S36, S39, S40, S50, S53, S58, S59, S62, S70 \\
-\bottomrule
-\end{tabularx}
-\par\vspace{2pt}{\footnotesize\raggedright Un estudio puede combinar varias familias. ``H\'{i}brido'' se refiere a la arquitectura y ``multimodal'' a los datos de entrada.\par}
-\end{table}
+\end{xltabular}
+\vspace{-6pt}{\footnotesize\raggedright Un estudio puede combinar varias familias. ``H\'{i}brido'' se refiere a la arquitectura y ``multimodal'' a los datos de entrada.\par}
+\endgroup

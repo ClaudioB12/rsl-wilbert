@@ -115,7 +115,7 @@ AJUSTES = {
     ("R0072", 1, "EVIDENCIA (cita y página)"): (
         "Propone MHGNN-CPLE evaluado en METR-LA y PEMS-BAY con generalización METR-LA→PEMS-BAY (pp. 21-23, Tablas 5, 7 y 8); "
         "R0102 (Duan, Sun y Liu, 2025) presenta el mismo marco con las mismas bases.", "Hojas 1 y 2 del autor."),
-    ("R0072", 1, "Comentario"): ("[Excluir CE-1] Publicación paralela de R0102 (Sun y Liu, 2025); se incluye R0102 para no "
+    ("R0072", 1, "Comentario"): ("[Excluir CE-1] Publicación paralela de R0102 (Duan et al., 2025); se incluye R0102 para no "
                                  "contar dos veces el mismo modelo.", "Motivo."),
     ("R0185", 1, "DECISIÓN TC"): ("Excluir", "Clasifica niveles de riesgo de interacción, no eventos anómalos "
                                              "(igual que R0635, excluido por CE-3)."),
@@ -125,6 +125,25 @@ AJUSTES = {
         "(p. 6, Tablas 3 y 4).", "Hoja 1 del autor."),
     ("R0185", 1, "Comentario"): ("[Excluir CE-3] CNN-LSTM-Attention estima el nivel de riesgo de las interacciones en túneles; "
                                  "no detecta ni anticipa eventos anómalos.", "Motivo."),
+    ("R0190", 1, "Comentario"): ("[Excluir CE-3] Pronostica el flujo con Deep LSTM y Mixture Deep LSTM (MAE) en horas punta y "
+                                 "tras accidentes; los accidentes son una condición de entrada, no eventos que se detecten.", "Coherente con CE-3."),
+    ("R0249", 1, "Comentario"): ("[Excluir CI-6] VAE para imputación, reducción de dimensión y pronóstico; la detección de anomalías "
+                                 "es exploratoria (espacio latente) y no se evalúa con etiquetas ni métricas de detección.", "Coherente con CI-6."),
+    ("R0528", 1, "Comentario"): ("[Excluir CI-6] YOLO-R, DeepSORT y GAN para detectar accidentes en video, sin tabla de resultados "
+                                 "de detección (precision, recall, F1 o AUC) frente a accidentes etiquetados.", "Coherente con CI-6."),
+    ("R1166", 1, "Comentario"): ("[Excluir CI-6] Plataforma de videovigilancia con detección y seguimiento de vehículos; muestra "
+                                 "ejemplos de incidentes, pero no reporta métricas de detección.", "Coherente con CI-6."),
+    ("R0614", 1, "Comentario"): ("[Excluir CE-3] Clasifica la gravedad de accidentes ya registrados (Random Forest, XGBoost, "
+                                 "LightGBM); no detecta incidentes y tampoco usa DL.", "Coherente con CE-3."),
+    ("R0604", 1, "Comentario"): ("[Excluir CE-2] YOLOv8n reconoce fatiga, bostezos, uso del teléfono y tabaquismo del conductor de camión en imágenes de cabina: es monitoreo del conductor.", "Comentario conciso para el anexo."),
+    ("R0929", 1, "Comentario"): ("[Excluir CE-2] La CNN clasifica si el conductor sostiene el teléfono en imágenes de cabina; el módulo de accidentes depende del acelerómetro y no se evalúa con DL.", "Comentario conciso para el anexo."),
+    ("R0389", 1, "Comentario"): ("[Excluir CI-6] Propone un enfoque de ciencia de datos con DL para anomalías de velocidad, pero no reporta métricas de detección (precision, recall, F1 o AUC) ni etiquetas de referencia.", "Comentario conciso para el anexo."),
+    ("R0585", 1, "Comentario"): ("[Excluir CE-5] El texto completo disponible es una tesis de maestría; no se encontró una versión revisada por pares de acceso abierto.", "Comentario conciso para el anexo."),
+    ("R0618", 1, "Comentario"): ("[Excluir CE-5] Preprint de arXiv (2505.02613) sin versión revisada por pares verificable.", "Comentario conciso para el anexo."),
+    ("R0622", 1, "Comentario"): ("[Excluir CE-5] Preprint de arXiv (2303.05000) sin versión revisada por pares verificable.", "Comentario conciso para el anexo."),
+    ("R0635", 1, "Comentario"): ("[Excluir CE-3] GPT-2-LoRA, GAT y LSTM predicen el riesgo de colisión en eventos peligrosos preseleccionados (TTC < 3 s) de highD; no detecta anomalías sobre tráfico no preseleccionado.", "Comentario conciso para el anexo."),
+    ("R0646", 1, "Comentario"): ("[Excluir CE-3] LSTM difusa que pronostica variables de conducción y un nivel de riesgo calculado con reglas difusas; solo reporta MAE, MSE y RMSE.", "Comentario conciso para el anexo."),
+    ("R0986", 1, "Comentario"): ("[Excluir CE-3] LSTM con IoT para pronosticar el flujo de autopista; menciona eventos anormales, pero no los etiqueta ni evalúa su detección.", "Comentario conciso para el anexo."),
     ("R0024", 3, "QA8 Limitaciones"): (0, "La hoja 2 dice «No reportadas»: la cita es trabajo futuro, no una limitación."),
     ("R0024", 3, "QA8 evidencia"): ("No reportado (solo trabajo futuro, p. 10)", "Coherente con la hoja 2."),
     ("R0121", 2, "Entorno"): ("Urbano", "Dos cruces peatonales de calle (35 mph) en Florida."),
