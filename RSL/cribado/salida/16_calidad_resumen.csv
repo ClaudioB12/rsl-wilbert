@@ -1,0 +1,78 @@
+﻿id,titulo,anio,QA1,QA2,QA3,QA4,QA5,QA6,QA7,QA8,total
+R0024,Abnormal Trajectory Detection Based on Geospatial Consistent Modeling,2020,1.0,0.5,1.0,0.0,0.5,1.0,1.0,0.0,5.0
+R0025,Abnormal Vehicle Toll Evasion Detection Based on an Improved Transformer,2025,0.0,1.0,1.0,0.0,0.0,0.0,1.0,0.5,3.5
+R0032,"A Comparative Analysis of Machine Learning, Deep Learning, and Metaheuristic-Based Ensemble Learning for Driver Behavior Profiling on UAH-DriveSet",2026,0.5,0.5,1.0,0.0,0.5,0.5,0.5,0.5,4.0
+R0045,A data-centric weak supervised learning for highway traffic incident detection,2022,1.0,1.0,1.0,1.0,0.5,0.0,1.0,1.0,6.5
+R0049,A Deep Cycle Limit Learning Machine Method for Urban Expressway Traffic Incident Detection,2020,1.0,0.5,1.0,0.5,0.0,0.5,1.0,0.5,5.0
+R0050,A deep encoder-decoder network for anomaly detection in driving trajectory behavior under spatio-temporal context,2022,1.0,0.5,1.0,0.5,0.0,0.5,1.0,0.5,5.0
+R0051,A Deep Learning Framework for Traffic Accident Detection Based on Improved YOLO11,2025,1.0,1.0,1.0,0.5,0.0,0.5,1.0,1.0,6.0
+R0052,A deep neural framework for real-time vehicular accident detection based on motion temporal templates,2022,1.0,0.0,0.5,0.5,0.0,0.5,1.0,0.5,4.0
+R0072,A framework for detecting and predicting highway traffic anomalies via multimodal fusion and heterogeneous graph neural networks,2025,0.5,0.5,1.0,0.5,0.5,1.0,1.0,1.0,6.0
+R0080,A Hybrid Method for Traffic Incident Detection Using Random Forest-Recursive Feature Elimination and Long Short-Term Memory Network with Bayesian Optimization Algorithm,2021,1.0,1.0,1.0,0.5,0.5,0.0,1.0,1.0,6.0
+R0097,A memory-augmented multi-task collaborative framework for unsupervised traffic anomaly detection in driving videos,2025,1.0,1.0,1.0,0.5,0.5,1.0,1.0,1.0,7.0
+R0102,A multimodal deep fusion framework for highway traffic anomaly detection,2025,0.5,0.5,1.0,0.5,0.5,1.0,1.0,1.0,6.0
+R0119,An efficient computer vision framework for RSU-based accident recognition and V2X communication,2026,0.5,1.0,1.0,0.5,0.5,0.0,0.5,1.0,5.0
+R0121,An ensemble time-embedded transformer model for traffic conflict prediction at RRFB pedestrian crossings,2025,0.5,0.5,1.0,1.0,0.5,0.0,0.5,1.0,5.0
+R0167,A Personalized Federated Learning Framework for Post-Event Forensic Traffic Analysis in Autonomous Vehicle Systems,2026,0.5,0.0,0.5,0.5,0.5,0.5,0.5,1.0,4.0
+R0175,A Real-Time Consensus-Free Accident Detection Framework for Internet of Vehicles Using Vision Transformer and EfficientNet,2026,1.0,0.5,1.0,1.0,1.0,0.5,0.5,1.0,6.5
+R0185,A Risk Identification and Prediction Model for Intelligent Driving Under Multi-Vehicle Interactions in Mountain Tunnel Environments,2026,0.5,0.5,1.0,1.0,0.5,0.5,1.0,0.5,5.5
+R0221,A Three-Stage Anomaly Detection Framework for Traffic Videos,2022,0.5,1.0,1.0,0.0,0.5,0.5,1.0,0.5,5.0
+R0227,A trajectory outlier detection method based on variational auto-encoder,2023,0.5,0.5,1.0,0.5,0.5,0.5,1.0,1.0,5.5
+R0239,Automatic detection of traffic accidents from video using deep learning techniques,2021,0.5,0.5,0.5,0.5,0.5,1.0,1.0,1.0,5.5
+R0243,Automatic Traffic Anomaly Detection on the Road Network with Spatial-Temporal Graph Neural Network Representation Learning,2022,0.5,0.5,1.0,0.5,0.5,0.5,1.0,1.0,5.5
+R0244,Autonomous anomaly detection on traffic flow time series with reinforcement learning,2023,0.0,0.0,1.0,0.5,0.0,0.5,1.0,0.5,3.5
+R0255,Backbone-Level Enhancements in YOLOv9 for Traffic Accident Detection from Video Footage,2026,1.0,0.5,1.0,0.0,1.0,0.5,0.5,1.0,5.5
+R0313,CVAE-ADS: A Deep Learning Framework for Traffic Accident Detection and Video Summarization,2026,1.0,0.5,0.5,1.0,0.5,1.0,1.0,1.0,6.5
+R0329,Data-driven traffic incident detection in urban roads based on machine learning algorithms,2023,0.0,0.5,1.0,0.0,0.0,0.5,1.0,0.0,3.0
+R0341,Deep learning based detection and localization of road accidents from traffic surveillance videos,2022,1.0,0.5,1.0,0.0,0.5,1.0,1.0,0.5,5.5
+R0349,Deep Learning-Driven Pattern Recognition for Real-Time Traffic Incident Detection in Complex Urban Environments,2025,1.0,0.5,1.0,0.5,0.5,0.0,1.0,1.0,5.5
+R0356,Deep representation of imbalanced spatio-temporal traffic flow data for traffic accident detection,2023,1.0,0.5,1.0,0.5,0.0,1.0,1.0,1.0,6.0
+R0360,Deformation Gated Recurrent Network for Lane-level Abnormal Driving Behavior Recognition,2024,0.0,0.0,1.0,0.0,0.0,1.0,1.0,0.5,3.5
+R0379,Detecting Socially Abnormal Highway Driving Behaviors via Recurrent Graph Attention Networks,2023,1.0,1.0,1.0,0.0,0.5,1.0,1.0,0.5,6.0
+R0380,Detecting Urban Traffic Anomalies Using Traffic-Monitoring Data,2024,0.5,0.0,1.0,0.0,0.5,0.5,0.5,0.5,3.5
+R0403,Domain-enhanced dual-branch model for efficient and interpretable accident anticipation,2025,1.0,0.5,1.0,0.5,1.0,1.0,1.0,1.0,7.0
+R0428,Driving Behaviour Estimation System Considering the Effect of Road Geometry by Means of Deep NN and Hotelling Transform,2024,0.5,1.0,1.0,0.5,0.5,0.5,1.0,0.5,5.5
+R0438,DSGF-YOLO: A Lightweight Deep Neural Network for Traffic Accident Detection and Severity Classifications,2025,0.5,0.5,1.0,0.5,0.0,0.5,1.0,1.0,5.0
+R0444,Early Detection of Freeway Traffic Anomalies With a Cycle-Consistent Bidirectional Generative Adversarial Network,2026,1.0,1.0,1.0,0.5,1.0,0.0,1.0,1.0,6.5
+R0465,Enhancing Freeway Safety: LSTM-Based Detection of Traffic Anomalies,2025,1.0,0.5,0.5,0.0,0.5,0.0,0.5,1.0,4.0
+R0501,Feasibility Analysis of Static-Image-Based Traffic Accident Detection Under Domain Shift for Edge-AI Surveillance Systems,2026,0.5,1.0,1.0,0.5,0.5,1.0,0.5,1.0,6.0
+R0537,GNN-RMNet: Leveraging graph neural networks and GPS analytics for driver behavior and route optimization in logistics,2025,0.5,0.0,1.0,0.5,0.5,0.5,0.5,1.0,4.5
+R0539,Graph autoencoder with mirror temporal convolutional networks for traffic anomaly detection,2024,0.0,0.5,1.0,0.5,0.5,0.5,0.5,0.5,4.0
+R0543,Graph Enhanced Trajectory Anomaly Detection,2025,0.0,0.0,0.5,0.5,0.0,1.0,0.5,0.5,3.0
+R0545,Graph Multi-Resolution Transformer for Road Traffic Anomaly Detection,2025,0.0,1.0,0.5,0.5,0.0,0.0,1.0,0.5,3.5
+R0561,History-Based Road Traffic Anomaly Detection Using Deep Learning and Real-World Data,2024,0.0,0.0,0.5,1.0,0.0,0.5,0.5,1.0,3.5
+R0596,Intelligent deep fusion network for urban traffic flow anomaly identification,2022,0.0,0.5,1.0,0.5,0.0,1.0,0.5,0.5,4.0
+R0598,Intelligent multi-sensor fusion and anomaly detection in vehicles via deep learning,2025,0.5,1.0,1.0,0.0,0.0,0.5,0.5,0.5,4.0
+R0600,Intelligent surveillance system for accident detection using machine learning,2026,1.0,0.5,1.0,0.5,0.0,0.0,1.0,1.0,5.0
+R0601,Intelligent traffic accident detection system in complex dynamic scenarios based on the dual-stream spatiotemporal-fusion model,2025,1.0,0.5,1.0,0.5,0.5,1.0,1.0,1.0,6.5
+R0615,IRF-HTID-BO-LSTM: Classification Model of Curve Shape Index for Mountainous Highways and Intelligent Traffic Incident Detection Method,2025,0.5,0.5,1.0,1.0,0.0,0.5,0.5,1.0,5.0
+R0637,Long short-term memory and convolutional neural network for abnormal driving behaviour recognition,2020,1.0,0.5,0.5,0.5,0.5,0.0,1.0,0.5,4.5
+R0658,MMVAD: A vision–language model for cross-domain video anomaly detection with contrastive learning and scale-adaptive frame segmentation,2025,1.0,1.0,1.0,0.5,0.5,1.0,0.5,1.0,6.5
+R0664,MoTIF: An end-to-end multimodal road traffic scene understanding foundation model,2025,0.5,1.0,1.0,1.0,0.5,0.5,0.5,0.5,5.5
+R0666,Multi-Adjacent Camera-Based Dangerous Driving Trajectory Recognition for Ultra-Long Highways,2024,0.5,0.5,0.0,0.0,0.0,0.5,1.0,1.0,3.5
+R0674,Multi-Scale Detection of Anomalous Spatio-Temporal Trajectories in Evolving Trajectory Datasets,2024,0.0,0.5,1.0,0.5,1.0,1.0,0.5,0.5,5.0
+R0682,Multi-stage classification of abnormal traffic events using a multi-head + LSTM,2026,0.5,1.0,0.5,0.0,0.5,0.0,0.5,1.0,4.0
+R0702,Online Anomalous Subtrajectory Detection on Road Networks with Deep Reinforcement Learning,2023,1.0,0.5,1.0,0.5,0.5,1.0,1.0,0.5,6.0
+R0721,Pattern Anomaly Detection based on Sequence-to-Sequence Regularity Learning,2023,0.5,0.0,1.0,0.0,0.5,1.0,1.0,0.5,4.5
+R0938,Real-time rapid accident detection for optimizing road safety in Bangladesh,2025,0.5,0.5,1.0,0.0,0.0,0.5,1.0,1.0,4.5
+R0943,Real-time traffic accident detection using yolov8,2025,0.5,0.0,1.0,0.5,0.0,0.5,0.5,0.5,3.5
+R0958,Recognition of surrounding vehicle anomalous intent in the vehicle-road-cloud environment for autonomous driving,2026,1.0,0.5,1.0,0.5,0.5,0.5,1.0,1.0,6.0
+R1000,RETAD: Vehicle Trajectory Anomaly Detection Based on Reconstruction Error,2023,0.0,0.5,1.0,0.0,0.5,0.5,1.0,0.5,4.0
+R1010,Road Incident Detection System,2025,0.0,0.0,0.0,0.0,0.0,0.0,0.5,0.5,1.0
+R1013,Road Traffic Anomaly Detection by Human-Attention-Assisted Text–Vision Learning,2026,0.5,0.5,1.0,0.5,0.0,0.5,1.0,1.0,5.0
+R1014,Road traffic anomaly monitoring and warning based on DeepWalk algorithm,2023,0.5,0.0,0.5,0.5,0.0,0.5,0.5,1.0,3.5
+R1029,Safety in Smart Cities—Automatic Recognition of Dangerous Driving Styles,2026,1.0,0.5,1.0,0.5,0.5,0.5,0.5,1.0,5.5
+R1049,Simulation-based early detection and classification of severity of traffic incident using deep learning and dynamical reservoir features,2026,0.0,0.5,0.5,0.5,0.0,0.0,1.0,1.0,3.5
+R1052,Smart City Transportation: Deep Learning Ensemble Approach for Traffic Accident Detection,2024,1.0,0.5,0.5,0.0,0.5,0.5,1.0,1.0,5.0
+R1074,"Special Traffic Event Detection: Framework, Dataset Generation, and Deep Neural Network Perspectives",2023,0.5,0.5,0.5,0.0,0.0,0.5,1.0,1.0,4.0
+R1082,Structural Attention-Based Recurrent Variational Autoencoder for Highway Vehicle Anomaly Detection,2023,0.0,0.0,1.0,1.0,0.5,0.5,1.0,0.5,4.5
+R1092,Suspicious detection in road traffic based on Kd-SLIC-K-means and SBAF-CNN using aerial view surveillance video,2026,0.5,0.5,1.0,0.5,0.5,0.5,0.5,1.0,5.0
+R1094,SWencoder: a succinct shockwave diagram encoding and interpretable deep learning model design to enhance learning efficiency and assurance,2026,1.0,0.5,0.5,0.5,0.0,0.5,1.0,0.5,4.5
+R1100,TempoLearn Network: Leveraging Spatio-Temporal Learning for Traffic Accident Detection,2023,1.0,0.5,1.0,0.5,0.5,1.0,1.0,0.5,6.0
+R1137,Traffic Accident Detection Method Using Trajectory Tracking and Influence Maps,2023,0.5,0.5,1.0,0.0,0.5,0.0,1.0,0.5,4.0
+R1138,Traffic Accident Detection Using Background Subtraction and CNN Encoder–Transformer Decoder in Video Frames,2023,0.5,0.5,1.0,0.0,0.5,0.5,1.0,0.5,4.5
+R1148,Traffic anomaly detection by fusing spatiotemporal graphs and visual perception,2026,1.0,0.0,1.0,0.5,0.5,0.5,1.0,1.0,5.5
+R1172,Traffic-Prior-Guided State-Aware Framework for Robust Urban Traffic Anomaly Detection,2026,0.0,0.5,1.0,0.5,0.5,0.0,0.5,1.0,4.0
+R1185,TriNet-RTAD: An efficient ensemble-based deep CNN framework for road traffic anomaly detection,2026,0.5,0.5,0.5,0.0,0.5,1.0,1.0,1.0,5.0
+R1202,Unsupervised Scalable Multimodal Driving Anomaly Detection,2023,1.0,0.5,1.0,0.5,0.0,0.5,1.0,1.0,5.5
+R1214,Vehicle Abnormal Behavior Detection Based on Dense Block and Soft Thresholding,2024,0.5,0.5,1.0,0.5,0.5,0.0,0.5,0.0,3.5

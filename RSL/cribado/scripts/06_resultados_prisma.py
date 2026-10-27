@@ -126,8 +126,8 @@ def main():
         doi, tit = normalizar_doi(e.get("doi", "")), normalizar_titulo(e["titulo"])
         r = next((r for r in unicos if (doi and normalizar_doi(r["doi"]) == doi) or normalizar_titulo(r["titulo"]) == tit), None)
         if r is None:
-            otros.append(e["id"])
-            base_recup[e["id"]] = "Otros métodos (búsqueda v1, ACM texto completo)"
+            # Decisión del autor: el corpus final solo tiene estudios encontrados por la cadena (no hay «otros métodos»).
+            avisos.append(f"{e['id']} ({e['primer_autor']} {e['anio']}) no aparece en la búsqueda: sale del corpus.")
             continue
         ids_corpus_encontrados.add(r["id"])
         base_recup[e["id"]] = r["bases"]

@@ -18,8 +18,8 @@ Excluidos TC               15
    CE-5 Revisión, survey, capítulo, tesis, resumen, póster, edi    3
    CI-6 Sin evaluación cuantitativa de la tarea de detección       5
 Incluidos desde bases      77
-Otros métodos               4  (S05, S07, S16, S18)
-TOTAL INCLUIDOS            81
+Otros métodos               0  ()
+TOTAL INCLUIDOS            77
 
 asistente_TA     {'kappa': 0.06, 'n': 663, 'acuerdo': 0.306, 'exclusiones_regla': 100, 'exclusiones_regla_confirmadas': 100}
 IA_TA            {'kappa': 0.77, 'n': 663, 'acuerdo': 0.928, 'decisiones_cambiadas': 62}
@@ -30,6 +30,10 @@ AVISOS (resolver antes de enviar):
   - S02 (Huang 2020) está en el corpus pero el cribado lo dejó como «Excluir» CI-2. Revisen la decisión o avisen para actualizar el corpus.
   - S03 (Cai 2021) está en el corpus pero el cribado lo dejó como «Excluir» CI-2. Revisen la decisión o avisen para actualizar el corpus.
   - S04 (Hu 2022) está en el corpus pero el cribado lo dejó como «Excluir» CI-2. Revisen la decisión o avisen para actualizar el corpus.
+  - S05 (Khan 2022) no aparece en la búsqueda: sale del corpus.
+  - S07 (Riaz 2022) no aparece en la búsqueda: sale del corpus.
+  - S16 (Abdallah 2025) no aparece en la búsqueda: sale del corpus.
+  - S18 (Jia 2025) no aparece en la búsqueda: sale del corpus.
   - NUEVO estudio incluido R0024: «Abnormal Trajectory Detection Based on Geospatial Consistent Modeling». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R0025: «Abnormal Vehicle Toll Evasion Detection Based on an Improved Transformer». Hay que extraer sus datos y evaluar su calidad.
   - NUEVO estudio incluido R0032: «A Comparative Analysis of Machine Learning, Deep Learning, and Metaheuristic-Bas». Hay que extraer sus datos y evaluar su calidad.
