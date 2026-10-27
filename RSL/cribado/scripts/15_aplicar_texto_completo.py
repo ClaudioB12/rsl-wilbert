@@ -63,6 +63,10 @@ AJUSTES = {
     ("R0604", 1, "CRITERIO"): ("CE-2", "Monitoreo del conductor dentro de la cabina."),
     ("R0929", 1, "DECISIÓN TC"): ("Excluir", "La CNN solo reconoce si el conductor sostiene el teléfono (imagen de cabina): CE-2 lo excluye expresamente."),
     ("R0929", 1, "CRITERIO"): ("CE-2", "Monitoreo del conductor dentro de la cabina."),
+    ("R0389", 1, "CRITERIO"): ("CI-6", "Trata anomalías de tráfico pero no reporta métricas de detección: es CI-6 (igual que R0249, R0528 y R1166)."),
+    ("R0403", 3, "QA5 Código y datos"): (1, "Código con DOI (ETS) y datasets públicos (DAD, CCD, A3D): ambos públicos."),
+    ("R0032", 2, "Tipo de dato"): ("Multimodal", "Acelerómetro, giroscopio y GPS del teléfono (UAH-DriveSet)."),
+    ("R0403", 2, "Partición"): ("Prueba independiente", "Particiones oficiales de DAD y CCD."),
     ("R0024", 3, "QA8 Limitaciones"): (0, "La hoja 2 dice «No reportadas»: la cita es trabajo futuro, no una limitación."),
     ("R0024", 3, "QA8 evidencia"): ("No reportado (solo trabajo futuro, p. 10)", "Coherente con la hoja 2."),
     ("R0121", 2, "Entorno"): ("Urbano", "Dos cruces peatonales de calle (35 mph) en Florida."),
@@ -101,12 +105,6 @@ AJUSTES = {
 }
 # Filas que hay que volver a hacer con su propio PDF (no se pueden corregir sin leerlo).
 PENDIENTES = {
-    "R0032": ("1,2,3", "La hoja 1 tiene el texto de R0045 (copiado) y las hojas 2-3 dicen EXCLUIDO: rehacer con el PDF de R0032 "
-                       "(Driver Behavior Profiling on UAH-DriveSet)."),
-    "R0389": ("1,2,3", "Las tres hojas tienen los datos de otro artículo (R0380, DOI 10.3390/ijgi13100351): rehacer con el PDF "
-                       "de R0389 (DOI 10.1007/s43926-022-00025-y)."),
-    "R0403": ("1,2,3", "Las tres hojas tienen los datos de R0380 (Traffic-ConvLSTM, Wuhan): rehacer con el PDF de R0403 "
-                       "(DOI 10.1016/j.commtr.2025.100214, anticipación de accidentes)."),
     "R0192": ("2", "La hoja 2 está desplazada (cada valor en la columna equivocada): volver a pegar el bloque de 20 valores."),
     "R0167": ("2", "Paradigma no identificable («aprendizaje federado»): elegir una opción de la lista."),
 }
@@ -114,8 +112,8 @@ PENDIENTES = {
 AVISOS = {
     "R0986": "El texto analizado corresponde a Systems and Soft Computing (DOI 10.1016/j.sasc.2025.200254), pero el registro tiene "
              "DOI 10.1002/spy2.70136: confirma que el PDF es el del registro.",
-    "R0029": "Se excluyó por CE-3 (clasifica perfiles normal/somnoliento/agresivo), pero R0360, R0428 y R1029 se incluyeron con "
-             "clasificación de conducción anómala. Decide con el mismo criterio para todos.",
+    "R0029": "Se excluyó por CE-3 (clasifica perfiles normal/somnoliento/agresivo), pero R0032 (UAH-DriveSet, mismas tres "
+             "clases), R0360, R0428 y R1029 se incluyeron. Decide con el mismo criterio para todos.",
     "R0666": "Caso límite: el DL extrae y reconstruye trayectorias y la anomalía se decide con reglas. Se mantiene incluido "
              "(regla de híbridos de CI-5); va al anexo de casos límite.",
     "R0025": "Partición «No reportada» en la hoja 2 pero QA2 = 1 en la hoja 3: revisa uno de los dos.",
