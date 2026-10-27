@@ -67,6 +67,17 @@ AJUSTES = {
     ("R0403", 3, "QA5 Código y datos"): (1, "Código con DOI (ETS) y datasets públicos (DAD, CCD, A3D): ambos públicos."),
     ("R0032", 2, "Tipo de dato"): ("Multimodal", "Acelerómetro, giroscopio y GPS del teléfono (UAH-DriveSet)."),
     ("R0403", 2, "Partición"): ("Prueba independiente", "Particiones oficiales de DAD y CCD."),
+    ("R0192", 1, "DECISIÓN TC"): ("Excluir", "Releído el PDF: la detección solo se valida de forma visual (face validation); "
+                                              "la única métrica cuantitativa (RMSE, Tabla 1) es de imputación."),
+    ("R0192", 1, "CRITERIO"): ("CI-6", "Sin evaluación cuantitativa de la detección (igual que R0249 y R0389)."),
+    ("R0192", 1, "EVIDENCIA (cita y página)"): (
+        '"we employ a face validation approach. In this approach, we visually examine the pace time series of various zones" '
+        '(p. 10, sección IV-E); "Table 1 presents the mean and standard deviation of RMSE across 10 trials of inference-phase '
+        'imputation" (p. 9, sección IV-C).', "Cita del PDF."),
+    ("R0192", 1, "Comentario"): (
+        "[Excluir CI-6] SI-DMSeq (encoder-decoder LSTM con atención, Manhattan, huracán Sandy y tormenta de 2010) detecta "
+        "disrupciones con una carta de control sobre el error de reconstrucción, pero no las evalúa contra etiquetas: no hay "
+        "precision, recall, F1, AUC ni tasa de detección; la única métrica numérica (RMSE) es de imputación.", "Motivo."),
     ("R0024", 3, "QA8 Limitaciones"): (0, "La hoja 2 dice «No reportadas»: la cita es trabajo futuro, no una limitación."),
     ("R0024", 3, "QA8 evidencia"): ("No reportado (solo trabajo futuro, p. 10)", "Coherente con la hoja 2."),
     ("R0121", 2, "Entorno"): ("Urbano", "Dos cruces peatonales de calle (35 mph) en Florida."),
@@ -105,8 +116,9 @@ AJUSTES = {
 }
 # Filas que hay que volver a hacer con su propio PDF (no se pueden corregir sin leerlo).
 PENDIENTES = {
-    "R0192": ("2", "La hoja 2 está desplazada (cada valor en la columna equivocada): volver a pegar el bloque de 20 valores."),
-    "R0167": ("2", "Paradigma no identificable («aprendizaje federado»): elegir una opción de la lista."),
+    "R0167": ("2", "Paradigma no identificable («aprendizaje federado»): elegir una opción de la lista con el PDF "
+                   "(https://jcbi.org/index.php/Main/article/download/1147/825). Si el PDF ya no se puede obtener, "
+                   "poner DECISIÓN TC = «No recuperado»."),
 }
 # Avisos que no cambian nada, pero que conviene mirar.
 AVISOS = {
