@@ -78,6 +78,13 @@ AJUSTES = {
         "[Excluir CI-6] SI-DMSeq (encoder-decoder LSTM con atención, Manhattan, huracán Sandy y tormenta de 2010) detecta "
         "disrupciones con una carta de control sobre el error de reconstrucción, pero no las evalúa contra etiquetas: no hay "
         "precision, recall, F1, AUC ni tasa de detección; la única métrica numérica (RMSE) es de imputación.", "Motivo."),
+    ("R0167", 2, "Paradigma"): ("No supervisado", "Releído el PDF: MGTGCN se entrena para predecir y reconstruir trayectorias "
+                                                "(ADE/FDE, Tabla 1, p. 12), sin etiquetas de anomalía; las conductas anómalas se "
+                                                "añaden después para evaluar: «adding a set of disruptive driving behaviors» (p. 12)."),
+    ("R0029", 1, "DECISIÓN TC"): ("No recuperado", "El autor verificó que no hay texto completo en acceso abierto "
+                                                 "(la copia de SSRN no está disponible)."),
+    ("R0029", 1, "CRITERIO"): (None, "No recuperado no lleva criterio."),
+    ("R0029", 1, "Comentario"): ("[No recuperado] Sin texto completo de acceso abierto.", "Coherente con las demás no recuperadas."),
     ("R0024", 3, "QA8 Limitaciones"): (0, "La hoja 2 dice «No reportadas»: la cita es trabajo futuro, no una limitación."),
     ("R0024", 3, "QA8 evidencia"): ("No reportado (solo trabajo futuro, p. 10)", "Coherente con la hoja 2."),
     ("R0121", 2, "Entorno"): ("Urbano", "Dos cruces peatonales de calle (35 mph) en Florida."),
@@ -116,16 +123,11 @@ AJUSTES = {
 }
 # Filas que hay que volver a hacer con su propio PDF (no se pueden corregir sin leerlo).
 PENDIENTES = {
-    "R0167": ("2", "Paradigma no identificable («aprendizaje federado»): elegir una opción de la lista con el PDF "
-                   "(https://jcbi.org/index.php/Main/article/download/1147/825). Si el PDF ya no se puede obtener, "
-                   "poner DECISIÓN TC = «No recuperado»."),
 }
 # Avisos que no cambian nada, pero que conviene mirar.
 AVISOS = {
     "R0986": "El texto analizado corresponde a Systems and Soft Computing (DOI 10.1016/j.sasc.2025.200254), pero el registro tiene "
              "DOI 10.1002/spy2.70136: confirma que el PDF es el del registro.",
-    "R0029": "Se excluyó por CE-3 (clasifica perfiles normal/somnoliento/agresivo), pero R0032 (UAH-DriveSet, mismas tres "
-             "clases), R0360, R0428 y R1029 se incluyeron. Decide con el mismo criterio para todos.",
     "R0666": "Caso límite: el DL extrae y reconstruye trayectorias y la anomalía se decide con reglas. Se mantiene incluido "
              "(regla de híbridos de CI-5); va al anexo de casos límite.",
     "R0025": "Partición «No reportada» en la hoja 2 pero QA2 = 1 en la hoja 3: revisa uno de los dos.",

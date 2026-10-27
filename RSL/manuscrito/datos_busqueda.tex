@@ -7,8 +7,8 @@
 %=============================================================
 
 % --- Fechas y registro ---------------------------------------
-\newcommand{\FechaBusqueda}{\pend{dd/mm/2026}}
-\newcommand{\FechaBusquedaEN}{\pend{dd Month 2026}}
+\newcommand{\FechaBusqueda}{19/10/2026}
+\newcommand{\FechaBusquedaEN}{19 October 2026}
 \newcommand{\RegistroOSF}{\pend{OSF, DOI 10.17605/OSF.IO/XXXXX}}
 \newcommand{\RepositorioDatos}{\url{https://github.com/ClaudioB12/rsl-wilbert}}
 
@@ -18,50 +18,50 @@
 \newcommand{\NRecribadoTA}{\pend{n}}
 \newcommand{\KappaRecribadoTC}{\pend{0,xx}}     % re-cribado ciego, texto completo
 \newcommand{\NRecribadoTC}{\pend{n}}
-\newcommand{\KappaAsistenteTA}{\pend{0,xx}}     % acuerdo autor-asistente (TA)
-\newcommand{\AcuerdoAsistenteTA}{\pend{xx~\%}}
-\newcommand{\NExclRegla}{\pend{n}}             % exclusiones propuestas por regla
-\newcommand{\NExclReglaConfirmadas}{\pend{n}}  % ... confirmadas por el autor
-\newcommand{\KappaIATA}{\pend{0,xx}}            % acuerdo autor-IA en TA (pasa / no pasa)
-\newcommand{\AcuerdoIATA}{\pend{xx~\%}}
-\newcommand{\NCambiosIATA}{\pend{n}}            % decisiones de la IA que el autor cambió
-\newcommand{\NFueraFiltros}{\pend{n}}           % quitados por filtros del protocolo aplicados por script
-\newcommand{\NexclOA}{\pend{n}}                 % excluidos en TA por no ser de acceso abierto (CI-2)
-\newcommand{\FechaOA}{\pend{fecha}}             % fecha de verificación del acceso abierto
+\newcommand{\KappaAsistenteTA}{0,06}     % acuerdo autor-asistente (TA)
+\newcommand{\AcuerdoAsistenteTA}{31~\%}
+\newcommand{\NExclRegla}{100}             % exclusiones propuestas por regla
+\newcommand{\NExclReglaConfirmadas}{100}  % ... confirmadas por el autor
+\newcommand{\KappaIATA}{0,77}            % acuerdo autor-IA en TA (pasa / no pasa)
+\newcommand{\AcuerdoIATA}{93~\%}
+\newcommand{\NCambiosIATA}{62}            % decisiones de la IA que el autor cambió
+\newcommand{\NFueraFiltros}{123}           % quitados por filtros del protocolo aplicados por script
+\newcommand{\NexclOA}{577}                 % excluidos en TA por no ser de acceso abierto (CI-2)
+\newcommand{\FechaOA}{19/10/2026}             % fecha de verificación del acceso abierto
 \newcommand{\AcuerdoCalidad}{\pend{xx~\%}}     % puntaje propuesto vs. verificado
 
 % --- Registros por base (Tabla de bases) ----------------------
-\newcommand{\NScopus}{\pend{n}}
-\newcommand{\NWoS}{\pend{n}}
-\newcommand{\NIEEE}{\pend{n}}
-\newcommand{\NScienceDirect}{\pend{n}}
-\newcommand{\NACM}{\pend{n}}
-\newcommand{\FScopus}{\pend{fecha}}
-\newcommand{\FWoS}{\pend{fecha}}
-\newcommand{\FIEEE}{\pend{fecha}}
-\newcommand{\FScienceDirect}{\pend{fecha}}
-\newcommand{\FACM}{\pend{fecha}}
+\newcommand{\NScopus}{498}
+\newcommand{\NWoS}{193}
+\newcommand{\NIEEE}{152}
+\newcommand{\NScienceDirect}{337}
+\newcommand{\NACM}{397}
+\newcommand{\FScopus}{19/10/2026}
+\newcommand{\FWoS}{19/10/2026}
+\newcommand{\FIEEE}{19/10/2026}
+\newcommand{\FScienceDirect}{19/10/2026}
+\newcommand{\FACM}{19/10/2026}
 
 % --- Flujo PRISMA 2020 ----------------------------------------
-\newcommand{\Pidentificados}{\pend{n}}   % suma de las cinco bases
-\newcommand{\Pduplicados}{\pend{n}}
-\newcommand{\Pcribados}{\pend{n}}
-\newcommand{\PexclTA}{\pend{n}}
-\newcommand{\Pbuscados}{\pend{n}}        % solicitados a texto completo
-\newcommand{\PnoRecuperados}{\pend{n}}
-\newcommand{\Pevaluados}{\pend{n}}
-\newcommand{\PexclTC}{\pend{n}}
+\newcommand{\Pidentificados}{1577}   % suma de las cinco bases
+\newcommand{\Pduplicados}{337}
+\newcommand{\Pcribados}{1240}
+\newcommand{\PexclTA}{1137}
+\newcommand{\Pbuscados}{103}        % solicitados a texto completo
+\newcommand{\PnoRecuperados}{11}
+\newcommand{\Pevaluados}{92}
+\newcommand{\PexclTC}{15}
 % Motivos de exclusión a texto completo (deben sumar \PexclTC)
-\newcommand{\PexclCEdos}{\pend{n}}      % CE-2 no es tráfico vehicular
-\newcommand{\PexclCEtres}{\pend{n}}     % CE-3 solo pronóstico/clasificación
-\newcommand{\PexclCEcuatro}{\pend{n}}   % CE-4 sin DL como método principal
-\newcommand{\PexclCEcinco}{\pend{n}}    % CE-5 tipo de documento / preprint
-\newcommand{\PexclCIseis}{\pend{n}}     % CI-6 sin evaluación cuantitativa de la detección
-\newcommand{\PexclCEseis}{\pend{n}}     % CE-6 información insuficiente
-\newcommand{\PexclOtros}{\pend{n}}      % CE-1, CI-2, CI-3
+\newcommand{\PexclCEdos}{2}      % CE-2 no es tráfico vehicular
+\newcommand{\PexclCEtres}{5}     % CE-3 solo pronóstico/clasificación
+\newcommand{\PexclCEcuatro}{0}   % CE-4 sin DL como método principal
+\newcommand{\PexclCEcinco}{3}    % CE-5 tipo de documento / preprint
+\newcommand{\PexclCIseis}{5}     % CI-6 sin evaluación cuantitativa de la detección
+\newcommand{\PexclCEseis}{0}     % CE-6 información insuficiente
+\newcommand{\PexclOtros}{0}      % CE-1, CI-2, CI-3
 % Otros métodos (búsqueda v1 en ACM DL a texto completo)
-\newcommand{\POtrosIdentificados}{2}
-\newcommand{\POtrosIncluidos}{2}
+\newcommand{\POtrosIdentificados}{4}
+\newcommand{\POtrosIncluidos}{4}
 
 % --- Base de recuperación de cada estudio (Anexo B) -----------
 % La escribe cribado/scripts/06_resultados_prisma.py en generado/base_recuperacion.tex.
