@@ -69,7 +69,9 @@ QA = OrderedDict([
     ("QA7", "Protocolo de evaluaci\\'{o}n expl\\'{i}cito"),
     ("QA8", "Limitaciones declaradas"),
 ])
-UMBRAL_ALTA = 5.0  # de 8: estudios de calidad alta para el análisis de sensibilidad
+UMBRAL_ALTA = 6.0  # de 8 (75 %): calidad alta, para el análisis de sensibilidad
+UMBRAL_BAJA = 4.0  # de 8 (50 %): por debajo, calidad baja (segundo análisis de sensibilidad)
+CORPUS = SUPL / "corpus.json"
 
 
 def esc(s):
@@ -77,7 +79,9 @@ def esc(s):
     rep = {"\\": r"\textbackslash{}", "&": r"\&", "%": r"\%", "$": r"\$", "#": r"\#",
            "_": r"\_", "{": r"\{", "}": r"\}", "~": r"\textasciitilde{}", "^": r"\^{}",
            "\u2212": r"$-$", "\u2248": r"$\approx$", "\u00b1": r"$\pm$", "\u2265": r"$\geq$",
-           "\u2264": r"$\leq$", "\u00d7": r"$\times$", "\u2013": "--", "\u2014": "---"}
+           "\u2264": r"$\leq$", "\u00d7": r"$\times$", "\u2013": "--", "\u2014": "---", "α": r"$\alpha$", "β": r"$\beta$", "γ": r"$\gamma$", "δ": r"$\delta$",
+           "ε": r"$\varepsilon$", "θ": r"$\theta$", "λ": r"$\lambda$", "μ": r"$\mu$", "σ": r"$\sigma$",
+           "τ": r"$\tau$", "ω": r"$\omega$", "Δ": r"$\Delta$", "→": r"$\rightarrow$", "²": r"\textsuperscript{2}"}
     return "".join(rep.get(c, c) for c in str(s))
 
 
@@ -99,7 +103,14 @@ def macro(nombre, valor):
 
 
 def cargar():
-    """Une cada ficha individual con su curación y escribe la matriz consolidada."""
+    """Carga el corpus final (corpus.json, de construir_corpus.py) y escribe la matriz consolidada.
+    Si no existe, une cada ficha individual con su curación (corpus de la versión anterior)."""
+    if CORPUS.exists():
+        estudios = json.loads(CORPUS.read_text(encoding="utf-8"))
+        MATRIZ.write_text(json.dumps(estudios, ensure_ascii=False, indent=1), encoding="utf-8")
+        for e in estudios:
+            e["qa_total"] = sum(e["calidad"][q]["p"] for q in QA)
+        return estudios
     cur = json.loads(CURACION.read_text(encoding="utf-8"))
     estudios = []
     for c in cur["incluidos"]:
@@ -156,6 +167,11 @@ def generar(estudios):
     m.append(macro("QAumbralAlta", f"{UMBRAL_ALTA:.1f}"))
     m.append(macro("NaltaCalidad", len(alta)))
     m.append(macro("IDaltaCalidad", lista_ids([e["id"] for e in alta])))
+    baja = [e for e in estudios if e["qa_total"] < UMBRAL_BAJA]
+    m.append(macro("QAumbralBaja", f"{UMBRAL_BAJA:.1f}"))
+    m.append(macro("NbajaCalidad", len(baja)))
+    m.append(macro("NmediaCalidad", n - len(alta) - len(baja)))
+    m.append(macro("NsinBaja", n - len(baja)))
     for q in QA:
         si = sum(1 for e in estudios if e["calidad"][q]["p"] == 1)
         m.append(macro(f"QA{'Uno Dos Tres Cuatro Cinco Seis Siete Ocho'.split()[int(q[2]) - 1]}si", si))

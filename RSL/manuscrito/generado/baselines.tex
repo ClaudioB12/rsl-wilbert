@@ -1,22 +1,73 @@
 % Generado por suplementos/generar_conteos.py. No editar a mano.
-S01 & LSTM, DBN, CNN, GBDT & S\'{i} & +2,0 pp de DR frente a DBN \\
-S02 & Ablaciones (flujo espacial o temporal solo) & S\'{i} & +4,9 pp de F1 frente al flujo espacial solo \\
-S03 & TB1, TB2, PB (no DL) & S\'{i} & $\approx$ +17 pp de F1 frente a TB2 (leído del gráfico) \\
-S04 & HA, RTC, AE, EncDec-AD, REBM, DAGMM, GraphSAGE, GCN & S\'{i} & Hasta +0,15 de AUC frente a GCN \\
-S05 & CNN sin promedio móvil (ablación) & No & +10 pp de accuracy (ablación) \\
-S06 & Autoencoders y equipos AI City & No & +2 pp de AUC en IITH \\
-S07 & CGAN, FlowNet, PredNet & No & +1,8 a +17,7 pp frente a FlowNet \\
-S08 & LOF, iForest, OCSVM, HBOS, COPOD, LSTM-VAE, MAD-GAN & S\'{i} & $-$1 pp de FAR frente a LSTM-VAE \\
-S09 & CVM, RAE, STGAE, STGAE-KDE, VV-RAE & S\'{i} & +10,3 pp de AUPR frente a STGAE-KDE \\
-S10 & CNN, RNN, PNN, AdaBoost, GradientBoost & S\'{i} & +0,15 de TPR frente a PNN, con mayor FPR \\
-S11 & R3D, P3D, I3D, R(2+1)D & No & +2,7 pp frente a R3D+Bi-LSTM \\
-S12 & SAE, CNN+LSTM, Bi-LSTM, GAN, Transformer & No & +3,7 pp frente a Transformer \\
-S13 & Con-GAE, GCN, GraphSAGE, GATv2, PMLP, otros & S\'{i} & +3,2 a +4,0 pp de AUC frente a PMLP \\
-S14 & iBAT, SAE, VSAE, GM-VSAE, DeepTEA & S\'{i} & +18,6 \% relativo de PR-AUC (Porto) \\
-S15 & Solo para re-identificación & No & Detección sin línea base \\
-S16 & CNN, LSTM, GRU, LSTM federado & No & +1 pp de F1 frente a LSTM federado \\
-S17 & AGC-LSTM, AttentionDeepST & No & +2,2 pp de F1 frente a AGC-LSTM \\
-S18 & iForest, LSTM-VAE, LSTM-NDT & S\'{i} & No comparable (sin etiquetas) \\
-S19 & LSTM, GRU, Transformer, Informer, Autoformer & No & +5,3 pp de recall frente a Autoformer (T=288) \\
-S20 & ResNet50, MNAD, OLP-TAD, RF-RG & No & +5,7 pp de AUC frente a RF-RG \\
-S21 & Cifras de otros artículos & S\'{i} & No comparable \\
+S01 & 4: LSTM, DBN, CNN, GBDT & S\'{i} & +2.01 puntos de DR frente a DBN (96.41 \%); FAR… \\
+S02 & LSTM independiente como único modelo comparativo con… & No & Mejora absoluta de 11,532 puntos porcentuales en… \\
+S03 & 4: iBOAT, SAE, GM-VSAE, SD-VSAE & S\'{i} & +0.1599 PR-AUC frente a SD-VSAE en Porto; +0.0989… \\
+S04 & Variantes internas de arquitectura y segmentación; sin… & S\'{i} & No reportada frente a detector externo \\
+S05 & KNN-SVM; FDL; WT-LR; GAN-SVM; TSA-SVM; RF-RFE-LSTM… & S\'{i} & El método propuesto obtiene Accuracy=98.07\% y… \\
+S06 & Chen et al. (2016); Ren et al. (2016); Arceda y Riveros… & S\'{i} & TP-r=98.5\% frente a 96.8\% de Chen et al. y 94.6\%… \\
+S07 & 5: Luo et al., Liu et al., Sultani et al., Zhu et al., Lv… & No & +2.07 puntos de AUC frente a Lv et al. en TAD… \\
+S08 & CNN mejorada de Javed et al. (referencia 31) y un método… & S\'{i} & Con el 100 \% de los datos, las Figuras 2-4… \\
+S09 & Stacked Autoencoder de Singh y Mohan en IITH (tabla 2)… & No & En IITH, AUC 79 \% frente a 77 \% de Stacked… \\
+S10 & 3: Random Forest, KNN-SVM ensemble, LSTM convencional & S\'{i} & -0.04 FAR y -0.06 DR frente a LSTM convencional \\
+S11 & LOF, iForest, OC-SVM, TPRRO, AE, OT-AD y OS-AD & S\'{i} & F1=0.905 frente a 0.767 del AE (NS=100; 20\%… \\
+S12 & LOF, IFOREST, OCSVM, HBOS, COPOD, LSTM-VAE, MAD-GAN & S\'{i} & +10 puntos porcentuales de accuracy frente a… \\
+S13 & SVM y Random Forest, comparados con LSTM en el mismo… & S\'{i} & Para incidentes inferiores a 6 minutos, LSTM… \\
+S14 & Baselines: CVM (modelo de velocidad constante, no… & S\'{i} & Frente a STGAE-KDE, el mejor baseline profundo de… \\
+S15 & Cinco métodos comparativos de la Tabla 1 y Tabla 2: HMM… & S\'{i} & Frente al mejor comparador por ROC-AUC, Dist-RNN… \\
+S16 & 3: DeepAnt; Telemon; BreakoutDetection & S\'{i} & Aproximadamente +10 puntos porcentuales de F1… \\
+S17 & DoTA, Tabla 3, p. 8, localización: ConvAE con escala de… & S\'{i} & DoTA localización, Tabla 3, p. 8: TempoLearn AUC… \\
+S18 & LTI (Linear Temporal Interpolation), CVM (Constant Velocity… & S\'{i} & En detección individual del escenario combinado… \\
+S19 & Comparación directa entre algoritmo A (YOLOv5 con cajas… & No & ResNet-34 modificada C supera a YOLOv5 +… \\
+S20 & Cinco baselines explícitos de detección de anomalías: LCSS… & S\'{i} & Frente al mejor baseline por F1, ATD-RNN, RETAD… \\
+S21 & Comparaciones de detección sobre el mismo tramo con CNN… & S\'{i} & Tabla 3, p. 616, a 18 minutos: LSTM TPR 0,705… \\
+S22 & Tres baselines principales: CNN-LSTM conditional GAN con… & No & No se puede calcular una mejora porcentual… \\
+S23 & 6: DTW, Hausdorff, KNN, Deep Clustering, SAE, GM-VSAE & S\'{i} & +0.047 F1 frente a Hausdorff; +0.072 PR-AUC… \\
+S24 & Siete métodos comparativos implementados para la tarea… & S\'{i} & Tabla III: frente a CTSS, mejor línea base en F1… \\
+S25 & Detector CNN convencional sobre imágenes CCTV, comparado… & No & Frente al detector CNN convencional, 95,87 \% $-$… \\
+S26 & DCNN/DNN, LSTMDTR y ViT-TA, comparados en curvas de pérdida… & No & Exactitud de validación 0,96 frente a DCNN/DNN… \\
+S27 & Comparación cuantitativa con DenseNet-Transformer RGB Only… & No & Frente a DenseNet-Transformer RGB Only, la mejor… \\
+S28 & Comparación interna entre LSTM-HT, LSTM-CNN y LSTM-LSTM… & S\'{i} & Para la segunda etapa agresiva/inatenta, LSTM-HT… \\
+S29 & Seis configuraciones comparadas: R3D, R3D + LSTM, R3D +… & No & Para Road accidents, DRN + Bi-LSTM obtiene 89.30\%… \\
+S30 & Stacked Autoencoder (SAE), CNN-LSTM, Bidirectional LSTM… & S\'{i} & En City-precision, Traffic-ConvLSTM obtiene… \\
+S31 & DONE, AdOne, AnomalyDAE y DOMINANT se comparan directamente… & No & DONE obtiene ROC-AUC de 0,98 frente a 0,81 de… \\
+S32 & Comparadores principales de las Tablas 1-2 (p. 10): HA… & S\'{i} & En NYC, con $\alpha$ = 50\% y $\beta$ = 10\%, MTGAE obtiene AUC… \\
+S33 & MAM, ConvGRU, ST-LSTM, SR-LSTM y CNN-BiGRU; comparados… & No & En Chengdu con todas las características, DF-GRN… \\
+S34 & Seis métodos comparativos en sección 7.1 y Tabla 2 (pp.… & S\'{i} & Los autores reportan una mejora relativa promedio… \\
+S35 & Parallel LSTM-CNN; LSTM; CNN; XGBoost; Time-Embedded… & S\'{i} & El ensemble mejora el Recall respecto al… \\
+S36 & La Tabla 4 (p. 22) compara GNN-RMNet con DenseNet, ResNet… & S\'{i} & GNN-RMNet obtiene accuracy 98\% frente a 95\% del… \\
+S37 & YOLOv9c y YOLOv10 son líneas base profundas entrenadas y… & No & Frente a YOLOv9, YOLOv11 mejora recall de 0,8209… \\
+S38 & STG-RGCN AE, STG-GAT AE, GCN-LSTM AE, GCN AE, Transformer… & No & La Tabla 2 informa AUC-ROC de 0.9607 para el LSTM… \\
+S39 & Comparadores de detección: TEVAD, MGFN, VadCLIP, ANDT y… & No & En UIT-ADrone, MMVAD obtiene 69,56 \% AUC frente… \\
+S40 & AGC-LSTM; AttentionDeepST; variantes sin HGNN, sin atención… & S\'{i} & MHGNN-CPLE supera a AGC-LSTM y AttentionDeepST en… \\
+S41 & VRT (Video Recognition Technology), 3D-CNN, Wavelet… & S\'{i} & En AUC, IRF-HTID-BO-LSTM obtiene 0,982 frente a… \\
+S42 & Tabla 3, página 9: DSA, ACRA, AdaLEA, UString, DSTA, GSC… & No & En DAD, frente a THAT-NET, mejor AP de la Tabla 3… \\
+S43 & YOLOv8n, YOLOv8s y YOLOv8m se comparan experimentalmente… & No & Respecto de YOLOv8s en las configuraciones… \\
+S44 & DETR, Faster R-CNN, YOLOv5n, YOLOv8n y YOLO11 & S\'{i} & mAP50-95=66.0\% frente a 59.7\% de YOLO11… \\
+S45 & Seis modelos de detección comparados experimentalmente… & No & Frente a YOLOv13n, DSGF-YOLO mejora mAP50 de… \\
+S46 & ConvAE; ConvLSTMAE; AnoPred; FOL-STD; FOL-Ensemble; DMMNet… & S\'{i} & En DoTA, MAMTCF alcanza AUC=76.6\% frente a… \\
+S47 & Conv-AE, MemAE, MNAD-P, MNAD-R, HF2VAD, ASTNET, ADA-VAD… & No & En 4M-TAD, el mejor AUC entre los métodos… \\
+S48 & SAE (Sequence Autoencoder), VSAE (Variational Sequence… & No & Frente al mejor baseline por métrica y escenario… \\
+S49 & No reportados para la evaluación experimental propia --- La… & No & No calculable --- No existe tabla de comparación de… \\
+S50 & RF (Random Forest), XGBoost, FCDNN, 1D-CNN y LSTM; todos se… & S\'{i} & Para giros bruscos, el mejor F1 de los baselines… \\
+S51 & LSTM, GRU, Transformer, Informer y Autoformer; cinco… & No & Comparación del recall promedio de GMRT con el… \\
+S52 & YOLOv4, SSD y Faster R-CNN evaluados sobre HWID12 (tabla 6… & No & Tabla 6, p. 981: mAP 96,91 \% frente a YOLOv4… \\
+S53 & Qwen-VL (7B), MiniGPT4-Video (7B), GLM4-V (9B), VideoLLaVA… & No & Frente al mejor comparador en accuracy… \\
+S54 & 6: Naive Bayes, Decision Tree, Random Forest, SVM, KNN… & S\'{i} & +0.02 AUC frente a Naive Bayes (0.96); +0.05 F1… \\
+S55 & YOLOv9-t; YOLOv9-s; YOLOv5-s; YOLOv5-n; YOLOv8-n; YOLO26n… & No & Frente al mejor baseline externo por mAP50… \\
+S56 & CNN-only basada en características espaciales; Motion-only… & S\'{i} & El framework híbrido supera a CNN-only… \\
+S57 & Centralized MGTGCN; Federated Learning FedAvg; Personalized… & S\'{i} & PLFL mejora ADE frente a FedAvg de 2.35 m a 1.98… \\
+S58 & LSTM, TSA-Transformer y Dual-TF son comparadores… & S\'{i} & Frente al mejor comparador de la Tabla 1… \\
+S59 & Seis configuraciones de referencia en TADS, Tabla 1, p. 13… & No & Micro AUC: 74,3 \% frente a 68,6 \% de RF-RG = +5,7… \\
+S60 & IITH y UCF-Crime se comparan con métodos publicados como… & S\'{i} & En la comparación bibliográfica de la tabla 6… \\
+S61 & Random Forest, clasificador tradicional basado en árboles… & S\'{i} & Respecto del mejor baseline directamente… \\
+S62 & La Tabla 1 (p. 8) compara resultados publicados de Djenouri… & No & Sin mejora cuantitativa directamente comparable… \\
+S63 & Cinco modelos de referencia de Deep Learning: STG-RGCN AE… & No & Frente al mejor baseline en AUC, GCN AE con 0.70… \\
+S64 & Baselines de clasificación: CNN convencional, RNN, LSTM y… & S\'{i} & Frente a CNN convencional en la Tabla 5, p. 16… \\
+S65 & Baselines directamente comparables de detección de… & No & Frente al mejor baseline de exactitud V-Z, S-Z… \\
+S66 & SVM, CNN-only y CNN-LSTM, evaluados con las mismas… & S\'{i} & El LSTM propuesto supera a CNN-only en F1 por… \\
+S67 & Comparación experimental directa con ResNet50, ResNet101 y… & No & En Traffic-Net, el mejor baseline por accuracy es… \\
+S68 & ViT-B/16 individual y EfficientNet-B0 individual como… & S\'{i} & El ensamble obtuvo F1=0.96 en CarCrash y CADP… \\
+S69 & Ocho arquitecturas neuronales de comparación bajo… & S\'{i} & Con Tw = 24, DB-CGNet supera al mejor F1 de los… \\
+S70 & RetinaNet, EfficientDet, Deformable DETR, BEiT3… & No & Frente al competidor más fuerte FM-FSOD, VTAD-FL… \\
+S71 & Comparación entre ViT-B/16, Swin Transformer y ResNet-50… & No & En CCD Caso 1, Swin Stages 3-4 supera a ResNet-50… \\
+S72 & CNN-1D y TCN son los dos comparadores experimentales del… & No & A 1 segundo, RC frente a TCN obtiene igual F1… \\
